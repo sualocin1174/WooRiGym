@@ -64,10 +64,6 @@
             /* margin: 0; */
             /* width: 100%; */
         }
-        /* #nav .dropdown:hover .dropdown-menu>li{
-            display: inline-block;
-            margin: 0;
-        } */
     
         
         /* 상단바 가로 정렬 */
@@ -76,6 +72,7 @@
             position: relative;
             /* top: 10px; */
         }
+      
         /* 상단바 테두리 없애기 */
         .btn{
             border:0px;
@@ -97,6 +94,11 @@
             padding: 5px;
             /* border: 1px solid black; */
         }
+        /* 로그인 | 최근본상품 */
+        #main_tnb li:first-child::after {
+            padding-left: 15px;
+            content: "|";
+        }
         #search_icon a{
             position: absolute;
             top: 10px;
@@ -107,18 +109,30 @@
         }
         
         </style>
-       <style>
-           /* content */
-           section {
-               width: 1200px;
-               padding: 30px 0 30px 0;
+        <style>
+            /* content */
+            section {
+                width: 1200px;
+                padding: 30px 0 30px 0;
             }
+        
             #main_bnb {
                 text-align: center;
             }
-          #main_bnb li{
-              display: inline-block;
-          }
+        
+            #main_bnb li {
+                display: inline-block;
+            }
+
+        /* 신상품 | 인기상품 | 타임세일 */
+            #main_bnb li::after{
+                padding: 10px;
+                content: "|";
+            }
+            #main_bnb li:last-child::after{
+                padding: 15px;
+                content: "";
+            }
 
           #main_img {
               position: relative;
@@ -178,7 +192,6 @@
                     <li><a href="#">웨이트리프팅 패키지</a></li>
                     <!-- <li class="divider"></li> -->
                     <!-- <li class="dropdown-header">Dropdown header 2</li> -->
-                    <!-- <li><a href="#">About Us</a></li> -->
                 </ul>
               </div>
             <div class="dropdown">

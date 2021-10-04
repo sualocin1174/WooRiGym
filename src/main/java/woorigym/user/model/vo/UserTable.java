@@ -3,6 +3,7 @@ package woorigym.user.model.vo;
 public class UserTable {
 	private String user_id;
 	private String user_pwd;
+	private String user_name;
 	private String email;
 	private String email_yn;
 	private String phone;
@@ -14,6 +15,22 @@ public class UserTable {
 	
 	public UserTable() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	public UserTable(String user_id, String user_pwd, String user_name) {
+		super();
+		this.user_id = user_id;
+		this.user_pwd = user_pwd;
+		this.user_name = user_name;
+	}
+	
+
+	@Override
+	public String toString() {
+		return "UserTable [user_id=" + user_id + ", user_pwd=" + user_pwd + ", user_name=" + user_name + ", email="
+				+ email + ", email_yn=" + email_yn + ", phone=" + phone + ", join_date=" + join_date + ", mileage="
+				+ mileage + ", birthday=" + birthday + ", identity_number=" + identity_number + ", gender=" + gender
+				+ "]";
 	}
 
 	public String getUser_id() {
@@ -30,6 +47,14 @@ public class UserTable {
 
 	public void setUser_pwd(String user_pwd) {
 		this.user_pwd = user_pwd;
+	}
+
+	public String getUser_name() {
+		return user_name;
+	}
+
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
 	}
 
 	public String getEmail() {
@@ -95,13 +120,8 @@ public class UserTable {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+	
 
-	@Override
-	public String toString() {
-		return "UserVo [user_id=" + user_id + ", user_pwd=" + user_pwd + ", email=" + email + ", email_yn=" + email_yn
-				+ ", phone=" + phone + ", join_date=" + join_date + ", mileage=" + mileage + ", birthday=" + birthday
-				+ ", identity_number=" + identity_number + ", gender=" + gender + "]";
-	}
 
 	
 }
