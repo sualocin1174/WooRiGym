@@ -1,4 +1,4 @@
-package admin.model.vo;
+package woorigym.admin.model.vo;
 import java.sql.Date;
 
 public class NoticeTable {
