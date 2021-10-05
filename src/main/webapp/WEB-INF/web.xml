@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
-  <display-name>우리짐</display-name>
+  <display-name>wooRiGym</display-name>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
@@ -9,18 +9,17 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  
   <servlet-mapping>
-		<servlet-name>default</servlet-name>
-		<url-pattern>/</url-pattern>
-		<url-pattern>*.js</url-pattern>
-		<url-pattern>*.css</url-pattern>
-		<url-pattern>*.jpg</url-pattern>
-		<url-pattern>*.png</url-pattern>
-		<url-pattern>*.ico</url-pattern>
-		<url-pattern>*.swf</url-pattern>
-		<url-pattern>*.gif</url-pattern>
-	</servlet-mapping>
+      <servlet-name>default</servlet-name>
+      <url-pattern>/</url-pattern>
+      <url-pattern>*.js</url-pattern>
+      <url-pattern>*.css</url-pattern>
+      <url-pattern>*.jpg</url-pattern>
+      <url-pattern>*.png</url-pattern>
+      <url-pattern>*.ico</url-pattern>
+      <url-pattern>*.swf</url-pattern>
+      <url-pattern>*.gif</url-pattern>
+   </servlet-mapping>
   
   
   <resource-ref>
