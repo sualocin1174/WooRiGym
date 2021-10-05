@@ -34,6 +34,7 @@ public class OrderTable {
 	
 	public OrderTable() {}
 
+
 	public String getOrder_no() {
 		return order_no;
 	}

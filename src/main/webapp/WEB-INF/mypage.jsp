@@ -1,9 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <% String ctxPath = request.getContextPath(); %>
+<%@page import = "woorigym.user.model.vo.UserTable" %>
+<%@page import="java.util.ArrayList"%>
+  <%
+  String user_id = (String)request.getAttribute("user_id");
+  %>
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -107,7 +112,8 @@
             /* border: 1px solid black; */
         }
 
-
+	<% if(user_id != null) %>
+	
         /* OOO님 | 로그아웃 | 마이페이지 | 장바구니 | 최근본상품 */
         #main_tnb li::after {
             padding-left: 10px;
@@ -169,7 +175,7 @@
         <ul>
             <li><a href="#">OOO님</a></li>
             <li><a href="#">로그아웃</a></li>
-            <li><a href="#">마이페이지</a></li>
+            <li><a href="<%=ctxPath %>/mypage">마이페이지</a></li>
             <li><a href="#">장바구니</a></li>
             <li><a href="#">최근본상품</a></li>
         </ul>
@@ -184,7 +190,6 @@
             <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">패키지
             <span class="caret"></span></button>
             <ul class="dropdown-menu">
-                <!-- <li class="dropdown-header">Dropdown header 1</li> -->
                 <li><a href="#">전체</a></li>
                 <li><a href="#">스미스짐 패키지</a></li>
                 <li><a href="#">멀티짐 패키지</a></li>
@@ -192,8 +197,6 @@
                 <li><a href="#">벤치 패키지</a></li>
                 <li><a href="#">벤치프레스 패키지</a></li>
                 <li><a href="#">웨이트리프팅 패키지</a></li>
-                <!-- <li class="divider"></li> -->
-                <!-- <li class="dropdown-header">Dropdown header 2</li> -->
             </ul>
           </div>
         <div class="dropdown">

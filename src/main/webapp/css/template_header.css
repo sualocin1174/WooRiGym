@@ -1,0 +1,86 @@
+@charset "UTF-8";
+        header {
+            width: 1200px;
+            /* margin: 0 auto; */
+            /* margin-right: 0;; */
+            height: 160px;
+            position: relative;
+            padding: 30px;
+        }
+        a {
+            color:#BDBDBD;
+            text-decoration: none;
+        }
+        a:link{
+            text-decoration: none;
+        }
+        a:hover {
+            color: #333;
+            text-decoration: none;
+        }
+        ul {
+            list-style-type: none;
+            position: relative;
+        }
+        
+        #nav.container {
+            text-align: center;
+            padding: 15px;
+            width: 1200px;
+            height: 62px;
+        }
+        
+        #nav li{
+            display: inline-block;
+            padding: 0px 15px;
+        }
+        
+        /* 마우스 오버 시 하위메뉴 노출 */
+        #nav .dropdown:hover .dropdown-menu{
+            display: inline-block;
+            /* margin: 0; */
+            /* width: 100%; */
+        }
+    
+        
+        /* 상단바 가로 정렬 */
+        .dropdown {
+            display: inline-block;
+            position: relative;
+            /* top: 10px; */
+        }
+      
+        /* 상단바 테두리 없애기 */
+        .btn{
+            border:0px;
+            padding: 10;
+        }
+        
+        #main_tnb{
+            position: absolute;
+            top: 10px;
+            bottom: 10px;
+            right: 70px;
+            margin: 10px;
+            overflow: hidden;
+            width: 180px;
+            height: 100px;
+        }
+        #main_tnb > ul > li{
+            display: inline-block;
+            padding: 5px;
+            /* border: 1px solid black; */
+        }
+        /* 로그인 | 최근본상품 */
+        #main_tnb li:first-child::after {
+            padding-left: 15px;
+            content: "|";
+        }
+        #search_icon a{
+            position: absolute;
+            top: 10px;
+            right: 50px;
+            margin: 15px;
+            width: 25px;
+            height: 25px;
+        }
