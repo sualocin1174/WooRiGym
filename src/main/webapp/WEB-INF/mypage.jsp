@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -83,15 +86,18 @@
             border: 0px;
             padding: 10;
         }
+       
+         /* id가 있으면=로그인 상태=마이페이지 접근가능
+         
          /* 로그인 전 후 화면 다름 시작 */
         #main_tnb {
             position: absolute;
             top: 10px;
             bottom: 10px;
-            right: 35px;
+            right: 30px;
             margin: 10px;
             overflow: hidden;
-            width: 400px;
+            width: 500px;
             height: 100px;
         }
 
@@ -101,13 +107,14 @@
             /* border: 1px solid black; */
         }
 
-        /* OOO님 | 로그아웃 | 장바구니 | 최근본상품 */
+
+        /* OOO님 | 로그아웃 | 마이페이지 | 장바구니 | 최근본상품 */
         #main_tnb li::after {
-            padding-left: 15px;
+            padding-left: 10px;
             content: "|";
         }
         #main_tnb li:last-child::after {
-            padding-left: 15px;
+            padding-left: 10px;
             content: "";
         }
          /* 로그인 전 후 화면 다름  끝*/
@@ -127,11 +134,26 @@
             width: 900px;
             padding: 30px 0 30px 0;
             position: relative;
-            bottom: 150px;
+            bottom: 170px;
             left: 300px;
         }
         aside {
             padding: 30px 0 0 30px;
+        }
+        #side-menu>ul>li{
+            padding: 5px;
+        }
+        /* 마이페이지 폰트 크게 */
+        #side-menu>ul>li:first-child{
+            font-size: 25px;
+        }
+
+        .coupon td {
+            padding: 0 100px 5px 0;
+        }
+        #order_info tr:first-child>td {
+            font-size: 50px;
+            padding: 20px;
         }
     </style>
 </head>
@@ -147,6 +169,7 @@
         <ul>
             <li><a href="#">OOO님</a></li>
             <li><a href="#">로그아웃</a></li>
+            <li><a href="#">마이페이지</a></li>
             <li><a href="#">장바구니</a></li>
             <li><a href="#">최근본상품</a></li>
         </ul>
@@ -267,7 +290,7 @@
     </div>
 </header>
 <aside>
-    <div>
+    <div id="side-menu">
         <ul>
             <li><a href="#">마이페이지</a></li>
             <li><a href="#">주문/배송조회</a></li>
@@ -281,10 +304,10 @@
 <section>
     <h1>ooo님 즐거운 쇼핑 되세요!</h1>
     <a href="#">회원정보 수정 ></a><hr>
-<table>
+<table class="coupon">
     <tr>
-        <td colspan="2">쿠폰</td>
-        <td colspan="2">적립금</td>
+        <td colspan="2"><a href="#">쿠폰</a></td>
+        <td colspan="2"><a href="#">적립금</a></td>
     </tr>
     <tr>
         <td>보유 쿠폰</td>
@@ -299,6 +322,25 @@
         <td>0P</td>
     </tr>
 </table>
+<hr>
+<p>주문/배송</p>
+<table id="order_info">
+    <tr>
+        <!-- 주문/배송조회에서 갯수 체크해서 불러오기 -->
+        <!-- 아래 0은 시범용(삭제예정) -->
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+    </tr>
+    <tr>
+        <td>주문완료</td>
+        <td>배송준비중</td>
+        <td>배송중</td>
+        <td>배송완료</td>
+    </tr>
+</table>
+
 </section>
 
 <footer>
