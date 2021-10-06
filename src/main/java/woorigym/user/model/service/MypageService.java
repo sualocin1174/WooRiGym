@@ -11,10 +11,10 @@ public class MypageService {
 
 	public MypageService() {}
 	
-	public ArrayList<UserTable> mypageMain(String userd){
+	public ArrayList<UserTable> mypageMain(String user_id){
 		ArrayList<UserTable> volist = null;
 		Connection conn = jdbcTemplate.getConnection();
-//		volist = new MypageDao().mypageMain(conn,);
+//		volist = new MypageDao().mypageMain(conn);
 		jdbcTemplate.close(conn);
 		return volist;
 	}

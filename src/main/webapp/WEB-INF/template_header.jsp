@@ -1,18 +1,62 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>\
+    pageEncoding="UTF-8"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <% String ctxPath = request.getContextPath(); %>
+    <%@page import = "woorigym.user.model.vo.UserTable" %>
+    <%
+    UserTable u = (UserTable)session.getAttribute("user_id");
+  %>
     <!-- 공통헤더 템플릿입니다. css 작성금지 -->
 <header>
+u : <%=u %>
         <div id="logo">
             <a href="http://woorigym.dothome.co.kr/">
                 <img src='./images/logo_simple_w 180x98.png' alt="로고"/><br>
             </a>
         </div>
+  <%if (u == null){ %> <!-- 로그인 여부 확인 -->
         <div id="main_tnb">
-            <ul>
-                <li><a href="#">로그인</a></li>
-                <li><a href="#">최근본상품</a></li>
-            </ul>
+         <button type="button" id="btnLogin">로그인</button>
+         <button type="button">최근본상품</button>
         </div>
+        <% } else { %> 
+        <div id="main_tnb">
+        <ul>
+            <li><a href="#"><%= u.getUser_name() %>님</a></li>
+            <li><a href="#">로그아웃</a></li>
+            <li><a href="<%=ctxPath %>/mypage">마이페이지</a></li>
+            <li><a href="#">장바구니</a></li>
+            <li><a href="#">최근본상품</a></li>
+        </ul>
+    </div> <% } %>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script type="text/javascript">
+  $("#btnLogin").on('click',function(){
+	
+	 $.ajax({
+		 type :"POST",
+		 url : "ulogin",
+		 data : {
+			 id : $("#user_id").val()
+		 },
+		 dataType : "json",
+		 success: function(data){
+			 if(data.result = "ok"){
+				 var text = " <li><a href="#">"+data.user_name+"님</a></li>"
+			 } else{
+				 alert("로그인 실패!"); 
+			 };
+		 },
+		 error : function(request,status,error) { 
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+
+				"\n"+"error:"+error); 
+	        } 
+	 });
+  });
+  
+  </script>
+  
+  
         <div id="search_icon">
             <a href="#">
                 <img src='./images/검색_돋보기.png' alt="검색" width="18px"/><br>
