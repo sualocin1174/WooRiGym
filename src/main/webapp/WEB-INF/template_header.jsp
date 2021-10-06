@@ -6,6 +6,8 @@
     <%
     UserTable u = (UserTable)session.getAttribute("user_id");
   %>
+  <!-- 헤더 CSS -->
+     <link rel="stylesheet" type="text/css" href="css/template_header.css"/>
     <!-- 공통헤더 템플릿입니다. css 작성금지 -->
 <header>
 u : <%=u %>
@@ -15,36 +17,38 @@ u : <%=u %>
             </a>
         </div>
   <%if (u == null){ %> <!-- 로그인 여부 확인 -->
-        <div id="main_tnb">
+        <span id="main_tnb1" class="tnb">
          <button type="button" id="btnLogin">로그인</button>
          <button type="button">최근본상품</button>
-        </div>
+        </span>
         <% } else { %> 
-        <div id="main_tnb">
+        <div id="main_tnb2" class="tnb">
         <ul>
-            <li><a href="#"><%= u.getUser_name() %>님</a></li>
-            <li><a href="#">로그아웃</a></li>
-            <li><a href="<%=ctxPath %>/mypage">마이페이지</a></li>
+            <li><%= u.getUser_name() %>님</li>
+            <li><a href="<%=ctxPath %>/LogoutTemplate">로그아웃</a></li>
+            <li><a href="<%=ctxPath %>/mypage" onclick="" id="btnmy">마이페이지</a></li>
             <li><a href="#">장바구니</a></li>
             <li><a href="#">최근본상품</a></li>
         </ul>
     </div> <% } %>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script type="text/javascript">
-  $("#btnLogin").on('click',function(){
+
+	<!-- 로그인 상태+마이페이지 버튼 클릭=마이페이지 접근가능 -->
+  $("#btnmy").on('click',function(){
 	
 	 $.ajax({
 		 type :"POST",
-		 url : "ulogin",
+		 url : "mypage",
 		 data : {
-			 id : $("#user_id").val()
+			 id : $("#").val()
 		 },
 		 dataType : "json",
 		 success: function(data){
 			 if(data.result = "ok"){
 				 var text = " <li><a href="#">"+data.user_name+"님</a></li>"
 			 } else{
-				 alert("로그인 실패!"); 
+				 alert("로그인 상태가 아닙니다. 로그인 해주세요!"); 
 			 };
 		 },
 		 error : function(request,status,error) { 
@@ -53,9 +57,7 @@ u : <%=u %>
 	        } 
 	 });
   });
-  
   </script>
-  
   
         <div id="search_icon">
             <a href="#">

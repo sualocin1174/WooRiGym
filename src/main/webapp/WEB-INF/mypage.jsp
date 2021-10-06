@@ -17,84 +17,17 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <style>
-        /* 폰트 */
-        /* @import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@200&family=Nanum+Gothic&family=Noto+Sans+KR:wght@100&display=swap'); */
-        @import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@200&family=Nanum+Gothic&family=Noto+Sans+KR:wght@100&display=swap');
-    </style>
+     <!-- 헤더 CSS -->
+     <link rel="stylesheet" type="text/css" href="css/template_header.css"/>
     <style>
         /* reset */
         * {
             margin: 0;
             padding: 0;
         }
-
-        /* header */
-        header {
-            width: 1200px;
-            /* margin: 0 auto; */
-            /* margin-right: 0;; */
-            height: 160px;
-            position: relative;
-            padding: 30px;
-        }
-
-        a {
-            color: #BDBDBD;
-            text-decoration: none;
-        }
-
-        a:link {
-            text-decoration: none;
-        }
-
-        a:hover {
-            color: #333;
-            text-decoration: none;
-        }
-
-        ul {
-            list-style-type: none;
-            position: relative;
-        }
-
-        #nav.container {
-            text-align: center;
-            padding: 15px;
-            width: 1200px;
-            height: 62px;
-        }
-
-        #nav li {
-            display: inline-block;
-            padding: 0px 15px;
-        }
-
-        /* 마우스 오버 시 하위메뉴 노출 */
-        #nav .dropdown:hover .dropdown-menu {
-            display: inline-block;
-            /* margin: 0; */
-            /* width: 100%; */
-        }
-
-
-        /* 상단바 가로 정렬 */
-        .dropdown {
-            display: inline-block;
-            position: relative;
-            /* top: 10px; */
-        }
-
-        /* 상단바 테두리 없애기 */
-        .btn {
-            border: 0px;
-            padding: 10;
-        }
-       
-         /* id가 있으면=로그인 상태=마이페이지 접근가능
-         
-         /* 로그인 전 후 화면 다름 시작 */
-        #main_tnb {
+        
+           /* 공통헤더에 있던 부분인데 css로 따로 빼면 적용이 안되서 reset에 포함 */
+        #main_tnb2 {
             position: absolute;
             top: 10px;
             bottom: 10px;
@@ -104,34 +37,24 @@
             width: 500px;
             height: 100px;
         }
-
-        #main_tnb>ul>li {
+		
+        #main_tnb2>ul>li {
             display: inline-block;
             padding: 5px;
-            /* border: 1px solid black; */
         }
-
-	<% if(user_id != null) %>
-	
-        /* OOO님 | 로그아웃 | 마이페이지 | 장바구니 | 최근본상품 */
-        #main_tnb li::after {
+      
+        /* 로그인 후: OOO님 | 로그아웃 | 마이페이지 | 장바구니 | 최근본상품 */
+        #main_tnb2 li::after {
             padding-left: 10px;
             content: "|";
         }
-        #main_tnb li:last-child::after {
+        #main_tnb2 li:last-child::after {
             padding-left: 10px;
             content: "";
         }
-         /* 로그인 전 후 화면 다름  끝*/
+         /* 공통헤더~reset에 포함  끝*/
 
-        #search_icon a {
-            position: absolute;
-            top: 10px;
-            right: 50px;
-            margin: 15px;
-            width: 25px;
-            height: 25px;
-        }
+       
     </style>
     <style>
         /* content */
@@ -156,10 +79,30 @@
         .coupon td {
             padding: 0 100px 5px 0;
         }
-        #order_info tr:first-child>td {
+         #order_info tr:first-child>td {
             font-size: 50px;
-            padding: 20px;
+            padding: 45px;
         }
+        #order_info tr:nth-child(2)>td{
+            text-align: center;
+            padding: 0 20px 0 20px;
+         }
+         /* 취소/교환/반품 */
+         #delivery_info > li{
+            position: relative;
+            top:20px;
+            display: inline-block;
+            border: 1px solid #BDBDBD;
+            padding: 10px 50px;
+         }
+          .recent_product{
+             position: relative;
+             top: 40px
+         }
+         .recent_product > img {
+             width: 200px;
+             height: 200px;
+         }
     </style>
 </head>
 
@@ -169,7 +112,7 @@
 <aside>
     <div id="side-menu">
         <ul>
-            <li><a href="#">마이페이지</a></li>
+            <li>마이페이지</li>
             <li><a href="#">주문/배송조회</a></li>
             <li><a href="#">취소/교환/반품</a></li>
             <li><a href="#">상품 후기</a></li>
@@ -179,7 +122,7 @@
     </div>
 </aside>
 <section>
-    <h1>ooo님 즐거운 쇼핑 되세요!</h1>
+    <h1><%= u.getUser_name() %>님 즐거운 쇼핑 되세요!</h1>
     <a href="#">회원정보 수정 ></a><hr>
 <table class="coupon">
     <tr>
@@ -200,7 +143,7 @@
     </tr>
 </table>
 <hr>
-<p>주문/배송</p>
+<h4>주문/배송</h4>
 <table id="order_info">
     <tr>
         <!-- 주문/배송조회에서 갯수 체크해서 불러오기 -->
@@ -217,7 +160,31 @@
         <td>배송완료</td>
     </tr>
 </table>
-
+<ul id="delivery_info">
+	<!-- 취소/교환/반품 -->
+<!-- 아래 0은 시범용(삭제예정) -->
+<li onclick="">
+    <span>취소:</span>
+    <span>0</span>
+    건
+</li>
+<li onclick="">
+    <span>교환:</span>
+    <span>0</span>
+    건
+</li>
+<li onclick="">
+    <span>반품:</span>
+    <span>0</span>
+    건
+</li>
+</ul>
+<h4 class="recent_product">최근 본 상품</h4>
+<div class="recent_product">
+    <img src="./images/01번 메인 841,500.jpg">
+    <img src="./images/1번 메인.jpg">
+    <img src="./images/01번 메인_2.jpg">
+</div>
 </section>
 
 <footer>
