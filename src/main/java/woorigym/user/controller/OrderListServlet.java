@@ -1,11 +1,17 @@
 package woorigym.user.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import woorigym.user.model.service.OrderService;
+import woorigym.user.model.vo.OrderTable;
 
 /**
  * Servlet implementation class OrderListServlet
@@ -26,7 +32,13 @@ public class OrderListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		PrintWriter out = response.getWriter();
+		String user_id = request.getParameter("id");
 		String viewPage = "/WEB-INF/orderlist.jsp";
+		
+		ArrayList<OrderTable> volist = new OrderService().readOrderListAll(user_id);
+		request.setAttribute("orderlist", volist);
 		request.getRequestDispatcher(viewPage).forward(request, response);
 	}
 

@@ -26,7 +26,7 @@ public class OrderTable {
 	private int coupon_discount;
 	private int order_payment;
 	private int order_method;
-	private String oerder_date;
+	private String order_date;
 	private String pay_state;
 	private String order_state;
 	private String arrive_date;
@@ -115,12 +115,12 @@ public class OrderTable {
 		this.order_method = order_method;
 	}
 
-	public String getOerder_date() {
-		return oerder_date;
+	public String getOrder_date() {
+		return order_date;
 	}
 
-	public void setOerder_date(String oerder_date) {
-		this.oerder_date = oerder_date;
+	public void setOrder_date(String order_date) {
+		this.order_date = order_date;
 	}
 
 	public String getPay_state() {
@@ -160,7 +160,7 @@ public class OrderTable {
 		return "OrderTable [order_no=" + order_no + ", user_id=" + user_id + ", address_no=" + address_no
 				+ ", order_memo=" + order_memo + ", order_total=" + order_total + ", order_cost=" + order_cost
 				+ ", point_discount=" + point_discount + ", coupon_discount=" + coupon_discount + ", order_payment="
-				+ order_payment + ", order_method=" + order_method + ", oerder_date=" + oerder_date + ", pay_state="
+				+ order_payment + ", order_method=" + order_method + ", order_date=" + order_date + ", pay_state="
 				+ pay_state + ", order_state=" + order_state + ", arrive_date=" + arrive_date + ", add_mileage="
 				+ add_mileage + "]";
 	}
