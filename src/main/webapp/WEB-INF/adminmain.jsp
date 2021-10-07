@@ -11,20 +11,32 @@
 <head>
 <meta charset="UTF-8">
 <title>관리자 메인 페이지</title>
+<style>
+	#table1 td {
+		width:1000px;
+		height:1000px;
+	}
+</style>
 </head>
 <body>
-<table border = "1">
+<table border = "1" id="table1">
 		<tr>
 			<td>상품번호</td>
-		<tr>
+		</tr>
 <%
 		if(volist != null){
 			for(ProductTable vo : volist){
-			//tr이 volist 갯수 만큼 생기게 됨.
-%>
+%>			
 			<tr>
-				<%=vo.getProductName()%>
-			<tr>
+			<td><%=vo.getProductNo()%></td>
+			<td><%=vo.getProductName()%></td>
+			<td><%=vo.getParentCategory()%></td>
+			<td><%=vo.getChildCategory()%></td>
+			<td><%=vo.getQuantity()%></td>
+			<td><%=vo.getPrice()%></td>
+			<td><%=vo.getProductInfoUrl()%></td>
+			<td><%=vo.getProductOption()%></td>
+			</tr>
 <%
 			}
 		}
