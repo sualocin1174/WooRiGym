@@ -48,7 +48,7 @@ u : <%=u %>
 		 dataType : "json",
 		 success: function(data){
 			 if(data.result = "ok"){
-				 var text = " <li><a href="#">"+data.user_name+"님</a></li>"
+				 var text = " <li><a href='#'>"+data.user_name+"님</a></li>"
 			 } else{
 				 alert("로그인 상태가 아닙니다. 로그인 해주세요!"); 
 			 };
