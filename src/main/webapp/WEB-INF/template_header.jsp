@@ -18,8 +18,10 @@ u : <%=u %>
         </div>
   <%if (u == null){ %> <!-- 로그인 여부 확인 -->
         <span id="main_tnb1" class="tnb">
-         <button type="button" id="btnLogin">로그인</button>
-         <button type="button">최근본상품</button>
+        <ul>
+                <li><a href="<%=ctxPath %>/login" id="btnLogin">로그인</a></li>
+                <li><a href="#">최근본상품</a></li>
+            </ul>
         </span>
         <% } else { %> 
         <div id="main_tnb2" class="tnb">
