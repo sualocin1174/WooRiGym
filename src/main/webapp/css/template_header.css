@@ -1,108 +1,144 @@
 @charset "UTF-8";
-        header {
-            width: 1200px;
-            /* margin: 0 auto; */
-            /* margin-right: 0;; */
-            height: 160px;
-            position: relative;
-            padding: 30px;
-        }
-        a {
-            color:#BDBDBD;
-            text-decoration: none;
-        }
-        a:link{
-            text-decoration: none;
-        }
-        a:hover {
-            color: #333;
-            text-decoration: none;
-        }
-        ul {
-            list-style-type: none;
-            position: relative;
-        }
-        
-        #nav.container {
-            text-align: center;
-            padding: 15px;
-            width: 1200px;
-            height: 62px;
-        }
-        
-        #nav li{
-            display: inline-block;
-            padding: 0px 15px;
-        }
-        
-        /* 마우스 오버 시 하위메뉴 노출 */
-        #nav .dropdown:hover .dropdown-menu{
-            display: inline-block;
-            /* margin: 0; */
-            /* width: 100%; */
-        }
-    
-        
-        /* 상단바 가로 정렬 */
-        .dropdown {
-            display: inline-block;
-            position: relative;
-            /* top: 10px; */
-        }
-      
-        /* 상단바 테두리 없애기 */
-        .btn{
-            border:0px;
-            padding: 10px;
-        }
-        
-           /* 로그인 전 후 CSS 다름 시작 */
-        #main_tnb1 {
-            position: absolute;
-            top: 10px;
-            bottom: 10px;
-            right: 70px;
-            margin: 10px;
-            overflow: hidden;
-            width: 180px;
-            height: 100px;
-        }  
-         /* 공통헤더에 있던 부분인데 css로 따로 빼면 적용이 안되서 reset에 포함 */
-        #main_tnb2 {
-            position: absolute;
-            top: 10px;
-            bottom: 10px;
-            right: 30px;
-            margin: 10px;
-            overflow: hidden;
-            width: 500px;
-            height: 100px;
-        }
-		
-        #main_tnb2>ul>li {
-            display: inline-block;
-            padding: 5px;
-        }
-       
-		 /* 로그인 전: 로그인 | 최근본상품 */
-       
-        /* 로그인 후: OOO님 | 로그아웃 | 마이페이지 | 장바구니 | 최근본상품 */
-        #main_tnb2 li::after {
-            padding-left: 10px;
-            content: "|";
-        }
-        #main_tnb2 li:last-child::after {
-            padding-left: 10px;
-            content: "";
-        }
-         /* 로그인 전 후 CSS 다름  끝*/
-         /* 공통헤더~reset에 포함  끝*/
+ /* reset */
+  * {
+     margin:0; 
+     padding:0;
+   }
+   
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
 
-        #search_icon a {
-            position: absolute;
-            top: 10px;
-            right: 50px;
-            margin: 15px;
-            width: 25px;
-            height: 25px;
-        }
+header {
+	width: 1200px;
+	/* margin: 0 auto; */
+	/* margin-right: 0;; */
+	height: 160px;
+	position: relative;
+	padding: 30px;
+}
+
+a {
+	color: #BDBDBD;
+	text-decoration: none;
+}
+
+a:link {
+	text-decoration: none;
+}
+
+a:hover {
+	color: #333;
+	text-decoration: none;
+}
+
+.navbar {
+  overflow: hidden;
+  background-color: white; 
+}
+
+.navbar a {
+  float: left;
+  font-size: 16px;
+  color: 333;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.subnav {
+  float: left;
+  overflow: hidden;
+}
+
+.subnav .subnavbtn {
+  font-size: 16px;  
+  border: none;
+  outline: none;
+  color: #333;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.navbar a:hover, .subnav:hover .subnavbtn {
+  background-color: rgb(129, 128, 128);
+  cursor: pointer;
+}
+
+.subnav-content {
+  display: none;
+  position: absolute;
+  left: 0;
+  background-color: white;
+  width: 100%;
+  z-index: 1;
+}
+
+.subnav-content a {
+  float: left;
+  color: black;
+  text-decoration: none;
+}
+
+.subnav-content a:hover {
+  background-color: #eee;
+  color: black;
+}
+
+.subnav:hover .subnav-content {
+  display: block;
+}
+
+/* 로그인 전 후 CSS 다름 시작 */
+#main_tnb1 {
+	position: absolute;
+	top: 10px;
+	bottom: 10px;
+	right: 70px;
+	margin: 10px;
+	overflow: hidden;
+	width: 180px;
+	height: 100px;
+}
+/* 공통헤더에 있던 부분인데 css로 따로 빼면 적용이 안되서 reset에 포함 */
+#main_tnb2 {
+	position: absolute;
+	top: 10px;
+	bottom: 10px;
+	right: 30px;
+	margin: 10px;
+	overflow: hidden;
+	width: 500px;
+	height: 100px;
+}
+
+#main_tnb2>ul>li {
+	display: inline-block;
+	padding: 5px;
+}
+
+/* 로그인 전: 로그인 | 최근본상품 */
+
+/* 로그인 후: OOO님 | 로그아웃 | 마이페이지 | 장바구니 | 최근본상품 */
+#main_tnb2 li::after {
+	padding-left: 10px;
+	content: "|";
+}
+
+#main_tnb2 li:last-child::after {
+	padding-left: 10px;
+	content: "";
+}
+/* 로그인 전 후 CSS 다름  끝*/
+/* 공통헤더~reset에 포함  끝*/
+#search_icon a {
+	position: absolute;
+	top: 10px;
+	right: 50px;
+	margin: 15px;
+	width: 25px;
+	height: 25px;
+}

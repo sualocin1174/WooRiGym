@@ -19,9 +19,10 @@ public class EncodingFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-//		서블릿마다 아래 2줄 안 써도 되게 해주는 필터!
+//		서블릿마다 아래 3줄 안 써도 되게 해주는 필터!
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
 		chain.doFilter(request, response);		
 	}
 

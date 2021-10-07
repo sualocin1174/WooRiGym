@@ -1,10 +1,13 @@
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_header.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <!-- 헤더 CSS -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import = "woorigym.user.model.vo.UserTable" %>
 <%@page import="java.util.ArrayList"%>
   <%
-  String user_id = (String)request.getAttribute("user_id");
+  String user_name = (String)request.getAttribute("user_name");
   %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -17,8 +20,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-     <!-- 헤더 CSS -->
-     <link rel="stylesheet" type="text/css" href="css/template_header.css"/>
     <style>
         /* reset */
         * {
@@ -113,7 +114,7 @@
     <div id="side-menu">
         <ul>
             <li>마이페이지</li>
-            <li><a href="#">주문/배송조회</a></li>
+            <li><a href="<%=request.getContextPath()%>/orderlist">주문/배송조회</a></li>
             <li><a href="#">취소/교환/반품</a></li>
             <li><a href="#">상품 후기</a></li>
             <li><a href="#">쿠폰 관리</a></li>
@@ -123,6 +124,7 @@
 </aside>
 <section>
     <h1><%= u.getUser_name() %>님 즐거운 쇼핑 되세요!</h1>
+    <!-- ${user_name}는 이름출력안됨. -->
     <a href="#">회원정보 수정 ></a><hr>
 <table class="coupon">
     <tr>

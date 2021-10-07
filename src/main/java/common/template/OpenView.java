@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class OpenView
  */
-@WebServlet("/join") //template_header 확인용  
+@WebServlet("/OpenView") //jsp 확인용! url수정XX 크롬에서 새로고침 
 public class OpenView extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -19,14 +19,14 @@ public class OpenView extends HttpServlet {
      */
     public OpenView() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String viewPage = "/WEB-INF/join.jsp";
+		String viewPage = "/WEB-INF/index.jsp";
+		//확인하고 싶은 jsp 경로만 수정하고 새로고침하면 됩니다.
 		request.getRequestDispatcher(viewPage).forward(request, response);
 	}
 
@@ -34,7 +34,6 @@ public class OpenView extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

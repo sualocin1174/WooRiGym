@@ -5,8 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import woorigym.common.jdbcTemplate;
-import woorigym.user.model.vo.OrderTable;
+import static woorigym.common.jdbcTemplate.*;
 import woorigym.user.model.vo.UserTable;
 
 public class MypageDao {
@@ -30,16 +29,13 @@ public class MypageDao {
 			e.printStackTrace();
 		} finally {
 			try {
-				jdbcTemplate.close(rset);
-				jdbcTemplate.close(pstmt);
+				close(rset);
+				close(pstmt);
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
 		}
 		return vo;
 	}
-	public ArrayList<UserTable> readOrderListAll(Connection conn){
-		ArrayList<UserTable> volist = null;
-		return volist;
-	}
+	
 }
