@@ -1,4 +1,9 @@
+<%@page import="woorigym.product.model.vo.ProductTable"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+	ArrayList<ProductTable> volist = (ArrayList<ProductTable>)request.getAttribute("productvolist");
+%>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -181,70 +186,71 @@
                 <img src='./images/검색_돋보기.png' alt="검색" width="18px"/><br>
             </a>
         </div>
-        <div id="searchmenu">
-        	<ul>
-        		<li>카테고리</li>
-        		<li>카테고리목록</li>
-        		<li>순위별</li>
-        		<li>순위별목록</li>
-        		<li>최소금액</li>
-        		<li>최대금액</li>
-        		<li>키워드검색텍스트박스</li>
-        		<li>검색</li>
-        	</ul>
-        </div>
     </header>
     <section>
         <div class="container">
-            <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                <!-- Indicators -->
-                <ol class="carousel-indicators">
-                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                    <li data-target="#myCarousel" data-slide-to="1"></li>
-                    <li data-target="#myCarousel" data-slide-to="2"></li>
-                </ol>
-                
-                <!-- Wrapper for slides -->
-             <!--    <div class="carousel-inner">
-                    <div class="item active">
-                        <img src='./images/메인_샘플1.jpg' alt="메인사진1" style="width:100%;"/><br>
-                    </div>
-                    
-                    <div class="item">
-                        <img src='./images/메인_샘플2.jpg' alt="메인사진2" style="width:100%;"/><br>
-                    </div>
-                    
-                    <div class="item">
-                        <img src='./images/메인_샘플3.jpg' alt="메인사진3" style="width:100%;"/><br>
-                    </div>
-                </div> -->
-                
-                <!-- Left and right controls -->
-                <!-- <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                    <span class="glyphicon glyphicon-chevron-right"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-        </div>
-        <div id="main_bnb">
-            <ul>
-                <li><a href="#">신상품</a></li>
-                <li><a href="#">인기상품</a></li>
-                <li><a href="#">타임세일</a></li>
-            </ul>
-        </div> -->
-        <div id="main_img">
-            <a href="#"><img src='./images/01번 메인 306,000.jpg' /><br></a>
-            <a href="#"><img src='./images/01번 메인 841,500.jpg' /><br></a>
-            <a href="#"><img src='./images/1번 메인.jpg' /><br></a>
-            <a href="#"><img src='./images/01번 메인_2.jpg' /><br></a>
-        </div>
+			<div id="searchmenu">
+				<div class="rank">
+					<button class="" type="button" data-toggle="dropdown">
+					<span class="caret">순위</span>
+					</button>
+					<ul class="dropdown-menu">
+						<li><a href="#">전체</a></li>
+						<li><a href="#">스미스짐 패키지</a></li>
+						<li><a href="#">멀티짐 패키지</a></li>
+						<li><a href="#">멀티랙 패키지</a></li>
+						<li><a href="#">벤치 패키지</a></li>
+						<li><a href="#">벤치프레스 패키지</a></li>
+						<li><a href="#">웨이트리프팅 패키지</a></li>
+					</ul>
+				</div>
+				<form> <!-- 2021.10.07 추가 -->
+					<div class = "price_box">
+						<input type="text" class="text" name = "minprice[]" placeholder="최소금액">
+						<span> ~ </span>
+						<input type="text" class="text" name = "maxprice[]" placeholder="최대금액">
+						<span>원</span>
+					</div>
+					<div class="keyword-div">
+						<input type = "text" name = "keyword" class = "keyword_input" id = "keyword_input">
+						<input type = "button" class = "searchBtn" id = "searchBtn" value = "검색"> <!-- 2021.10.07 추 -->
+					</div>
+				</form> <!-- 2021.10.07 추가 -->
+				<!-- <button type="submit" class="btn_search">검색</button>  2021.10.07 삭제-->
+			</div>
+		</div>
     </section>
     <footer></footer>
+    <script>
+    /* 2021-10-07 수정 */
+    	$("#searchBtn").click( function () {
+			if($("#keyword_input").val() == "") {
+				alert("상품명을 검색창에 입력 후 검색버튼을 눌러주세요");
+				return;
+			}
+			$.ajax({
+				type:"post",
+				url:"<%=request.getContextPath()%>/slist.ajax",
+				data: {
+					productName : "육각아령",
+					parentCategory: "", 
+					childCategory: "",
+					minPrice: 1000,
+					maxPrice: 1000000
+					// TODO: 순위, 인기... 
+				},
+				success: function(data){
+					console.log(data);
+					alert("aaa");
+				},
+				error : function(request,status,error) {
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+
+					"\n"+"error:"+error);
+					}
+			});
+		});
+    	/* 2021-10-07 수정완료 */
+    </script>
 </body>
 
 </html>

@@ -9,16 +9,105 @@ import woorigym.common.jdbcTemplate;
 import woorigym.product.model.vo.ProductTable;
 
 public class SearchListDao {
+
+	// 2021-10-07 추가
+	public ArrayList<ProductTable> productSearch(Connection conn, ProductTable searchKeyVo) {
+		System.out.println("productSearch 1");
+		System.out.println(searchKeyVo);
+
+		ArrayList<ProductTable> productlist = null;
+		String sql = "select product_info_url, product_name, product_option, price" + " from product ";
+
+		String productName = searchKeyVo.getProductName();
+		String parentCategory = searchKeyVo.getParentCategory();
+		String childCategory = searchKeyVo.getChildCategory();
+		int minPrice = searchKeyVo.getMinPrice();
+		int maxPrice = searchKeyVo.getMaxPrice();
+		boolean flag = false;
+
+		if (productName != null && !productName.equals("")) {
+			if (!flag) {
+				sql += " where ";
+				flag = true;
+			} else {
+				sql += " and ";
+			}
+			sql += " product_name like '%" + productName + "%'";
+		}
+		if (parentCategory != null && !parentCategory.equals("")) {
+			if (!flag) {
+				sql += " where ";
+				flag = true;
+			} else {
+				sql += " and ";
+			}
+			sql += " parent_category like '%" + parentCategory + "%'";
+		}
+		if (childCategory != null && !childCategory.equals("")) {
+			if (!flag) {
+				sql += " where ";
+				flag = true;
+			} else {
+				sql += " and ";
+			}
+			sql += " child_category like '%" + childCategory + "%'";
+		}
+		if (minPrice >= 0 || maxPrice >= 0) {
+			if (!flag) {
+				sql += " where ";
+				flag = true;
+			} else {
+				sql += " and ";
+			}
+			sql += " price between " + minPrice + " and " + maxPrice;
+		}
+		System.out.println(sql);
+
+		//
+		PreparedStatement pstmt = null;
+		ResultSet rest = null;
+		try {
+			System.out.println("productSearch executeQuery 1");
+			pstmt = conn.prepareStatement(sql);
+			rest = pstmt.executeQuery();
+			System.out.println("productSearch executeQuery 2");
+			if (rest.next()) {
+				System.out.println("productSearch executeQuery over 1");
+				productlist = new ArrayList<ProductTable>();
+				do {
+					ProductTable vo = new ProductTable();
+					vo.setProductInfoUrl(rest.getString("product_info_url"));
+					vo.setProductName(rest.getString("product_name"));
+					vo.setProductOption(rest.getString("product_option"));
+					vo.setPrice(rest.getInt("price"));
+					productlist.add(vo);
+					System.out.println("productSearch executeQuery over 1++");
+				} while (rest.next());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			jdbcTemplate.close(rest);
+			jdbcTemplate.close(pstmt);
+		}
+		System.out.println("productlist 2" + productlist);
+		return productlist;
+	}
+	// 2021-10-07 추가완
+
+	// TODO
 	public ArrayList<ProductTable> productSearch(Connection conn, String productName) {
 		ArrayList<ProductTable> productlist = null;
-//		String product_name = null;
-		String sql = "select * from product where product_name like '% ? %'";
+		String sql = "select product_info_url, product_name, product_option, price"
+				+ " from product where product_name like '% ? %'";
+		// ?는 searchpage.jsp에서 텍스트를 입력받아와야함
 		PreparedStatement pstmt = null;
 		ResultSet rest = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, productName);
 			rest = pstmt.executeQuery();
+			productlist = new ArrayList<ProductTable>();
 			if(rest.next()) {
 				productlist = new ArrayList<ProductTable>();
 				do {
@@ -37,6 +126,155 @@ public class SearchListDao {
 			jdbcTemplate.close(rest);
 			jdbcTemplate.close(pstmt);
 		}
+		System.out.println("productlist 리턴은 " + productlist);
 		return productlist;
 	}
+
+	// 2021-10-07 추가
+	// 가격 범위 검색 메소드
+	public ArrayList<ProductTable> priceSearch(Connection conn, int minprice, int maxprice) {
+		ArrayList<ProductTable> productlist = null;
+		String sql = "select product_info_url, product_name, product_option, price"
+				+ " from product where price between ? and ?";
+		// ?는 searchpage.jsp에서 숫자를 입력받아와야함(첫번째는 최소금액 두번째는 최대금액 숫자로 입력한걸 받아와야함)
+		PreparedStatement pstmt = null;
+		ResultSet rest = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, minprice);
+			pstmt.setInt(1, maxprice);
+			rest = pstmt.executeQuery();
+			productlist = new ArrayList<ProductTable>();
+			if(rest.next()) {
+				productlist = new ArrayList<ProductTable>();
+				do {
+					ProductTable vo = new ProductTable();
+					vo.setProductInfoUrl(rest.getString("product_info_url"));
+					vo.setProductName(rest.getString("product_name"));
+					vo.setProductOption(rest.getString("product_option"));
+					vo.setPrice(rest.getInt("price"));
+					productlist.add(vo);
+				} while(rest.next());
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			jdbcTemplate.close(rest);
+			jdbcTemplate.close(pstmt);
+		}
+		System.out.println("productlist 리턴은 " + productlist);
+		return productlist;
+	}
+	
+	// 인기(주문)순위별 검색 메소드
+	public ArrayList<ProductTable> buyRankSearch(Connection conn) {
+		ArrayList<ProductTable> productlist = null;
+		String sql = "select p.product_info_url, p.product_name, p.product_option, p.price, p.product_no, count(o.buy_quantity)"
+				+ " from product p join order_detail o"
+				+ " on p.product_no = o.product_no"
+				+ " group by p.product_info_url, p.product_name, p.product_option, p.price, p.product_no"
+				+ " order by count(o.buy_quantity) desc";
+		PreparedStatement pstmt = null;
+		ResultSet rest = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rest = pstmt.executeQuery();
+			productlist = new ArrayList<ProductTable>();
+			if(rest.next()) {
+				productlist = new ArrayList<ProductTable>();
+				do {
+					ProductTable vo = new ProductTable();
+					vo.setProductInfoUrl(rest.getString("product_info_url"));
+					vo.setProductName(rest.getString("product_name"));
+					vo.setProductOption(rest.getString("product_option"));
+					vo.setPrice(rest.getInt("price"));
+					productlist.add(vo);
+				} while(rest.next());
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			jdbcTemplate.close(rest);
+			jdbcTemplate.close(pstmt);
+		}
+		System.out.println("productlist 리턴은 " + productlist);
+		return productlist;
+	}
+	
+	// 평점순위별 검색 메소드
+			public ArrayList<ProductTable> scoreRankSearch(Connection conn) {
+				ArrayList<ProductTable> productlist = null;
+				String sql = "select p.product_info_url, p.product_name, p.product_option, p.price, p.product_no, sum(r.score)"
+						+ " from product p inner join order_detail o"
+						+ " on p.product_no = o.product_no"
+						+ " inner join review r"
+						+ " on o.order_detail_no = r.order_detail_no"
+						+ " group by p.product_info_url, p.product_name, p.product_option, p.price, p.product_no"
+						+ " order by sum(r.score) desc";
+				PreparedStatement pstmt = null;
+				ResultSet rest = null;
+				try {
+					pstmt = conn.prepareStatement(sql);
+					rest = pstmt.executeQuery();
+					productlist = new ArrayList<ProductTable>();
+					if(rest.next()) {
+						productlist = new ArrayList<ProductTable>();
+						do {
+							ProductTable vo = new ProductTable();
+							vo.setProductInfoUrl(rest.getString("product_info_url"));
+							vo.setProductName(rest.getString("product_name"));
+							vo.setProductOption(rest.getString("product_option"));
+							vo.setPrice(rest.getInt("price"));
+							productlist.add(vo);
+						} while(rest.next());
+					}
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					jdbcTemplate.close(rest);
+					jdbcTemplate.close(pstmt);
+				}
+				System.out.println("productlist 리턴은 " + productlist);
+				return productlist;
+			}
+	
+	// 카테고리별 검색 메소드
+		public ArrayList<ProductTable> categorySearch(Connection conn) {
+			ArrayList<ProductTable> productlist = null;
+			String sql = "select product_info_url, product_name, product_option, price"
+					+ " from product"
+					+ " where parent_category like ' ? '";
+			// ?는 searchpage.jsp에서 선택된 옵션값을 받아와야함
+			PreparedStatement pstmt = null;
+			ResultSet rest = null;
+			try {
+				pstmt = conn.prepareStatement(sql);
+				rest = pstmt.executeQuery();
+				productlist = new ArrayList<ProductTable>();
+				if(rest.next()) {
+					productlist = new ArrayList<ProductTable>();
+					do {
+						ProductTable vo = new ProductTable();
+						vo.setProductInfoUrl(rest.getString("product_info_url"));
+						vo.setProductName(rest.getString("product_name"));
+						vo.setProductOption(rest.getString("product_option"));
+						vo.setPrice(rest.getInt("price"));
+						productlist.add(vo);
+					} while(rest.next());
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				jdbcTemplate.close(rest);
+				jdbcTemplate.close(pstmt);
+			}
+			System.out.println("productlist 리턴은 " + productlist);
+			return productlist;
+		}
+	// 2021-10-07 추가완료
+	
 }

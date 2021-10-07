@@ -1,6 +1,7 @@
 package woorigym.search.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -9,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import woorigym.common.Command;
 import woorigym.product.model.vo.ProductTable;
 import woorigym.search.model.service.SearchListService;
@@ -16,7 +20,7 @@ import woorigym.search.model.service.SearchListService;
 /**
  * Servlet implementation class SearchListServlet
  */
-@WebServlet("/slist")
+@WebServlet("/slist.ajax")
 public class SearchListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -28,44 +32,48 @@ public class SearchListServlet extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		actionDo(request, response);
-	}
-		
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+//		request.setCharacterEncoding("UTF-8");
+//		response.setCharacterEncoding("UTF-8");
+//		response.setContentType("text/html; charset=UTF-8");
+
+		// 2021-10-07 수정
+		PrintWriter out = response.getWriter();
+		
+		String productName = request.getParameter("productName");
+		String parentCategory = request.getParameter("parentCategory");
+		String childCategory = request.getParameter("childCategory");
+		String minPriceStr = request.getParameter("minPrice");
+		String maxPriceStr = request.getParameter("maxPrice");
+		int minPrice = -1;
+		int maxPrice = -1;
+		
+		try {
+			minPrice = Integer.parseInt(minPriceStr);
+			maxPrice = Integer.parseInt(maxPriceStr);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		ProductTable searchKeyVo = new ProductTable();
+		if(productName != null && !productName.equals(""))	searchKeyVo.setProductName(productName);
+		if(parentCategory != null && !parentCategory.equals(""))   searchKeyVo.setParentCategory(parentCategory);
+		if(childCategory != null && !childCategory.equals(""))   searchKeyVo.setChildCategory(childCategory);
+		searchKeyVo.setMinPrice(minPrice);
+		searchKeyVo.setMaxPrice(maxPrice);
+		
+		ArrayList<ProductTable> productlist = new SearchListService().productSearch(searchKeyVo);
+		request.setAttribute("productlist", productlist);
+		Gson gson = new GsonBuilder().create();
+		String jsonListVo = gson.toJson(productlist);
+		out.print(jsonListVo);
+		out.flush();
+		out.close();
 	}
-	protected void actionDo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8");
-		
-		String viewPage = null;
-		Command cmd = null;
-		String uri = request.getRequestURI();
-		String contextPath = request.getContextPath();
-		String com = uri.substring(contextPath.length());
-		System.out.println(uri);
-		System.out.println(contextPath);
-		System.out.println(com);
-		
-		viewPage = "/WEB-INF/index.jsp";
-		
-		request.getRequestDispatcher(viewPage).forward(request, response);
-		
-//		String productName = request.getParameter("product_name");
-		
-//		ArrayList<ProductTable> productlist = new SearchListService().productSearch(productName);
-//		response.getWriter().append(productName+"상품이 조회되었습니다.");
-		
-	}
+	// 2021-10-07 수정완료
 
 }

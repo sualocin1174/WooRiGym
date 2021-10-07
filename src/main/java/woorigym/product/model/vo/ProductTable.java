@@ -21,7 +21,22 @@ public class ProductTable {
 	private String productInfoUrl;
 	private String productOption;
 	
+	// 2021-10-07 추가
+	// for Search
+	private int minPrice;
+	private int maxPrice;
+	// 2021-10-07 추가완료
 	
+	// 2021-10-07 수정
+	@Override
+	public String toString() {
+		return "ProductTable [productNo=" + productNo + ", productName=" + productName + ", parentCategory="
+				+ parentCategory + ", childCategory=" + childCategory + ", quantity=" + quantity + ", price=" + price
+				+ ", productInfoUrl=" + productInfoUrl + ", productOption=" + productOption + ", minPrice=" + minPrice
+				+ ", maxPrice=" + maxPrice + "]";
+	}
+	// 2021-10-07 수정완료
+
 
 	public String getProductNo() {
 		return productNo;
@@ -117,18 +132,29 @@ public class ProductTable {
 		this.productOption = productOption;
 	}
 
-
-
-	@Override
-	public String toString() {
-		return "ProductTable [productNo=" + productNo + ", productName=" + productName + ", parentCategory="
-				+ parentCategory + ", childCategory=" + childCategory + ", quantity=" + quantity + ", price=" + price
-				+ ", productInfoUrl=" + productInfoUrl + ", productOption=" + productOption + "]";
+	
+	// 2021-10-07 추가
+	public int getMinPrice() {
+		return minPrice;
 	}
 
 
 
-	public static void main(String[] args) {
+	public void setMinPrice(int minPrice) {
+		this.minPrice = minPrice;
 	}
+
+
+
+	public int getMaxPrice() {
+		return maxPrice;
+	}
+
+
+
+	public void setMaxPrice(int maxPrice) {
+		this.maxPrice = maxPrice;
+	}
+	// 2021-10-07 추가완료
 
 }
