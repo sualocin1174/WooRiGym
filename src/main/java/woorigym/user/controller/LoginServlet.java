@@ -38,19 +38,19 @@ public class LoginServlet extends HttpServlet {
 		String user_id = request.getParameter("id");
 		String user_pwd = request.getParameter("pw");
 		
-		// login?id=gym11&pw=qw1234  ·Î±×ÀÎ È®ÀÎ
+		// login?id=gym11&pw=qw1234  ï¿½Î±ï¿½ï¿½ï¿½ È®ï¿½ï¿½
 		int result = new UserService().Login(user_id, user_pwd);
 		if(result == 1) {
 			request.getSession().setAttribute("LoginInfo", user_id);
-			out.print(user_id + "´Ô ·Î±×ÀÎ ¼º°øÇÏ¼Ì½À´Ï´Ù.");
+			out.print(user_id + "ë¡œê·¸ì¸ ì„±ê³µ");
 //			out.append("<p>aaa<p/>");
 //			request.getRequestDispatcher("/index.jsp").forward(request,response);
 		}
 		else if(result == 0) {
-			out.print("ºñ¹Ğ¹øÈ£ ºÒÀÏÄ¡");
+			out.print("ë¹„ë°€ë²ˆí˜¸ ë¶ˆì¼ì¹˜");
 		}
 		else {
-			out.print("¾ÆÀÌµğ°¡ ¾ø½À´Ï´Ù.");
+			out.print("ì•„ì´ë””ê°€ ì—†ìŠµë‹ˆë‹¤");
 		}
 	}
 
