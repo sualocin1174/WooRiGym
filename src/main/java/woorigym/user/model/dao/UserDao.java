@@ -3,6 +3,7 @@ package woorigym.user.model.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import woorigym.common.*;
 import woorigym.user.model.vo.UserTable;
@@ -13,42 +14,66 @@ public class UserDao {
 		// TODO Auto-generated constructor stub
 	}
 	public int login(Connection conn, String user_id, String user_pwd) {
-		int result = 0; // ·Î±×ÀÎ ½ÇÆĞ : 0
 		String sql ="select user_pwd from member where user_id = ?";
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		System.out.println("·Î±×ÀÎ dao ÁøÀÔ");
+		System.out.println("ë¡œê·¸ì¸ dao ì§„ì…");
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, user_id);
 			rset = pstmt.executeQuery();
 			if(rset.next()) {
 				if(rset.getString(1).equals(user_pwd)) {
-					System.out.println("¼º°ø");
-					return 1; // ·Î±×ÀÎ ¼º°ø
+					System.out.println("ë¡œê·¸ì¸ ì„±ê³µ");
+					return 1; // ë¡œê·¸ì¸ ì„±ê³µ
 				}
 				else {
-					System.out.println("ºñ¹Ğ¹øÈ£ ºÒÀÏÄ¡");
-					return 0; //ºñ¹Ğ¹øÈ£ ºÒÀÏÄ¡
+					System.out.println("ë¹„ë°€ë²ˆí˜¸ ë¶ˆì¼ì¹˜");
+					return 0; //ë¹„ë°€ë²ˆí˜¸ ë¶ˆì¼ì¹˜
 				}
 			}
-			System.out.println("¾ÆÀÌµğ ¾øÀ½");
-			return -1; //¾ÆÀÌµğ°¡ ¾øÀ½
+			System.out.println("ì•„ì´ë””ê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤");
+			return -1; //ì•„ì´ë”” ì—†ìŒ
 		}catch(Exception e) {
 			e.printStackTrace();
 		} finally {
 			jdbcTemplate.close(rset);
 			jdbcTemplate.close(pstmt);
 		}
-		return -2; //µ¥ÀÌÅÍ º£ÀÌ½º ¿À·ù
+		return -2; //ë°ì´í„° ë² ì´ìŠ¤ ì—ëŸ¬
 	}
 	
 	public int userInsert(Connection conn, UserTable user) {
 		int result = 0;
-		String sql ="insert into user values(?,?,?,?,?,?,?,?,?,?,?)";
+//TODO
+		String tempDate = "2021/05/31";
+		String sql ="insert into member values(?, ?, ?, ?, ?, ?, to_date('"+tempDate+"','yyyy/mm/dd'), ?, to_date(? ,'yyyy/mm/dd'), ?, ?)";
+//		String sql ="insert into user values(?, ?, ?, ?, ?, ?, sysdate, ?, to_date(? ,'yyyy/mm/dd'), ?, ?)";
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		return result;
+		System.out.println("íšŒì›ê°€ì… dao ì§„ì…");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, user.getUser_id());
+			pstmt.setString(2, user.getUser_pwd());
+			pstmt.setString(3, user.getUser_name());
+			pstmt.setString(4, user.getEmail());
+			pstmt.setInt(5, user.getEmail_yn());
+			pstmt.setString(6, user.getPhone());
+			pstmt.setInt(7, user.getMileage());
+			pstmt.setString(8, user.getBirthday());
+			pstmt.setString(9, user.getIdentity_number());
+			pstmt.setInt(10, user.getGender());
+			
+			return pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			jdbcTemplate.close(rset);
+			jdbcTemplate.close(pstmt);
+		}
+		System.out.println("ë°ì´í„° ë² ì´ìŠ¤ ì˜¤ë¥˜");
+		return result; // ë°ì´í„°ë² ì´ìŠ¤ ì˜¤ë¥˜
 	}
 
 }

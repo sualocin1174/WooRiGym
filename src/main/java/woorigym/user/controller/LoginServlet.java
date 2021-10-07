@@ -33,18 +33,20 @@ public class LoginServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
-		UserService userservice = new UserService();
+//		UserService userservice = new UserService();
 		PrintWriter out = response.getWriter();
 		String user_id = request.getParameter("id");
 		String user_pwd = request.getParameter("pw");
 		
-		// login?id=gym11&pw=qw1234  �α��� Ȯ��
+		// login?id=gym11&pw=qw1234       -->   로그인 확인방법 (임시)
 		int result = new UserService().Login(user_id, user_pwd);
 		if(result == 1) {
 			request.getSession().setAttribute("LoginInfo", user_id);
-			out.print(user_id + "로그인 성공");
+			System.out.println(user_id + "로그인 성공");
 //			out.append("<p>aaa<p/>");
-//			request.getRequestDispatcher("/index.jsp").forward(request,response);
+//			response.sendRedirect("/web-inf/join.jsp");
+//			request.getRequestDispatcher("test.jsp").forward(request,response);
+			request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request,response);
 		}
 		else if(result == 0) {
 			out.print("비밀번호 불일치");
@@ -58,8 +60,7 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		
 	}
 
 }

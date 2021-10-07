@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class OpenView
  */
-@WebServlet("/OpenView") //template_header 확인용
+@WebServlet("/join") //template_header 확인용  
 public class OpenView extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -26,7 +26,7 @@ public class OpenView extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String viewPage = "/WEB-INF/template_header.jsp";
+		String viewPage = "/WEB-INF/join.jsp";
 		request.getRequestDispatcher(viewPage).forward(request, response);
 	}
 
