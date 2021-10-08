@@ -1,4 +1,4 @@
-package woorigym.admin.model.dao;
+package woorigym.product.model.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

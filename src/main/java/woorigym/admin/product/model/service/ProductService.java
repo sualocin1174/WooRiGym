@@ -3,8 +3,8 @@ package woorigym.admin.product.model.service;
 import java.sql.Connection;
 import java.util.ArrayList;
 
-import woorigym.admin.model.dao.ProductDao;
 import woorigym.common.jdbcTemplate;
+import woorigym.product.model.dao.ProductDao;
 import woorigym.product.model.vo.ProductTable;
 
 public class ProductService {
