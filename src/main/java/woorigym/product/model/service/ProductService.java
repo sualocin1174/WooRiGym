@@ -1,4 +1,4 @@
-package woorigym.admin.product.model.service;
+package woorigym.product.model.service;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -22,5 +22,4 @@ public class ProductService {
 		jdbcTemplate.close(conn);
 		return volist;
 	}
-	
 }

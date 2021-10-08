@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import woorigym.common.jdbcTemplate;
-import woorigym.product.model.vo.*;
+import woorigym.product.model.vo.ProductTable;
 
 public class ProductDao {
 
@@ -21,7 +21,7 @@ public class ProductDao {
 		ResultSet rset = null;
 		
 		try {
-			pstmt = conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement(sql); 
 			rset = pstmt.executeQuery();
 			volist = new ArrayList<ProductTable>();
 			System.out.println("product-1");
@@ -113,6 +113,32 @@ public class ProductDao {
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
+			jdbcTemplate.close(pstmt);
+		}
+		return result;
+	}
+	
+	public int checkDuplicatedProduct(Connection conn, ProductTable vo) {
+		int result =-1;
+		String sql = "select PRODUCT_NO from PRODUCT where PRODUCT_NO=?";
+		PreparedStatement pstmt= null;
+		ResultSet rset = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getProductNo());
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				result = 1;  //  기존 상품이 있으면
+				System.out.println("이미 상품이 존재합니다.");
+			} else {
+				result = 0;
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("오류 발생");
+			// 여기 -1
+		} finally {
+			jdbcTemplate.close(rset);
 			jdbcTemplate.close(pstmt);
 		}
 		return result;
