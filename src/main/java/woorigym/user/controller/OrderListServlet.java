@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import woorigym.user.model.service.OrderService;
+import woorigym.user.model.service.OrderListService;
 import woorigym.user.model.vo.OrderTable;
 
 /**
@@ -37,7 +37,7 @@ public class OrderListServlet extends HttpServlet {
 		String user_id = request.getParameter("id");
 		String viewPage = "/WEB-INF/orderlist.jsp";
 		
-		ArrayList<OrderTable> volist = new OrderService().readOrderListAll(user_id);
+		ArrayList<OrderTable> volist = new OrderListService().readOrderListAll(user_id);
 		request.setAttribute("orderlist", volist);
 		request.getRequestDispatcher(viewPage).forward(request, response);
 	}
