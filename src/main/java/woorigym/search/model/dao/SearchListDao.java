@@ -93,9 +93,10 @@ public class SearchListDao {
 		System.out.println("productlist 2" + productlist);
 		return productlist;
 	}
-	// 2021-10-07 추가완
+	// 2021-10-07 추가완료
 
 	// TODO
+	// 상품명검색 메소드
 	public ArrayList<ProductTable> productSearch(Connection conn, String productName) {
 		ArrayList<ProductTable> productlist = null;
 		String sql = "select product_info_url, product_name, product_option, price"

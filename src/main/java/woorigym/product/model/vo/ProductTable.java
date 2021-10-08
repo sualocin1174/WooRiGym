@@ -22,7 +22,7 @@ public class ProductTable {
 	private String productOption;
 	
 	// 2021-10-07 추가
-	// for Search
+	// for Search을 위한 추가로 eclipse에서는 사용하는 변수로 oracle DB에는 추가할 필요 없음(2021-10-08 1차 내용추가)
 	private int minPrice;
 	private int maxPrice;
 	// 2021-10-07 추가완료
