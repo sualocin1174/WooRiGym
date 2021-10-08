@@ -1,0 +1,82 @@
+.orderform{
+    margin-top: 30px;
+}
+#productinfo {
+    border: 0.5px solid rgb(223, 185, 185);
+    border-collapse: collapse;
+	border-right: 0px solid black;
+}
+
+#productinfo th {
+    background-color: rgb(243, 239, 234);
+    border-collapse: collapse;
+    border-right: 0px solid black;
+}
+
+
+#productinfo th, td {
+    border: 0.5px solid rgb(223, 185, 185);
+    border-collapse: collapse;
+    border-right: 0px solid black;
+}
+#cartinfo {
+    border: 0.5px solid rgb(223, 185, 185);
+    border-collapse: collapse;
+
+}
+
+#cartinfo th {
+    background-color: rgb(243, 239, 234);
+    border-collapse: collapse;
+}
+
+#cartinfo th, td {
+    border: 0.5px solid rgb(223, 185, 185);
+    border-collapse: collapse;
+}
+
+#userinfo {
+    border: 0.5px solid rgb(223, 185, 185);
+    border-collapse: collapse;
+
+}
+
+#userinfo th {
+    background-color: rgb(243, 239, 234);
+    border-collapse: collapse;
+}
+
+#userinfo th,td {
+    border: 0.5px solid rgb(223, 185, 185);
+    border-collapse: collapse;
+}
+#addressuinfo{
+    border: 0.5px solid rgb(223, 185, 185);
+    border-collapse: collapse;
+}
+#addressuinfo th {
+    background-color: rgb(243, 239, 234);
+    border-collapse: collapse;
+}
+
+#addressuinfo th, td {
+    border: 0.5px solid rgb(223, 185, 185);
+    border-collapse: collapse;
+}
+#payinfo{
+    border: 0.5px solid rgb(223, 185, 185);
+    border-collapse: collapse;
+}
+#payinfo th {
+    background-color: rgb(243, 239, 234);
+    border-collapse: collapse;
+}
+
+#payinfo th, td {
+    border: 0.5px solid rgb(223, 185, 185);
+    border-collapse: collapse;
+}
+ input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
