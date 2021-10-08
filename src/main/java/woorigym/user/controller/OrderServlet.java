@@ -51,13 +51,15 @@ public class OrderServlet extends HttpServlet {
 		//1. 로그인된 유저 아이디
 //		String userid = "gym11"; //일단 임의로 정함
 		UserTable user = (UserTable)request.getSession().getAttribute("user_id");
-		String userid = user.getUser_id();
-		System.out.println(user.getUser_id());
-		
+	
+		try {
+			String userid = user.getUser_id();
+			System.out.println(user.getUser_id());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		//장바구니 정보 가져오기
-		
-		
 		
 		request.getRequestDispatcher("/WEB-INF/order.jsp").forward(request, response);   
 		
