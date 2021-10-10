@@ -3,7 +3,7 @@
    <!-- 헤더 CSS -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import = "woorigym.user.model.vo.UserTable" %>
 <%@page import="java.util.ArrayList"%>
   <%
@@ -16,10 +16,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>우리짐 마이페이지 메인</title>
-    <!-- 부트스트랩 CDN -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <style>
         /* reset */
         * {
@@ -108,24 +104,17 @@
 </head>
 
 <body>
-<!-- 공통헤더 템플릿 -->
+	<!-- 공통헤더 템플릿 -->
  	<%@ include file="template_header.jsp"%>
-<aside>
-    <div id="side-menu">
-        <ul>
-            <li>마이페이지</li>
-            <li><a href="<%=request.getContextPath()%>/orderlist">주문/배송조회</a></li>
-            <li><a href="#">취소/교환/반품</a></li>
-            <li><a href="#">상품 후기</a></li>
-            <li><a href="#">쿠폰 관리</a></li>
-            <li><a href="#">상품 문의(Q&A)</a></li>
-        </ul>
-    </div>
-</aside>
+ 	<!--마이페이지 공통사이드 템플릿 -->
+ 	<c:import url="template_mypage_aside.jsp"/>
+ 	
 <section>
-    <h1><%= u.getUser_name() %>님 즐거운 쇼핑 되세요!</h1>
+  <c:if test="${user_id != null}">
+    <h1>${user_id.user_name }님 즐거운 쇼핑 되세요!</h1>
     <!-- ${user_name}는 이름출력안됨. -->
     <a href="#">회원정보 수정 ></a><hr>
+  </c:if>
 <table class="coupon">
     <tr>
         <td colspan="2"><a href="#">쿠폰</a></td>
@@ -133,15 +122,19 @@
     </tr>
     <tr>
         <td>보유 쿠폰</td>
-        <td>0장</td>
+        <td>0</td>
+        <td>장</td>
         <td>보유 적립금</td>
-        <td>0P</td>
+        <td>0</td>
+        <td>P</td>
     </tr>
     <tr>
         <td>소멸 예정 쿠폰</td>
-        <td>0장</td>
+        <td>0</td>
+        <td>장</td>
         <td>소멸 예정 적립금</td>
-        <td>0P</td>
+        <td>0</td>
+        <td>P</td>
     </tr>
 </table>
 <hr>

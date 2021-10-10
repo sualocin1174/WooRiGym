@@ -3,6 +3,11 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import = "woorigym.user.model.vo.OrderTable" %>
+<%@ page import = "woorigym.user.model.vo.OrderDetailTable" %>
+<%@ page import = "java.util.ArrayList"%>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -10,6 +15,59 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>마이페이지-주문/배송조회</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+    <script>
+  //페이지 로드 시 sysdate 기준 2주 이내의 주문내역 출력
+    window.onload = pageLoadedHandler;
+    function pageLoadedHandler(){
+       	// TODO
+    	//$("#start_date").val(1달전날짜);
+    	//$("#end_date").val(오늘날짜);
+    	$("#start_date").val("2021-08-01");
+    	$("#end_date").val("2021-10-01");
+    	
+    	$("#order_search").on("click", ajaxF1);
+    	ajaxF1();
+    }
+    function ajaxF1(){ //검색버튼 클릭 시
+    	// 유효성검사 해도되고 
+    	var startDate = $("#start_date").val();
+    	var endDate =  $("#end_date").val();
+    	console.log(startDate);
+    	console.log(endDate);
+    	$.ajax({
+    		type: "post",
+    		url: "<%=request.getContextPath()%>/orderlist",
+    		data: {
+    			startDate: startDate,
+    			endDate: endDate
+    		},
+    		dataType: "json", //전달받을 객체는 json이다.
+    		success: function(data){
+    			console.log(data);
+    			console.log(data.length);
+    			console.log(data[0].product_name);
+    			//TODO
+    			if(data!=null){
+    				var html = "";
+    				for(var i=0; i<data.length;i++){
+    					console.log(data[i]);
+	    				html+="<h4><a href='./orderDetail?order_no="+data[i].order_no+"'>"+data[i].order_no+"</a></h4>";
+	    				console.log(html);
+    					
+    				}
+    				var ol = data[0].product_name;
+        		    $("#order_search").html(ol);
+    			} else {
+        			$("#order_search").html("검색결과 없음");
+    			}
+    		},
+    		error:function(){
+    			//TODO
+    		}
+    	});
+	};
+    </script>
     <!-- header.css 분리예정 -->
  <style>
      /* reset */
@@ -177,6 +235,45 @@
           width: 80px;
           height: 80px;
       }
+       /* 주문/배송조회 */
+      section > h3 {
+          margin: 0;
+          text-align: center;
+      }
+      /* 기간별 주문내역 검색 */
+      #btngroup{
+          text-align: center;
+      }
+       .button{
+        padding: 5px 25px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 16px;
+        margin: 10px 10px;
+        transition-duration: 0.3s;
+        }
+
+        .button{
+            background-color: white;
+            color: black;
+            border: 2px solid #e7e7e7;
+        }
+
+        .button:hover{
+            background-color: #e7e7e7;
+        }
+
+        #order_search {
+        padding: 6px 32px;
+        margin: 4px 2px;
+        background-color: white;
+        color: black;
+        border: 2px solid #555555;
+        }
+        #order_search:hover {
+        background-color: #555555;
+        color: white;
+        }
 
  </style>
 </head>
@@ -184,63 +281,28 @@
 <body>
 		<!-- 공통헤더 템플릿 -->
  	<%@ include file="template_header.jsp"%>
-<aside>
- <div id="side-menu">
-     <ul>
-         <li><a href="#">마이페이지</a></li>
-         <li><a href="#">주문/배송조회</a></li>
-         <li><a href="#">취소/교환/반품</a></li>
-         <li><a href="#">상품 후기</a></li>
-         <li><a href="#">쿠폰 관리</a></li>
-         <li><a href="#">상품 문의(Q&A)</a></li>
-     </ul>
- </div>
-</aside>
+	<!--마이페이지 공통사이드 템플릿 -->
+ 	<%@ include file="template_mypage_aside.jsp"%>
+
 <section>
     <h3>주문/배송 조회</h3>
     <h4>조회 기간</h4>
     <!-- 달력 -->
-    <input type="submit" value="검색">
-    <hr>
-    <!-- 주문번호 -->
-    <!-- 날짜 시간 yyyy.mm-dd hh:mm-->
-    <table id="order_detail">
-        <tr>
-            <td colspan="2">상품명</td>
-            <td>수량</td>
-            <td>상품금액</td>
-            <td>배송비</td>
-            <td>진행상태</td>
-        </tr>
-        <tr>
-            <!-- 이미지 클릭 시 상품페이지로 이동 -->
-            <td><a href="#">
-                <img src="./images/1번 메인.jpg">
-            </a></td>
-            <!-- 상품명 -->
-            <td>X5 런닝머신</td>
-            <td>1</td>
-            <td>1,169,000</td>
-            <td>2,500</td>
-            <td>주문완료</td>
-        </tr>
-        <!-- <tr>
-            <td>주문취소</td>
-        </tr> -->
-        <tr>
-            <td><a href="#">
-            <img src="./images/01번 메인_2.jpg">
-        </a></td>
-            <td>에베레스트 스텝퍼</td>
-            <td>1</td>
-            <td>1,197,500</td>
-            <td>2,500</td>
-            <td>배송완료</td>
-        </tr>
-         <!-- <tr>
-            <td>교환/반품</td>
-        </tr> -->
-    </table>
+     <div id="btngroup">
+     <!-- $("#start_date").val() -->
+     <!-- $("#end_date").val() -->
+    <input type="date" id="start_date">
+    <input type="date" id="end_date">
+    <!--  클릭 시 end_date = sysdate 기준으로 
+    start_date = 1주일, 1개월, 3개월, 6개월 전 날짜 자동선택 -->
+    <input type="button" class="button" value="1주일" id="1week">
+    <input type="button" class="button" value="1개월" id="1month">
+    <input type="button" class="button" value="3개월" id="3month">
+    <input type="button" class="button" value="6개월" id="6month">
+    <br>
+    <input type="submit" class="button" value="검색" id="order_search">
+    <hr> </div>
+  
 </section>
 </body>
 </html>
