@@ -46,7 +46,7 @@ public class LoginServlet extends HttpServlet {
 //			out.append("<p>aaa<p/>");
 //			response.sendRedirect("/web-inf/join.jsp");
 //			request.getRequestDispatcher("test.jsp").forward(request,response);
-			request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request,response);
+			request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request,response);
 		}
 		else if(result == 0) {
 			out.print("비밀번호 불일치");

@@ -7,8 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="join.do" method="post">
-	<button type="submit">임시가입</button>
-</form> 
+
 </body>
 </html>
