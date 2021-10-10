@@ -42,6 +42,30 @@ public class UserDao {
 		}
 		return -2; //데이터 베이스 에러
 	}
+	public int dupidChk(Connection conn, String user_id) {
+		int result = 0;
+		String sql = "select count(*) from user where user_id";
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		System.out.println("중복체크 dao 진입");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, user_id);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			jdbcTemplate.close(rset);
+			jdbcTemplate.close(pstmt);
+		}
+		
+		return result; 
+	}
 	
 	public int userInsert(Connection conn, UserTable user) {
 		int result = 0;

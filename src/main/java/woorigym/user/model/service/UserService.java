@@ -23,7 +23,12 @@ public class UserService {
 		Connection conn = jdbcTemplate.getConnection();
 		int result = new UserDao().userInsert(conn, user);
 		jdbcTemplate.close(conn);
-		System.out.println("회원가입 성공");
 		return result;
+	}
+	
+	public int dupidChk(Connection conn, String user_id) {
+		int result = new UserDao().dupidChk(conn, user_id);
+		jdbcTemplate.close(conn);
+		return result; 
 	}
 }
