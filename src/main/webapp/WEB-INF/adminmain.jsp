@@ -7,7 +7,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	ArrayList<ProductTable> volist = (ArrayList<ProductTable>)request.getAttribute("productvolist");
+	ArrayList<ProductTable> volist = (ArrayList<ProductTable>)request.getAttribute("productlist");
 %>
 <!DOCTYPE html>
 <html>
@@ -105,39 +105,86 @@
             </style>
 </head>
 <body>
-<%
-	String s = request.getParameter("search");
-	String s1;
-%>
+<%--
+	//String s = request.getParameter("#search");
+	//String s1;
+--%>
 	<input type="text" id="search" name="search" placeholder="상품번호를 입력해주세요.">
 	<button type="button" id="btn_search" name="btn_search">검색</button>
-	<script>
-		$("#btn_search").click(function(){
+	<div id="product"> 출력하는 위치</div>
+	 <script>
+	 	$(function() {
+	 		//$("#search").val("");
+	 		//ajaxF1();
+	 	});
+		$("#btn_search").click(searchF2);
+		function searchF2(){
 			if($("#search").val() == ""){
 				alert("상품 번호를 입력해주세요.");
 				return;
 			}
-			$.ajax({
-				type:"post",
-				url:"<%=request.getContextPath()%>/plist.ajax",
-				data: {
-					productNo:$("#search").val(),
-					parentName:"",
-					parentCategory:"",
-					childCategory:"",
-					quantity:"",
-					price:"",
-					productInfoUrl:"",
-					productOption:""
-				},
-				success: function(data){
-					console.log(data);
-				},
-				error: function(request, status, error){
-					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				}
+			ajaxF1();
+		}
+		function ajaxF1(){
+
+			 {
+				$.ajax({
+					type:"post",
+					url:"<%=request.getContextPath()%>/plist.ajax",
+					data: {
+						productNo:$("#search").val(),
+						productName:"",
+						parentCategory:"",
+						childCategory:"",
+						quantity:5,//$("#quantity").val(),
+						price:2000,
+						productInfoUrl:"",
+						productOption:""
+					},
+					dataType:"json",
+					success: function(data){
+//[{"productNo":"a","productName":"b","parentCategory":"c","childCategory":"d","quantity":1,"price":2,"productInfoUrl":"e","productOption":"f","minPrice":0,"maxPrice":0}]
+						resultHtml(data);
+					},
+					error: function(request, status, error){
+						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+				});
+			}
+		}
+		
+		function resultHtml(data){
+			var html="<table border='1'>";
+			html += "<tr>";
+			html += "<th>상품번호</th>";
+			html += "<th>상품이름</th>";
+			html += "<th>부모카테고리</th>";
+			html += "<th>자식카테고리</th>";
+			html += "<th>수량</th>";
+			html += "<th>가격</th>";
+			html += "<th>상품이미지URL</th>";
+			html += "<th>상품 옵션</th>";
+			html += "</tr>";
+			
+			$.each(data, function(key, value){
+				console.log(value);
+				html += "<tr>";
+				html += "<td>" + value.productNo + "</td>";
+				html += "<td>" + value.productName + "</td>";
+				html += "<td>" + value.parentCategory + "</td>";
+				html += "<td>" + value.childCategory + "</td>";
+				html += "<td>" + value.quantity + "</td>";
+				html += "<td>" + value.price + "</td>";
+				html += "<td>" + value.productInfoUrl + "</td>";
+				html += "<td>" + value.productOption + "</td>";
+				html += "</tr>";
 			});
-		});
+			
+			html += "</table>";
+			$("#product").empty();
+			$("#product").append(html);
+		}
+		
 	</script>
 </body>
 </html>

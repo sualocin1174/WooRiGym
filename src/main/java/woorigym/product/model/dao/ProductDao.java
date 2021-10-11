@@ -14,18 +14,19 @@ public class ProductDao {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ArrayList<ProductTable> readProductList(Connection conn){
-		ArrayList<ProductTable> volist = null;
-		String sql = "select * from product";
+	public ArrayList<ProductTable> readProductList(Connection conn, String productNo){
+		ArrayList<ProductTable> productlist = null;
+		String sql = "select * from product where product_No=?";
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, productNo);
 			rset = pstmt.executeQuery();
 			System.out.println("product-1");
 			if(rset.next()) {
-				volist = new ArrayList<ProductTable>();
+				productlist = new ArrayList<ProductTable>();
 				System.out.println("product-2");
 				do {
 					ProductTable vo = new ProductTable();
@@ -37,7 +38,7 @@ public class ProductDao {
 					vo.setPrice(rset.getInt("PRICE"));
 					vo.setProductInfoUrl(rset.getString("PRODUCT_INFO_URL"));
 					vo.setProductOption(rset.getString("PRODUCT_OPTION"));
-					volist.add(vo);
+					productlist.add(vo);
 					System.out.println("product-3");
 				} while(rset.next());
 			}
@@ -48,8 +49,8 @@ public class ProductDao {
 				jdbcTemplate.close(rset);
 				jdbcTemplate.close(pstmt);
 			}
-		System.out.println("product 리턴은" + volist);
-		return volist;
+		System.out.println("product 리턴은" + productlist);
+		return productlist;
 	}
 	
 	public int addProduct(Connection conn, ProductTable vo) {

@@ -2,6 +2,7 @@ package woorigym.admin.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import woorigym.product.model.service.ProductService;
 import woorigym.product.model.vo.ProductTable;
 
 /**
@@ -17,7 +22,7 @@ import woorigym.product.model.vo.ProductTable;
 @WebServlet("/plist.ajax")
 public class ProductListServletAjax extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -35,30 +40,49 @@ public class ProductListServletAjax extends HttpServlet {
 		
 		PrintWriter out = response.getWriter();
 		
-		String productNoStr = request.getParameter("productNo");
+		String productNo = request.getParameter("productNo");
 		String productName = request.getParameter("productName");
 		String parentCategory = request.getParameter("parentCategory");
 		String childCategory = request.getParameter("childCategory");
-		String quantityStr = request.getParameter("quantity");
+		String quantity = request.getParameter("quantity");
 		String price = request.getParameter("price");
-		String productInfoUrl = request.getParameter("productInfoUrl");
+		String productInfoUrl = request.getParameter("productInfoUrl");  //""
 		String productOption = request.getParameter("productOption");
-		int productNo = 0;
-		int quantity = 0;
+		System.out.println(quantity);
+		System.out.println(price);
+		System.out.println(productInfoUrl);
+		int quantityInt = 0;
+		int priceInt = 0;
 		try {
-			productNo = Integer.parseInt(productNoStr);
-			quantity = Integer.parseInt(quantityStr);
+			quantityInt = Integer.parseInt(quantity);
+			priceInt = Integer.parseInt(price);
+//			productNo = Integer.parseInt(productNoStr);
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("숫자로 변환하지 못했음.");
 			//
-//			out.println("오류발생");
-//			out.flush();
-//			out.close();
-//			return;
+			out.println("오류발생");
+			out.flush();
+			out.close();
+			return;
 		}
+		ProductTable productVo = new ProductTable();
+		productVo.setProductNo(productNo);
+		productVo.setProductName(productName);
+		productVo.setParentCategory(parentCategory);
+		productVo.setChildCategory(childCategory);
+		productVo.setQuantity(quantityInt);
+		productVo.setPrice(priceInt);
+		productVo.setProductInfoUrl(productInfoUrl);
+		productVo.setProductOption(productOption);
 		
-
+		ArrayList<ProductTable> productlist = new ProductService().readProductList(productNo);
+		request.setAttribute("productlist", productVo);
+		Gson gson = new GsonBuilder().create();
+		String jsonListVo = gson.toJson(productlist);
+		out.print(jsonListVo);
+		out.flush();
+		out.close();
 	}
 
 	/**
