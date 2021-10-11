@@ -14,114 +14,72 @@
 <html lang="ko">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>우리짐 메인페이지</title>
-       <!-- /* content */-->
-        <style>
-            section {
-                width: 1200px;
-                padding: 30px 0 30px 0;
-            }
-        
-            #main_bnb {
-                text-align: center;
-            }
-            
-            #main_bnb>ul {
-				list-style-type: none;
-				position: relative;
-			}
-			        
-            #main_bnb li {
-                display: inline-block;
-            }
+<meta charset="UTF-8">
+<title>login page</title>
+<style>
+#head {
+	text-align: center;
+}
 
-        /* 신상품 | 인기상품 | 타임세일 */
-            #main_bnb li::after{
-                padding: 10px;
-                content: "|";
-            }
-            #main_bnb li:last-child::after{
-                padding: 15px;
-                content: "";
-            }
+#login-btn {
+	text-emphasis-color: gray;
+	background-color: black;
+}
 
-          #main_img {
-              position: relative;
-              left: 20px;
-              box-sizing: content-box;
-            }
-            #main_img a{
-                display: inline-block;
-                padding: 15px;
-                /* position: relative; */
-                
-            }
-            #main_img img{
-            /* vertical-align: middle; */
-              /* display: inline-block; */
-              width: 250px;
-          }
-            </style>
-    </head>
+#login-menu {
+	text-align: center;
+}
 
+#login-menu>ul {
+	list-style-type: none;
+	position: relative;
+}
+
+#login-menu li {
+	display: inline-block;
+}
+
+/* 아이디 | 비밀번호 찾기 | 회원가입 */
+#login-menu li::after {
+	padding: 10px;
+	content: "|";
+}
+
+#login-menu li:last-child::after {
+	padding: 15px;
+	content: "";
+}
+</style>
+</head>
 <body>
-		<!-- 공통헤더 템플릿 -->
- 	<%@ include file="template_header.jsp"%>
-    
-    <section>
-        <div class="container">
-            <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                <!-- Indicators -->
-                <ol class="carousel-indicators">
-                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                    <li data-target="#myCarousel" data-slide-to="1"></li>
-                    <li data-target="#myCarousel" data-slide-to="2"></li>
-                </ol>
-                
-                <!-- Wrapper for slides -->
-                <div class="carousel-inner">
-                    <div class="item active">
-                        <img src='./images/메인_샘플1.jpg' alt="메인사진1" style="width:100%;"/><br>
-                    </div>
-                    
-                    <div class="item">
-                        <img src='./images/메인_샘플2.jpg' alt="메인사진2" style="width:100%;"/><br>
-                    </div>
-                    
-                    <div class="item">
-                        <img src='./images/메인_샘플3.jpg' alt="메인사진3" style="width:100%;"/><br>
-                    </div>
-                </div>
-                
-                <!-- Left and right controls -->
-                <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                    <span class="glyphicon glyphicon-chevron-right"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-        </div>
-        <div id="main_bnb">
-            <ul>
-                <li><a href="#">신상품</a></li>
-                <li><a href="#">인기상품</a></li>
-                <li><a href="#">타임세일</a></li>
-            </ul>
-        </div>
-        <div id="main_img">
-            <a href="#"><img src='./images/01번 메인 306,000.jpg' /><br></a>
-            <a href="#"><img src='./images/01번 메인 841,500.jpg' /><br></a>
-            <a href="#"><img src='./images/1번 메인.jpg' /><br></a>
-            <a href="#"><img src='./images/01번 메인_2.jpg' /><br></a>
-        </div>
-    </section>
-    <footer></footer>
+	<!-- 공통헤더 템플릿 -->
+	<%@ include file="template_header.jsp"%>
+	
+			<!-- Indicators -->
+			<ol class="carousel-indicators">
+				<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+				<li data-target="#myCarousel" data-slide-to="1"></li>
+				<li data-target="#myCarousel" data-slide-to="2"></li>
+			</ol>
+			
+			<form action="loginAction.jsp" method="post">
+				<h4 id="head">로그인</h4>
+
+				<div class="form-group">
+					<input type="text" placeholder="아이디" name="user_id" maxlength="20"><br>
+				</div>
+				<div class="form-group">
+					<input type="password" placeholder="비밀번호" name="user_pwd" maxlength="20"><br>
+				</div>
+				<input type="submit" value="로그인">
+				<div id="login-menu">
+					<ui>
+					<li><a href="#">아이디</a></li>
+					<li><a href="#">비밀번호 찾기</a></li>
+					<li><a href="#">회원가입</a></li>
+					</ui>
+				</div>
+			</form>
 </body>
 
 </html>

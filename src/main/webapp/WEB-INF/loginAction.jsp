@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ page import="woorigym.user.model.service.UserService" %>
-    <%@ page import="woorigym.user.model.vo.UserTable" %>
     <%@ page import="java.io.PrintWriter" %>
+    <% request.setCharacterEncoding("UTF-8"); %>
    	<jsp:useBean id="user" class="woorigym.user.model.vo.UserTable" scope="page"/>
    	<jsp:setProperty name="user" property="user_id"/>
    	<jsp:setProperty name="user" property="user_pwd"/>
@@ -11,7 +11,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>log</title>
 </head>
 <body>
 	<%

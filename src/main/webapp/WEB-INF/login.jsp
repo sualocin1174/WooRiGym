@@ -48,41 +48,56 @@
 	content: "|";
 }
 
-#login-menu li:last-child::after {
-	padding: 15px;
-	content: "";
-}
-</style>
-</head>
-<body>
-	<!-- 공통헤더 템플릿 -->
-	<%@ include file="template_header.jsp"%>
+                #login-menu li:last-child::after {
+                    padding: 15px;
+                    content: "";
+                }
+               
+                #log-box{
+                	position: relative;
+                	left: 500px;
+                	top: -240px;
+                }
+            </style>
+        </head>
 
-	<section>
-		<div class="container">
-			<div id="myCarousel" class="carousel slide" data-ride="carousel">
-				<!-- Indicators -->
-				<ol class="carousel-indicators">
-					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-					<li data-target="#myCarousel" data-slide-to="1"></li>
-					<li data-target="#myCarousel" data-slide-to="2"></li>
-				</ol>
-				<form action="main.jsp" name="info" method="GET">
-        <h4 id="head">로그인</h4>
-        
-            <div id="login">                
-                <input type="text" placeholder="아이디" id="id" name="id"><br>               
-                <input type="password" placeholder="비밀번호" id="userPwd" name="userPwd"><br>
-                <button id="login-btn" onclick="">로그인</button>
-        
-        </div>
-        <div id="login-menu">
-            <ui>
-                <li><a href="#">아이디</a></li>
-                <li><a href="#">비밀번호 찾기</a></li>
-                <li><a href="#">회원가입</a></li>
-            </ui>
-        </div>
-    </form>
-</body>
-</html>
+        <body>
+            <!-- 공통헤더 템플릿 -->
+            <%@ include file="template_header.jsp" %>
+
+                <div class="container">
+                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#myCarousel" data-slide-to="1"></li>
+                            <li data-target="#myCarousel" data-slide-to="2"></li>
+                        </ol>
+
+                        <div class="container">
+                            <form id= "log-box" method="post" action="loginAction">
+                                <h4 id="head">로그인</h4>
+
+                                <div class="form-group">
+                                    <input type="text" placeholder="아이디" name="user_id" maxlength="20"><br>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" placeholder="비밀번호" name="user_pwd" maxlength="20"><br>
+                                </div>
+                                <input type="submit" value="로그인">
+                                
+                            </form>
+                                <div id="login-menu">
+                                    <ul>
+                                        <li><a href="#">아이디</a></li>
+                                        <li><a href="#">비밀번호 찾기</a></li>
+                                        <li><a href="#">회원가입</a></li>
+                                    </ul>
+                                </div>
+
+                        </div>
+                    </div>
+                </div>
+        </body>
+
+        </html>

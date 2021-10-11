@@ -44,7 +44,7 @@ public class UserDao {
 	}
 	public int dupidChk(Connection conn, String user_id) {
 		int result = 0;
-		String sql = "select count(*) from user where user_id";
+		String sql = "select count(*) from member where user_id";
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		System.out.println("중복체크 dao 진입");
@@ -89,6 +89,7 @@ public class UserDao {
 			pstmt.setString(9, user.getIdentity_number());
 			pstmt.setInt(10, user.getGender());
 			
+			System.out.println("회원가입 성공");
 			return pstmt.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -99,5 +100,68 @@ public class UserDao {
 		System.out.println("데이터 베이스 오류");
 		return result; // 데이터베이스 오류
 	}
-
+	
+	public int updateUser(Connection conn, UserTable user) {
+		String sql ="update member set ";
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		System.out.println("로그인 dao 진입");
+		try {
+			
+			return -1; //아이디 없음
+		}catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			jdbcTemplate.close(rset);
+			jdbcTemplate.close(pstmt);
+		}
+		return -2; //데이터 베이스 에러
+	}
+	public String findId(Connection conn, String user_name, String phone) {
+		String sql = "select user_id from member where user_name = ? and phone = ?";
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String user_id = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, user_name);
+			pstmt.setString(2, phone);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				user_id = rset.getString("user_id");
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			jdbcTemplate.close(rset);
+			jdbcTemplate.close(pstmt);
+		}
+		return user_id;
+	}
+	
+	public String findPwd(Connection conn, String user_id, String email) {
+		String sql = "select user_pwd from member where user_id = ? and email = ?";
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String user_pwd = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, user_id);
+			pstmt.setString(2, email);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				user_pwd = rset.getString("user_pwd");
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			jdbcTemplate.close(rset);
+			jdbcTemplate.close(pstmt);
+		}
+		return user_pwd;
+	}
 }
