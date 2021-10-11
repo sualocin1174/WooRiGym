@@ -49,6 +49,7 @@ public class SearchListServletAjax extends HttpServlet {
 		String childCategory = request.getParameter("childCategory");
 		String minPriceStr = request.getParameter("minPrice");
 		String maxPriceStr = request.getParameter("maxPrice");
+		String selectRank = request.getParameter("selectRank"); // 2021.10.11 1차 내용추가
 		int minPrice = -1;
 		int maxPrice = -1;
 		
@@ -62,6 +63,7 @@ public class SearchListServletAjax extends HttpServlet {
 		ProductTable searchKeyVo = new ProductTable();
 		if(productName != null && !productName.equals(""))	searchKeyVo.setProductName(productName);
 		if(parentCategory != null && !parentCategory.equals(""))   searchKeyVo.setParentCategory(parentCategory);
+		if(selectRank != null && !selectRank.equals(""))   searchKeyVo.setSelectRank(""); // 2021.10.11 1차 내용추가
 		if(childCategory != null && !childCategory.equals(""))   searchKeyVo.setChildCategory(childCategory);
 		searchKeyVo.setMinPrice(minPrice);
 		searchKeyVo.setMaxPrice(maxPrice);

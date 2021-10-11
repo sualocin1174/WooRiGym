@@ -9,22 +9,51 @@ import woorigym.common.jdbcTemplate;
 import woorigym.product.model.vo.ProductTable;
 
 public class SearchListDao {
+	
+	// 2021.10.11 추가시작
+	public int getProductListCount(Connection conn) {
+		int result = 0;
+		String sql = "select count(product_no) from product";
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			if (rset.next()) {
+				result = rset.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			jdbcTemplate.close(rset);
+			jdbcTemplate.close(pstmt);
+		}
+		return result;
+	}
+	// 2021.10.11 추가완료	
 
-	// 2021-10-07 추가
+	// 2021.10.07 추가
 	public ArrayList<ProductTable> productSearch(Connection conn, ProductTable searchKeyVo) {
 		System.out.println("productSearch 1");
 		System.out.println(searchKeyVo);
 
 		ArrayList<ProductTable> productlist = null;
-		String sql = "select product_info_url, product_name, product_option, price" + " from product ";
-
+		// 2021.10.11 1차 내용수정 시작
+		String sql = "select p.product_info_url, p.product_name, p.product_option, p.price"
+				+ " from product p"
+				+ " inner join order_detail o on p.product_no = o.product_no"
+				+ " inner join review r on o.order_detail_no = r.order_detail_no";
+		// 2021.10.11 1차 내용수정 완료
+		
 		String productName = searchKeyVo.getProductName();
 		String parentCategory = searchKeyVo.getParentCategory();
-		String childCategory = searchKeyVo.getChildCategory();
+		String selectRank = searchKeyVo.getSelectRank(); // 2021.10.11 1차 내용추가
+		String childCategory = searchKeyVo.getChildCategory();	
 		int minPrice = searchKeyVo.getMinPrice();
 		int maxPrice = searchKeyVo.getMaxPrice();
 		boolean flag = false;
 
+		// 2021.10.11 1차 내용수정 시작
 		if (productName != null && !productName.equals("")) {
 			if (!flag) {
 				sql += " where ";
@@ -32,7 +61,7 @@ public class SearchListDao {
 			} else {
 				sql += " and ";
 			}
-			sql += " product_name like '%" + productName + "%'";
+			sql += " p.product_name like '%" + productName + "%'";
 		}
 		if (parentCategory != null && !parentCategory.equals("")) {
 			if (!flag) {
@@ -41,7 +70,7 @@ public class SearchListDao {
 			} else {
 				sql += " and ";
 			}
-			sql += " parent_category like '%" + parentCategory + "%'";
+			sql += " p.parent_category like '%" + parentCategory + "%'";
 		}
 		if (childCategory != null && !childCategory.equals("")) {
 			if (!flag) {
@@ -50,7 +79,7 @@ public class SearchListDao {
 			} else {
 				sql += " and ";
 			}
-			sql += " child_category like '%" + childCategory + "%'";
+			sql += " p.child_category like '%" + childCategory + "%'";
 		}
 		if (minPrice >= 0 || maxPrice >= 0) {
 			if (!flag) {
@@ -59,8 +88,23 @@ public class SearchListDao {
 			} else {
 				sql += " and ";
 			}
-			sql += " price between " + minPrice + " and " + maxPrice;
+			sql += " p.price between " + minPrice + " and " + maxPrice;
 		}
+		if (selectRank != null || selectRank == "인기순") {
+			if (!flag) {
+				sql += " group by p.product_info_url, p.product_name, p.product_option, p.price, p.product_no"
+						+ " order by count(o.buy_quantity) desc";
+				flag = true;
+			}
+		}
+		if (selectRank != null || selectRank == "평점순") {
+			if (!flag) {
+				sql += " group by p.product_info_url, p.product_name, p.product_option, p.price, p.product_no"
+						+ " order by sum(r.score) desc";
+				flag = true;
+			}
+		}
+		// 2021.10.11 1차 내용수정 완료
 		System.out.println(sql);
 
 		//
@@ -93,7 +137,7 @@ public class SearchListDao {
 		System.out.println("productlist 2" + productlist);
 		return productlist;
 	}
-	// 2021-10-07 추가완료
+	// 2021.10.07 추가완료
 
 	// TODO
 	// 상품명검색 메소드
@@ -108,7 +152,6 @@ public class SearchListDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, productName);
 			rest = pstmt.executeQuery();
-			productlist = new ArrayList<ProductTable>();
 			if(rest.next()) {
 				productlist = new ArrayList<ProductTable>();
 				do {
@@ -145,7 +188,6 @@ public class SearchListDao {
 			pstmt.setInt(1, minprice);
 			pstmt.setInt(1, maxprice);
 			rest = pstmt.executeQuery();
-			productlist = new ArrayList<ProductTable>();
 			if(rest.next()) {
 				productlist = new ArrayList<ProductTable>();
 				do {
@@ -181,7 +223,6 @@ public class SearchListDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rest = pstmt.executeQuery();
-			productlist = new ArrayList<ProductTable>();
 			if(rest.next()) {
 				productlist = new ArrayList<ProductTable>();
 				do {
@@ -219,7 +260,6 @@ public class SearchListDao {
 				try {
 					pstmt = conn.prepareStatement(sql);
 					rest = pstmt.executeQuery();
-					productlist = new ArrayList<ProductTable>();
 					if(rest.next()) {
 						productlist = new ArrayList<ProductTable>();
 						do {
@@ -254,7 +294,6 @@ public class SearchListDao {
 			try {
 				pstmt = conn.prepareStatement(sql);
 				rest = pstmt.executeQuery();
-				productlist = new ArrayList<ProductTable>();
 				if(rest.next()) {
 					productlist = new ArrayList<ProductTable>();
 					do {

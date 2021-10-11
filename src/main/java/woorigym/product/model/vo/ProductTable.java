@@ -25,17 +25,20 @@ public class ProductTable {
 	// for Search을 위한 추가로 eclipse에서는 사용하는 변수로 oracle DB에는 추가할 필요 없음(2021-10-08 1차 내용추가)
 	private int minPrice;
 	private int maxPrice;
-	// 2021-10-07 추가완료
+	private String selectRank; // 2021.10.11 1차 내용추가
+	// 2021.10.07 추가완료
 	
-	// 2021-10-07 수정
+	// 2021.10.07 수정시작	
+	// 2021.10.11 1차 수정시작	
 	@Override
 	public String toString() {
 		return "ProductTable [productNo=" + productNo + ", productName=" + productName + ", parentCategory="
 				+ parentCategory + ", childCategory=" + childCategory + ", quantity=" + quantity + ", price=" + price
 				+ ", productInfoUrl=" + productInfoUrl + ", productOption=" + productOption + ", minPrice=" + minPrice
-				+ ", maxPrice=" + maxPrice + "]";
+				+ ", maxPrice=" + maxPrice + ", selectRank=" + selectRank + "]";
 	}
-	// 2021-10-07 수정완료
+	// 2021.10.11 1차 수정완료
+	// 2021.10.07 수정완료
 
 
 	public String getProductNo() {
@@ -155,6 +158,20 @@ public class ProductTable {
 	public void setMaxPrice(int maxPrice) {
 		this.maxPrice = maxPrice;
 	}
-	// 2021-10-07 추가완료
+	// 2021.10.07 추가완료
+
+
+	// 2021.10.11 1차 추가시작
+	public String getSelectRank() {
+		return selectRank;
+	}
+
+
+	public void setSelectRank(String selectRank) {
+		this.selectRank = selectRank;
+	}
+	// 2021.10.11 1차 추가완료
+	
+	
 
 }

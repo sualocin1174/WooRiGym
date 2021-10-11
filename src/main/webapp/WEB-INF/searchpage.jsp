@@ -11,6 +11,7 @@
   %>
 <%
 	ArrayList<ProductTable> volist = (ArrayList<ProductTable>)request.getAttribute("productvolist");
+	ArrayList<ProductTable> productlist = (ArrayList<ProductTable>) request.getAttribute("productlist");
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -20,15 +21,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>우리짐 검색페이지</title>
-    <!-- 부트스트랩 CDN -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <style>
-        /* 폰트 */
-        /* @import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@200&family=Nanum+Gothic&family=Noto+Sans+KR:wght@100&display=swap'); */
-        /* @import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@200&family=Nanum+Gothic&family=Noto+Sans+KR:wght@100&display=swap'); */
-    </style>
     <style>
         /* reset */
         * {
@@ -93,10 +87,17 @@
 			text-align: center;
 		}
 		
-		/* section > div {
-			padding-top : 250px;
+		/* 2021.10.11 1차 추가시작 */
+		section {
+			position: relative; 
+			top: 100px;
 			text-align: center;
-		} */
+		}
+		
+		section > ul {
+			border: 1px solid black;
+		}
+		/* 2021.10.11 1차 추가완료 */
         
     </style> <!-- 2021.10.08 1차 추가완료 -->
     </head>
@@ -105,7 +106,7 @@
     <aside>
 		<form>
 			<div id="searchmenubar">
-				<div class="searchmenu"> <!-- 2021.10.08 1 추가시작 -->
+				<div class="searchmenu"> <!-- 2021.10.08 1차 추가시작 -->
 					<span id="catalog">카테고리별 검색</span>
 					<select name="category" id="category">
 						<option value="">선택목록</option>
@@ -125,9 +126,9 @@
 					</select>
 				</div> <!-- 2021.10.08 1차 추가완료 -->
 				<div class = "searchmenu"> <!-- 2021.10.07 추가시작 -->
-					<input type="text" class="text" name = "minprice[]" placeholder="최소금액">
+					<input type="text" name = "minprice[]" class="minprice[]_input" id="minprice[]_input" placeholder="최소금액"> <!-- 2021.10.11 1차 내용수정 -->
 					<span> ~ </span>
-					<input type="text" class="text" name = "maxprice[]" placeholder="최대금액">
+					<input type="text" name = "maxprice[]" class="maxprice[]_input" id="maxprice[]_input" placeholder="최대금액"> <!-- 2021.10.11 1차 내용수정 -->
 					<span>원</span>
 				</div>
 				<div class="searchmenu">
@@ -139,31 +140,57 @@
 		<!-- <button type="submit" class="btn_search">검색</button>  2021.10.07 삭제-->
     </aside>
     <section>
+<%
+// 이곳은 자바 문법에 따름
+ArrayList<ProductTable> productlist = (ArrayList<ProductTable>) request.getAttribute("productlist");
+%>
     	<h2 id="productlist">상품목록</h2> <!-- 2021.10.08 1차 내용추가 및 추가완료 -->
+    	<!-- 2021.10.11 1차 추가시작 -->
+    	<table border="1">
+	    	<tr></tr>
+	    		<td>이미지</td>
+	    	<tr></tr>
+	    		<td>상품명</td>
+	    	<tr></tr>
+	    		<td>옵션</td>
+	    	<tr></tr>
+	    		<td>가격</td>
+    	</table>
+<%
+if (volist != null) {
+	for (ProductTable vo : productlist) {
+		// tr 이 volist 갯수 만큼 생기게 됨.
+%>
+    	<!-- 2021.10.11 1차 추가완료 -->
     </section>
     <footer>
     </footer>
     <script>
     /* 2021-10-07 수정 */
     	$("#searchBtn").click( function () {
+			/* 2021.10.11 1차 내용삭제시작 // 상품명 검색을 안해도 카테고리나 금액 순위로 검색할 수 있기때문에 삭제함
 			if($("#keyword_input").val() == "") {
 				alert("상품명을 검색창에 입력 후 검색버튼을 눌러주세요");
 				return;
-			}
+			} 
+			2021.10.11 1차 내용삭제완료*/
+			
 			$.ajax({
 				type:"post",
 				url:"<%=request.getContextPath()%>/slist.ajax",
 				data: {
-					productName : "육각아령",
-					parentCategory: "", 
-					childCategory: "",
-					minPrice: 1000,
-					maxPrice: 6000
-					// TODO: 순위, 인기... 
+					/* 2021.10.11 1차 수정시작 */
+					productName : $("#keyword_input").val(),
+					parentCategory: $("#category option:selected").val(),
+					selectRank: $("#rank option:selected").val(), 
+					/* childCategory: "", */
+					minPrice: 0,/* $("#minprice[]_input").val(), */
+					maxPrice: 10000000/* $("#maxprice[]_input").val() */
+					/* 2021.10.11 1차 수정완료 */
 				},
 				success: function(data){
 					console.log(data);
-					alert("aaa");
+					alert("상품이 검색되었습니다."); /* 2021.10.11 1차 내용수정 */
 				},
 				error : function(request,status,error) {
 					alert("code:"+request.status+"\n"+"message:"+request.responseText+

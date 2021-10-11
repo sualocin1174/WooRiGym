@@ -11,7 +11,17 @@ import woorigym.search.model.dao.SearchListDao;
 
 public class SearchListService {
 	
-	// 2021-10-07 추가
+	// 2021.10.11 추가시작
+	public int getProductListCount() {
+		int result = 0;
+		Connection conn = jdbcTemplate.getConnection();
+		result = new SearchListDao().getProductListCount(conn);		
+		jdbcTemplate.close(conn);
+		return result;
+	}
+	// 2021.10.11 추가완료
+	
+	// 2021.10.07 추가시작
 	public ArrayList<ProductTable> productSearch(ProductTable searchKeyVo) {
 		ArrayList<ProductTable> productlist = null;
 		Connection conn = jdbcTemplate.getConnection();
@@ -19,7 +29,7 @@ public class SearchListService {
 		jdbcTemplate.close(conn);
 		return productlist;
 	}
-	// 2021-10-07 추가완료
+	// 2021.10.07 추가완료
 	
 	
 	public ArrayList<ProductTable> productSearch(String productName) {
@@ -30,7 +40,7 @@ public class SearchListService {
 		return productlist;
 	}
 	
-	// 2021-10-07 추가
+	// 2021.10.07 추가시작
 	public ArrayList<ProductTable> priceSearch(int minprice, int maxprice) {
 		ArrayList<ProductTable> productlist = null;
 		Connection conn = jdbcTemplate.getConnection();
@@ -58,5 +68,5 @@ public class SearchListService {
 		productlist = new SearchListDao().categorySearch(conn);
 		return productlist;
 	}
-	// 2021-10-07 추가완료
+	// 2021.10.07 추가완료
 }
