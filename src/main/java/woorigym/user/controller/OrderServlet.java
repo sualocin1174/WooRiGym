@@ -50,8 +50,8 @@ public class OrderServlet extends HttpServlet {
 		//받아온 정보
 		//1. 로그인된 유저 아이디
 //		String userid = "gym11"; //일단 임의로 정함
-		UserTable user = (UserTable)request.getSession().getAttribute("user_id");
-	
+		UserTable user = (UserTable)request.getSession().getAttribute("LoginInfo");
+		
 		try {
 			String userid = user.getUser_id();
 			System.out.println(user.getUser_id());
@@ -60,8 +60,12 @@ public class OrderServlet extends HttpServlet {
 		}
 		
 		//장바구니 정보 가져오기
-		
-		request.getRequestDispatcher("/WEB-INF/order.jsp").forward(request, response);   
+		try {
+			request.getRequestDispatcher("/WEB-INF/order.jsp").forward(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		   
 		
 //		ArrayList<CartTable> volistCart = new OrderService().getCart(userid);
 //		System.out.println(volistCart);
@@ -171,11 +175,6 @@ public class OrderServlet extends HttpServlet {
 		} else {
 			System.out.println("장바구니 정보 불러오기 실패");
 		}
-		
-		
-		
-		
-		
 		
 		out.flush();
 		out.close();

@@ -72,5 +72,25 @@ public class OrderService {
 		close(conn);
 		return volist;
 	}
+	
+	public int addressInsert(String user_id,String postcode,String basic_address,String detail_address){
+		int result = -1;
+		
+		Connection conn = getConnection();
+		result = new OrderDao().addressInsert(user_id, postcode, basic_address, detail_address, conn);
+		close(conn);
+		
+		return result;
+	}
+	public int deleteInsert(String user_id,String postcode,String basic_address,String detail_address){
+		int result = -1;
+		
+		Connection conn = getConnection();
+		result = new OrderDao().deleteInsert(user_id, postcode, basic_address, detail_address, conn);
+		close(conn);
+		
+		return result;
+	}
+	
 
 }
