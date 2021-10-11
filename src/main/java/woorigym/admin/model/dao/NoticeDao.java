@@ -14,7 +14,6 @@ public class NoticeDao {
 		// TODO Auto-generated constructor stub
 	}
 
-
 	public ArrayList<NoticeTable> readNoticeListAll(Connection conn){
 		ArrayList<NoticeTable> volist = null;
 		String sql = "SELECT * FROM NOTICE";
@@ -24,10 +23,11 @@ public class NoticeDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rset = pstmt.executeQuery();
-			volist = new ArrayList<NoticeTable>();
 			System.out.println("notice-1");
 			
 			if(rset.next()) {
+				volist = new ArrayList<NoticeTable>();
+				System.out.println("notice-2");
 				do {
 					NoticeTable vo = new NoticeTable();
 					vo.setNotice_no(rset.getInt("notice_no"));
@@ -35,10 +35,12 @@ public class NoticeDao {
 					vo.setN_content(rset.getString("n_content"));
 					vo.setN_date(rset.getDate("n_date"));
 					volist.add(vo);
+					System.out.println("notice-3");
 				} while(rset.next());
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
+			System.out.println("notice-4");
 		} finally {
 			jdbcTemplate.close(rset);
 			jdbcTemplate.close(pstmt);

@@ -21,14 +21,10 @@
 			for(NoticeTable vo : volist){
 %>			
 			<tr>
-			<td><%=vo.getProductNo()%></td>
-			<td><%=vo.getProductName()%></td>
-			<td><%=vo.getParentCategory()%></td>
-			<td><%=vo.getChildCategory()%></td>
-			<td><%=vo.getQuantity()%></td>
-			<td><%=vo.getPrice()%></td>
-			<td><%=vo.getProductInfoUrl()%></td>
-			<td><%=vo.getProductOption()%></td>
+			<td><%=vo.getNotice_no()%></td>
+			<td><%=vo.getN_title()%></td>
+			<td><%=vo.getN_content()%></td>
+			<td><%=vo.getN_date()%></td>
 			</tr>
 <%
 			}

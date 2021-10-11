@@ -1,11 +1,14 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_header.css" />
+
 <%@page import = "woorigym.product.model.vo.ProductTable" %>
 <%@page import = "java.util.ArrayList"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
 	ArrayList<ProductTable> volist = (ArrayList<ProductTable>)request.getAttribute("productvolist");
 %>
- 
 <!DOCTYPE html>
 <html>
 <head>
@@ -102,28 +105,39 @@
             </style>
 </head>
 <body>
-<table border = "1" id="table1">
-		<tr>
-			<td>상품번호</td>
-		</tr>
 <%
-		if(volist != null){
-			for(ProductTable vo : volist){
-%>			
-			<tr>
-			<td><%=vo.getProductNo()%></td>
-			<td><%=vo.getProductName()%></td>
-			<td><%=vo.getParentCategory()%></td>
-			<td><%=vo.getChildCategory()%></td>
-			<td><%=vo.getQuantity()%></td>
-			<td><%=vo.getPrice()%></td>
-			<td><%=vo.getProductInfoUrl()%></td>
-			<td><%=vo.getProductOption()%></td>
-			</tr>
-<%
-			}
-		}
+	String s = request.getParameter("search");
+	String s1;
 %>
-	</table>
+	<input type="text" id="search" name="search" placeholder="상품번호를 입력해주세요.">
+	<button type="button" id="btn_search" name="btn_search">검색</button>
+	<script>
+		$("#btn_search").click(function(){
+			if($("#search").val() == ""){
+				alert("상품 번호를 입력해주세요.");
+				return;
+			}
+			$.ajax({
+				type:"post",
+				url:"<%=request.getContextPath()%>/plist.ajax",
+				data: {
+					productNo:$("#search").val(),
+					parentName:"",
+					parentCategory:"",
+					childCategory:"",
+					quantity:"",
+					price:"",
+					productInfoUrl:"",
+					productOption:""
+				},
+				success: function(data){
+					console.log(data);
+				},
+				error: function(request, status, error){
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			});
+		});
+	</script>
 </body>
 </html>

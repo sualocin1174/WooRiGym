@@ -13,11 +13,11 @@ public class ProductService {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ArrayList<ProductTable> readProductListAll(){
+	public ArrayList<ProductTable> readProductList(){
 		ArrayList<ProductTable> volist = null;
 		Connection conn = jdbcTemplate.getConnection();
 		
-		volist = new ProductDao().readProductListAll(conn);
+		volist = new ProductDao().readProductList(conn);
 		
 		jdbcTemplate.close(conn);
 		return volist;

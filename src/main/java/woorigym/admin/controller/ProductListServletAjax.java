@@ -2,7 +2,6 @@ package woorigym.admin.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,21 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import woorigym.product.model.service.ProductService;
 import woorigym.product.model.vo.ProductTable;
-import woorigym.user.model.vo.UserTable;
 
 /**
- * Servlet implementation class AdminMainServlet
+ * Servlet implementation class ProductListSerbletAjax
  */
-@WebServlet("/amain")
-public class AdminMainServlet extends HttpServlet {
+@WebServlet("/plist.ajax")
+public class ProductListServletAjax extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminMainServlet() {
+    public ProductListServletAjax() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,15 +35,30 @@ public class AdminMainServlet extends HttpServlet {
 		
 		PrintWriter out = response.getWriter();
 		
-		
-		ArrayList<ProductTable> volist = new ProductService().readProductList();
-		
-		for(ProductTable vo : volist) {
-			out.println(vo.toString());
+		String productNoStr = request.getParameter("productNo");
+		String productName = request.getParameter("productName");
+		String parentCategory = request.getParameter("parentCategory");
+		String childCategory = request.getParameter("childCategory");
+		String quantityStr = request.getParameter("quantity");
+		String price = request.getParameter("price");
+		String productInfoUrl = request.getParameter("productInfoUrl");
+		String productOption = request.getParameter("productOption");
+		int productNo = 0;
+		int quantity = 0;
+		try {
+			productNo = Integer.parseInt(productNoStr);
+			quantity = Integer.parseInt(quantityStr);
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("숫자로 변환하지 못했음.");
+			//
+//			out.println("오류발생");
+//			out.flush();
+//			out.close();
+//			return;
 		}
 		
-		request.setAttribute("productvolist", volist);
-		request.getRequestDispatcher("/WEB-INF/adminmain.jsp").forward(request,response);
+
 	}
 
 	/**

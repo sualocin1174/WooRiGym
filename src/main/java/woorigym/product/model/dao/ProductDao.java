@@ -14,28 +14,29 @@ public class ProductDao {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ArrayList<ProductTable> readProductListAll(Connection conn){
+	public ArrayList<ProductTable> readProductList(Connection conn){
 		ArrayList<ProductTable> volist = null;
 		String sql = "select * from product";
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
 		try {
-			pstmt = conn.prepareStatement(sql); 
+			pstmt = conn.prepareStatement(sql);
 			rset = pstmt.executeQuery();
-			volist = new ArrayList<ProductTable>();
 			System.out.println("product-1");
 			if(rset.next()) {
+				volist = new ArrayList<ProductTable>();
+				System.out.println("product-2");
 				do {
 					ProductTable vo = new ProductTable();
-					vo.setProductNo(rset.getString("productNo"));
-					vo.setProductName(rset.getString("productName"));
-					vo.setParentCategory(rset.getString("parentCategory"));
-					vo.setChildCategory(rset.getString("childCategory"));
-					vo.setQuantity(rset.getInt("quantity"));
-					vo.setPrice(rset.getInt("price"));
-					vo.setProductInfoUrl(rset.getString("productInfoUrl"));
-					vo.setProductOption(rset.getString("productOption"));
+					vo.setProductNo(rset.getString("PRODUCT_NO"));
+					vo.setProductName(rset.getString("PRODUCT_NAME"));
+					vo.setParentCategory(rset.getString("PARENT_CATEGORY"));
+					vo.setChildCategory(rset.getString("CHILD_CATEGORY"));
+					vo.setQuantity(rset.getInt("QUANTITY"));
+					vo.setPrice(rset.getInt("PRICE"));
+					vo.setProductInfoUrl(rset.getString("PRODUCT_INFO_URL"));
+					vo.setProductOption(rset.getString("PRODUCT_OPTION"));
 					volist.add(vo);
 					System.out.println("product-3");
 				} while(rset.next());

@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import woorigym.admin.model.service.NoticeService;
 import woorigym.admin.model.vo.NoticeTable;
-import woorigym.product.model.vo.ProductTable;
 
 /**
  * Servlet implementation class PopUpAddServlet
@@ -44,8 +43,8 @@ public class PopUpAddServlet extends HttpServlet {
 			out.println(vo.toString());
 		}
 		
-		request.setAttribute("NoticeTable", volist);
-		request.getRequestDispatcher("/WEB-INF/adminmain.jsp").forward(request,response);
+		request.setAttribute("noticevolist", volist);
+		request.getRequestDispatcher("/WEB-INF/notice.jsp").forward(request,response);
 	}
 
 	/**
