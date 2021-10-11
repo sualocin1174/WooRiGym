@@ -26,7 +26,7 @@ import woorigym.user.model.vo.UserTable;
 /**
  * Servlet implementation class OrderListServlet
  */
-
+//참고용
 @WebServlet("/orderlist2")   //  get : forward
 public class OrderListServlet2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -45,13 +45,13 @@ public class OrderListServlet2 extends HttpServlet {
 		
 
 		PrintWriter out = response.getWriter();
-		UserTable userTableSessionAttr = (UserTable)request.getSession().getAttribute("user_id");
+		UserTable userTableSessionAttr = (UserTable)request.getSession().getAttribute("LoginInfo");
 		if(userTableSessionAttr == null) {
 			 out.append("<script>alert('로그인 상태가 아닙니다.!\n'로그인 해주세요!');</script>");
 			 return;
 		}
 		String uid = userTableSessionAttr.getUser_id();
-		System.out.println("user_id: "+uid);
+		System.out.println("LoginInfo: "+uid);
 		
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());

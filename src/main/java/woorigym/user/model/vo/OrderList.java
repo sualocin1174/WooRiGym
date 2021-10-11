@@ -1,6 +1,6 @@
 package woorigym.user.model.vo;
 
-public class OrderList {
+public class OrderList { // 10/10 추가 - 실제테이블 추가가 아닌 결과화면을 위한 vo 추가생성!
 //	SELECT oinfo.order_no,order_total,order_cost,order_date,order_state, 
 //    odetail.product_no, buy_quantity, 
 //    product.product_name, product.PRODUCT_INFO_URL

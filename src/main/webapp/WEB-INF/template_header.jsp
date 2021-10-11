@@ -4,7 +4,7 @@
     <% String ctxPath = request.getContextPath(); %>
     <%@page import = "woorigym.user.model.vo.UserTable" %>
     <%
-    UserTable u = (UserTable)session.getAttribute("user_id");
+    UserTable u = (UserTable)session.getAttribute("LoginInfo"); // 10/11 user_id -> LoginInfo로 수정
   %>
     <!-- 공통헤더 템플릿입니다. css 작성금지 -->
 <header>
@@ -43,25 +43,7 @@
 		  // 해당 user_id의 마이페이지로 이동
 		  location.href = "mypage";
 	  }
-<%-- 	 $.ajax({
-		 type :"POST",
-		 url : "<%=ctxPath %>/mypage",
-		 data : {
-			 id : $("#").val()
-		 },
-		 dataType : "json",
-		 success: function(data){
-			 if(data.result = "ok"){
-				 var text = " <li><a href='#'>"+data.user_name+"님</a></li>"
-			 } else{
-				 alert("로그인 상태가 아닙니다. 로그인 해주세요."); 
-			 };
-		 },
-		 error : function(request,status,error) { 
-				alert("code:"+request.status+"\n"+"message:"+request.responseText+
-				"\n"+"error:"+error); 
-	        } 
-	 }); --%>
+
   });
   </script>
   

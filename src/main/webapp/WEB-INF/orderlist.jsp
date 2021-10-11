@@ -17,7 +17,7 @@
     <title>마이페이지-주문/배송조회</title>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
     <script>
-  //페이지 로드 시 sysdate 기준 2주 이내의 주문내역 출력
+  //페이지 로드 시 sysdate 기준 1달 이내의 주문내역 출력
     window.onload = pageLoadedHandler;
     function pageLoadedHandler(){
        	// TODO
@@ -52,18 +52,41 @@
     				var html = "";
     				for(var i=0; i<data.length;i++){
     					console.log(data[i]);
-	    				html+="<h4><a href='./orderDetail?order_no="+data[i].order_no+"'>"+data[i].order_no+"</a></h4>";
+	    				html+="<h4><a href='./orderDetailTable?order_no="+data[i].order_no+"'>"+data[i].order_no+"</a></h4>";
+	    				console.log(html);
+	    				html+="<h5><a href='./orderTable?order_date='"+data[i].order_date+"</a></h5>";
+	    				console.log(html);
+	    				html+="<table id='order_detail'><tr><td colspan='2'>상품명</td>"
+		    	            + "<td>수량</td><td>상품금액</td><td>배송비</td><td>진행상태</td></tr>"
+		    	            
+		    	 		+"<a href='./orderDetailTable?product_no="+data[i].product_no+"'>"
+		    	 		+"<img src='./images/1번 메인.jpg'></a></td><td>"+data[i].product_name+"</td>"	  
+		    	 		
+		    	       +"<td><a href='./orderDetailTable?buy_quantity="+data[i].buy_quantity+"'></a></td>"
+		    	       +"<td><a href='./orderTable?order_total="+data[i].order_total+"'></a></td>"
+		    	       +"<td><a href='./orderTable?order_cost="+data[i].order_cost+"'></a></td>"
+		    	       +"<td><a href='./orderTable?order_state="+data[i].order_state+"'></a></td>"
+		    	 				
+		    	       +"<tr><td><a href='./productTable?product_info_url="+data[i].product_info_url+"'></a></td>"
+		    	    	
+		    	        +"</tr></table>";
+		    	   
 	    				console.log(html);
     					
     				}
     				var ol = data[0].product_name;
-        		    $("#order_search").html(ol);
+    				
+        		    $("#order_search").html(ol);//노드 내용 수정하기
+    				//$("#order_search").insertAfter(ol);//검색 버튼 뒤에 ol 추가
+    				//$("#order_search").append(html);
+    				//$("#order_search").html(html);
     			} else {
-        			$("#order_search").html("검색결과 없음");
+        			$("#order_search").html("결과없음");
     			}
     		},
-    		error:function(){
-    			//TODO
+    		error:function(request,status,error){
+    			alert("code:"+request.status+"\n"+"message:"+request.responseText+
+    					"\n"+"error:"+error);
     		}
     	});
 	};
@@ -236,7 +259,7 @@
           height: 80px;
       }
        /* 주문/배송조회 */
-      section > h3 {
+      section > h2 {
           margin: 0;
           text-align: center;
       }
@@ -285,7 +308,7 @@
  	<%@ include file="template_mypage_aside.jsp"%>
 
 <section>
-    <h3>주문/배송 조회</h3>
+    <h2>주문/배송 조회</h2>
     <h4>조회 기간</h4>
     <!-- 달력 -->
      <div id="btngroup">
@@ -301,8 +324,16 @@
     <input type="button" class="button" value="6개월" id="6month">
     <br>
     <input type="submit" class="button" value="검색" id="order_search">
-    <hr> </div>
-  
+    </div>
+  	<table id="order_detail">
+        <tr>
+            <td colspan="2">상품명</td>
+            <td>수량</td>
+            <td>상품금액</td>
+            <td>배송비</td>
+            <td>진행상태</td>
+        </tr>
+        </table>
 </section>
 </body>
 </html>

@@ -1,6 +1,8 @@
 package common.template;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,14 +21,17 @@ public class LogoutTemplate extends HttpServlet {
      */
     public LogoutTemplate() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getSession().removeAttribute("user_id");
+		PrintWriter out = response.getWriter();
+		out.append("<title>로그아웃 템플릿</title>"); // 10/11 추가
+		request.getSession().removeAttribute("LoginInfo");// 10/11 user_id -> LoginInfo로 수정
+		out.println("로그아웃 성공"); // 10/11 추가
+		System.out.println("로그아웃 성공"); // 10/11 추가
 	}
 
 	/**

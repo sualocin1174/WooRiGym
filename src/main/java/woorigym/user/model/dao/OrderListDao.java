@@ -20,7 +20,6 @@ public class OrderListDao {
 	public ArrayList<OrderTable> readOrderListAll(Connection conn, String uid){
 		System.out.println("uid : "+uid);
 		ArrayList<OrderTable> volist = null;
-//		ArrayList<OrderDetailTable> olist = null; //상품번호, 수량은 주문상세내역 테이블에..
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String query = "SELECT order_no,order_total,order_cost,order_date,order_state FROM ORDERINFO WHERE USER_ID = ?";
@@ -59,7 +58,6 @@ public class OrderListDao {
 	public ArrayList<OrderList> readOrderListPeriod(Connection conn, String uid, String startDate ,String endDate){
 		System.out.println("uid : "+uid);
 		ArrayList<OrderList> volist = null;
-//		ArrayList<OrderDetailTable> olist = null; //상품번호, 수량은 주문상세내역 테이블에..
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String query = "SELECT oinfo.order_no,order_total,order_cost, to_char(order_date, 'yyyy/mm/dd hh:mm') order_date,order_state, ";
@@ -95,10 +93,10 @@ public class OrderListDao {
 					vo.setOrder_cost(rset.getInt("order_cost")); //배송비
 					vo.setOrder_date(rset.getString("order_date")); //주문일자
 					vo.setOrder_state(rset.getString("order_state")); //배송상태
-					vo.setProduct_no(rset.getString("product_no")); //배송상태
-					vo.setBuy_quantity(rset.getInt("buy_quantity")); //배송상태
-					vo.setProduct_name(rset.getString("product_name")); //배송상태
-					vo.setProduct_info_url(rset.getString("product_info_url")); //배송상태
+					vo.setProduct_no(rset.getString("product_no")); //상품번호
+					vo.setBuy_quantity(rset.getInt("buy_quantity")); //구매수량
+					vo.setProduct_name(rset.getString("product_name")); //상품명
+					vo.setProduct_info_url(rset.getString("product_info_url")); //상품이미지url
 					volist.add(vo);
 				} while(rset.next());
 			}

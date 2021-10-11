@@ -23,7 +23,6 @@ public class LoginTemplate extends HttpServlet {
      */
     public LoginTemplate() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -31,19 +30,20 @@ public class LoginTemplate extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
+		out.append("<title>로그인 템플릿</title>"); // 10/11 추가
 		UserTable u = new UserTable();
 		u.setUser_id("gym11");
 		u.setEmail("gym11@gmail.com");
 		u.setUser_name("김민수");
-		request.getSession().setAttribute("user_id", u);
-		out.println("로그인 상태 진입"); //1008
+		request.getSession().setAttribute("LoginInfo", u); // 10/11 user_id -> LoginInfo로 수정
+		out.println("로그인 성공"); // 10/08 추가
+		System.out.println("로그인 성공"); // 10/11 추가
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
