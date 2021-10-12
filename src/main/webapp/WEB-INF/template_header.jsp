@@ -26,7 +26,7 @@
             <li><%= u.getUser_name() %>님</li>
             <li><a href="<%=ctxPath %>/LogoutTemplate">로그아웃</a></li>
             <li><a href="<%=ctxPath %>/mypage" id="btnmy">마이페이지</a></li> 
-            <li><a href="#">장바구니</a></li>
+            <li><a href="<%=ctxPath %>/sblist">장바구니</a></li>
             <li><a href="#">최근본상품</a></li>
         </ul>
     </div> <% } %>
@@ -48,7 +48,7 @@
   </script>
   
         <div id="search_icon">
-            <a href="<%=ctxPath %>/slist.ajax">
+            <a href="<%=ctxPath %>/slist"> <!-- 2021.10.12 1차 내용수정 // /slist.ajax에서 /slist로 수정 -->
                 <img src='./images/검색_돋보기.png' alt="검색" width="18px"/><br>
             </a>
         </div>

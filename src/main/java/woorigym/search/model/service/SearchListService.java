@@ -11,6 +11,24 @@ import woorigym.search.model.dao.SearchListDao;
 
 public class SearchListService {
 	
+	// 2021.10.12 1차 추가시작
+	public ProductTable getProductNo(String productNo) {
+		ProductTable vo = null;
+		Connection conn = jdbcTemplate.getConnection();
+		vo = new SearchListDao().getProductNo(conn, productNo);
+		jdbcTemplate.close(conn);
+		return vo;
+	}
+	
+	public ArrayList<ProductTable> searchProductList(int start, int end) {
+		ArrayList<ProductTable> produList = null;
+		Connection conn = jdbcTemplate.getConnection();
+		produList = new SearchListDao().searchProductList(conn, start, end);
+		jdbcTemplate.close(conn);
+		return produList;
+	}
+	// 2021.10.12 1차 추가완료
+	
 	// 2021.10.11 추가시작
 	public int getProductListCount() {
 		int result = 0;

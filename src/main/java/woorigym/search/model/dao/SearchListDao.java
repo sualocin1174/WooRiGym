@@ -9,6 +9,75 @@ import woorigym.common.jdbcTemplate;
 import woorigym.product.model.vo.ProductTable;
 
 public class SearchListDao {
+	// 2021.10.12 1차 추가시작
+	public ProductTable getProductNo(Connection conn, String productNo) {
+		System.out.println("getProductNo 1");
+		ProductTable vo = null;
+		String sql = "select productNo"
+				+ " from product where productNo = ?";
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			System.out.println("getProductNo executeQuery 1");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, productNo);
+			rset = pstmt.executeQuery();
+			System.out.println("getProductNo executeQuery 2");
+			if (rset.next()) {
+				vo = new ProductTable();
+				vo.setProductNo(rset.getString("product_No"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			jdbcTemplate.close(rset);
+			jdbcTemplate.close(pstmt);
+		}
+		return vo;
+	}
+	
+	public ArrayList<ProductTable> searchProductList(Connection conn, int start, int end) {
+		System.out.println("searchProductList 1");
+		ArrayList<ProductTable> productlist = null;
+		String sql = "select *"
+				+ " from (select rownum r, t1.*"
+				+ "      from(select *"
+				+ "           from Product"
+				+ "           )"
+				+ "      t1) t2"
+				+ " where r between ? and ?";
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			System.out.println("searchProductList executeQuery 1");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			rset = pstmt.executeQuery();
+			System.out.println("searchProductList executeQuery 2");
+			if (rset.next()) {
+				System.out.println("searchProductList executeQuery over 1");
+				productlist = new ArrayList<ProductTable>();
+				do {
+					ProductTable vo = new ProductTable();
+					vo.setProductInfoUrl(rset.getString("product_info_url"));
+					vo.setProductName(rset.getString("product_name"));
+					vo.setProductOption(rset.getString("product_option"));
+					vo.setPrice(rset.getInt("price"));
+					productlist.add(vo);			
+					System.out.println("searchProductList executeQuery over 2");
+				} while (rset.next());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			jdbcTemplate.close(rset);
+			jdbcTemplate.close(pstmt);
+		}
+		System.out.println("searchProductList 2" + productlist);
+		return productlist;
+	}
+	// 2021.10.12 1차 추가완료
 	
 	// 2021.10.11 추가시작
 	public int getProductListCount(Connection conn) {
@@ -39,7 +108,7 @@ public class SearchListDao {
 
 		ArrayList<ProductTable> productlist = null;
 		// 2021.10.11 1차 내용수정 시작
-		String sql = "select p.product_info_url, p.product_name, p.product_option, p.price"
+		String sql = "select p.product_info_url, p.product_name, p.product_option, p.price, p.product_no, count(o.buy_quantity), sum(r.score)"
 				+ " from product p"
 				+ " inner join order_detail o on p.product_no = o.product_no"
 				+ " inner join review r on o.order_detail_no = r.order_detail_no";
@@ -90,19 +159,13 @@ public class SearchListDao {
 			}
 			sql += " p.price between " + minPrice + " and " + maxPrice;
 		}
-		if (selectRank != null || selectRank == "인기순") {
-			if (!flag) {
+		if (selectRank != null && selectRank.equals("인기순")) {
 				sql += " group by p.product_info_url, p.product_name, p.product_option, p.price, p.product_no"
 						+ " order by count(o.buy_quantity) desc";
-				flag = true;
-			}
 		}
-		if (selectRank != null || selectRank == "평점순") {
-			if (!flag) {
+		else if (selectRank != null && selectRank.equals("평점순")) {
 				sql += " group by p.product_info_url, p.product_name, p.product_option, p.price, p.product_no"
 						+ " order by sum(r.score) desc";
-				flag = true;
-			}
 		}
 		// 2021.10.11 1차 내용수정 완료
 		System.out.println(sql);

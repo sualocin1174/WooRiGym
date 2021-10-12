@@ -1,6 +1,6 @@
+   <!-- 헤더 CSS -->
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_header.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-   <!-- 헤더 CSS -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -10,7 +10,6 @@
   String user_name = (String)request.getAttribute("user_name");
   %>
 <%
-	ArrayList<ProductTable> volist = (ArrayList<ProductTable>)request.getAttribute("productvolist");
 	ArrayList<ProductTable> productlist = (ArrayList<ProductTable>) request.getAttribute("productlist");
 %>
 <!DOCTYPE html>
@@ -126,9 +125,9 @@
 					</select>
 				</div> <!-- 2021.10.08 1차 추가완료 -->
 				<div class = "searchmenu"> <!-- 2021.10.07 추가시작 -->
-					<input type="text" name = "minprice[]" class="minprice[]_input" id="minprice[]_input" placeholder="최소금액"> <!-- 2021.10.11 1차 내용수정 -->
+					<input type="text" name = "minprice" class="minprice_input" id="minprice_input" placeholder="최소금액"> <!-- 2021.10.11 1차 내용수정 -->
 					<span> ~ </span>
-					<input type="text" name = "maxprice[]" class="maxprice[]_input" id="maxprice[]_input" placeholder="최대금액"> <!-- 2021.10.11 1차 내용수정 -->
+					<input type="text" name = "maxprice" class="maxprice_input" id="maxprice_input" placeholder="최대금액"> <!-- 2021.10.11 1차 내용수정 -->
 					<span>원</span>
 				</div>
 				<div class="searchmenu">
@@ -140,18 +139,47 @@
 		<!-- <button type="submit" class="btn_search">검색</button>  2021.10.07 삭제-->
     </aside>
     <section>
+	    <p>
+			${productlist}
+			<br>
+			${startPage}
+			<br>
+			${endPage}
+			<br>
+			${pageCount}
+		</p>
     	<h2 id="productlist">상품목록</h2> <!-- 2021.10.08 1차 내용추가 및 추가완료 -->
     	<!-- 2021.10.11 1차 추가시작 -->
     	<table border="1">
-	    	<tr></tr>
+	    	<tr><td>이미지</td></tr>
+	    	<tr><td>상품명</td></tr>
+	    	<tr><td>옵션</td></tr>
+	    	<tr><td>가격</td></tr>	    	
+	    	
+	    	<!-- <tr>
 	    		<td>이미지</td>
-	    	<tr></tr>
 	    		<td>상품명</td>
-	    	<tr></tr>
 	    		<td>옵션</td>
-	    	<tr></tr>
 	    		<td>가격</td>
+	    	</tr> -->
+	   		<%-- <%
+		    	if(productlist != null){
+		    		for(ProductTable vo : productlist){
+	    	%> --%>
+	    	
     	</table>
+    	<c:if test=" ${startPage} > 1 " >
+			이전
+		</c:if>
+		<c:forEach begin="${startPage}"  end="${endPage}" step="1" var="i">
+			<a href="./searchpage?pagenum=${i}"> ${i} </a>
+			<c:if test="${i } != ${endPage}">
+				,
+			</c:if>
+		</c:forEach>
+		<c:if test=" ${endPage} < ${pageCount}" >
+			다음
+		</c:if>
     	<!-- 2021.10.11 1차 추가완료 -->
     </section>
     <footer>
@@ -165,7 +193,8 @@
 				return;
 			} 
 			2021.10.11 1차 내용삭제완료*/
-			
+			console.log($("#minprice_input").val());
+			console.log($("#maxprice_input").val());
 			$.ajax({
 				type:"post",
 				url:"<%=request.getContextPath()%>/slist.ajax",
@@ -175,8 +204,8 @@
 					parentCategory: $("#category option:selected").val(),
 					selectRank: $("#rank option:selected").val(), 
 					/* childCategory: "", */
-					minPrice: 0,/* $("#minprice[]_input").val(), */
-					maxPrice: 10000000/* $("#maxprice[]_input").val() */
+					minPrice: $("#minprice_input").val(),
+					maxPrice: $("#maxprice_input").val()
 					/* 2021.10.11 1차 수정완료 */
 				},
 				success: function(data){
