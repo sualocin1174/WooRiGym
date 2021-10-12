@@ -140,10 +140,6 @@
 		<!-- <button type="submit" class="btn_search">검색</button>  2021.10.07 삭제-->
     </aside>
     <section>
-<%
-// 이곳은 자바 문법에 따름
-ArrayList<ProductTable> productlist = (ArrayList<ProductTable>) request.getAttribute("productlist");
-%>
     	<h2 id="productlist">상품목록</h2> <!-- 2021.10.08 1차 내용추가 및 추가완료 -->
     	<!-- 2021.10.11 1차 추가시작 -->
     	<table border="1">
@@ -156,11 +152,6 @@ ArrayList<ProductTable> productlist = (ArrayList<ProductTable>) request.getAttri
 	    	<tr></tr>
 	    		<td>가격</td>
     	</table>
-<%
-if (volist != null) {
-	for (ProductTable vo : productlist) {
-		// tr 이 volist 갯수 만큼 생기게 됨.
-%>
     	<!-- 2021.10.11 1차 추가완료 -->
     </section>
     <footer>
