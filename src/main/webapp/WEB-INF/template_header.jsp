@@ -2,9 +2,8 @@
     pageEncoding="UTF-8"%>
     <!-- jstl은 header가 아닌 메인페이지에 삽입 -->
     <% String ctxPath = request.getContextPath(); %>
-    <%@page import = "woorigym.user.model.vo.UserTable" %>
-    <%
-    UserTable u = (UserTable)session.getAttribute("LoginInfo"); // 10/11 user_id -> LoginInfo로 수정
+  <%
+    String u = (String)session.getAttribute("woriGymLoginSession");
   %>
     <!-- 공통헤더 템플릿입니다. css 작성금지 -->
 <header>
@@ -13,7 +12,7 @@
                 <img src='./images/logo_simple_w 180x98.png' alt="로고"/><br>
             </a>
         </div>
-  <%if (u == null){ %> <!-- 로그인 여부 확인 -->
+  <%if (u == null){ %> <!-- 로그인 여부 확인   --> 
         <span id="main_tnb1" class="tnb">
         <ul>
                 <li><a href="<%=ctxPath %>/login" id="btnLogin">로그인</a></li>
@@ -23,7 +22,7 @@
         <% } else { %> 
         <div id="main_tnb2" class="tnb"> 
         <ul>
-            <li><%= u.getUser_name() %>님</li>
+            <li><%=u%>님</li> <!-- 10월 13일  u.getUser_name -> n 수정 -->
             <li><a href="<%=ctxPath %>/LogoutTemplate">로그아웃</a></li>
             <li><a href="<%=ctxPath %>/mypage" id="btnmy">마이페이지</a></li> 
             <li><a href="<%=ctxPath %>/sblist">장바구니</a></li>
@@ -35,7 +34,7 @@
 
 	<!-- 로그인 상태+마이페이지 버튼 클릭=마이페이지 접근가능 -->
   $("#btnmy").on('click',function(){
-	  var a = "${user_id.user_name}";
+	  var a = "${user_id}";
 	  console.log(a);
 	  if (a == ""){
 		  alert("로그인 상태가 아닙니다.\n로그인 해주세요.");

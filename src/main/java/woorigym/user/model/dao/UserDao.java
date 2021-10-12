@@ -3,9 +3,9 @@ package woorigym.user.model.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.ArrayList;
 
-import woorigym.common.*;
+import woorigym.common.jdbcTemplate;
 import woorigym.user.model.vo.UserTable;
 
 public class UserDao {
@@ -42,6 +42,55 @@ public class UserDao {
 		}
 		return -2; //데이터 베이스 에러
 	}
+//	public int userInfo(Connection conn, String user_id) {
+//		String sql ="select user_name email from member where user_id = ?";
+//		PreparedStatement pstmt = null;
+//		ResultSet rset = null;
+//		try {
+//			pstmt = conn.prepareStatement(sql);
+//			pstmt.setString(1, user_id);
+//			rset = pstmt.executeQuery();
+//			if(rset.next()){
+//				return 1; // 아이디 일치
+//			}
+//			return 0; //불일치
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			jdbcTemplate.close(rset);
+//			jdbcTemplate.close(pstmt);
+//		}
+//		return -2; //데이터 베이스 에러
+//	}
+//	public ArrayList<UserTable> userInfo(Connection conn, String user_id) {
+//		ArrayList<UserTable> volist = null; 
+//		String sql ="select (user_name, email) from member where user_id = ?";
+//		PreparedStatement pstmt = null;
+//		ResultSet rset = null;
+//		
+//		try {
+//			pstmt = conn.prepareStatement(sql);
+//			pstmt.setString(1, user_id);
+//			rset = pstmt.executeQuery();
+//			volist = new ArrayList<UserTable>();
+//			if(rset.next()) {
+//				do {
+//					UserTable vo = new UserTable();
+//					vo.setUser_id(rset.getString("user_id"));
+//					vo.setUser_name(rset.getString("user_name"));
+//					vo.setEmail(rset.getString("email"));
+//					volist.add(vo);
+//					}while(rset.next());
+//			}		
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			jdbcTemplate.close(rset);
+//			jdbcTemplate.close(pstmt);
+//		}
+//		 return volist;
+//	}
+	
 	public int dupidChk(Connection conn, String user_id) {
 		int result = 0;
 		String sql = "select count(*) from member where user_id";

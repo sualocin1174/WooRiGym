@@ -48,20 +48,22 @@
 	content: "|";
 }
 
-                #login-menu li:last-child::after {
-                    padding: 15px;
-                    content: "";
-                }
-               
-                #log-box{
-                	position: relative;
-                	left: 500px;
-                	top: -240px;
-                }
-            </style>
-        </head>
+#login-menu li:last-child::after {
+    padding: 15px;
+    content: "";
+}
 
-        <body>
+
+</style>
+</head>
+<body>
+<script>
+	var result = "${result}";
+	console.log(result);
+	if(result == "로그인실패") {
+		alert("아이디와 패스워드가 일치하지 않습니다. 다시 확인하고 로그인해주세요");
+	}
+</script>
             <!-- 공통헤더 템플릿 -->
             <%@ include file="template_header.jsp" %>
 
@@ -75,7 +77,7 @@
                         </ol>
 
                         <div class="container">
-                            <form id= "log-box" method="post" action="loginAction">
+                            <form id= "log-box" method="post" action="login">
                                 <h4 id="head">로그인</h4>
 
                                 <div class="form-group">

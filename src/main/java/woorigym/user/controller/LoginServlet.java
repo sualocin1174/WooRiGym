@@ -76,9 +76,23 @@ public class LoginServlet extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		String user_id = request.getParameter("user_id");
 		String user_pwd = request.getParameter("user_pwd");
-		UserService user = new UserService();
-		int result = user.Login(user_id, user_pwd);
-		if(result == 1) {
+		UserService userDao = new UserService();
+		int result = userDao.Login(user_id, user_pwd);
+//		UserTable user = new UserTable();
+//		ArrayList<UserTable> volist = new UserService().userInfo(user_id);
+		
+//		if(user_id == )
+//		for(UserTable vo : volist){
+//			vo.getUser_id();
+//			vo.getUser_name();
+//			vo.getEmail();
+//		
+//		}
+		
+		
+		
+		if(result == 1) {		
+//			userDao.userInfo(user_id);
 			request.setAttribute("result", result);
 			HttpSession session = request.getSession();
 			session.setAttribute("user_id", user_id);
@@ -86,7 +100,7 @@ public class LoginServlet extends HttpServlet {
 			rd.forward(request, response);
 		}
 		else {
-			request.setAttribute("result", result);
+			request.setAttribute("result", "로그인실패");
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/login.jsp");
 			rd.forward(request, response);
 		}		

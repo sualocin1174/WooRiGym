@@ -3,6 +3,7 @@ package woorigym.user.model.service;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import woorigym.common.jdbcTemplate;
 import woorigym.user.model.dao.UserDao;
@@ -27,7 +28,7 @@ public class UserService {
 		return result;
 	}
 	
-	// ¾ÆÀÌµğÁßº¹Ã¼Å©
+	// ì•„ì´ë”” ì¤‘ë³µ
 	public int dupidChk(String user_id) {
 		Connection conn = jdbcTemplate.getConnection();
 		int result = new UserDao().dupidChk(conn, user_id);
@@ -35,7 +36,7 @@ public class UserService {
 		return result; 
 	}
 	
-	// ¾ÆÀÌµğ Ã£±â ±â´É
+	// ì•„ì´ë”” ì°¾ê¸°
 	public String findId(String user_name, String phone) {
 		Connection conn = jdbcTemplate.getConnection();
 		String user_id = new UserDao().findId(conn, user_name, phone);
@@ -43,11 +44,25 @@ public class UserService {
 		return user_id;
 	}
 	
-	// ºñ¹Ğ¹øÈ£ Ã£±â ±â´É
+	// ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸°
 	public String findPwd(String user_id, String email) {
 		Connection conn = jdbcTemplate.getConnection();
 		String user_pwd = new UserDao().findId(conn, user_id, email);
 		jdbcTemplate.close(conn);
 		return user_pwd;
 	}
+	
+//	public int userInfo(String user_id) {
+//		Connection conn = jdbcTemplate.getConnection();
+//		int result = new UserDao().userInfo(conn, user_id);
+//		return result; //ë°ì´í„° ë² ì´ìŠ¤ ì—ëŸ¬
+//	}
+	
+//	public ArrayList<UserTable> userInfo(String user_id) {
+//		Connection conn = jdbcTemplate.getConnection();
+//		ArrayList<UserTable> volist = new UserDao().userInfo(conn, user_id);
+//		
+//		 return volist;
+//	}
+	
 }
