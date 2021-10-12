@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_header.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import = "woorigym.user.model.vo.UserTable" %>
     <%
     UserTable user = (UserTable)session.getAttribute("LoginInfo");
@@ -17,9 +17,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>우리짐 결제페이지</title>
     <!-- 부트스트랩 CDN -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
      <!-- 헤더 CSS -->
      
     <style>
@@ -104,7 +101,11 @@
 	margin : 50px 100px;
 }
 </style>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
+
 <script type="text/javascript">
     // cart 와 product 불러와서 상품 정보 불러오는 js
     var totalpro = "";
@@ -192,11 +193,6 @@
     	
     	
     }
-    
-   
-    
-  
-    
 
 </script>
 
@@ -238,10 +234,11 @@
 var fixaddr0 = "";
 var fixaddr1 = "";
 var fixaddr2 = "";
+var fixaddrno = "";
     // 배송지 정보 불러오기
     $(document).ready(function () {
     	
-        //해당하는 상품정보 불러오기
+        
         $.ajax({ // JQuery 를 통한 ajax 호출 방식 사용
             type: "post",
             url: "orderaddress",
@@ -252,12 +249,12 @@ var fixaddr2 = "";
                 console.log("주소지 정보 호출 성공");
                 var addressinfo = data;
                 console.log(addressinfo);
-                
+                fixaddrno = addressinfo[0].address_no;
                 fixaddr0 = addressinfo[0].postcode;
                 fixaddr1 = addressinfo[0].basic_address;
                 fixaddr2 = addressinfo[0].detail_address;
                 
-                
+                $("#addressno").val(fixaddrno);
                 $("#postcode").val(fixaddr0);
                 $("#basicaddr").val(fixaddr1);
                 $("#detailaddr").val(fixaddr2);
@@ -277,12 +274,15 @@ var fixaddr2 = "";
         
     }); // ready
     function fixedaddr(){
+    	console.log(fixaddrno);
+    	$("#addressno").val(fixaddrno);
     	$("#postcode").val(fixaddr0);
         $("#basicaddr").val(fixaddr1);
         $("#detailaddr").val(fixaddr2);
     	
     }
     function clearaddr(){
+    	$("#addressno").val("");
     	$("#postcode").val("");
         $("#basicaddr").val("");
         $("#detailaddr").val("");
@@ -365,7 +365,7 @@ var fixaddr2 = "";
                 var p = 0;
                 for (p in couponinfo) {
                     var selcoun = " <option id='c_name" + p + "'>" + couponinfo[p].c_name + " </option>";
-                    var selcoup = " <span id='c_name" + p + "dis' style='display:none'>" + couponinfo[p].c_discount + " </span>";
+                    var selcoup = " <span id='c_name" + p + "dis' style='display:none'>" + couponinfo[p].c_discount + " </span><span id='c_name" + p + "no' style='display:none'>" + couponinfo[p].coupon_no + " </span>";
                     $("#couponselect").append(selcoun);
                     $("#payinfo").append(selcoup);
                     p++;
@@ -384,28 +384,204 @@ var fixaddr2 = "";
              }
         	 //$("#totalprice").val(comma(sumPxQ) + "원");
         },100);
-        
-       
 
         setInterval(function () {
             var finalpay = 1*minusComma($("#totalprice").val()) - (1 * $("#insertmile").val()) - (1 * $("#coudiscount").val()) + (1 * $("#shippingpay").val())
             $("#finalpay").val(comma(finalpay)+"원");
 
-        }, 10);
+        }, 100);
+        
+        
     }); //ready
     function chageacouSelect() {
         if ($("#couponselect option:selected")) {
             if ($("#couponselect option:selected").val() != "쿠폰 선택") {
                 var couid = $("#couponselect option:selected").attr("id");
                 var coudis = "#" + couid + "dis";
+                var couno = "#" + couid + "no";
                 console.log("쿠폰 선택");
                 console.log($(coudis).text());
                 $("#coudiscount").val($(coudis).text());
+                $("#couponno").val($(couno).text());
+                
             } else if ($("#couponselect option:selected").val() == "쿠폰 선택") {
                 $("#coudiscount").val(0);
             }
         };
     }
+  //카드결제 선택 시
+  var openPay;
+  
+    function cardpay() {
+    	$("#paymethodno").val(0);
+    	 // window.name = "부모창 이름"; 
+    	 console.log("카드결제");
+        window.name = "parentForm";
+        // window.open("open할 window", "자식창 이름", "팝업창 옵션");
+        openPay = window.open("cardpayment",
+                "childForm", "width=700, height=350, resizable = no, scrollbars = no, left=400px , top=300px" );
+        
+    };
+    
+    //무통장입금 선택 시
+    function transferpay() {
+    	$("#paymethodno").val(1);
+    	 // window.name = "부모창 이름"; 
+    	 console.log("무통장입금");
+        window.name = "parentForm";
+        // window.open("open할 window", "자식창 이름", "팝업창 옵션");
+        openPay = window.open("depositpayment",
+                "childForm", "width=700, height=350, resizable = no, scrollbars = no, left=400px , top=300px" );
+        
+    };
+    var timer = setInterval(checkChild, 500);
+    
+	// 결제창이 닫히면 db에 주문내역, 주문상세내역 생성 후 화면 넘어가기 기능 10.11추가 10.12 기능 구현
+    function checkChild() { 
+        if (openPay.closed) {
+            console.log("Child window closed");   
+            clearInterval(timer);
+            (function(){
+           	 console.log("정보넘기기");  
+           	 console.log($(".existaddr").is(":checked"));  
+           	 
+           	 // 배송지 새주소일때는 새 주소 생성후 값 넘기고
+           	 // 기존 주소지 일 때는 addressno와 함께 한번에 넘기기
+           	 // 1. 기존 주소지나 기본주소로 골랐을 때
+           	if($(".existaddr").is(":checked")){
+           	 $.ajax({ // JQuery 를 통한 ajax 호출 방식 사용
+                 type: "post",
+                 url: "orderpayment",
+                 async: false,
+              // 주문내역
+                 data: { user_id: "<%=user.getUser_id() %>",
+                	 	 address_no : $("#addressno").val(), //String으로 넘어간거 주의
+                	 	order_memo : $("#ordermemo").val()+"",
+                	 	order_total : minusComma($("#totalprice").val()),
+                	 	order_cost : $("#shippingpay").val()+"",
+                	 	point_discount : $("#insertmile").val()+"",
+                	 	coupon_discount : minusComma($("#coudiscount").val())+"",
+                	 	order_payment : minusComma($("#finalpay").val()),
+                	 	order_method : $("#paymethodno").val(),
+                	 	add_mileage : 0.05 * minusComma($("#totalprice").val())
+                	 	
+                 },
+                 dataType: "json", // 전달받을 객체는 JSON 이다.
+                 success: function (data) {
+                	 alert("주문내역 기록 성공\n" + data);
+                	 //TODO 마이페이지로 넘어가기
+                 },
+                 error : function(request,status,error) {
+                 alert("code:"+request.status+"\n"+"message:"+request.responseText+
+                 "\n"+"error:"+error);
+                 }
+             });
+           	
+           	
+           	} else if($("#newaddr").is(":checked")){
+           		// 새 주소지 만들기
+           		
+             	   $.ajax({ // JQuery 를 통한 ajax 호출 방식 사용
+                        type: "get",
+                        url: "orderinsertaddress",
+                        async: false,
+                        data: { user_id: "<%=user.getUser_id() %>",
+                     		   postcode : $("#postcode").val(),
+                     		   basicaddr : $("#basicaddr").val(),
+                     		   detailaddr : $("#detailaddr").val()
+                        },
+                        success: function (data) {
+								// address_no 받아오기
+								$("#addressno").val(minusComma(data));
+								alert($("#addressno").val());
+
+                            }
+                        });
+           		
+             	  $.ajax({ // JQuery 를 통한 ajax 호출 방식 사용
+                      type: "post",
+                      url: "orderpayment",
+                      async: false,
+                   // 주문내역 만들기 10.12 내용추가
+                      data: { user_id: "<%=user.getUser_id() %>",
+                     	 	 address_no : $("#addressno").val(), //String으로 넘어간거 주의
+                     	 	order_memo : $("#ordermemo").val()+"",
+                     	 	order_total : minusComma($("#totalprice").val()),
+                     	 	order_cost : $("#shippingpay").val()+"",
+                     	 	point_discount : $("#insertmile").val()+"",
+                     	 	coupon_discount : minusComma($("#coudiscount").val())+"",
+                     	 	order_payment : minusComma($("#finalpay").val()),
+                     	 	order_method : $("#paymethodno").val(),
+                     	 	add_mileage : 0.05 * minusComma($("#totalprice").val())
+                     	 	
+                      },
+                      dataType: "json", // 전달받을 객체는 JSON 이다.
+                      success: function (data) {
+                     	 alert("주문내역 기록 성공\n" + data);
+                     	 //TODO 마이페이지로 넘어가기
+                      },
+                      error : function(request,status,error) {
+                      alert("code:"+request.status+"\n"+"message:"+request.responseText+
+                      "\n"+"error:"+error);
+                      }
+                  });
+           	}; // 주소지 생성 여부 if else 문 
+           	
+           	//TODO 1. 사용된 쿠폰 used 로 바꾸기   10.12 내용추가
+           	//TODO 2. 사용된 적립금 만큼 회원 적립금 차감하기  10.12 내용추가
+           	if($("#couponselect option:selected").val() != "쿠폰 선택"){// 쿠폰이 선택 됐다면 조건문
+           		$.ajax({ // JQuery 를 통한 ajax 호출 방식 사용
+                    type: "post",
+                    url: "orderusedcoupon",
+                    async: false,
+                    data: { user_id: "<%=user.getUser_id() %>",
+                  	  coupon_no : minusComma($("#couponno").val())
+                    },
+                    dataType: "json", // 전달받을 객체는 JSON 이다.
+                    success: function (data) {
+                   	 alert("사용된 쿠폰 기록 성공\n" + data);
+                    },
+                    error : function(request,status,error) {
+                    alert("code:"+request.status+"\n"+"message:"+request.responseText+
+                    "\n"+"error:"+error);
+                    }
+                });
+           		
+           	};
+           	
+           	
+           	//적립금 사용액 빼기  10.12 내용추가
+           	//console.log(minusComma($("#insertmile").val()));
+           	if(minusComma($("#insertmile").val())){
+           		$.ajax({ // JQuery 를 통한 ajax 호출 방식 사용
+                    type: "post",
+                    url: "orderusedmile",
+                    async: false,
+                    data: { user_id: "<%=user.getUser_id() %>",
+                  	  used_mile : minusComma($("#insertmile").val())
+                    },
+                    dataType: "json", // 전달받을 객체는 JSON 이다.
+                    success: function (data) {
+                   	 alert("사용된 적립금 기록 성공\n" + data);
+                    },
+                    error : function(request,status,error) {
+                    alert("code:"+request.status+"\n"+"message:"+request.responseText+
+                    "\n"+"error:"+error);
+                    }
+                });
+           		
+           	}
+           
+           	
+           	  
+           	
+           	
+           	
+           	
+           }()); // checkchild 끝
+        }
+    }
+    
 </script>
     
     </head>
@@ -454,10 +630,10 @@ var fixaddr2 = "";
             <table id="addressuinfo">
                 <tr>
                     <th>배송지 선택</th>
-                    <td>기본 주소 선택 <input type="radio" name="addrtype" checked="checked" onclick="fixedaddr()"> 배송주소록에서 선택 <input type="radio" name="addrtype" onclick="selectAddr()">
+                    <td>기본 주소 선택 <input type="radio" name="addrtype" checked="checked" class="existaddr" onclick="fixedaddr()"> 배송주소록에서 선택 <input type="radio" name="addrtype" class="existaddr" onclick="selectAddr()">
                     <!-- <select id="selectaddress" onchange="chageaddrSelect()">
         <option>배송지 목록에서 선택</option> </select> -->
- 새 주소 입력 <input type="radio" name="addrtype" onclick="clearaddr()"></td>
+ 새 주소 입력 <input type="radio" name="addrtype" id="newaddr" onclick="clearaddr()"></td>
                 </tr>
                 <tr>
                     <th rowspan="2">주소</th>
@@ -476,25 +652,30 @@ var fixaddr2 = "";
                 </tr>
                 <tr>
                     <th>요청사항</th>
-                    <td><textarea  cols="30" rows="5" style="resize: none;"></textarea></td>
+                    <td><textarea  cols="30" rows="5" style="resize: none;" id="ordermemo"></textarea></td>
                 </tr>
             </table>
+            
         </div>
  <div class="orderform">
             ⦁ 결제 정보 입력
             <table id="payinfo">
                 <tr><th>총 상품 가격 </th><td><input type="text" id="totalprice" readonly></td></tr>
-                <tr><th>적립금 사용 </th><td id="usemile"><input type="text" placeholder="0" id="insertmile">현재 금액 : <input type="text" id="availmile" readonly></td></tr>
-                <tr><th>쿠폰 사용 </th><td id="usecoupon"><select id="couponselect" onchange="chageacouSelect()"><option>쿠폰 선택</option></select>적용 금액 : <input id="coudiscount" readonly></td></tr>
+                <tr><th>적립금 사용 </th><td id="usemile"><input type="text" value="0" id="insertmile">현재 금액 : <input type="text" id="availmile" readonly></td></tr>
+                <tr><th>쿠폰 사용 </th><td id="usecoupon"><select id="couponselect" onchange="chageacouSelect()"><option>쿠폰 선택</option></select>적용 금액 : <input id="coudiscount" value="0" readonly></td></tr>
                 <tr><th>배송비 </th><td> <input type="text"  id="shippingpay" readonly> </td></tr>
                 <tr><th>총 결제 금액</th><td><input type="text" id="finalpay" readonly> </td></tr>
-                <tr><th>결제 수단</th><td>신용카드 <input type="radio" name="paymethod">무통장입금 <input type="radio" name="paymethod"></td></tr>
+                <tr><th>결제 수단</th><td>신용카드 <input type="radio" name="paymethod" onclick="cardpay()">무통장입금 <input type="radio" name="paymethod" onclick="transferpay()"></td></tr>
             </table>
         </div>
 </section>
   <p>
-            <input type="submit" value="결제 완료">  
+ 
+  <input type="submit" value="결제 완료" id="submitinfo">
         </p>
+<input type="text" id="addressno">
+<input type="text" id="paymethodno">
+<input type="text" id="couponno">
 
     <footer></footer>
 </body>

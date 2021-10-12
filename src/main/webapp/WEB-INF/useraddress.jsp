@@ -14,7 +14,10 @@
 		border : 1px solid black;
 	}
 </style>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
 <script type="text/javascript">
     // 배송지 정보 불러오기
     $(document).ready(function () {
@@ -28,8 +31,9 @@
                 var addressinfo = data;
                 var p = 0;
                 for (p in addressinfo) {
-                    var seladdr = "<tr id='tr"+p+"'><td id='postcode"+p+"'>"+addressinfo[p].postcode + "</td> <td id='basicaddr"+p+"'>" + addressinfo[p].basic_address + "</td> <td id='detailaddr"+p+"'>" + addressinfo[p].detail_address+"</td><td><button onclick='setAddrInfo("+p+")'>선택</button></td><td><button onclick='delAddr("+p+")'>삭제</button></td></tr>";
+                    var seladdr = "<tr id='tr"+p+"'><td id='postcode"+p+"'>"+addressinfo[p].postcode + "</td> <td id='basicaddr"+p+"'>" + addressinfo[p].basic_address + "</td> <td id='detailaddr"+p+"'>" + addressinfo[p].detail_address+"</td><td id='addressno"+p+"' style='display:none'>" + addressinfo[p].address_no+"</td><td><button onclick='setAddrInfo("+p+")'>선택</button></td><td><button onclick='delAddr("+p+")'>삭제</button></td></tr>";
                     $("#addrtable").append(seladdr);
+                    
                     p++;
                 }
                 
@@ -45,6 +49,8 @@
         opener.document.getElementById("postcode").value = $("#postcode"+n+"").text();
         opener.document.getElementById("basicaddr").value = $("#basicaddr"+n+"").text();
         opener.document.getElementById("detailaddr").value = $("#detailaddr"+n+"").text();
+        opener.document.getElementById("addressno").value = $("#addressno"+n+"").text();
+        
         window.close();
     }
    

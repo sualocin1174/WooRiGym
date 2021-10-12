@@ -164,14 +164,14 @@ public class OrderServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		
 		ArrayList<CartTable> volistCart = new OrderService().getCart(userid);
-		System.out.println(volistCart);
+		//System.out.println(volistCart);
 		Gson cart_gob = new GsonBuilder().setPrettyPrinting().create();
 		String cart_gobStr = "";
 		if(volistCart !=null) {
 			System.out.println("장바구니 불러오기 성공");
 			cart_gobStr = cart_gob.toJson(volistCart);
 			out.println(cart_gobStr);
-			System.out.println(cart_gobStr);
+			//System.out.println(cart_gobStr);
 		} else {
 			System.out.println("장바구니 정보 불러오기 실패");
 		}

@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import woorigym.user.model.vo.CouponTable;
+import woorigym.user.model.vo.UserTable;
 import woorigym.user.model.service.OrderService;
 
 /**
@@ -38,18 +39,17 @@ public class OrderCouponServlet extends HttpServlet {
 		//TODO 쿠폰 정보 - 만료전, 사용 안 된 것  가져오기  --> 객체 배열로 넘길 것임 
 		response.setContentType("application/json;charset=UTF-8");
 		String userid = request.getParameter("user_id");
-
 		PrintWriter out = response.getWriter();
 
 		ArrayList<CouponTable> volistCoupon = new OrderService().getCoupon(userid);
-		System.out.println(volistCoupon);
+		//System.out.println(volistCoupon);
 		Gson coupon_gob = new GsonBuilder().setPrettyPrinting().create();
 		String coupon_gobstr = "";
 		if (volistCoupon != null) {
 			System.out.println("쿠폰 정보 불러오기 성공");
 			coupon_gobstr = coupon_gob.toJson(volistCoupon);
 			out.println(coupon_gobstr);
-			System.out.println(coupon_gobstr);
+//			System.out.println(coupon_gobstr);
 		} else {
 			System.out.println("쿠폰 정보 불러오기 실패");
 		}

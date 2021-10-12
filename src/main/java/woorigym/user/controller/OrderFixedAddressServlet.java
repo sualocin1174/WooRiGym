@@ -43,14 +43,14 @@ public class OrderFixedAddressServlet extends HttpServlet {
 				PrintWriter out = response.getWriter();
 
 				ArrayList<AddressTable> volistAddress = new OrderService().getAddress(userid);
-				System.out.println(volistAddress);
+				//System.out.println(volistAddress);
 				Gson address_gob = new GsonBuilder().setPrettyPrinting().create();
 				String address_gobstr = "";
 				if (volistAddress != null) {
 					System.out.println("주소 정보 불러오기 성공");
 					address_gobstr = address_gob.toJson(volistAddress);
 					out.println(address_gobstr);
-					System.out.println(address_gobstr);
+					//System.out.println(address_gobstr);
 				} else {
 					System.out.println("주소 정보 불러오기 실패");
 				}

@@ -41,14 +41,14 @@ public class OrderProductServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 
 		ArrayList<ProductTable> volistProduct = new OrderService().getProductinfo(userid);
-		System.out.println(volistProduct);
+		//System.out.println(volistProduct);
 		Gson product_gob = new GsonBuilder().setPrettyPrinting().create();
 		String product_gobStr = "";
 		if (volistProduct != null) {
 			System.out.println("구매상품 정보 불러오기 성공");
 			product_gobStr = product_gob.toJson(volistProduct);
 			out.println(product_gobStr);
-			System.out.println(product_gobStr);
+			//System.out.println(product_gobStr);
 		} else {
 			System.out.println("구매상품 정보 불러오기 실패");
 		}

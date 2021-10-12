@@ -43,14 +43,14 @@ public class OrderUserInfoServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 
 		ArrayList<UserTable> voUser = new OrderService().getUserInfo(userid);
-		System.out.println(voUser);
+		//System.out.println(voUser);
 		Gson user_gob = new GsonBuilder().setPrettyPrinting().create();
 		String user_gobstr = "";
 		if (voUser != null) {
 			System.out.println("유저 정보 불러오기 성공");
 			user_gobstr = user_gob.toJson(voUser);
 			out.println(user_gobstr);
-			System.out.println(user_gobstr);
+			//System.out.println(user_gobstr);
 		} else {
 			System.out.println("유저 정보 불러오기 실패");
 		}
