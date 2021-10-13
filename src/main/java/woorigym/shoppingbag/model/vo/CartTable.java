@@ -14,15 +14,25 @@ public class CartTable {
 	private String productNo;
 	private int cartQuantity;
 	private int checked;
+	// 2021.10.13 1차 내용추가시작
+	private String productName;
+	private String productOption;
+	private int price;
+	// 2021.10.13 1차 내용추가완료
 
 	public static void main(String[] args) {
 	}
 
+	// 2021.10.13 1차 내용수정시작
 	@Override
 	public String toString() {
 		return "CartTable [cartNo=" + cartNo + ", userId=" + userId + ", productNo=" + productNo + ", cartQuantity="
-				+ cartQuantity + ", checked=" + checked + "]";
+				+ cartQuantity + ", checked=" + checked + ", productName=" + productName + ", productOption="
+				+ productOption + ", price=" + price + "]";
 	}
+	// 2021.10.13 1차 내용수정완료
+
+
 
 	public int getCartNo() {
 		return cartNo;
@@ -63,7 +73,30 @@ public class CartTable {
 	public void setChecked(int checked) {
 		this.checked = checked;
 	}
-	
-	
 
+	// 2021.10.13 1차 내용추가시작
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public String getProductOption() {
+		return productOption;
+	}
+
+	public void setProductOption(String productOption) {
+		this.productOption = productOption;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	// 2021.10.13 1차 내용추가완료
 }

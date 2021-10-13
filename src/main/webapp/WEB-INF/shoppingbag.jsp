@@ -76,52 +76,41 @@
 <!-- 공통헤더 템플릿 -->
 <%@ include file="template_header.jsp"%>
 
-<h2>장바구니</h2>
-<c:choose>
-    <c:when test="${map.count == 0 }">
-    <!-- when은 ~~일때 라는 뜻 그러니까 map의 count가 0일때... -->
-    <!-- xml파일에서 hashmap에 list를 넣어놓았기 때문에 현재 map에 자료가 들어있다.  -->
-    <!-- map에 자료가 아무것도 없다면 -->
-        장바구니가 비었습니다.
-    </c:when>
-    
-    <c:otherwise>
-        <form id="form1" name="form1" method="post">
-            <table border="1" width="400px">
-                <tr>
-                	<th><input type ="checkbox" name="mainCB"> 체크박스</th>
-                    <th>상품명/옵션</th>
-                    <th>수량</th>
-                    <th>상품금액</th>
-                    <th>적립금</th>
-                    <th>배송비</th>
-                </tr>
-                <tr align="center">
-                	<td><input type ="checkbox" name="subCB"> 체크박스</td>
-                    <td>상품명/옵션</td>
-                    <td>수량</td>
-                    <!-- <fmt:formatNumber value="" pattern="#,###,###"/> -->
-                    <td>상품금액</td>
-                    <td>적립금</td>
-                    <td>배송비</td>
-                </tr>
-            </table>
-            <table>
-                <tr>
-                    <td align="right">
-                        장바구니 금액 합계 :
-                        <br>
-                        배송료 : <br>
-                        총합계 : 
-                    </td>
-                </tr>
-            </table>                
-            <button type="button" id="btnSelectDelete">선택구매</button>
-            <button type="button" id="btnSelectDelete">선택삭제</button>
-            <button type="button" id="btnAllDelete">전체구매</button>
-            <button type="button" id="btnAllDelete">전체삭제</button>
-        </form>
-    </c:otherwise>
-</c:choose>
+	<h2>장바구니</h2>
+	<form id="form1" name="form1" method="post">
+	    <table border="1" width="400px">
+	        <tr>
+	        	<th><input type ="checkbox" name="mainCB" id="mainCB"> 체크박스</th> <!-- 2021.10.13 1차 내용수정 id값 추가 -->
+	            <th>상품명/옵션</th>
+	            <th>수량</th>
+	            <th>상품금액</th>
+	            <th>적립금</th>
+	            <th>배송비</th>
+	        </tr>
+	        <tr align="center">
+	        	<td><input type ="checkbox" name="subCB" id="subCB"> 체크박스</td> <!-- 2021.10.13 1차 내용수정 id값 추가 -->
+	            <td>상품명/옵션</td>
+	            <td>수량</td>
+	            <!-- <fmt:formatNumber value="" pattern="#,###,###"/> -->
+	            <td>상품금액</td>
+	            <td>적립금</td>
+	            <td>배송비</td>
+	        </tr>
+	    </table>
+	    <table>
+	        <tr>
+	            <td align="right">
+	                장바구니 금액 합계 :
+	                <br>
+	                배송료 : <br>
+	                총합계 : 
+	            </td>
+	        </tr>
+	    </table>                
+	    <button type="button" id="btnSelectDelete">선택구매</button>
+	    <button type="button" id="btnSelectDelete">선택삭제</button>
+	    <button type="button" id="btnAllDelete">전체구매</button>
+	    <button type="button" id="btnAllDelete">전체삭제</button>
+	</form>
 </body>
 </html>

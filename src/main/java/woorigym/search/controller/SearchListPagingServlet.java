@@ -46,8 +46,11 @@ public class SearchListPagingServlet extends HttpServlet {
 	}
 
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		final int PAGE_SIZE = 2; // 한 페이지 당 글수
-		final int PAGE_BLOCK = 3; // 한 화면에 나타날 페이지 링크 수
+		// 2021.10.13 1차 수정시작
+		final int PAGE_SIZE = 20; // 한 페이지 당 글수
+		final int PAGE_BLOCK = 5; // 한 화면에 나타날 페이지 링크 수
+		// 페이지당 글 수랑 화면에 나타낼 페이지 수 변경
+		// 2021.10.13 1차 수정완료
 		int bCount = 0; // 총 글수
 		int pageCount = 0; // 총 페이지수
 		int startPage = 1; // 화면에 나타날 시작페이지

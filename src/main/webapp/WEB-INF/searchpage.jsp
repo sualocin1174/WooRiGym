@@ -139,7 +139,7 @@
 		<!-- <button type="submit" class="btn_search">검색</button>  2021.10.07 삭제-->
     </aside>
     <section>
-	    <p>
+	   <%--  <p>
 			${productlist}
 			<br>
 			${startPage}
@@ -147,21 +147,18 @@
 			${endPage}
 			<br>
 			${pageCount}
-		</p>
+		</p> --%>
     	<h2 id="productlist">상품목록</h2> <!-- 2021.10.08 1차 내용추가 및 추가완료 -->
     	<!-- 2021.10.11 1차 추가시작 -->
     	<table border="1">
-	    	<tr><td>이미지</td></tr>
-	    	<tr><td>상품명</td></tr>
-	    	<tr><td>옵션</td></tr>
-	    	<tr><td>가격</td></tr>	    	
-	    	
-	    	<!-- <tr>
-	    		<td>이미지</td>
-	    		<td>상품명</td>
-	    		<td>옵션</td>
-	    		<td>가격</td>
-	    	</tr> -->
+    	<!-- 2021.10.13 1차 추가시작 -->
+    		<c:forEach var="plist" items="${productlist}">
+		    	<tr><td>이미지 : ${plist.productInfoUrl}</td></tr>
+		    	<tr><td>상품명 : ${plist.productName}</td></tr>
+		    	<tr><td>옵션 : ${plist.productOption}</td></tr>
+		    	<tr><td>가격 : ${plist.price}</td></tr>
+    	<!-- 2021.10.13 1차 추가완료 -->
+	    	</c:forEach>
 	   		<%-- <%
 		    	if(productlist != null){
 		    		for(ProductTable vo : productlist){
