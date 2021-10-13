@@ -11,23 +11,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import woorigym.user.model.vo.UserTable;
 
-/**
- * Servlet implementation class LoginTemplate
- */
+
 @WebServlet("/LoginTemplate")
 public class LoginTemplate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+   
     public LoginTemplate() {
         super();
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 		out.append("<title>로그인 템플릿</title>"); // 10/11 추가
@@ -35,14 +28,12 @@ public class LoginTemplate extends HttpServlet {
 		u.setUser_id("gym11");
 		u.setEmail("gym11@gmail.com");
 		u.setUser_name("김민수");
-		request.getSession().setAttribute("loginSS", u); // 10/11 user_id -> LoginInfo로 수정
+		request.getSession().setAttribute("loginSS", u); // 10/13 수정
 		out.println("로그인 성공"); // 10/08 추가
 		System.out.println("로그인 성공"); // 10/11 추가
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}

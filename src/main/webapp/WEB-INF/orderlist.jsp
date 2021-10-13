@@ -1,6 +1,8 @@
    <!-- 헤더 CSS -->
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_header.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- 마이페이지 사이드 CSS -->
+ <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_mypage_aside.css" />
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -17,20 +19,50 @@
     <title>마이페이지-주문/배송조회</title>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
     <script>
-  //페이지 로드 시 sysdate 기준 1달 이내의 주문내역 출력
+    
+    	// 현재 날짜 및 시간
+        var now = new Date();	
+        console.log("현재 : ", now);
+    function sysdate(){
+        //날짜 추출
+    	var yyyy = now.getFullYear();
+    	var mm = now.getMonth() + 1;
+    	var dd = now.getDate();
+	//원하는 날짜형식: yyyy/mm/dd
+    	return yyyy+"/"+mm+"/"+dd;
+    }
+        console.log("현재 : ", sysdate());
+ 
+ 	 //한달 전
+    var oneMonthAgo = new Date(now.setMonth(now.getMonth() - 1)); 
+    console.log("한달 전 : ", oneMonthAgo);
+    
+    function default_date(){
+    	var year = oneMonthAgo.getFullYear();
+    	var month = ("0"+(1+oneMonthAgo.getMonth())).slice(-2);
+    	var day = ("0"+oneMonthAgo.getDate()).slice(-2);
+    	
+    	return year+"/"+month+"/"+day;
+    }
+        console.log("한달 전 : ", default_date());
+    
+  //페이지 로드 시 오늘날짜 기준 1달 이내의 주문내역 출력
     window.onload = pageLoadedHandler;
     function pageLoadedHandler(){
        	// TODO
     	//$("#start_date").val(1달전날짜);
     	//$("#end_date").val(오늘날짜);
-    	$("#start_date").val("2021-08-01");
-    	$("#end_date").val("2021-10-01");
+    	$("#start_date").val(default_date());
+    	$("#end_date").val(sysdate());
+    	console.log("1달전 : ", oneMonthAgo); 
+    	console.log("오늘 날짜 : ", sysdate); 
     	
     	$("#order_search").on("click", ajaxF1);
     	ajaxF1();
     }
+    
     function ajaxF1(){ //검색버튼 클릭 시
-    	// 유효성검사 해도되고 
+    	// TODO: 유효성검사 해도되고 
     	var startDate = $("#start_date").val();
     	var endDate =  $("#end_date").val();
     	console.log(startDate);
@@ -44,6 +76,7 @@
     		},
     		dataType: "json", //전달받을 객체는 json이다.
     		success: function(data){
+    			
     			console.log(data);
     			console.log(data.length);
     			console.log(data[0].product_name);
@@ -74,14 +107,14 @@
 	    				console.log(html);
     					
     				}
+        		    $("#order_search").html(html);//노드 내용 수정하기
     				var ol = data[0].product_name;
-    				
-        		    $("#order_search").html(ol);//노드 내용 수정하기
+    		       // $("#olist").append(html);
     				//$("#order_search").insertAfter(ol);//검색 버튼 뒤에 ol 추가
-    				//$("#order_search").append(html);
     				//$("#order_search").html(html);
     			} else {
         			$("#order_search").html("결과없음");
+        			//$("#olist").append("결과없음");
     			}
     		},
     		error:function(request,status,error){
@@ -90,116 +123,11 @@
     		}
     	});
 	};
+	
+	
     </script>
-    <!-- header.css 분리예정 -->
+ <!-- /* content */ -->
  <style>
-     /* reset */
-     * {
-         margin: 0;
-         padding: 0;
-     }
-
-     /* header */
-     header {
-         width: 1200px;
-         /* margin: 0 auto; */
-         /* margin-right: 0;; */
-         height: 160px;
-         position: relative;
-         padding: 30px;
-     }
-
-     a {
-         color: #BDBDBD;
-         text-decoration: none;
-     }
-
-     a:link {
-         text-decoration: none;
-     }
-
-     a:hover {
-         color: #333;
-         text-decoration: none;
-     }
-
-     ul {
-         list-style-type: none;
-         position: relative;
-     }
-
-     #nav.container {
-         text-align: center;
-         padding: 15px;
-         width: 1200px;
-         height: 62px;
-     }
-
-     #nav li {
-         display: inline-block;
-         padding: 0px 15px;
-     }
-
-     /* 마우스 오버 시 하위메뉴 노출 */
-     #nav .dropdown:hover .dropdown-menu {
-         display: inline-block;
-         /* margin: 0; */
-         /* width: 100%; */
-     }
-
-
-     /* 상단바 가로 정렬 */
-     .dropdown {
-         display: inline-block;
-         position: relative;
-         /* top: 10px; */
-     }
-
-     /* 상단바 테두리 없애기 */
-     .btn {
-         border: 0px;
-         padding: 10;
-     }
-      /* 로그인 전 후 화면 다름 시작 */
-     #main_tnb2 {
-         position: absolute;
-         top: 10px;
-         bottom: 10px;
-         right: 30px;
-         margin: 10px;
-         overflow: hidden;
-         width: 500px;
-         height: 100px;
-     }
-
-     #main_tnb2>ul>li {
-         display: inline-block;
-         padding: 5px;
-         /* border: 1px solid black; */
-     }
-
-     /* OOO님 | 로그아웃 | 마이페이지 | 장바구니 | 최근본상품 */
-     #main_tnb2 li::after {
-         padding-left: 10px;
-         content: "|";
-     }
-     #main_tnb2 li:last-child::after {
-         padding-left: 10px;
-         content: "";
-     }
-      /* 로그인 전 후 화면 다름  끝*/
-
-     #search_icon a {
-         position: absolute;
-         top: 10px;
-         right: 50px;
-         margin: 15px;
-         width: 25px;
-         height: 25px;
-     }
- </style>
- <style>
-     /* content */
      section {
          width: 900px;
          padding: 30px 0 30px 0;
@@ -207,44 +135,6 @@
          bottom: 170px;
          left: 300px;
      }
-     aside {
-         padding: 30px 0 0 30px;
-     }
-     #side-menu>ul>li{
-         padding: 5px;
-     }
-     /* 마이페이지 폰트 크게 */
-     #side-menu>ul>li:first-child{
-         font-size: 25px;
-     }
-
-     .coupon td {
-         padding: 0 100px 5px 0;
-     }
-     #order_info tr:first-child>td {
-         font-size: 50px;
-         padding: 45px;
-     }
-     #order_info tr:nth-child(2)>td{
-         text-align: center;
-         padding: 0 20px 0 20px;
-      }
-     /* 취소/교환/반품 */
-      #delivery_info > li{
-         position: relative;
-         top:20px;
-         display: inline-block;
-         border: 1px solid #BDBDBD;
-         padding: 10px 50px;
-      }
-      .recent_product{
-          position: relative;
-          top: 40px
-      }
-      .recent_product > img {
-          width: 200px;
-          height: 200px;
-      }
 
       table#order_detail{
           text-align: center;
@@ -332,6 +222,13 @@
             <td>상품금액</td>
             <td>배송비</td>
             <td>진행상태</td>
+        </tr>
+        <tr id="olist">
+            <td colspan="2"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
         </tr>
         </table>
 </section>

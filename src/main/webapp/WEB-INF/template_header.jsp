@@ -39,6 +39,7 @@
 	  console.log(a);
 	  if (a == ""){
 		  alert("로그인 상태가 아닙니다.\n로그인 해주세요.");
+		  //TODO: 로그인 페이지로 이동
 	  } else{
 		  // 해당 user_id의 마이페이지로 이동
 		  location.href = "mypage";

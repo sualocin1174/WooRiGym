@@ -17,35 +17,21 @@ import woorigym.user.model.service.OrderListService;
 import woorigym.user.model.vo.OrderList;
 import woorigym.user.model.vo.UserTable;
 
-/**
- * Servlet implementation class OrderListView
- */
-@WebServlet("/orderlist")   // get방식: viewpage forward로 열기, post는 ajax
+@WebServlet("/orderlist")   // get방식: viewpage forward로 열기(orderlist2), post방식: ajax
 public class OrderListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public OrderListServlet() {
-        super();
-    }
+    public OrderListServlet() { super(); }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String viewPage = "/WEB-INF/orderlist.jsp";
 		request.getRequestDispatcher(viewPage).forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 		//매개변수와 동일한 객체 속성값 불러오는 메소드
-		UserTable userTableSessionAttr = (UserTable)request.getSession().getAttribute("loginSS"); // 10/11 user_id -> LoginInfo로 수정
+		UserTable userTableSessionAttr = (UserTable)request.getSession().getAttribute("loginSS"); // 10/13 수정
 		if(userTableSessionAttr == null) {
 			out.append("로그인 상태가 아닙니다!\n로그인 해주세요!");
 			 out.flush();

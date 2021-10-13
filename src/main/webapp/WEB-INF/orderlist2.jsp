@@ -15,7 +15,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>주문배송조회 Get방식</title>
 </head>
 <body>
 	<c:if test="${orderList != null}">

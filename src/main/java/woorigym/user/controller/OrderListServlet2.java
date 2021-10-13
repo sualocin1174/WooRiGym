@@ -23,26 +23,14 @@ import woorigym.user.model.vo.OrderList;
 import woorigym.user.model.vo.OrderTable;
 import woorigym.user.model.vo.UserTable;
 
-/**
- * Servlet implementation class OrderListServlet
- */
 //참고용
-@WebServlet("/orderlist2")   //  get : forward
+@WebServlet("/orderlist2")   //  get방식 : forward
 public class OrderListServlet2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public OrderListServlet2() {
-        super();
-    }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	public OrderListServlet2() { super(); }
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 
 		PrintWriter out = response.getWriter();
 		UserTable userTableSessionAttr = (UserTable)request.getSession().getAttribute("loginSS");
@@ -76,9 +64,6 @@ public class OrderListServlet2 extends HttpServlet {
 		request.getRequestDispatcher(viewPage).forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
 	}

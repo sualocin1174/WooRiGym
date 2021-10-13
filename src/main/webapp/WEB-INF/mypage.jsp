@@ -1,6 +1,8 @@
+   <!-- 헤더 CSS -->
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_header.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-   <!-- 헤더 CSS -->
+  <!-- 마이페이지 사이드 CSS -->
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_mypage_aside.css" />
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -22,36 +24,6 @@
             margin: 0;
             padding: 0;
         }
-        
-           /* 공통헤더에 있던 부분인데 css로 따로 빼면 적용이 안되서 reset에 포함 */
-        #main_tnb2 {
-            position: absolute;
-            top: 10px;
-            bottom: 10px;
-            right: 30px;
-            margin: 10px;
-            overflow: hidden;
-            width: 500px;
-            height: 100px;
-        }
-		
-        #main_tnb2>ul>li {
-            display: inline-block;
-            padding: 5px;
-        }
-      
-        /* 로그인 후: OOO님 | 로그아웃 | 마이페이지 | 장바구니 | 최근본상품 */
-        #main_tnb2 li::after {
-            padding-left: 10px;
-            content: "|";
-        }
-        #main_tnb2 li:last-child::after {
-            padding-left: 10px;
-            content: "";
-        }
-         /* 공통헤더~reset에 포함  끝*/
-
-       
     </style>
     <style>
         /* content */
@@ -61,9 +33,6 @@
             position: relative;
             bottom: 170px;
             left: 300px;
-        }
-        aside {
-            padding: 30px 0 0 30px;
         }
         #side-menu>ul>li{
             padding: 5px;

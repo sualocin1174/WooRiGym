@@ -12,7 +12,7 @@ public class CouponService {
 	public CouponService() {
 	}
 	
-	public ArrayList<CouponTable> couponListAll(String uid){
+	public ArrayList<CouponTable> couponListAll(String uid, String c_name, String c_discount, String c_issue_date, String c_expire_date){
 		Connection conn = getConnection();
 		ArrayList<CouponTable> volist = new CouponDao().couponListAll(conn, uid);
 		close(conn);
