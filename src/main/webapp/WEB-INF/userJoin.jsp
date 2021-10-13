@@ -69,13 +69,11 @@
 				<li data-target="#myCarousel" data-slide-to="2"></li>
 			</ol>
 			
-			<form action="join.do" method="post">
+			<form action="join" method="post">
 				<h4 id="head">회원가입</h4>
 				<div class="form-group">
 					아이디<input type="text" placeholder="아이디" name="user_id" maxlength="20">
-					<form action="#" method="post">
-					<input type="submit" onclick="" value="본인인증">
-					</form>
+					<input type="submit" value="아이디중복">
 					<br>
 				</div>
 				<div class="form-group">

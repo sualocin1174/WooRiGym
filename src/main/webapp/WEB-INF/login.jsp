@@ -90,9 +90,9 @@
                             </form>
                                 <div id="login-menu">
                                     <ul>
-                                        <li><a href="fineId">아이디 찾기</a></li>
-                                        <li><a href="#">비밀번호 찾기</a></li>
-                                        <li><a href="#">회원가입</a></li>
+                                        <li><a href="findId">아이디</a></li>
+                                        <li><a href="findPwd">비밀번호 찾기</a></li>
+                                        <li><a href="join">회원가입</a></li>
                                     </ul>
                                 </div>
 

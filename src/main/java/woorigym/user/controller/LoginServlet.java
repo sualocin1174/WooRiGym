@@ -35,38 +35,6 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
-		
-		
-		//		response.setCharacterEncoding("UTF-8");
-//		response.setContentType("text/html; charset=UTF-8");
-//		UserService user = new UserService();
-//		PrintWriter out = response.getWriter();
-//		String user_id = request.getParameter("user_id");
-//		String user_pwd = request.getParameter("user_pwd");
-//		int result = user.Login(user_id, user_pwd);
-//		if(result == 1) {
-//			response.sendRedirect("/WEB-INF/login.jsp");
-//		}
-//		else {
-//			
-//		}
-		
-		// login?id=gym11&pw=qw1234       -->   로그인 확인방법 (임시)
-//		int result = new UserService().Login(user_id, user_pwd);
-//		if(result == 1) {
-//			request.getSession().setAttribute("LoginInfo", user_id);
-//			System.out.println(user_id + "로그인 성공");
-//			out.append("<p>aaa<p/>");
-//			response.sendRedirect("/web-inf/join.jsp");
-//			request.getRequestDispatcher("test.jsp").forward(request,response);
-//			request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request,response);
-//		}
-//		else if(result == 0) {
-//			out.print("비밀번호 불일치");
-//		}
-//		else {
-//			out.print("아이디가 없습니다");
-//		}
 	}
 
 	/**
@@ -79,16 +47,7 @@ public class LoginServlet extends HttpServlet {
 		String user_pwd = request.getParameter("user_pwd");
 		UserService userSvc = new UserService();
 		UserTable vo = userSvc.Login(user_id, user_pwd);
-//		UserTable user = new UserTable();
-//		ArrayList<UserTable> volist = new UserService().userInfo(user_id);
-		
-//		if(user_id == )
-//		for(UserTable vo : volist){
-//			vo.getUser_id();
-//			vo.getUser_name();
-//			vo.getEmail();
-//		
-//		}
+
 		if(vo != null) {		
 			System.out.println("로그인 성공");
 			request.setAttribute("result", "로그인성공");

@@ -75,14 +75,14 @@
                         </ol>
 
                         <div class="container">
-                            <form id= "log-box" method="post" action="fineId">
+                            <form id= "log-box" method="post" action="findId">
                                 <h4 id="head">아이디 찾기</h4>
 
                                 <div class="form-group">
-                                    <input type="text" placeholder="이름" name="user_name"><br>
+                                   	이름<input type="text" placeholder="이름" name="user_name"><br>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" placeholder="휴대폰 번호" name="phone" maxlength="20"><br>
+                                        휴대폰 번호<input type="text" placeholder="ex)010-1111-2222" name="phone" maxlength="20"><br>
                                 </div>
                                 <div class="form-group">
                                 <input type="submit" value="아이디 찾기">
@@ -90,9 +90,9 @@
                             </form>
                                 <div id="login-menu">
                                     <ul>
-                                        <li><a href="#">아이디</a></li>
-                                        <li><a href="#">비밀번호 찾기</a></li>
-                                        <li><a href="#">회원가입</a></li>
+                                        <li><a href="findId">아이디</a></li>
+                                        <li><a href="findPwd">비밀번호 찾기</a></li>
+                                        <li><a href="join">회원가입</a></li>
                                     </ul>
                                 </div>
 

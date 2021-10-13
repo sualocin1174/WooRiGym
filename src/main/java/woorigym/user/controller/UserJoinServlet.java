@@ -13,7 +13,7 @@ import woorigym.user.model.vo.UserTable;
 /**
  * Servlet implementation class UserJoinServlet
  */
-@WebServlet("/join.do")
+@WebServlet("/join")
 public class UserJoinServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -29,7 +29,7 @@ public class UserJoinServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		request.getRequestDispatcher("/WEB-INF/userJoin.jsp").forward(request, response);
 	}
 
 	/**

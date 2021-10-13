@@ -16,7 +16,7 @@ import woorigym.user.model.service.UserService;
 /**
  * Servlet implementation class UserFindIdServlect
  */
-@WebServlet("/fineId")
+@WebServlet("/findId")
 public class UserFindIdServlect extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -33,9 +33,6 @@ public class UserFindIdServlect extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("/WEB-INF/findId.jsp").forward(request, response);
-		
-		
-		
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 //		PrintWriter out = response.getWriter();
@@ -62,13 +59,14 @@ public class UserFindIdServlect extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		String user_name = request.getParameter("user_name");
 		String phone = request.getParameter("phone");
-		UserService userDao = new UserService();
-		String result = userDao.findId(user_name, phone);
+		UserService userSvc = new UserService();
+		String result = userSvc.findId(user_name, phone);
 		
 		if(result != null) {
 //			request.setAttribute("user_id", result);
+			System.out.println("아이디 찾기 성공");
 			request.getSession().setAttribute("user_id", result);
-			request.getRequestDispatcher("").forward(request, response);;
+			request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);;
 			
 		}
 		else {

@@ -14,7 +14,7 @@ import woorigym.user.model.service.UserService;
 /**
  * Servlet implementation class UserFindPwdServlect
  */
-@WebServlet("/UserFindPwdServlect")
+@WebServlet("/findPwd")
 public class UserFindPwdServlect extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
