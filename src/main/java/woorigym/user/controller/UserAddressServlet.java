@@ -45,7 +45,7 @@ public class UserAddressServlet extends HttpServlet {
 		// 받아온 정보
 		// 1. 로그인된 유저 아이디
 //		String userid = "gym11"; //일단 임의로 정함
-		UserTable user = (UserTable) request.getSession().getAttribute("LoginInfo");
+		UserTable user = (UserTable) request.getSession().getAttribute("loginSS");
 
 		try {
 			String userid = user.getUser_id();

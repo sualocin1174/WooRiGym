@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@page import = "woorigym.user.model.vo.UserTable" %>
 <%
-   UserTable user = (UserTable)session.getAttribute("LoginInfo");
+   UserTable user = (UserTable)session.getAttribute("loginSS");
 %>
 <!DOCTYPE html>
 <html>

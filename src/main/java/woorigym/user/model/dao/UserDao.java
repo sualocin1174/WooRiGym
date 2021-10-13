@@ -13,34 +13,36 @@ public class UserDao {
 	public UserDao() {
 		// TODO Auto-generated constructor stub
 	}
-	public int login(Connection conn, String user_id, String user_pwd) {
-		String sql ="select user_pwd from member where user_id = ?";
+	public UserTable login(Connection conn, String user_id, String user_pwd) {
+		String sql ="select * from member where user_id = ?";
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		System.out.println("로그인 dao 진입");
+		UserTable vo = null;   // 실패시 null 을 return
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, user_id);
 			rset = pstmt.executeQuery();
 			if(rset.next()) {
-				if(rset.getString(1).equals(user_pwd)) {
+				if(rset.getString("user_pwd").equals(user_pwd)) {
 					System.out.println("로그인 성공");
-					return 1; // 로그인 성공
+					vo = new UserTable();
+					vo.setUser_id(rset.getString("user_id"));
+					vo.setUser_name(rset.getString("user_name"));
+					vo.setEmail(rset.getString("email"));
 				}
 				else {
 					System.out.println("비밀번호 불일치");
-					return 0; //비밀번호 불일치
 				}
 			}
 			System.out.println("아이디가 존재하지 않습니다");
-			return -1; //아이디 없음
 		}catch(Exception e) {
 			e.printStackTrace();
 		} finally {
 			jdbcTemplate.close(rset);
 			jdbcTemplate.close(pstmt);
 		}
-		return -2; //데이터 베이스 에러
+		return vo; 
 	}
 //	public int userInfo(Connection conn, String user_id) {
 //		String sql ="select user_name email from member where user_id = ?";

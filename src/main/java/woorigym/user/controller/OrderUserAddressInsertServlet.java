@@ -38,7 +38,7 @@ public class OrderUserAddressInsertServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		
-		UserTable user = (UserTable)request.getSession().getAttribute("LoginInfo");
+		UserTable user = (UserTable)request.getSession().getAttribute("loginSS");
 		System.out.println(user.getUser_id());
 		String user_id = user.getUser_id();
 

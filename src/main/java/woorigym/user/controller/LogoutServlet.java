@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class LogoutServlet
  */
-@WebServlet("/ulogout")
+@WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -26,8 +26,11 @@ public class LogoutServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String viewPage = "/WEB-INF/logoutAction.jsp";
+//		//확인하고 싶은 jsp 경로만 수정하고 새로고침하면 됩니다.
+		request.getRequestDispatcher(viewPage).forward(request, response);
+		
+//		response.sendRedirect("/WEB-INF/logoutAction.jsp");/WEB-INF/logoutAction.jsp 로 url에 표시되게 되므로 안됨.
 	}
 
 	/**

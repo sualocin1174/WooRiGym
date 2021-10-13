@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import woorigym.user.model.service.UserService;
+import woorigym.user.model.vo.UserTable;
 
 /**
  * Servlet implementation class LoginServlet
@@ -76,8 +77,8 @@ public class LoginServlet extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		String user_id = request.getParameter("user_id");
 		String user_pwd = request.getParameter("user_pwd");
-		UserService userDao = new UserService();
-		int result = userDao.Login(user_id, user_pwd);
+		UserService userSvc = new UserService();
+		UserTable vo = userSvc.Login(user_id, user_pwd);
 //		UserTable user = new UserTable();
 //		ArrayList<UserTable> volist = new UserService().userInfo(user_id);
 		
@@ -88,14 +89,11 @@ public class LoginServlet extends HttpServlet {
 //			vo.getEmail();
 //		
 //		}
-		
-		
-		
-		if(result == 1) {		
+		if(vo != null) {		
 //			userDao.userInfo(user_id);
-			request.setAttribute("result", result);
-			HttpSession session = request.getSession();
-			session.setAttribute("user_id", user_id);
+			request.setAttribute("result", "로그인성공");
+			HttpSession sessionId = request.getSession();
+			sessionId.setAttribute("loginSS", vo);
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/loginAction.jsp");
 			rd.forward(request, response);
 		}

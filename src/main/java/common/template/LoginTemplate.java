@@ -35,7 +35,7 @@ public class LoginTemplate extends HttpServlet {
 		u.setUser_id("gym11");
 		u.setEmail("gym11@gmail.com");
 		u.setUser_name("김민수");
-		request.getSession().setAttribute("LoginInfo", u); // 10/11 user_id -> LoginInfo로 수정
+		request.getSession().setAttribute("loginSS", u); // 10/11 user_id -> LoginInfo로 수정
 		out.println("로그인 성공"); // 10/08 추가
 		System.out.println("로그인 성공"); // 10/11 추가
 	}

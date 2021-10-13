@@ -28,7 +28,7 @@ public class OrderUserAddressInsertViewServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
-		UserTable user = (UserTable)request.getSession().getAttribute("LoginInfo");
+//		UserTable user = (UserTable)request.getSession().getAttribute("loginSS");
 		request.getRequestDispatcher("/WEB-INF/insertaddress.jsp").forward(request, response);
 	}
 

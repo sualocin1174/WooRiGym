@@ -59,9 +59,9 @@ public class UserJoinServlet extends HttpServlet {
 //		birthday = "2001/05/31";
 //		identity_number = "2222222";
 //		gender = 0;
-		user_id = "user01";
+		user_id = "user02";
 		user_pwd = "1234";
-		user_name = "사용자1";
+		user_name = "사용자2";
 		email = "user01@a.com";
 		email_yn = 0;
 		phone = "010-1111-2222";

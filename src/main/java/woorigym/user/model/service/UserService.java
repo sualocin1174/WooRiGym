@@ -13,12 +13,12 @@ public class UserService {
 
 	public UserService() {
 	}
-	public int Login(String user_id, String user_pwd) {
+	public UserTable Login(String user_id, String user_pwd) {
 		Connection conn = jdbcTemplate.getConnection();
-		int result = new UserDao().login(conn, user_id, user_pwd);
+		UserTable vo = new UserDao().login(conn, user_id, user_pwd);
 		jdbcTemplate.close(conn);
 		
-		return result;
+		return vo;
 	}
 	
 	public int userInsert(UserTable user) {

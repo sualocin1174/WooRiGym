@@ -3,18 +3,20 @@ package woorigym.user.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import woorigym.user.model.service.UserService;
 
 /**
  * Servlet implementation class UserFindIdServlect
  */
-@WebServlet("/UserFindIdServlect")
+@WebServlet("/fineId")
 public class UserFindIdServlect extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -30,21 +32,25 @@ public class UserFindIdServlect extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getRequestDispatcher("/WEB-INF/findId.jsp").forward(request, response);
+		
+		
+		
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		UserService findID = new UserService();
-		String user_name = request.getParameter("user_name");
-		String phone = request.getParameter("phone");
-		String result = findID.findId(user_name, phone);
-		if(result != null) {
-			// ?user_name=»ç¿ëÀÚ1&phone=010-1111-2222       -->   ¾ÆÀÌµğÃ£±â È®ÀÎ¹æ¹ı (ÀÓ½Ã)
-			out.println("¾ÆÀÌµğ Ã£±â ¼º°ø");
-			System.out.println(user_name + "´ÔÀÇ ¾ÆÀÌµğ´Â" + result + "ÀÔ´Ï´Ù.");
-		}
-		else {
-			System.out.println("Á¤º¸°¡ ¿Ã¹Ù¸£Áö ¾Ê½À´Ï´Ù.");
-		}
+//		PrintWriter out = response.getWriter();
+//		UserService findID = new UserService();
+//		String user_name = request.getParameter("user_name");
+//		String phone = request.getParameter("phone");
+//		String result = findID.findId(user_name, phone);
+//		if(result != null) {
+//			// ?user_name=user01&phone=010-1111-2222       -->   ì„ì‹œí™•ì¸
+//			out.println("ì•„ì´ë”” ì°¾ê¸° ì„±ê³µ");
+//			System.out.println(user_name + "ë‹˜ì˜ ì•„ì´ë””ëŠ”" + result + "ì…ë‹ˆë‹¤.");
+//		}
+//		else {
+//			System.out.println("ì •ë³´ê°€ ì˜¬ë°”ë¥´ì§€ ì•ŠìŠµë‹ˆë‹¤.");
+//		}
 		
 	}
 
@@ -52,7 +58,24 @@ public class UserFindIdServlect extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+		String user_name = request.getParameter("user_name");
+		String phone = request.getParameter("phone");
+		UserService userDao = new UserService();
+		String result = userDao.findId(user_name, phone);
+		
+		if(result != null) {
+//			request.setAttribute("user_id", result);
+//			request.getSession().setAttribute("user_id", result);
+			RequestDispatcher rd = request.getRequestDispatcher("");
+			rd.forward(request, response);
+		}
+		else {
+			
+		}
+		
+		
 	}
 
 }

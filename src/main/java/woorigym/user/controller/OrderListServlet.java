@@ -45,7 +45,7 @@ public class OrderListServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 		//매개변수와 동일한 객체 속성값 불러오는 메소드
-		UserTable userTableSessionAttr = (UserTable)request.getSession().getAttribute("user_id"); // 10/11 user_id -> LoginInfo로 수정
+		UserTable userTableSessionAttr = (UserTable)request.getSession().getAttribute("loginSS"); // 10/11 user_id -> LoginInfo로 수정
 		if(userTableSessionAttr == null) {
 			out.append("로그인 상태가 아닙니다!\n로그인 해주세요!");
 			 out.flush();

@@ -7,7 +7,7 @@
 <%@ page import="woorigym.user.model.vo.OrderList"%>
 <%@ page import = "java.util.ArrayList"%>
 <%--
-//    UserTable o = (UserTable)session.getAttribute("user_id");   // ${user_id}
+//    UserTable o = (UserTable)session.getAttribute("loginSS");   // ${user_id}
 //    ArrayList<OrderList> volist = (ArrayList<OrderList>)session.getAttribute("orderList");  // ${orderList} 
 --%>
 <!-- 10/10 추가 - 참고용 -->

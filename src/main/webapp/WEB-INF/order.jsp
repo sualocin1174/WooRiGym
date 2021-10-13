@@ -6,7 +6,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import = "woorigym.user.model.vo.UserTable" %>
     <%
-    UserTable user = (UserTable)session.getAttribute("LoginInfo");
+    UserTable user = (UserTable)session.getAttribute("loginSS");
   %>
 <!DOCTYPE html>
 <html lang="ko">

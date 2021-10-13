@@ -5,12 +5,8 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- 부트스트랩 CDN -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@page import="woorigym.user.model.vo.UserTable"%>
@@ -52,7 +48,9 @@
     padding: 15px;
     content: "";
 }
-
+.form-group{
+	text-align:center;
+}
 
 </style>
 </head>
@@ -86,12 +84,13 @@
                                 <div class="form-group">
                                     <input type="password" placeholder="비밀번호" name="user_pwd" maxlength="20"><br>
                                 </div>
+                                <div class="form-group">
                                 <input type="submit" value="로그인">
-                                
+                                </div>
                             </form>
                                 <div id="login-menu">
                                     <ul>
-                                        <li><a href="#">아이디</a></li>
+                                        <li><a href="fineId">아이디 찾기</a></li>
                                         <li><a href="#">비밀번호 찾기</a></li>
                                         <li><a href="#">회원가입</a></li>
                                     </ul>

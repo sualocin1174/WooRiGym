@@ -1,9 +1,10 @@
+<%@page import="woorigym.user.model.vo.UserTable"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <!-- jstl은 header가 아닌 메인페이지에 삽입 -->
     <% String ctxPath = request.getContextPath(); %>
   <%
-    String u = (String)session.getAttribute("woriGymLoginSession");
+    UserTable user_id = (UserTable)session.getAttribute("loginSS");
   %>
     <!-- 공통헤더 템플릿입니다. css 작성금지 -->
 <header>
@@ -12,7 +13,7 @@
                 <img src='./images/logo_simple_w 180x98.png' alt="로고"/><br>
             </a>
         </div>
-  <%if (u == null){ %> <!-- 로그인 여부 확인   --> 
+  <%if (user_id == null){ %> <!-- 로그인 여부 확인   --> 
         <span id="main_tnb1" class="tnb">
         <ul>
                 <li><a href="<%=ctxPath %>/login" id="btnLogin">로그인</a></li>
@@ -22,8 +23,8 @@
         <% } else { %> 
         <div id="main_tnb2" class="tnb"> 
         <ul>
-            <li><%=u%>님</li> <!-- 10월 13일  u.getUser_name -> n 수정 -->
-            <li><a href="<%=ctxPath %>/LogoutTemplate">로그아웃</a></li>
+            <li><%=user_id%>님</li> <!-- 10월 13일  u.getUser_name -> n 수정 -->
+            <li><a href="<%=ctxPath %>/logout">로그아웃</a></li>
             <li><a href="<%=ctxPath %>/mypage" id="btnmy">마이페이지</a></li> 
             <li><a href="<%=ctxPath %>/sblist">장바구니</a></li>
             <li><a href="#">최근본상품</a></li>
@@ -45,7 +46,6 @@
 
   });
   </script>
-  
         <div id="search_icon">
             <a href="<%=ctxPath %>/slist"> <!-- 2021.10.12 1차 내용수정 // /slist.ajax에서 /slist로 수정 -->
                 <img src='./images/검색_돋보기.png' alt="검색" width="18px"/><br>
@@ -140,7 +140,7 @@
   <div class="subnav">
     <button class="subnavbtn">회원가입 <i class="fa fa-caret-down"></i></button>
     <div class="subnav-content">
-        <a href="#">로그인</a>
+        <a href="login">로그인</a>
         <a href="#">회원가입</a>
         <a href="#">주문</a>
         <a href="#">나의페이지</a>

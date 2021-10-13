@@ -38,12 +38,12 @@ public class UserFindPwdServlect extends HttpServlet {
 		String email = request.getParameter("email");
 		String result = findPwd.findPwd(user_id, email);
 		if(result != null) {
-			// ?user_id=user01&email=user01@a.com      -->   ¾ÆÀÌµğÃ£±â È®ÀÎ¹æ¹ı (ÀÓ½Ã)
-			out.println("ºñ¹Ğ¹øÈ£  Ã£±â ¼º°ø");
-			System.out.println(user_id + "´ÔÀÇ ºñ¹Ğ¹øÈ£´Â" + result + "ÀÔ´Ï´Ù.");
+			// ?user_id=user01&email=user01@a.com      -->   ì„ì‹œ í™•ì¸
+			out.println("ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸° ì„±ê³µ");
+			System.out.println(user_id + "ë‹˜ì˜ ë¹„ë°€ë²ˆí˜¸ëŠ”" + result + "ì…ë‹ˆë‹¤");
 		}
 		else {
-			System.out.println("Á¤º¸°¡ ¿Ã¹Ù¸£Áö ¾Ê½À´Ï´Ù.");
+			System.out.println("ì •ë³´ê°€ ì˜¬ë°”ë¥´ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 		}
 	}
 
@@ -51,8 +51,8 @@ public class UserFindPwdServlect extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
 	}
 
 }

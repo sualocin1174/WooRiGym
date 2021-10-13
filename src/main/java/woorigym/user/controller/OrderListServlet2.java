@@ -45,7 +45,7 @@ public class OrderListServlet2 extends HttpServlet {
 		
 
 		PrintWriter out = response.getWriter();
-		UserTable userTableSessionAttr = (UserTable)request.getSession().getAttribute("LoginInfo");
+		UserTable userTableSessionAttr = (UserTable)request.getSession().getAttribute("loginSS");
 		if(userTableSessionAttr == null) {
 			 out.append("<script>alert('로그인 상태가 아닙니다.!\n'로그인 해주세요!');</script>");
 			 return;

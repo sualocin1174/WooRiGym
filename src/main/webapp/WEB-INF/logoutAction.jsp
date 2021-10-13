@@ -1,24 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title></title>
+<title>Insert title here</title>
 </head>
 <body>
+	<%
+	session.removeAttribute("loginSS");
+	%>
 	<script>
-		var result = "${result}";
-		console.log(result);
-		var msg = "";
-		if("${loginSS.user_name}" != "") {
-			msg += "${user_name}님, ";
-		}
-		msg +="로그인 하셨습니다.";
-		alert(msg);
+		alert("로그아웃되었습니다.");
 		location.href = "index";
+		//history.go(-1);
 	</script>
 </body>
 </html>
