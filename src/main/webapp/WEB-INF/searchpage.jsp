@@ -150,13 +150,33 @@
 		</p> --%>
     	<h2 id="productlist">상품목록</h2> <!-- 2021.10.08 1차 내용추가 및 추가완료 -->
     	<!-- 2021.10.11 1차 추가시작 -->
-    	<table border="1">
+    	<table>
     	<!-- 2021.10.13 1차 추가시작 -->
     		<c:forEach var="plist" items="${productlist}">
-		    	<tr><td>이미지 : ${plist.productInfoUrl}</td></tr>
+	    		<!-- 2021.10.13 2차 추가시작 -->
+		    	<%-- <tr><td>이미지 : ${plist.productInfoUrl}</td></tr>
 		    	<tr><td>상품명 : ${plist.productName}</td></tr>
 		    	<tr><td>옵션 : ${plist.productOption}</td></tr>
 		    	<tr><td>가격 : ${plist.price}</td></tr>
+		    	<td height="20px"></td> --%>
+		    	
+		    	<tr>
+		    		<td>이미지 : ${plist.productInfoUrl}<br>
+		    			상품명 : ${plist.productName}<br>
+		    			옵션 : ${plist.productOption}<br>
+		    			가격 : ${plist.price}<br><br>
+		    		</td>
+		    	</tr>
+		    	
+		    	<%-- <li>
+		    		<div>${plist.productInfoUrl}</div>
+		    		<div>${plist.productName}</div>
+		    		<div>${plist.productOption}</div>
+		    		<div>${plist.price}</div>
+		    		<div> </div>
+		    	</li> --%>
+	    		<!-- 2021.10.13 2차 추가완 -->
+		    	
     	<!-- 2021.10.13 1차 추가완료 -->
 	    	</c:forEach>
 	   		<%-- <%
