@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class PopUpDeleteServlet
  */
-@WebServlet("/apudelete")
+@WebServlet("/apupage")
 public class PopUpServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

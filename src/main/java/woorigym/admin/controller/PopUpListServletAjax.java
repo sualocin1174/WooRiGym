@@ -19,7 +19,7 @@ import woorigym.admin.model.vo.NoticeTable;
 /**
  * Servlet implementation class PopUpAddServlet
  */
-@WebServlet("/pulist.ajax")
+@WebServlet("/apulist.ajax")
 public class PopUpListServletAjax extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
