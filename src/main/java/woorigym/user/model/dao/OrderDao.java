@@ -51,7 +51,7 @@ public class OrderDao {
 	public ArrayList<AddressTable> getAddress(String userid, Connection conn) {
 		ArrayList<AddressTable> volist;
 
-		String sql = "SELECT POSTCODE, BASIC_ADDRESS, DETAIL_ADDRESS, FIXED_ADDRESS, ADDRESS_NO FROM ADDRESS WHERE USER_ID = ? ORDER BY FIXED_ADDRESS DESC";
+		String sql = "SELECT POSTCODE, BASIC_ADDRESS, DETAIL_ADDRESS, FIXED_ADDRESS, ADDRESS_NO FROM ADDRESS WHERE USER_ID = ? AND FIXED_ADDRESS < 2  ORDER BY FIXED_ADDRESS DESC";
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -228,11 +228,11 @@ public class OrderDao {
 		return result;
 	}
 
-	public int deleteInsert(String user_id, String postcode, String basic_address, String detail_address,
+	public int deleteInsert(String user_id, String postcode, String basic_address, String detail_address, int address_no,
 			Connection conn) {
 		int result = -1;
 
-		String sql = "DELETE ADDRESS WHERE USER_ID = ? AND POSTCODE = ? AND BASIC_ADDRESS = ? AND DETAIL_ADDRESS = ?";
+		String sql = "UPDATE ADDRESS SET FIXED_ADDRESS=2 WHERE USER_ID = ? AND POSTCODE = ? AND BASIC_ADDRESS = ? AND DETAIL_ADDRESS = ?";
 
 		PreparedStatement pstmt = null;
 

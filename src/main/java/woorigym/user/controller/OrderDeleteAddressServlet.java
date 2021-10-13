@@ -40,9 +40,10 @@ public class OrderDeleteAddressServlet extends HttpServlet {
 		String postcode = request.getParameter("postcode");
 		String basic_address = request.getParameter("basicaddr");
 		String detail_address = request.getParameter("detailaddr");
+		int address_no = Integer.parseInt(request.getParameter("addressno"));
 		//System.out.println(detail_address);
 		
-		int result = new OrderService().deleteInsert(user_id, postcode, basic_address, detail_address);
+		int result = new OrderService().deleteInsert(user_id, postcode, basic_address, detail_address, address_no);
 		
 		
 	}

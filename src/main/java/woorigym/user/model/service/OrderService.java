@@ -82,11 +82,11 @@ public class OrderService {
 		
 		return result;
 	}
-	public int deleteInsert(String user_id,String postcode,String basic_address,String detail_address){
+	public int deleteInsert(String user_id,String postcode,String basic_address,String detail_address,int address_no){
 		int result = -1;
 		
 		Connection conn = getConnection();
-		result = new OrderDao().deleteInsert(user_id, postcode, basic_address, detail_address, conn);
+		result = new OrderDao().deleteInsert(user_id, postcode, basic_address, detail_address,address_no, conn);
 		close(conn);
 		
 		return result;

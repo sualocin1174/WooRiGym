@@ -62,7 +62,8 @@
             data: { user_id: "<%=user.getUser_id() %>",
          		   postcode : $("#postcode"+n+"").text(),
          		   basicaddr : $("#basicaddr"+n+"").text(),
-         		   detailaddr : $("#detailaddr"+n+"").text()
+         		   detailaddr : $("#detailaddr"+n+"").text(),
+        		   addressno : $("#addressno"+n+"").text()
             },
             success: function (data) {
          	  window.location.reload();
