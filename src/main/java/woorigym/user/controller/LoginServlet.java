@@ -90,19 +90,16 @@ public class LoginServlet extends HttpServlet {
 //		
 //		}
 		if(vo != null) {		
-//			userDao.userInfo(user_id);
 			System.out.println("로그인 성공");
 			request.setAttribute("result", "로그인성공");
 			HttpSession sessionId = request.getSession();
 			sessionId.setAttribute("loginSS", vo);
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/loginAction.jsp");
-			rd.forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/loginAction.jsp").forward(request, response);;
 		}
 		else {
 			System.out.println("로그인 실패");
 			request.setAttribute("result", "로그인실패");
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/login.jsp");
-			rd.forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);;
 		}		
 	}
 }

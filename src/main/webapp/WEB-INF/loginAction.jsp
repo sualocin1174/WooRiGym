@@ -13,7 +13,7 @@
 		var result = "${result}";
 		console.log(result);
 		var msg = "";
-		if("${loginSS.user_name}" != "") {
+		if("${loginSS}" != "") {
 			msg += "${loginSS.user_id}님, ";
 		}
 		msg +="로그인 하셨습니다.";
