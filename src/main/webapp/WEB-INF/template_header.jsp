@@ -3,33 +3,32 @@
     pageEncoding="UTF-8"%>
     <!-- jstl은 header가 아닌 메인페이지에 삽입 -->
     <% String ctxPath = request.getContextPath(); %>
-  <%
-    UserTable user_id = (UserTable)session.getAttribute("loginSS");
-  %>
     <!-- 공통헤더 템플릿입니다. css 작성금지 -->
 <header>
         <div id="logo">
-            <a href="http://woorigym.dothome.co.kr/">
+            <a href="<%=ctxPath %>/main"> <!-- 10/13 수정: 로고 클릭시 main으로 이동 -->
                 <img src='./images/logo_simple_w 180x98.png' alt="로고"/><br>
             </a>
         </div>
-  <%if (user_id == null){ %> <!-- 로그인 여부 확인   --> 
+        <c:if test="${loginSS == null}"> <!-- 10/13 수정: 로그인 여부 확인   --> 
         <span id="main_tnb1" class="tnb">
         <ul>
                 <li><a href="<%=ctxPath %>/login" id="btnLogin">로그인</a></li>
                 <li><a href="#">최근본상품</a></li>
             </ul>
         </span>
-        <% } else { %> 
+        </c:if>
+   <c:if test="${loginSS != null}"><!-- 10/13 수정: 로그인 여부 확인   --> 
         <div id="main_tnb2" class="tnb"> 
         <ul>
-            <li><%=user_id%>님</li> <!-- 10월 13일  u.getUser_name -> n 수정 -->
+            <li>${user_id}님</li> <!-- 10월 13일  수정. TODO: 유저이름 -->
             <li><a href="<%=ctxPath %>/logout">로그아웃</a></li>
             <li><a href="<%=ctxPath %>/mypage" id="btnmy">마이페이지</a></li> 
             <li><a href="<%=ctxPath %>/sblist">장바구니</a></li>
             <li><a href="#">최근본상품</a></li>
         </ul>
-    </div> <% } %>
+    </div> 
+    </c:if>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script type="text/javascript">
 
