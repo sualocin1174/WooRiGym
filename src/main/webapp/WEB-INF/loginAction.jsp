@@ -14,11 +14,11 @@
 		console.log(result);
 		var msg = "";
 		if("${loginSS.user_name}" != "") {
-			msg += "${user_name}님, ";
+			msg += "${loginSS.user_id}님, ";
 		}
 		msg +="로그인 하셨습니다.";
 		alert(msg);
-		location.href = "index";
+		location.href = "main";
 	</script>
 </body>
 </html>

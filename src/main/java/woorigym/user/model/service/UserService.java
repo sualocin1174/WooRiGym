@@ -17,7 +17,6 @@ public class UserService {
 		Connection conn = jdbcTemplate.getConnection();
 		UserTable vo = new UserDao().login(conn, user_id, user_pwd);
 		jdbcTemplate.close(conn);
-		
 		return vo;
 	}
 	

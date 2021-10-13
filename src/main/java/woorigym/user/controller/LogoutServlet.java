@@ -26,6 +26,7 @@ public class LogoutServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("로그아웃");
 		String viewPage = "/WEB-INF/logoutAction.jsp";
 //		//확인하고 싶은 jsp 경로만 수정하고 새로고침하면 됩니다.
 		request.getRequestDispatcher(viewPage).forward(request, response);

@@ -67,9 +67,9 @@ public class UserFindIdServlect extends HttpServlet {
 		
 		if(result != null) {
 //			request.setAttribute("user_id", result);
-//			request.getSession().setAttribute("user_id", result);
-			RequestDispatcher rd = request.getRequestDispatcher("");
-			rd.forward(request, response);
+			request.getSession().setAttribute("user_id", result);
+			request.getRequestDispatcher("").forward(request, response);;
+			
 		}
 		else {
 			

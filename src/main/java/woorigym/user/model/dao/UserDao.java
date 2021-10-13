@@ -25,17 +25,12 @@ public class UserDao {
 			rset = pstmt.executeQuery();
 			if(rset.next()) {
 				if(rset.getString("user_pwd").equals(user_pwd)) {
-					System.out.println("로그인 성공");
 					vo = new UserTable();
 					vo.setUser_id(rset.getString("user_id"));
 					vo.setUser_name(rset.getString("user_name"));
 					vo.setEmail(rset.getString("email"));
 				}
-				else {
-					System.out.println("비밀번호 불일치");
-				}
 			}
-			System.out.println("아이디가 존재하지 않습니다");
 		}catch(Exception e) {
 			e.printStackTrace();
 		} finally {

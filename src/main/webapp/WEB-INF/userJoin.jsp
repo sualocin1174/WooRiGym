@@ -19,6 +19,8 @@
 <style>
 #head {
 	text-align: center;
+	position: relative;
+	top: 10px;
 }
 
 #login-btn {
@@ -49,6 +51,11 @@
 	padding: 15px;
 	content: "";
 }
+.form-group{
+	text-align: center;
+	position: relative;
+	top: 10px;
+}
 </style>
 </head>
 <body>
@@ -62,22 +69,39 @@
 				<li data-target="#myCarousel" data-slide-to="2"></li>
 			</ol>
 			
-			<form action="loginAction.jsp" method="post">
-				<h4 id="head">로그인</h4>
-
+			<form action="join.do" method="post">
+				<h4 id="head">회원가입</h4>
 				<div class="form-group">
-					<input type="text" placeholder="아이디" name="user_id" maxlength="20"><br>
+					아이디<input type="text" placeholder="아이디" name="user_id" maxlength="20">
+					<form action="#" method="post">
+					<input type="submit" onclick="" value="본인인증">
+					</form>
+					<br>
 				</div>
 				<div class="form-group">
-					<input type="password" placeholder="비밀번호" name="user_pwd" maxlength="20"><br>
+					비밀번호<input type="password" placeholder="비밀번호" name="user_pwd" maxlength="20"><br>
 				</div>
-				<input type="submit" value="로그인">
+				<div class="form-group">
+					비밀번호 확인<input type="password" placeholder="비밀번호 확인" name="user_pwdtest" maxlength="20"><br>
+				</div>
+				<div class="form-group">
+					연락처<input type="text" placeholder="ex)010-1111-2222" name="phone" maxlength="20"><br>
+				</div>
+				<div class="form-group">
+					이메일<input type="text" placeholder="이메일" name="email" maxlength="20"><br>
+				</div>
+				<div class="form-group">
+					주민등록번호<input type="text" placeholder=" 뒷자리 7자리" name="user_pwd" maxlength="20"><br>
+				</div>
+				<div class="form-group">
+				<input type="submit" value="회원가입">
+				</div>
 				<div id="login-menu">
-					<ui>
+				
+					<ul>
 					<li><a href="#">아이디</a></li>
 					<li><a href="#">비밀번호 찾기</a></li>
-					<li><a href="#">회원가입</a></li>
-					</ui>
+					</ul>
 				</div>
 			</form>
 </body>
