@@ -57,10 +57,12 @@ public class OrderListDao {
 	
 	public ArrayList<OrderList> readOrderListPeriod(Connection conn, String uid, String startDate ,String endDate){
 		System.out.println("uid : "+uid);
+		System.out.println("startDate: "+startDate);
+		System.out.println("endDate: "+endDate);
 		ArrayList<OrderList> volist = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query = "SELECT oinfo.order_no,order_total,order_cost, to_char(order_date, 'yyyy/mm/dd hh:mm') order_date,order_state, ";
+		String query = "SELECT oinfo.order_no,order_total,order_cost, to_char(order_date, 'yyyy-mm-dd hh:mm') order_date,order_state, ";
 		query += " odetail.product_no, buy_quantity, ";
 		query += " product.product_name, product.PRODUCT_INFO_URL";
 		query += " FROM ORDERINFO oinfo ";
@@ -68,7 +70,7 @@ public class OrderListDao {
 		query += " join product product on odetail.PRODUCT_NO = product.PRODUCT_NO";
 		query += " WHERE ";
 		query += " USER_ID = ?";
-		query += " and order_date between to_date(?, 'yyyy/mm/dd') and to_date(?, 'yyyy/mm/dd')";
+		query += " and order_date between to_date(?, 'yyyy-mm-dd') and to_date(?, 'yyyy-mm-dd')";
 //		private String order_no;
 //		private int order_total;
 //		private int order_cost;
@@ -110,7 +112,7 @@ public class OrderListDao {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("volist 리턴");
+		System.out.println("volist 리턴: "+ volist);
 		return volist;
 	}
 }

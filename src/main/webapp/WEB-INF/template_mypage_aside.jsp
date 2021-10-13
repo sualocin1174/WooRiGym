@@ -5,10 +5,9 @@
     <!-- 마이페이지 공통사이드 템플릿입니다. css 작성금지 -->
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
     <script>
-    
     window.onload = pageLoadedHandler;
     function pageLoadedHandler(){
-    	couponFunction();
+    	
     	$("#btncoupon").on("click", ajaxC1);
     	ajaxC1();
     }
@@ -55,36 +54,7 @@
 			});
 		}
     
-    var request = new XMLHttpRequest();
-    function couponFunction(){
-    	request.open("Post","./CouponListServlet?user_id="+encodeURIComponent(document.getElementById("user_id").value),true);
-    	request.onreadystatechange = couponProcess;
-    	request.send(null);
-    }
-    
-    function couponProcess(){
-		var table = document.getElementById("ajaxTable");
-		table.innerHTML = "";
-		//통신 성공여부 확인
-		if(request.readyState == 4 && request.status == 200){
-			var object = eval('('+request.responseText+')'); //Json
-			var result = object.result; //쿠폰서블릿의 result라는 변수
-			for(var i=0;i<result[i].length;i++){
-				//현재 테이블에 행 추가
-				var row = table.insertRow(0);
-				//각각의 행에 해당 유저의 쿠폰정보 추가
-				for(var j=0;j<result[i].length;j++){
-				var cell = row.insertCell(j);
-				cell.innerHTML = result[i][j].value;
-					
-				}
-			}
-		}
-	}
-    
-    // 쿠폰 모달창
-    var popup = document.querySelectorAll('.gallery img'),
-    lightbox = document.querySelector('#')
+   
     </script>
     <aside>
  <div id="side-menu">

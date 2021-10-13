@@ -6,11 +6,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import = "woorigym.user.model.vo.UserTable" %>
 <%@page import="java.util.ArrayList"%>
-  <%
-  String user_name = (String)request.getAttribute("user_name");
-  %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -79,8 +75,8 @@
  	<c:import url="template_mypage_aside.jsp"/>
  	
 <section>
-  <c:if test="${user_id != null}">
-    <h1>${user_id.user_name }님 즐거운 쇼핑 되세요!</h1>
+  <c:if test="${loginSS != null}">
+    <h1>${loginSS.user_name}님 즐거운 쇼핑 되세요!</h1>
     <!-- ${user_name}는 이름출력안됨. -->
     <a href="#">회원정보 수정 ></a><hr>
   </c:if>

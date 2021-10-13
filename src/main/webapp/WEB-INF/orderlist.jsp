@@ -25,11 +25,14 @@
         console.log("현재 : ", now);
     function sysdate(){
         //날짜 추출
-    	var yyyy = now.getFullYear();
-    	var mm = now.getMonth() + 1;
-    	var dd = now.getDate();
+        var year = now.getFullYear();
+    	var month = ("0"+(2+now.getMonth())).slice(-2);
+    	var day = ("0"+now.getDate()).slice(-2);
+    	
+    	//확인
+    	console.log("sysdate(): "+year+"-"+month+"-"+day);
 	//원하는 날짜형식: yyyy/mm/dd
-    	return yyyy+"/"+mm+"/"+dd;
+    	return year+"-"+month+"-"+day;
     }
         console.log("현재 : ", sysdate());
  
@@ -41,10 +44,27 @@
     	var year = oneMonthAgo.getFullYear();
     	var month = ("0"+(1+oneMonthAgo.getMonth())).slice(-2);
     	var day = ("0"+oneMonthAgo.getDate()).slice(-2);
-    	
-    	return year+"/"+month+"/"+day;
+    	//확인
+    	console.log("default_date(): "+year+"-"+month+"-"+day);
+    	return year+"-"+month+"-"+day;
     }
-        console.log("한달 전 : ", default_date());
+    console.log("한달 전 : ", default_date());
+    
+    //1주일 전
+    	function lastWeek() {
+    		//날짜 추출
+            var year = now.getFullYear();
+        	var month = ("0"+(2+now.getMonth())).slice(-2);
+        	var day = ("0"+(-7+now.getDate())).slice(-2);
+        	
+        	//확인
+        	console.log("lastWeek(): "+year+"-"+month+"-"+day);
+    	//원하는 날짜형식: yyyy/mm/dd
+        	return year+"-"+month+"-"+day;
+        	
+    	}
+        console.log("1주일 전 : ", lastWeek());
+    
     
   //페이지 로드 시 오늘날짜 기준 1달 이내의 주문내역 출력
     window.onload = pageLoadedHandler;
@@ -52,18 +72,21 @@
        	// TODO
     	//$("#start_date").val(1달전날짜);
     	//$("#end_date").val(오늘날짜);
+    }
     	$("#start_date").val(default_date());
     	$("#end_date").val(sysdate());
     	console.log("1달전 : ", oneMonthAgo); 
     	console.log("오늘 날짜 : ", sysdate); 
+    	$("#order_search").on("click", ajaxF1());//검색 버튼
+    	$("#1month").on("click", ajaxF1); //1개월 버튼
     	
-    	$("#order_search").on("click", ajaxF1);
     	ajaxF1();
-    }
     
     function ajaxF1(){ //검색버튼 클릭 시
-    	// TODO: 유효성검사 해도되고 
-    	var startDate = $("#start_date").val();
+    	// TODO: 유효성검사 해도되고 $("#start_date")")
+    	
+    	console.log($("#start_date"));
+		var startDate = $("#start_date").val();
     	var endDate =  $("#end_date").val();
     	console.log(startDate);
     	console.log(endDate);
@@ -79,9 +102,8 @@
     			
     			console.log(data);
     			console.log(data.length);
-    			console.log(data[0].product_name);
-    			//TODO
-    			if(data!=null){
+    			//console.log(data[0].product_name); 참고용
+    			if(data!=""){
     				var html = "";
     				for(var i=0; i<data.length;i++){
     					console.log(data[i]);
@@ -108,10 +130,11 @@
     					
     				}
         		    $("#order_search").html(html);//노드 내용 수정하기
-    				var ol = data[0].product_name;
-    		       // $("#olist").append(html);
-    				//$("#order_search").insertAfter(ol);//검색 버튼 뒤에 ol 추가
-    				//$("#order_search").html(html);
+    				var ol = data[0].product_name; 
+        		    //참고용
+    		        $("#olist").append(html);
+    				$("#order_search").insertAfter(ol);//검색 버튼 뒤에 ol 추가
+    				$("#order_search").html(html);
     			} else {
         			$("#order_search").html("결과없음");
         			//$("#olist").append("결과없음");
@@ -123,8 +146,6 @@
     		}
     	});
 	};
-	
-	
     </script>
  <!-- /* content */ -->
  <style>
@@ -190,7 +211,6 @@
 
  </style>
 </head>
-
 <body>
 		<!-- 공통헤더 템플릿 -->
  	<%@ include file="template_header.jsp"%>
@@ -213,7 +233,7 @@
     <input type="button" class="button" value="3개월" id="3month">
     <input type="button" class="button" value="6개월" id="6month">
     <br>
-    <input type="submit" class="button" value="검색" id="order_search">
+    <input type="submit" class="button" value="검색" id="order_search" onclick="ajaxF1()">
     </div>
   	<table id="order_detail">
         <tr>
@@ -225,12 +245,13 @@
         </tr>
         <tr id="olist">
             <td colspan="2"></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td id="product_name"></td>
+            <td id="buy_quantity"></td>
+            <td id="order_total"></td>
+            <td id="order_cost"></td>
+            <td id="order_state"></td>
         </tr>
-        </table>
+    </table>
 </section>
 </body>
 </html>
