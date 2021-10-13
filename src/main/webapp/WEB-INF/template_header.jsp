@@ -34,7 +34,7 @@
 
 	<!-- 로그인 상태+마이페이지 버튼 클릭=마이페이지 접근가능 -->
   $("#btnmy").on('click',function(){
-	  var a = "${user_id}";
+	  var a = ${loginSS};
 	  console.log(a);
 	  if (a == ""){
 		  alert("로그인 상태가 아닙니다.\n로그인 해주세요.");
