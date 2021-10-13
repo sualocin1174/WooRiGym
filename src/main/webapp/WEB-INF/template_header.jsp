@@ -52,7 +52,7 @@
   });
   </script>
         <div id="search_icon">
-            <a href="<%=ctxPath %>/slist"> <!-- 2021.10.12 1차 내용수정 // /slist.ajax에서 /slist로 수정 -->
+            <a href="<%=ctxPath %>/searchpage"> <!-- 2021.10.12 1차 내용수정 // /slist.ajax에서 /slist로 수정 -->
                 <img src='./images/검색_돋보기.png' alt="검색" width="18px"/><br>
             </a>
         </div>
