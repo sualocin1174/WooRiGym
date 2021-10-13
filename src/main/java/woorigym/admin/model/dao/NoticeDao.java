@@ -14,7 +14,7 @@ public class NoticeDao {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ArrayList<NoticeTable> readNoticeListAll(Connection conn){
+	public ArrayList<NoticeTable> NoticeListAll(Connection conn){
 		ArrayList<NoticeTable> volist = null;
 		String sql = "SELECT * FROM NOTICE";
 		PreparedStatement pstmt = null;
@@ -33,7 +33,7 @@ public class NoticeDao {
 					vo.setNotice_no(rset.getInt("notice_no"));
 					vo.setN_title(rset.getString("n_title"));
 					vo.setN_content(rset.getString("n_content"));
-					vo.setN_date(rset.getDate("n_date"));
+					vo.setN_date(rset.getString("n_date"));
 					volist.add(vo);
 					System.out.println("notice-3");
 				} while(rset.next());
@@ -49,7 +49,7 @@ public class NoticeDao {
 		return volist;
 	}
 	
-	public int addProduct(Connection conn, NoticeTable vo) {
+	public int addNotice(Connection conn, NoticeTable vo) {
 		int result = -1;
 		String sqlInsert = "INSERT INTO"
 				+ " NOTICE"
@@ -61,7 +61,7 @@ public class NoticeDao {
 			pstmt.setInt(1, vo.getNotice_no());
 			pstmt.setString(2, vo.getN_title());
 			pstmt.setString(3, vo.getN_content());
-			pstmt.setDate(4, vo.getN_date());
+			pstmt.setString(4, vo.getN_date());
 			
 			result = pstmt.executeUpdate();
 		} catch(Exception e) {
@@ -72,9 +72,9 @@ public class NoticeDao {
 		return result;
 	}
 	
-	public int updateProduct(Connection conn, NoticeTable vo) {
+	public int updateNotice(Connection conn, NoticeTable vo) {
 		int result = -1;
-		String sqlUpdate = "UPDATE PRODUCT SET (N_TITLE=?, N_CONTENT=?) WHERE NOTICE_NO=?"; 
+		String sqlUpdate = "UPDATE NOTICE SET (N_TITLE=?, N_CONTENT=?) WHERE NOTICE_NO=?"; 
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = conn.prepareStatement(sqlUpdate);
@@ -91,7 +91,7 @@ public class NoticeDao {
 		return result;
 	}
 	
-	public int deleteProduct(Connection conn, String notice_no) {
+	public int deleteNotice(Connection conn, String notice_no) {
 		int result = -1;
 		String sqlDelete = "DELETE FROM NOTICE WHERE NOTICE_NO=?";
 		PreparedStatement pstmt = null;

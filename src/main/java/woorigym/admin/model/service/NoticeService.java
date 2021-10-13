@@ -13,11 +13,11 @@ public class NoticeService {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ArrayList<NoticeTable> readNoticeListAll(){
+	public ArrayList<NoticeTable> NoticeListAll(){
 		ArrayList<NoticeTable> volist = null;
 		Connection conn = jdbcTemplate.getConnection();
 		
-		volist = new NoticeDao().readNoticeListAll(conn);
+		volist = new NoticeDao().NoticeListAll(conn);
 		
 		jdbcTemplate.close(conn);
 		return volist;

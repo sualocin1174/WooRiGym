@@ -5,18 +5,18 @@ public class NoticeTable {
 	private int notice_no; // 공지사항 번호
 	private String n_title; // 제목
 	private String n_content; // 내용
-	private Date n_date; // 작성일
+	private String n_date; // 작성일
 	
 	// notice_no    NUMBER
 	// n_title      VARCHAR2(300)
 	// n_content    VARCHAR2(4000)
-	// n_date       DATE
+	// n_date       String
 	
 	public NoticeTable() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public NoticeTable(int notice_no, String n_title, String n_content, Date n_date) {
+	public NoticeTable(int notice_no, String n_title, String n_content, String n_date) {
 		super();
 		this.notice_no = notice_no;
 		this.n_title = n_title;
@@ -54,11 +54,11 @@ public class NoticeTable {
 		this.n_content = n_content;
 	}
 
-	public Date getN_date() {
+	public String getN_date() {
 		return n_date;
 	}
 
-	public void setN_date(Date n_date) {
+	public void setN_date(String n_date) {
 		this.n_date = n_date;
 	}
 }

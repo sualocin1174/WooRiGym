@@ -2,7 +2,6 @@ package woorigym.admin.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,23 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import woorigym.product.model.service.ProductService;
 import woorigym.product.model.vo.ProductTable;
 
 /**
- * Servlet implementation class ProductListSerbletAjax
+ * Servlet implementation class ProductAddServlet
  */
-@WebServlet("/plist.ajax")
-public class ProductListServletAjax extends HttpServlet {
+@WebServlet("/apadd.ajax")
+public class ProductAddServletAjax extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductListServletAjax() {
+    public ProductAddServletAjax() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -46,9 +42,9 @@ public class ProductListServletAjax extends HttpServlet {
 		String childCategory = request.getParameter("childCategory");
 		String quantity = request.getParameter("quantity");
 		String price = request.getParameter("price");
-		String productInfoUrl = request.getParameter("productInfoUrl");  //""
-		String productOption = request.getParameter("productOption");
-
+		String productInfoUrl = request.getParameter("product_info_url");
+		String productOption = request.getParameter("product_option");
+		
 		int quantityInt = 0;
 		int priceInt = 0;
 		
@@ -64,30 +60,21 @@ public class ProductListServletAjax extends HttpServlet {
 			return;
 		}
 		
-		ProductTable productVo = new ProductTable();
-		productVo.setProductNo(productNo);
-		productVo.setProductName(productName);
-		productVo.setParentCategory(parentCategory);
-		productVo.setChildCategory(childCategory);
-		productVo.setQuantity(quantityInt);
-		productVo.setPrice(priceInt);
-		productVo.setProductInfoUrl(productInfoUrl);
-		productVo.setProductOption(productOption);
-		
-		ArrayList<ProductTable> productlist = new ProductService().readProductList(productNo);
-		request.setAttribute("productlist", productVo);
-		Gson gson = new GsonBuilder().create();
-		String jsonListVo = gson.toJson(productlist);
-		out.print(jsonListVo);
-		out.flush();
-		out.close();
+		ProductTable vo = new ProductTable(productNo, productName, parentCategory, childCategory, quantityInt, priceInt, productInfoUrl, productOption);
+		int result = new ProductService().addProduct(vo);
+		if(result ==0) {
+			out.println("상품이 추가되지않았습니다.");
+		}
+		else {
+			out.println("상품이 추가되었습니다.");
+		}
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 		doGet(request, response);
 	}
 

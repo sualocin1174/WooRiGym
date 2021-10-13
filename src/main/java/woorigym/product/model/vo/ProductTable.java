@@ -28,6 +28,26 @@ public class ProductTable {
 	private String selectRank; // 2021.10.11 1차 내용추가
 	// 2021.10.07 추가완료
 	
+	// 2021.10.13 추가
+	public ProductTable() {
+		
+	}
+	// 2021.10.13 추가 완료
+	
+	// 2021.10.13 추가
+	public ProductTable(String productNo, String productName, String parentCategory, String childCategory, int quantity, int price, String productInfoUrl, String productOption) {
+		super();
+		this.productNo = productNo;
+		this.productName = productName;
+		this.parentCategory = parentCategory;
+		this.childCategory = childCategory;
+		this.quantity = quantity;
+		this.price = price;
+		this.productInfoUrl = productInfoUrl;
+		this.productOption = productOption;
+	}
+	// 2021.10.13 추가완료
+		
 	// 2021.10.07 수정시작	
 	// 2021.10.11 1차 수정시작	
 	@Override
@@ -39,8 +59,7 @@ public class ProductTable {
 	}
 	// 2021.10.11 1차 수정완료
 	// 2021.10.07 수정완료
-
-
+	
 	public String getProductNo() {
 		return productNo;
 	}

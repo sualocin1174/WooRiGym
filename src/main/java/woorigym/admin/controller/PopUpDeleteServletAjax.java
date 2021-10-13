@@ -11,13 +11,13 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class PopUpDeleteServlet
  */
 @WebServlet("/apudelete")
-public class PopUpDeleteServlet extends HttpServlet {
+public class PopUpDeleteServletAjax extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public PopUpDeleteServlet() {
+    public PopUpDeleteServletAjax() {
         super();
         // TODO Auto-generated constructor stub
     }

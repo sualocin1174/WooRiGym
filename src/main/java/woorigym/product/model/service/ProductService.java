@@ -30,7 +30,7 @@ public class ProductService {
 		int result2 = -1;
 		Connection conn = getConnection();
 		jdbcTemplate.setAutoCommit(conn, false);
-		result = new ProductDao().checkDuplicatedProduct(conn, vo);
+		result2 = new ProductDao().checkDuplicatedProduct(conn, vo);
 		
 		if(result == 0) {
 			result = new ProductDao().addProduct(conn, vo);

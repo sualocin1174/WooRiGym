@@ -9,7 +9,6 @@ import woorigym.common.jdbcTemplate;
 import woorigym.product.model.vo.ProductTable;
 
 public class ProductDao {
-
 	public ProductDao() {
 		// TODO Auto-generated constructor stub
 	}
@@ -58,18 +57,17 @@ public class ProductDao {
 		String sqlInsert = "INSERT INTO"
 				+ " PRODUCT"
 				+ " (PRODUCT_NO, PRODUCT_NAME, PARENT_CATEGORY, CHILD_CATEGORY, QUANTITY, PRICE, PRODUCT_INFO_URL, PRODUCT_OPTION)"
-				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+				+ " VALUES (PRODUCT_IN_SEQ.nextval, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = conn.prepareStatement(sqlInsert);
-			pstmt.setString(1, vo.getProductNo());
-			pstmt.setString(2, vo.getProductName());
-			pstmt.setString(3, vo.getParentCategory());
-			pstmt.setString(4, vo.getChildCategory());
-			pstmt.setInt(5, vo.getQuantity());
-			pstmt.setInt(6, vo.getPrice());
-			pstmt.setString(7, vo.getProductInfoUrl());
-			pstmt.setString(8, vo.getProductOption());
+			pstmt.setString(1, vo.getProductName());
+			pstmt.setString(2, vo.getParentCategory());
+			pstmt.setString(3, vo.getChildCategory());
+			pstmt.setInt(4, vo.getQuantity());
+			pstmt.setInt(5, vo.getPrice());
+			pstmt.setString(6, vo.getProductInfoUrl());
+			pstmt.setString(7, vo.getProductOption());
 			
 			result = pstmt.executeUpdate();
 		} catch(Exception e) {
