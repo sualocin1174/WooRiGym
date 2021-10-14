@@ -101,10 +101,7 @@
 	margin : 50px 100px;
 }
 </style>
-<script
-  src="https://code.jquery.com/jquery-3.6.0.min.js"
-  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-  crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script type="text/javascript">
     // cart 와 product 불러와서 상품 정보 불러오는 js
@@ -145,9 +142,9 @@
 
                 var p = 0;
                 var producttotal = 0;
-                for (var i in cart) {
+                for (var i in cart) { // 상품번호도 상세주문내역 생성 메소드 호출 시 넘길 수 있도록 td 태그 추가 --10.14
                     let priceXquant = ((1 * cart[i].cartQuantity) * (1 * minusComma($('#product' + p).text())));
-                    ctext += "<tr id='cartinfos"+p+"'><td>" + cart[i].cartQuantity + "</td><td id='pXq"+p+"'>" + comma(priceXquant) + "원" + "</td><td>" + comma(priceXquant * 0.05) + "원</td><td><button onclick='delProduct("+p+")'>삭제</button></td><tr>";
+                    ctext += "<tr id='cartinfos"+p+"'><td style='display:none' id='cartprono"+p+"'>" + cart[i].productNo + "</td><td id='cartquan"+p+"'>" + cart[i].cartQuantity + "</td><td id='pXq"+p+"'>" + comma(priceXquant) + "원" + "</td><td>" + comma(priceXquant * 0.05) + "원</td><td><button onclick='delProduct("+p+")'>삭제</button></td><tr>";
                     producttotal += priceXquant;
                     p++;
                 }
@@ -351,7 +348,24 @@ var fixaddrno = "";
 <script type="text/javascript">
 // 결제 정보 js
 
+
+
     $(document).ready(function () {
+    	//적립금  입력칸 클릭하면 0 지워주기 10.14 추가
+    	$("#insertmile").click(function(){
+    		console.log($("#insertmile").val());
+    		if($("#insertmile").val()==0){
+    			$("#insertmile").val('');
+    		}
+    	});
+    	// 적립금 입력칸에 빈칸 입력시 0으로 만들어주기 10.14 추가
+    	$("#insertmile").focusout(function(){
+    		if($("#insertmile").val()==''){
+    			$("#insertmile").val(0);
+    		}
+    	})
+    	
+    	
         //쿠폰불러오기
         $.ajax({ // JQuery 를 통한 ajax 호출 방식 사용
             type: "post",
@@ -387,6 +401,7 @@ var fixaddrno = "";
 
         setInterval(function () {
             var finalpay = 1*minusComma($("#totalprice").val()) - (1 * $("#insertmile").val()) - (1 * $("#coudiscount").val()) + (1 * $("#shippingpay").val())
+            if(finalpay<0) finalpay = 0;
             $("#finalpay").val(comma(finalpay)+"원");
 
         }, 100);
@@ -571,12 +586,60 @@ var fixaddrno = "";
                 });
            		
            	}
-           
            	
-           	  
+           	// 주문상세내역 생성 
            	
+           	var dataArrayToSendNo = [];
+           	var dataArrayToSendQuan = [];
            	
+           	$("#cartinfo tr").each(function(){
+           		
+           		// 카트 정보 for 문 이용해서 배열에 넣기
+           		dataArrayToSendNo.push($(this).find("td").eq(0).text());
+           		dataArrayToSendQuan.push($(this).find("td").eq(1).text());
+           		
+           		
+           		
+           	}); 
            	
+           	console.log(dataArrayToSendNo);
+           	console.log(dataArrayToSendQuan);
+           	var newDataArrayToSendNo = [];
+           	var newDataArrayToSendQuan = [];
+           	newDataArrayToSendNo = dataArrayToSendNo.filter(function(item){
+           		return item !== "";
+           		
+           	});
+           	newDataArrayToSendQuan = dataArrayToSendQuan.filter(function(item){
+           		return item !== "";
+           	});
+           	
+           	console.log(newDataArrayToSendNo);
+           	console.log(newDataArrayToSendQuan);
+           	$("#prono").val(newDataArrayToSendNo);
+           	$("#proquan").val(newDataArrayToSendQuan);
+           	
+           	console.log(typeof newDataArrayToSendNo);
+           	console.log(typeof newDataArrayToSendQuan);
+           	
+           	// ajax 넣기
+           	$.ajax({ // JQuery 를 통한 ajax 호출 방식 사용
+                type: "post",
+                url: "orderdetailinsert",
+                async: false,
+                data: { user_id: "<%=user.getUser_id() %>",
+                	productNo : 	$("#prono").val(),
+                	ProductQuan : $("#proquan").val()
+                },
+                dataType: "json", // 전달받을 객체는 JSON 이다.
+                success: function (data) {
+               	 alert("주문상세내역 기록 성공" + data);
+                },
+                error : function(request,status,error) {
+                alert("code:"+request.status+"\n"+"message:"+request.responseText+
+                "\n"+"error:"+error+"주문상세내역 기록 실패");
+                }
+            });
            	
            }()); // checkchild 끝
         }
@@ -637,7 +700,7 @@ var fixaddrno = "";
                 </tr>
                 <tr>
                     <th rowspan="2">주소</th>
-                    <td><input type="text" id="postcode"> <button onclick="findAddr()">우편번호 찾기</button></td>
+                    <td><input type="text" id="postcode" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"> <button onclick="findAddr()">우편번호 찾기</button></td>
                 </tr>
                 <tr>
                     <td><input type="text" id="basicaddr"></td>
@@ -661,12 +724,13 @@ var fixaddrno = "";
             ⦁ 결제 정보 입력
             <table id="payinfo">
                 <tr><th>총 상품 가격 </th><td><input type="text" id="totalprice" readonly></td></tr>
-                <tr><th>적립금 사용 </th><td id="usemile"><input type="text" value="0" id="insertmile">현재 금액 : <input type="text" id="availmile" readonly></td></tr>
+                <tr><th>적립금 사용 </th><td id="usemile"><input type="text" value="0" id="insertmile" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>현재 금액 : <input type="text" id="availmile" readonly></td></tr>
                 <tr><th>쿠폰 사용 </th><td id="usecoupon"><select id="couponselect" onchange="chageacouSelect()"><option>쿠폰 선택</option></select>적용 금액 : <input id="coudiscount" value="0" readonly></td></tr>
                 <tr><th>배송비 </th><td> <input type="text"  id="shippingpay" readonly> </td></tr>
                 <tr><th>총 결제 금액</th><td><input type="text" id="finalpay" readonly> </td></tr>
                 <tr><th>결제 수단</th><td>신용카드 <input type="radio" name="paymethod" onclick="cardpay()">무통장입금 <input type="radio" name="paymethod" onclick="transferpay()"></td></tr>
             </table>
+            <button id="modal">모달창 테스트</button>
         </div>
 </section>
   <p>
@@ -676,6 +740,10 @@ var fixaddrno = "";
 <input type="text" id="addressno">
 <input type="text" id="paymethodno">
 <input type="text" id="couponno">
+<input type="text" id="prono">
+<input type="text" id="proquan">
+
+
 
     <footer></footer>
 </body>

@@ -258,7 +258,7 @@ public class OrderDao {
 			int add_mileage, Connection conn) {
 		int result = -1;
 
-		String sql = "insert into ORDERINFO values ('GYM'||to_char(sysdate, 'yyyymmdd')||ORDER_SEQ.nextval, ? , ? , ? , ? , ? ,? ,? ,? ,? ,sysdate , ?,'배송전',null, ? )";
+		String sql = "insert into ORDERINFO values ('GYM'||to_char(sysdate, 'yyyymmdd')||'-'||ORDER_SEQ.nextval, ? , ? , ? , ? , ? ,? ,? ,? ,? ,sysdate , ?,'배송전',null, ? )";
 
 		PreparedStatement pstmt = null;
 
@@ -282,9 +282,29 @@ public class OrderDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
+			//close(pstmt);
 		}
 
+		// 적립금 추가하기
+		//UPDATE MEMBER SET mileage = mileage + (SELECT ADD_MILEAGE FROM ORDERINFO WHERE USER_ID= 'gym11' and order_date = (select MAX(order_date) from orderinfo where user_id='gym11')) where USER_ID= 'gym11';
+		sql = "UPDATE MEMBER SET mileage = mileage + (SELECT ADD_MILEAGE FROM ORDERINFO WHERE USER_ID= ? and order_date = (select MAX(order_date) from orderinfo where user_id=?)) where USER_ID= ?";
+
+		pstmt = null;
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, user_id);
+			pstmt.setString(2, user_id);
+			pstmt.setString(3, user_id);
+			result = pstmt.executeUpdate();
+			conn.commit();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
 		return result;
 
 	}
@@ -332,6 +352,45 @@ public class OrderDao {
 
 		return result;
 
+	}
+	
+	public int orderDeatilInsert(String user_id,String[] proNoArr,String[] proQuanArr, Connection conn) {
+		int result=0;
+		
+		for(int i = 0 ; i < proNoArr.length;i++ ) {
+			
+			
+		}
+		
+		String sql = "INSERT INTO order_detail values (" + 
+				"(SELECT ORDER_NO FROM ORDERINFO " + 
+				"WHERE ORDER_DATE = (SELECT MAX(ORDER_DATE) FROM ORDERINFO WHERE user_id = ?))||'-'|| ORDER_DETAIL_SEQ.nextval ," + 
+				"(SELECT ORDER_NO FROM ORDERINFO " + 
+				"WHERE ORDER_DATE = (SELECT MAX(ORDER_DATE) FROM ORDERINFO WHERE user_id = ?)), " + 
+				"?," + 
+				"?" + 
+				")";
+		
+		PreparedStatement pstmt = null;
+		
+		try {
+			for(int i = 0 ; i < proNoArr.length;i++ ) {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, user_id);
+				pstmt.setString(2, user_id);
+				pstmt.setString(3, proNoArr[i]);
+				pstmt.setInt(4, Integer.parseInt(proQuanArr[i]));
+				result += pstmt.executeUpdate();
+			}
+			conn.commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result; 
 	}
 
 }// class

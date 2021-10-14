@@ -97,7 +97,7 @@ public class OrderService {
 		
 		Connection conn = getConnection();
 		result = new OrderDao().insertOrderinfo(user_id, address_no, order_memo, order_total, order_cost, point_discount, coupon_discount, order_payment, order_method,pay_state, add_mileage, conn);
-		
+		close(conn);
 		return result; 
 		
 	}
@@ -106,7 +106,7 @@ public class OrderService {
 		
 		Connection conn = getConnection();
 		result = new OrderDao().UpdateCoupon(coupon_no, user_id, conn);
-		
+		close(conn);
 		return result; 
 		
 	}
@@ -116,9 +116,18 @@ public class OrderService {
 		
 		Connection conn = getConnection();
 		result = new OrderDao().usedMileage(user_id, used_mile, conn);
-		
+		close(conn);
 		return result; 
 		
+	}
+	
+	public int orderDeatilInsert(String user_id,String[] proNoArr,String[] proQuanArr) {
+		int result=-1;
+	
+		Connection conn = getConnection();
+		result = new OrderDao().orderDeatilInsert(user_id, proNoArr, proQuanArr, conn);
+		close(conn);
+		return result; 
 	}
 	
 
