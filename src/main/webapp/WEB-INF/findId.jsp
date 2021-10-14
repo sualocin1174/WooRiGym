@@ -1,10 +1,8 @@
 
 <!-- 헤더 CSS -->
-<link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/css/template_header.css" />
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<!-- 부트스트랩 CDN -->
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_header.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -56,11 +54,7 @@
 </head>
 <body>
 <script>
-	var result = "${result}";
-	console.log(result);
-	if(result == "로그인실패") {
-		alert("아이디와 패스워드가 일치하지 않습니다. 다시 확인하고 로그인해주세요");
-	}
+	
 </script>
             <!-- 공통헤더 템플릿 -->
             <%@ include file="template_header.jsp" %>
@@ -90,7 +84,7 @@
                             </form>
                                 <div id="login-menu">
                                     <ul>
-                                        <li><a href="findId">아이디</a></li>
+                                        <li><a href="findId">아이디 찾기</a></li>
                                         <li><a href="findPwd">비밀번호 찾기</a></li>
                                         <li><a href="join">회원가입</a></li>
                                     </ul>

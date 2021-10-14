@@ -121,6 +121,7 @@ public class UserDao {
 //		String sql ="insert into user values(?, ?, ?, ?, ?, ?, sysdate, ?, to_date(? ,'yyyy/mm/dd'), ?, ?)";
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
+		
 		System.out.println("회원가입 dao 진입");
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -135,16 +136,21 @@ public class UserDao {
 			pstmt.setString(9, user.getIdentity_number());
 			pstmt.setInt(10, user.getGender());
 			
-			System.out.println("회원가입 성공");
-			return pstmt.executeUpdate();
+			
+			result = pstmt.executeUpdate();
+			if(result > 0) {
+				System.out.println("회원가입 성공");
+			}
+			else {
+				System.out.println("회원가입 실패");
+			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		} finally {
 			jdbcTemplate.close(rset);
 			jdbcTemplate.close(pstmt);
 		}
-		System.out.println("데이터 베이스 오류");
-		return result; // 데이터베이스 오류
+		return result; 
 	}
 	
 	public int updateUser(Connection conn, UserTable user) {

@@ -33,8 +33,8 @@ public class UserFindIdServlect extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("/WEB-INF/findId.jsp").forward(request, response);
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8");
+//		response.setCharacterEncoding("UTF-8");
+//		response.setContentType("text/html; charset=UTF-8");
 //		PrintWriter out = response.getWriter();
 //		UserService findID = new UserService();
 //		String user_name = request.getParameter("user_name");
@@ -55,23 +55,23 @@ public class UserFindIdServlect extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8");
-		String user_name = request.getParameter("user_name");
-		String phone = request.getParameter("phone");
-		UserService userSvc = new UserService();
-		String result = userSvc.findId(user_name, phone);
-		
-		if(result != null) {
+//		response.setCharacterEncoding("UTF-8");
+//		response.setContentType("text/html; charset=UTF-8");
+//		String user_name = request.getParameter("user_name");
+//		String phone = request.getParameter("phone");
+//		UserService userSvc = new UserService();
+//		String result = userSvc.findId(user_name, phone);
+//		
+//		if(result != null) {
 //			request.setAttribute("user_id", result);
-			System.out.println("아이디 찾기 성공");
-			request.getSession().setAttribute("user_id", result);
-			request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);;
-			
-		}
-		else {
-			
-		}
+//			System.out.println("아이디 찾기 성공");
+//			request.getSession().setAttribute("user_id", result);
+//			request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);;
+//			
+//		}
+//		else {
+//			
+//		}
 		
 		
 	}
