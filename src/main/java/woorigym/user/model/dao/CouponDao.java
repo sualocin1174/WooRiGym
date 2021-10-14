@@ -20,7 +20,9 @@ public class CouponDao {
 		ResultSet rset = null;
 		String sql = "Select c_name, c_discount, c_issue_date, c_expire_date"; 
 				sql += " from coupon";
-				sql += " where user_id=? and c_use = 0";
+				sql += " where user_id=? and c_use = 0 and c_expire_date >= sysdate";
+				//where절에 필요한 것(db조회시 필요한 조건절) = 화면에서 던져줘야 되는 것~~
+				
 				//TODO: and c_expire_date가 오늘 이후(오늘 포함)날짜
 				
 //				private String coupon_no;

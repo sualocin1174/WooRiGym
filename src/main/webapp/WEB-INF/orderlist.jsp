@@ -33,7 +33,8 @@
     	console.log("1달전 : ", default_date()); 
     	console.log("오늘 날짜 : ", sysdate()); 
     	$("#order_search").on("click", ajaxF1());//검색 버튼
-    	$("#1month").on("click", ajaxF1); //1개월 버튼
+    	$("#1week").on("click", lastWeek); //1주일 버튼
+    	//TODO: 1,3,6개월
 		ajaxF1();
     	
     });
@@ -79,7 +80,7 @@
         	//확인
         	console.log("lastWeek(): "+year+"-"+month+"-"+day);
     	//원하는 날짜형식: yyyy/mm/dd
-        	return year+"-"+month+"-"+day;
+        	$("#start_date").val(year+"-"+month+"-"+day);
         	
     	}
         console.log("1주일 전 : ", lastWeek());
@@ -103,23 +104,16 @@
     		},
     		dataType: "json", //전달받을 객체는 json이다.
     		success: function(data){
-    			
+    			$("#order_detail").html("");
+    			$("#order_detail").remove();
     			console.log(data);
     			console.log(data.length);
+    				var empty ="";
     			//console.log(data[0].product_name); 참고용
     			if(data!=""){
-    				var no_and_date ="";
     				var html = "";
-    				var title ="";
-    				var content="";
-    				var empty ="";
-    			
     				for(var i=0; i<data.length;i++){
     					console.log(data[i]);
-    				//주문번호, 주문날짜(yyyy-mm-dd hh:mm)
-    					no_and_date += "<h4><a href='./orderDetailTable?order_no="+data[i].order_no+"'>"+data[i].order_no+"</a></h4>"
-    								+ "<h5><a href='./orderTable?order_date='"+data[i].order_date+"'>"+data[i].order_date+"</a></h5>";
-    					console.log("주문번호, 주문날짜: "+no_and_date);
     				//주문번호, 주문날짜+테이블 제목+내용
     					 html+=  "<h4><a href='./orderDetailTable?order_no="+data[i].order_no+"'>"+data[i].order_no+"</a></h4>"
 							 + "<h5><a href='./orderTable?order_date='"+data[i].order_date+"'>"+data[i].order_date+"</a></h5>"
@@ -134,30 +128,17 @@
 		    	       		 +"<td><a href='./orderTable?order_cost="+data[i].order_cost+"'>"+data[i].order_cost+"</a></td>"
 		    	       		 +"<td><a href='./orderTable?order_state="+data[i].order_state+"'>"+data[i].order_state+"</a></td>"
 		    	        	 +"</tr></table>";
-		    	    //제목만
-		    	    title += "<table id='order_detail'><tr><td colspan='2'>상품명</td>"
-						  + "<td>수량</td><td>상품금액</td><td>배송비</td><td>진행상태</td></tr>";
-    				// 내용만
-    				content += "<td colspan='2'><a href='./productTable?product_name="+data[i].product_name+"'></a></td>"//상품명
-    				 +"<td><a href='./orderDetailTable?buy_quantity="+data[i].buy_quantity+"'></a></td>" //수량
-		    	       +"<td><a href='./orderTable?order_total="+data[i].order_total+"'></a></td>" //상품금액
-		    	       +"<td><a href='./orderTable?order_cost="+data[i].order_cost+"'></a></td>" //배송비
-		    	       +"<td><a href='./orderTable?order_state="+data[i].order_state+"'></a></td>"; //진행상태
-    				console.log(content);
-		    	      //결과 없을 때
-    				empty += "<table id='order_detail'><tr><td colspan='2'>상품명</td>"
-						  + "<td>수량</td><td>상품금액</td><td>배송비</td><td>진행상태</td></tr>"
-						 + "<td colspan='2'><a href='./productTable?product_name="+data[i].product_name+"'></a></td>"//상품명
-		    				 +"<td><a href='./orderDetailTable?buy_quantity="+data[i].buy_quantity+"'></a></td>" //수량
-				    	       +"<td><a href='./orderTable?order_total="+data[i].order_total+"'></a></td>" //상품금액
-				    	       +"<td><a href='./orderTable?order_cost="+data[i].order_cost+"'></a></td>" //배송비
-				    	       +"<td><a href='./orderTable?order_state="+data[i].order_state+"'></a></td>"; //진행상태;
     				
     				}
-        		    $(html).insertAfter($("#btngroup"));
+        		  //  $(html).insertAfter($("#btngroup"));
+        		    $("#order").html(html);
         		   // $(no_and_date).insertAfter($("#btngroup"));
     				//var ol = data[0].product_name; //참고용
     			} else {
+		    	      //결과 없을 때
+    				empty += "<table id='order_detail'><tr><td colspan='2'>상품명</td>"
+						  + "<td>수량</td><td>상품금액</td><td>배송비</td><td>진행상태</td></tr>"
+						  +"<td>결과가 없습니다</td>"
         			 $(empty).insertAfter($("#btngroup"));
     			}
     		},
@@ -255,6 +236,9 @@
     <input type="button" class="button" value="6개월" id="6month">
     <br>
     <input type="submit" class="button" value="검색" id="order_search" onclick="ajaxF1()">
+    </div>
+    <div id="order">
+    
     </div>
   	<!-- 주문번호, 주문일자 -->
   	<!-- 상품이미지, 상품명, 수량, 상품금액, 배송비, 주문상태  -->

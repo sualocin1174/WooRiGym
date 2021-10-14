@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- 마이페이지 사이드 CSS -->
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_mypage_aside.css" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -66,6 +67,52 @@
              height: 200px;
          }
     </style>
+    <script>
+    window.onload = pageLoadedHandler;
+    function pageLoadedHandler(){
+    	
+    	$("#btncoupon").on("click", ajaxC1);
+    }
+    
+    function ajaxC1(){// 쿠폰관리 버튼 클릭 시
+    	// TODO: 유효성검사 (선택사항)
+    	console.log("ajax 시작");
+    	console.log("<%=session.getAttribute("loginSS")%>");
+    	console.log("<%=session.getAttribute("loginSS")%>");
+    	var loginSS = "<%=session.getAttribute("loginSS")%>";
+    //레스트API CRUD 관점에서 해석
+    //get 단순조회 , post 인서트할때, put 업데이트
+    	$.ajax({
+    		type: "post", //서블릿은 post
+    		//데이터를 전송할 URL
+    		url : "<%=request.getContextPath()%>/couponlist" ,
+    		data: {loginSS : loginSS},
+    		dataType: "json",
+			//ajax 통신에 성공했을 때 호출될 이벤트 핸들러
+			success : function(data){
+				//확인용
+				console.log(data);
+    			console.log(data.length);
+    			
+				if(data!=null){
+					var couponlist = "";
+					for(var i=0; i<data.length;i++){
+						console.log(data[i]);
+						
+					}
+				} else {
+					
+				}
+			},
+			error : function(request,status,error) {
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+
+				"\n"+"error:"+error);
+				}
+			});
+		}
+    
+   
+    </script>
 </head>
 
 <body>
