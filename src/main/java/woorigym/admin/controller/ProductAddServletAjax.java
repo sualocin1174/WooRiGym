@@ -61,13 +61,13 @@ public class ProductAddServletAjax extends HttpServlet {
 		}
 		
 		ProductTable vo = new ProductTable(productNo, productName, parentCategory, childCategory, quantityInt, priceInt, productInfoUrl, productOption);
-		int result = new ProductService().addProduct(vo);
-		if(result ==0) {
-			out.println("상품이 추가되지않았습니다.");
-		}
-		else {
-			out.println("상품이 추가되었습니다.");
-		}
+		//int result = new ProductService().addProduct(vo);
+//		if(result ==0) {
+//			out.print("상품이 추가되지않았습니다.");
+//		}
+//		else {
+//			out.print("상품이 추가되었습니다.");
+//		}
 	}
 
 	/**

@@ -5,6 +5,8 @@ import static woorigym.common.jdbcTemplate.getConnection;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import woorigym.admin.model.vo.ProductImgTable;
+import woorigym.admin.model.vo.ProductOptionTable;
 import woorigym.common.jdbcTemplate;
 import woorigym.product.model.dao.ProductDao;
 import woorigym.product.model.vo.ProductTable;
@@ -16,24 +18,24 @@ public class ProductService {
 	}
 
 	public ArrayList<ProductTable> readProductList(String productNo){
-		ArrayList<ProductTable> volist = null;
+		ArrayList<ProductTable> productlist = null;
 		Connection conn = jdbcTemplate.getConnection();
 		
-		volist = new ProductDao().readProductList(conn, productNo);
+		productlist = new ProductDao().readProductList(conn, productNo);
 		
 		jdbcTemplate.close(conn);
-		return volist;
+		return productlist;
 	}
 	
-	public int addProduct(ProductTable vo){
+	public int addProduct(ProductTable productVo, ArrayList<ProductOptionTable> productOption, ArrayList<ProductImgTable> productImg){
 		int result = -1;
 		int result2 = -1;
 		Connection conn = getConnection();
 		jdbcTemplate.setAutoCommit(conn, false);
-		result2 = new ProductDao().checkDuplicatedProduct(conn, vo);
+		result2 = new ProductDao().checkDuplicatedProduct(conn, productVo);
 		
 		if(result == 0) {
-			result = new ProductDao().addProduct(conn, vo);
+			result = new ProductDao().addProduct(conn, productVo, productOption, productImg);
 			
 			if(result >0 && result2 >0) {
 				jdbcTemplate.commit(conn);
