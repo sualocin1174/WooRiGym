@@ -6,6 +6,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
 <%@ page import = "woorigym.user.model.vo.OrderTable" %>
 <%@ page import = "woorigym.user.model.vo.OrderDetailTable" %>
 <%@ page import = "java.util.ArrayList"%>
@@ -17,21 +18,39 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>마이페이지-주문/배송조회</title>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
     <script>
-    
+
+    //페이지 로드 시 오늘날짜 기준 1달 이내의 주문내역 출력
+    window.onload = pageLoadedHandler();
+    function pageLoadedHandler(){
+    $(function(){ 
+       	// TODO
+    	//$("#start_date").val(1달전날짜);
+    	//$("#end_date").val(오늘날짜);
+    	console.log($("#start_date"));
+    	$("#start_date").val(default_date());
+    	$("#end_date").val(sysdate());
+    	console.log("1달전 : ", default_date()); 
+    	console.log("오늘 날짜 : ", sysdate()); 
+    	$("#order_search").on("click", ajaxF1());//검색 버튼
+    	$("#1month").on("click", ajaxF1); //1개월 버튼
+		ajaxF1();
+    	
+    });
+    };
     	// 현재 날짜 및 시간
         var now = new Date();	
         console.log("현재 : ", now);
     function sysdate(){
-        //날짜 추출
+        //날짜 추출**********************************************************************
         var year = now.getFullYear();
-    	var month = ("0"+(2+now.getMonth())).slice(-2);
+    	var month = ("0"+(now.getMonth()+2)).slice(-2);
+    	console.log("month: "+month); //왜 now랑 end_date는 이번달로 잘 나오고 month는 다음달로 나올까..
     	var day = ("0"+now.getDate()).slice(-2);
     	
     	//확인
     	console.log("sysdate(): "+year+"-"+month+"-"+day);
-	//원하는 날짜형식: yyyy/mm/dd
+		//원하는 날짜형식: yyyy/mm/dd
     	return year+"-"+month+"-"+day;
     }
         console.log("현재 : ", sysdate());
@@ -66,26 +85,11 @@
         console.log("1주일 전 : ", lastWeek());
     
     
-  //페이지 로드 시 오늘날짜 기준 1달 이내의 주문내역 출력
-    window.onload = pageLoadedHandler;
-    function pageLoadedHandler(){
-       	// TODO
-    	//$("#start_date").val(1달전날짜);
-    	//$("#end_date").val(오늘날짜);
-    }
-    	$("#start_date").val(default_date());
-    	$("#end_date").val(sysdate());
-    	console.log("1달전 : ", oneMonthAgo); 
-    	console.log("오늘 날짜 : ", sysdate); 
-    	$("#order_search").on("click", ajaxF1());//검색 버튼
-    	$("#1month").on("click", ajaxF1); //1개월 버튼
-    	
-    	ajaxF1();
     
     function ajaxF1(){ //검색버튼 클릭 시
     	// TODO: 유효성검사 해도되고 $("#start_date")")
     	
-    	console.log($("#start_date"));
+    	console.log("#start_date: "+$("#start_date"));
 		var startDate = $("#start_date").val();
     	var endDate =  $("#end_date").val();
     	console.log(startDate);
@@ -104,40 +108,57 @@
     			console.log(data.length);
     			//console.log(data[0].product_name); 참고용
     			if(data!=""){
+    				var no_and_date ="";
     				var html = "";
+    				var title ="";
+    				var content="";
+    				var empty ="";
+    			
     				for(var i=0; i<data.length;i++){
     					console.log(data[i]);
-	    				html+="<h4><a href='./orderDetailTable?order_no="+data[i].order_no+"'>"+data[i].order_no+"</a></h4>";
-	    				console.log(html);
-	    				html+="<h5><a href='./orderTable?order_date='"+data[i].order_date+"</a></h5>";
-	    				console.log(html);
-	    				html+="<table id='order_detail'><tr><td colspan='2'>상품명</td>"
-		    	            + "<td>수량</td><td>상품금액</td><td>배송비</td><td>진행상태</td></tr>"
-		    	            
-		    	 		+"<a href='./orderDetailTable?product_no="+data[i].product_no+"'>"
-		    	 		+"<img src='./images/1번 메인.jpg'></a></td><td>"+data[i].product_name+"</td>"	  
-		    	 		
-		    	       +"<td><a href='./orderDetailTable?buy_quantity="+data[i].buy_quantity+"'></a></td>"
-		    	       +"<td><a href='./orderTable?order_total="+data[i].order_total+"'></a></td>"
-		    	       +"<td><a href='./orderTable?order_cost="+data[i].order_cost+"'></a></td>"
-		    	       +"<td><a href='./orderTable?order_state="+data[i].order_state+"'></a></td>"
-		    	 				
-		    	       +"<tr><td><a href='./productTable?product_info_url="+data[i].product_info_url+"'></a></td>"
-		    	    	
-		    	        +"</tr></table>";
-		    	   
-	    				console.log(html);
-    					
+    				//주문번호, 주문날짜(yyyy-mm-dd hh:mm)
+    					no_and_date += "<h4><a href='./orderDetailTable?order_no="+data[i].order_no+"'>"+data[i].order_no+"</a></h4>"
+    								+ "<h5><a href='./orderTable?order_date='"+data[i].order_date+"'>"+data[i].order_date+"</a></h5>";
+    					console.log("주문번호, 주문날짜: "+no_and_date);
+    				//주문번호, 주문날짜+테이블 제목+내용
+    					 html+=  "<h4><a href='./orderDetailTable?order_no="+data[i].order_no+"'>"+data[i].order_no+"</a></h4>"
+							 + "<h5><a href='./orderTable?order_date='"+data[i].order_date+"'>"+data[i].order_date+"</a></h5>"
+    						 + "<table id='order_detail'><tr><td colspan='2'>상품명</td>"
+    						 + "<td>수량</td><td>상품금액</td><td>배송비</td><td>진행상태</td></tr>"
+    						 
+	    					 //+ "<a href='./orderDetailTable?product_no="+data[i].product_no+"'>"
+		    	 			 + "<td><a href='./productTable?product_info_url="+data[i].product_info_url
+		    	 			 +"<img src='./images/1번 메인.jpg'></a></td><td>"+data[i].product_name+"</td>"	  //TODO: 이미지 경로 수정
+		    	       		 +"<td><a href='./orderDetailTable?buy_quantity="+data[i].buy_quantity+"'>"+data[i].buy_quantity+"</a></td>"
+		    	       		 +"<td><a href='./orderTable?order_total="+data[i].order_total+"'>"+data[i].order_total+"</a></td>"
+		    	       		 +"<td><a href='./orderTable?order_cost="+data[i].order_cost+"'>"+data[i].order_cost+"</a></td>"
+		    	       		 +"<td><a href='./orderTable?order_state="+data[i].order_state+"'>"+data[i].order_state+"</a></td>"
+		    	        	 +"</tr></table>";
+		    	    //제목만
+		    	    title += "<table id='order_detail'><tr><td colspan='2'>상품명</td>"
+						  + "<td>수량</td><td>상품금액</td><td>배송비</td><td>진행상태</td></tr>";
+    				// 내용만
+    				content += "<td colspan='2'><a href='./productTable?product_name="+data[i].product_name+"'></a></td>"//상품명
+    				 +"<td><a href='./orderDetailTable?buy_quantity="+data[i].buy_quantity+"'></a></td>" //수량
+		    	       +"<td><a href='./orderTable?order_total="+data[i].order_total+"'></a></td>" //상품금액
+		    	       +"<td><a href='./orderTable?order_cost="+data[i].order_cost+"'></a></td>" //배송비
+		    	       +"<td><a href='./orderTable?order_state="+data[i].order_state+"'></a></td>"; //진행상태
+    				console.log(content);
+		    	      //결과 없을 때
+    				empty += "<table id='order_detail'><tr><td colspan='2'>상품명</td>"
+						  + "<td>수량</td><td>상품금액</td><td>배송비</td><td>진행상태</td></tr>"
+						 + "<td colspan='2'><a href='./productTable?product_name="+data[i].product_name+"'></a></td>"//상품명
+		    				 +"<td><a href='./orderDetailTable?buy_quantity="+data[i].buy_quantity+"'></a></td>" //수량
+				    	       +"<td><a href='./orderTable?order_total="+data[i].order_total+"'></a></td>" //상품금액
+				    	       +"<td><a href='./orderTable?order_cost="+data[i].order_cost+"'></a></td>" //배송비
+				    	       +"<td><a href='./orderTable?order_state="+data[i].order_state+"'></a></td>"; //진행상태;
+    				
     				}
-        		    $("#order_search").html(html);//노드 내용 수정하기
-    				var ol = data[0].product_name; 
-        		    //참고용
-    		        $("#olist").append(html);
-    				$("#order_search").insertAfter(ol);//검색 버튼 뒤에 ol 추가
-    				$("#order_search").html(html);
+        		    $(html).insertAfter($("#btngroup"));
+        		   // $(no_and_date).insertAfter($("#btngroup"));
+    				//var ol = data[0].product_name; //참고용
     			} else {
-        			$("#order_search").html("결과없음");
-        			//$("#olist").append("결과없음");
+        			 $(empty).insertAfter($("#btngroup"));
     			}
     		},
     		error:function(request,status,error){
@@ -226,7 +247,7 @@
      <!-- $("#end_date").val() -->
     <input type="date" id="start_date">
     <input type="date" id="end_date">
-    <!--  클릭 시 end_date = sysdate 기준으로 
+    <!--  클릭 시 end_date = sysdate() 기준으로 
     start_date = 1주일, 1개월, 3개월, 6개월 전 날짜 자동선택 -->
     <input type="button" class="button" value="1주일" id="1week">
     <input type="button" class="button" value="1개월" id="1month">
@@ -235,23 +256,8 @@
     <br>
     <input type="submit" class="button" value="검색" id="order_search" onclick="ajaxF1()">
     </div>
-  	<table id="order_detail">
-        <tr>
-            <td colspan="2">상품명</td>
-            <td>수량</td>
-            <td>상품금액</td>
-            <td>배송비</td>
-            <td>진행상태</td>
-        </tr>
-        <tr id="olist">
-            <td colspan="2"></td>
-            <td id="product_name"></td>
-            <td id="buy_quantity"></td>
-            <td id="order_total"></td>
-            <td id="order_cost"></td>
-            <td id="order_state"></td>
-        </tr>
-    </table>
+  	<!-- 주문번호, 주문일자 -->
+  	<!-- 상품이미지, 상품명, 수량, 상품금액, 배송비, 주문상태  -->
 </section>
 </body>
 </html>

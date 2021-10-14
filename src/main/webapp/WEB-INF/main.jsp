@@ -1,17 +1,13 @@
    <!-- 헤더 CSS -->
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_header.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
    <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<% response.setStatus(HttpServletResponse.SC_OK); %>
 
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -64,48 +60,135 @@
               width: 250px;
           }
             </style>
+            <!-- Slideshow / Carousel -->
+            <style>
+			* {box-sizing: border-box;}
+			body {font-family: Verdana, sans-serif;}
+			.mySlides {display: none;}
+			img {vertical-align: middle;}
+			
+			/* Slideshow container */
+			.slideshow-container {
+			  max-width: 1000px;
+			  position: relative;
+			  margin: auto;
+			}
+			
+			/* Caption text */
+			.text {
+			  color: #f2f2f2;
+			  font-size: 15px;
+			  padding: 8px 12px;
+			  position: absolute;
+			  bottom: 8px;
+			  width: 100%;
+			  text-align: center;
+			}
+			
+			/* Number text (1/3 etc) */
+			.numbertext {
+			  color: #f2f2f2;
+			  font-size: 12px;
+			  padding: 8px 12px;
+			  position: absolute;
+			  top: 0;
+			}
+			
+			/* The dots/bullets/indicators */
+			.dot {
+			  height: 15px;
+			  width: 15px;
+			  margin: 0 2px;
+			  background-color: #bbb;
+			  border-radius: 50%;
+			  display: inline-block;
+			  transition: background-color 0.6s ease;
+			}
+			
+			.active {
+			  background-color: #717171;
+			}
+			
+			/* Fading animation */
+			.fade {
+			  -webkit-animation-name: fade;
+			  -webkit-animation-duration: 1s;
+			  animation-name: fade;
+			  animation-duration: 1s;
+			}
+			
+			@-webkit-keyframes fade {
+			  from {opacity: .4} 
+			  to {opacity: 1}
+			}
+			
+			@keyframes fade {
+			  from {opacity: .4} 
+			  to {opacity: 1}
+			}
+			
+			/* On smaller screens, decrease text size */
+			@media only screen and (max-width: 300px) {
+			  .text {font-size: 11px}
+			}
+</style>
     </head>
 
 <body>
 		<!-- 공통헤더 템플릿 -->
  	<%@ include file="template_header.jsp"%>
     
-    <section>
-        <div class="container">
-            <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                <!-- Indicators -->
-                <ol class="carousel-indicators">
-                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                    <li data-target="#myCarousel" data-slide-to="1"></li>
-                    <li data-target="#myCarousel" data-slide-to="2"></li>
-                </ol>
-                
-                <!-- Wrapper for slides -->
-                <div class="carousel-inner">
-                    <div class="item active">
-                        <img src='./images/메인_샘플1.jpg' alt="메인사진1" style="width:100%;"/><br>
-                    </div>
-                    
-                    <div class="item">
-                        <img src='./images/메인_샘플2.jpg' alt="메인사진2" style="width:100%;"/><br>
-                    </div>
-                    
-                    <div class="item">
-                        <img src='./images/메인_샘플3.jpg' alt="메인사진3" style="width:100%;"/><br>
-                    </div>
-                </div>
-                
-                <!-- Left and right controls -->
-                <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                    <span class="glyphicon glyphicon-chevron-right"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-        </div>
+ <section>
+    <!-- Slideshow / Carousel -->
+        <div class="slideshow-container">
+		<div class="mySlides fade">
+		  <div class="numbertext">1 / 3</div>
+		  <img src="./images/메인_샘플1.jpg" style="width:100%">
+		  <div class="text">Caption Text</div>
+		</div>
+		
+		<div class="mySlides fade">
+		  <div class="numbertext">2 / 3</div>
+		  <img src="./images/메인_샘플2.jpg" style="width:100%">
+		  <div class="text">Caption Two</div>
+		</div>
+		
+		<div class="mySlides fade">
+		  <div class="numbertext">3 / 3</div>
+		  <img src="./images/메인_샘플3.jpg" style="width:100%">
+		  <div class="text">Caption Three</div>
+		</div>
+		
+		</div>
+		<br>
+		
+		<div style="text-align:center">
+		  <span class="dot"></span> 
+		  <span class="dot"></span> 
+		  <span class="dot"></span> 
+		</div>
+		
+		<script>
+		var slideIndex = 0;
+		showSlides();
+		
+		function showSlides() {
+		  var i;
+		  var slides = document.getElementsByClassName("mySlides");
+		  var dots = document.getElementsByClassName("dot");
+		  for (i = 0; i < slides.length; i++) {
+		    slides[i].style.display = "none";  
+		  }
+		  slideIndex++;
+		  if (slideIndex > slides.length) {slideIndex = 1}    
+		  for (i = 0; i < dots.length; i++) {
+		    dots[i].className = dots[i].className.replace(" active", "");
+		  }
+		  slides[slideIndex-1].style.display = "block";  
+		  dots[slideIndex-1].className += " active";
+		  setTimeout(showSlides, 5000); // Change image every 5 seconds
+		}
+		</script>
         <div id="main_bnb">
             <ul>
                 <li><a href="#">신상품</a></li>
@@ -119,8 +202,6 @@
             <a href="#"><img src='./images/1번 메인.jpg' /><br></a>
             <a href="#"><img src='./images/01번 메인_2.jpg' /><br></a>
         </div>
-    </section>
-    <footer></footer>
+  </section>
 </body>
-
 </html>

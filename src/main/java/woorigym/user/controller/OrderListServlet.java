@@ -39,7 +39,7 @@ public class OrderListServlet extends HttpServlet {
 			 return;
 		}
 		String uid = userTableSessionAttr.getUser_id();
-		System.out.println("user_id: "+uid);// 10/11 user_id -> LoginInfo로 수정
+		System.out.println("user_id: "+uid);
 
 		String startDate = request.getParameter("startDate");
 		String endDate = request.getParameter("endDate");
