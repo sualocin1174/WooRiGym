@@ -3,10 +3,6 @@
     pageEncoding="UTF-8"%>
     <!-- jstl은 header가 아닌 메인페이지에 삽입 -->
     <% String ctxPath = request.getContextPath(); %>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    <%
-    UserTable loginSS = (UserTable)session.getAttribute("loginSS");
-    %>
     <!-- 공통헤더 템플릿입니다. css 작성금지 -->
 <header>
         <div id="logo">
@@ -33,7 +29,6 @@
         </ul>
     </div> 
     </c:if>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script type="text/javascript">
 
 	<!-- 로그인 상태+마이페이지 버튼 클릭=마이페이지 접근가능 -->

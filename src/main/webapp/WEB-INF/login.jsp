@@ -4,7 +4,7 @@
 	href="<%=request.getContextPath()%>/css/template_header.css" />
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<!-- 부트스트랩 CDN -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
