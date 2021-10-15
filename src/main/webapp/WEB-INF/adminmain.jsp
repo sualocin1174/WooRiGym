@@ -80,34 +80,76 @@
 	<div id="product">검색한 상품 출력하는 위치</div>
 	<br><br>
 	<form id="form1" name="form1" method="post" enctype="multipart/form-data">
-	<div id = "header">
-		<div id = "titleImg">
-			<p align = "center">상품 대표 사진</p>
-			<img id = "titleImg" src="./css/alt.JPG"><input type="file" name="upLoadTitleImg" id="upLoadTitleImg" class="hiddenInput" accept="image/jpeg, image/jpg, image/png" required="required">
-		</div>
-		<div id="content">
-		<br><label>상품 번호</label>
-		<input type="text" name="productNo" id="productNo" required="required" placeholder="상품 번호를 입력해주세요."><br><br>
-		<div id="productOption">
-		<label>상품명</label>
-		<input type="text" name="productName" id="productName" required="required" placeholder="상품명을 입력해주세요."><br><br>
-		<label>상품 가격</label>
-		<input type="text" name="price" id="price" required="required" placeholder="상품 가격을 입력해주세요."><br><br>
-		</div>
-		<a href ='#' id='btn_txtAdd'><i class='fas fa-plus-circle'></i></a><br><br>
-		</div>
-		<label>상위 카테고리</label><select id="upCategory" name="upCategory">
-		<option value="1">근력기구</option>
-		<option value="2">유산소기구</option>
-		<option value="3">웨이트리프팅</option>
-		<option value="4">어시스트</option>
-		<option value="5">전시상품</option>
-		</select><br><br>
-		<label>하위 카테고리</label><select id="downCategory" name="downCategory">
+		<div id = "header">
+			<div id="titleImgContainer">
+               <p align="center">상품 대표 사진</p>
+               <img id="titleImg" src="./css/alt.JPG"> <input type="file"name="uploadTitleImg" id="uploadTitleImg" class="hidden_input" accept="image/jpeg, image/jpg, image/png" required="required">
+               
+            </div>
+			<div id = "imgCollection">
+				<div id = "imgCollection_1">
+					<label>이미지 추가</label>
+					<img src="./css/alt.jpg" name="stepImg_1" id="stepImg_1">
+					<input type="file"name="uploadStepImg_1" required="required">
+            		<input name="addButton" type="button" id="img_btn" value="추가">
+				</div>
+			</div>
+			<input type="hidden" name="stepCount" id="stepCount" readonly value="1">
+			<div id="content">
+				<br><label>상품 번호</label>
+				<input type="text" name="productNo" id="prodNo" required="required" placeholder="상품 번호를 입력해주세요."><br><br>
 		
-		
-		
-		</select>
+				<div id="productOption">
+					<label>상품명</label>
+					<input type="text" name="productName" id="productName" required="required" placeholder="상품명을 입력해주세요."><br><br>
+					<label>상품 가격</label>
+					<input type="text" name="price" id="price" required="required" placeholder="상품 가격을 입력해주세요."><br><br>
+					<label>상품 수량</label>
+					<input type="text" name="quantity" id="quantity" required="required" placeholder="상품 수량을 입력해주세요."><br><br>
+					<label>상품 옵션</label>
+					<input type="text" name="option" id="option" required="required" placeholder="상품 옵션을 입력해주세요."><br><br>
+				</div>
+			</div>
+			<label>상위 카테고리</label>
+			<select id="upCategory" name="upCategory">
+				<option value="1">근력기구</option>
+				<option value="2">유산소기구</option>
+				<option value="3">웨이트리프팅</option>
+				<option value="4">어시스트</option>
+				<option value="5">전시상품</option>
+			</select><br><br>
+			<label>하위 카테고리</label>
+			<select id="downCategory" name="downCategory">
+				<option value="1">멀티랙</option>
+				<option value="2">멀티짐</option>
+				<option value="3">벤치</option>
+				<option value="4">벤치프레스</option>
+				<option value="5">스미스짐</option>
+				<option value="6">클럽용머신</option>
+				<option value="7">마사지</option>
+				<option value="8">매트</option>
+				<option value="9">스트랩과패드</option>
+				<option value="10">튜빙밴드</option>
+				<option value="11">트레이닝보조</option>
+				<option value="12">거꾸리</option>
+				<option value="13">케이블손잡이</option>
+				<option value="14">부속품</option>
+				<option value="15">덤벨</option>
+				<option value="16">바벨</option>
+				<option value="17">정리대</option>
+				<option value="18">케틀벨</option>
+				<option value="19">플레이트(원판)</option>
+				<option value="20">런닝머신</option>
+				<option value="21">사이클</option>
+				<option value="22">로잉머신</option>
+				<option value="23">일립티컬</option>
+				<option value="24">샌드백</option>
+			</select>
+		</div>
+		<div class="btn_collection"><br>
+			<button type="submit" id="save">등록</button>
+			<button type="button" id="cancle">취소</button>
+		</div>
 	</form>
 	
 	<script>
@@ -172,10 +214,86 @@
 				html += "</tr>";
 			});
 			
-			html += "</table>";
-			$("#product").empty(); 
-			$("#product").append(html);
-		}
+		html += "</table>";
+		$("#product").empty(); 
+		$("#product").append(html);
+	}
+		
+	$("#img_btn").click(function(e){
+		e.preventDefault();
+	});
+	
+	var stepId= 1;
+	var stepImgId = 1;
+	
+	
+	$("#img_btn").on('click', function(){
+		stepId++;
+		stepImgId++;
+		$('#imgCollection').append('<div id="imgCollection_1"><img src="./css/alt.JPG" name="stepImg_'+stepId+'" id="stepImg_' + stepId + '"alt="상품 상세 정보 순서"'> <input type="file" name="uploadStepImg_'+stepId+'" required="required"></div>');
+        $("#stepCount").val(stepId);
+        console.log(stepId);
+	});
+	
+	$('#uploadTitleImg').change(function(){
+        readTitle(this);
+     });
+    
+     function readTitle(input) {
+        if (input.files && input.files[0]) {
+           var reader = new FileReader();
+           
+           reader.onload = function (e) {
+              $('#titleImg').attr('src', e.target.result);  
+           }
+           reader.readAsDataURL(input.files[0]);
+        }
+     }
+     $("input[id^='uploadStepImg_']").change(function(){
+        console.log($(this).attr('id').charAt(14));
+        var num = $(this).attr('id').charAt(14);
+       readStep(this, num);
+     });
+     function readStep(input, num) {
+        console.log(num);
+        if (input.files && input.files[0]) {
+           var reader = new FileReader();
+           
+           reader.onload = function (e) {
+              $("#stepImg_"+num).prev().attr('src', e.target.result);
+           }
+           reader.readAsDataURL(input.files[0]);
+        }
+     }
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	</script>
     <footer></footer>
 </body>
