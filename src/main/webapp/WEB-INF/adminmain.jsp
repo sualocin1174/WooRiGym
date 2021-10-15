@@ -86,39 +86,28 @@
 			<img id = "titleImg" src="./css/alt.JPG"><input type="file" name="upLoadTitleImg" id="upLoadTitleImg" class="hiddenInput" accept="image/jpeg, image/jpg, image/png" required="required">
 		</div>
 		<div id="content">
-		<table>
-			<tr>
-			<td>상품명</td>
-			<td><input type="text" id="product_name" name="product_name" required="required" placeholder="상품명을 입력해주세요."></td>
-			</tr>
-			<tr>
-			<td>상위 카테고리</td>
-			<td><input id="parent_category" name="parent_category"></td>
-			</tr>
-			<tr>
-			<td>하위 카테고리</td>
-			<td><input id="child_category" name="child_category"></td>
-			</tr>
-			<tr>
-			<td>수량</td>
-			<td><input id="quantity" name="quantity"></td>
-			</tr>
-			<tr>
-			<td>가격</td>
-			<td><input id="price" name="price"></td>
-			</tr>
-			<tr>
-			<td>상품이미지</td>
-			<td><input id="product_info_url" name="product_info_url"></td>
-			</tr>
-			<tr>
-			<td>상품옵션</td>
-			<td><input id="product_option" name="product_option"></td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center"><button type="button" id="check">등록</button></td>
-			</tr>
-		</table>
+		<br><label>상품 번호</label>
+		<input type="text" name="productNo" id="productNo" required="required" placeholder="상품 번호를 입력해주세요."><br><br>
+		<div id="productOption">
+		<label>상품명</label>
+		<input type="text" name="productName" id="productName" required="required" placeholder="상품명을 입력해주세요."><br><br>
+		<label>상품 가격</label>
+		<input type="text" name="price" id="price" required="required" placeholder="상품 가격을 입력해주세요."><br><br>
+		</div>
+		<a href ='#' id='btn_txtAdd'><i class='fas fa-plus-circle'></i></a><br><br>
+		</div>
+		<label>상위 카테고리</label><select id="upCategory" name="upCategory">
+		<option value="1">근력기구</option>
+		<option value="2">유산소기구</option>
+		<option value="3">웨이트리프팅</option>
+		<option value="4">어시스트</option>
+		<option value="5">전시상품</option>
+		</select><br><br>
+		<label>하위 카테고리</label><select id="downCategory" name="downCategory">
+		
+		
+		
+		</select>
 	</form>
 	
 	<script>
