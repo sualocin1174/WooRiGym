@@ -20,10 +20,10 @@ public class SearchListService {
 		return vo;
 	}
 	
-	public ArrayList<ProductTable> searchProductList(int start, int end) {
+	public ArrayList<ProductTable> searchProductList(String productName, String parentCategory, int minprice, int maxprice, int start, int end) {
 		ArrayList<ProductTable> produList = null;
 		Connection conn = jdbcTemplate.getConnection();
-		produList = new SearchListDao().searchProductList(conn, start, end);
+		produList = new SearchListDao().searchProductList(conn, productName, parentCategory, minprice, maxprice, start, end);
 		jdbcTemplate.close(conn);
 		return produList;
 	}

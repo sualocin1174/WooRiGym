@@ -36,13 +36,21 @@ public class SearchListDao {
 		return vo;
 	}
 	
-	public ArrayList<ProductTable> searchProductList(Connection conn, int start, int end) {
+	// 2021.10.15 1차 내용수정 시작
+	public ArrayList<ProductTable> searchProductList(Connection conn, String productName, String parentCategory, int minprice, int maxprice, int start, int end) {
 		System.out.println("searchProductList 1");
 		ArrayList<ProductTable> productlist = null;
 		String sql = "select *"
 				+ " from (select rownum r, t1.*"
-				+ "      from(select *"
-				+ "           from Product"
+				+ "      from(select p.product_info_url, p.product_name, p.product_option, p.price, p.product_no, count(o.buy_quantity), sum(r.score)"
+				+ "           from product p"
+				+ "           inner join order_detail o on p.product_no = o.product_no"
+				+ "           inner join review r on o.order_detail_no = r.order_detail_no"
+				+ "           where  p.product_name like '%?%'"
+				+ "           and  p.parent_category like '%?%'"
+				+ "           and  p.price between ? and ?"
+				+ "           group by p.product_info_url, p.product_name, p.product_option, p.price, p.product_no"
+				+ "           order by count(o.buy_quantity) desc" // 조건에 따라 바뀌어야함
 				+ "           )"
 				+ "      t1) t2"
 				+ " where r between ? and ?";
@@ -51,8 +59,12 @@ public class SearchListDao {
 		try {
 			System.out.println("searchProductList executeQuery 1");
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, start);
-			pstmt.setInt(2, end);
+			pstmt.setString(1, productName);
+			pstmt.setString(2, parentCategory);
+			pstmt.setInt(3, minprice);
+			pstmt.setInt(4, maxprice);
+			pstmt.setInt(5, start);
+			pstmt.setInt(6, end);
 			rset = pstmt.executeQuery();
 			System.out.println("searchProductList executeQuery 2");
 			if (rset.next()) {
@@ -77,6 +89,7 @@ public class SearchListDao {
 		System.out.println("searchProductList 2" + productlist);
 		return productlist;
 	}
+	// 2021.10.15 1차 내용수정 완료
 	// 2021.10.12 1차 추가완료
 	
 	// 2021.10.11 추가시작
@@ -249,7 +262,7 @@ public class SearchListDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, minprice);
-			pstmt.setInt(1, maxprice);
+			pstmt.setInt(2, maxprice);
 			rest = pstmt.executeQuery();
 			if(rest.next()) {
 				productlist = new ArrayList<ProductTable>();

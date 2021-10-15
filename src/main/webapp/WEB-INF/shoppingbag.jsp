@@ -53,50 +53,85 @@
 	     /* 공통헤더~reset에 포함  끝*/
 	</style>
 	<script>
+		/* 2021.10.14 1차 내용수정 시작 */
+		function allCheckFunc( obj ) {
+				$("[name=subCB]").prop("checked", $(obj).prop("checked") );
+		}
+	
+		/* 체크박스 체크시 전체선택 체크 여부 */
+		function oneCheckFunc( obj ) {
+			var allObj = $("[name=mainCB]");
+			var objName = $(obj).attr("name");
+	
+			if( $(obj).prop("checked") ) {
+				checkBoxLength = $("[name="+ objName +"]").length;
+				checkedLength = $("[name="+ objName +"]:checked").length;
+	
+				if( checkBoxLength == checkedLength ) {
+					allObj.prop("checked", true);
+				} else {
+					allObj.prop("checked", false);
+				}
+			} else {
+				allObj.prop("checked", false);
+			}
+		}
+	
 		$(function(){
-		
-		    $("#btnList").click(function(){
-		    	/* TODO */
-		        /* location.href="${path}/shop/product/list.do"; */
-		    });
-		
-		     // 아래쪽에서 btnlist를 호출해서 실행되는 function() 함수 구문.
-		     // list로 가는 링크를 만든다.
-		
-		    $("#btnDelete").click(function(){
-		        if(confirm("장바구니를 비우시겠습니까?")){
-			    	/* TODO */
-		            /* location.href="${path}/shop/cart/deleteAll.do"; */
-		        }
-		    });
+			$("[name=mainCB]").click(function(){
+				allCheckFunc( this );
+			});
+			$("[name=subCB]").each(function(){
+				$(this).click(function(){
+					oneCheckFunc( $(this) );
+				});
+			});
 		});
+		/* 2021.10.14 1차 내용수정 완료 */
 	</script>
 </head>
 <body>
 <!-- 공통헤더 템플릿 -->
 <%@ include file="template_header.jsp"%>
 
+	<div id="" style="display: none"></div>
 	<h2>장바구니</h2>
+	[[[${cartTableVolist}]]
 	<form id="form1" name="form1" method="post">
 	    <table border="1" width="400px">
-	        <tr>
-	        	<th><input type ="checkbox" name="mainCB" id="mainCB"> 체크박스</th> <!-- 2021.10.13 1차 내용수정 id값 추가 -->
-	            <th>상품명/옵션</th>
-	            <th>수량</th>
-	            <th>상품금액</th>
-	            <th>적립금</th>
-	            <th>배송비</th>
-	        </tr>
-	        <tr align="center">
-	        	<td><input type ="checkbox" name="subCB" id="subCB"> 체크박스</td> <!-- 2021.10.13 1차 내용수정 id값 추가 -->
-	            <td>상품명/옵션</td>
-	            <td>수량</td>
-	            <!-- <fmt:formatNumber value="" pattern="#,###,###"/> -->
-	            <td>상품금액</td>
-	            <td>적립금</td>
-	            <td>배송비</td>
-	        </tr>
+	    	<c:forEach var="cartlist" items="${cartTableVolist}">
+		        <tr>
+		        	<th><input type ="checkbox" name="mainCB" id="mainCB"> 체크박스</th> <!-- 2021.10.13 1차 내용수정 id값 추가 -->
+		            <th>상품명/옵션</th>
+		            <th>수량</th>
+		            <th>상품금액</th>
+		            <th>적립금</th>
+		            <th>배송비</th>
+		        </tr>
+		        <tr align="center">
+		        	<td><input type ="checkbox" name="subCB" id="subCB"></td> <!-- 2021.10.13 1차 내용수정 id값 추가 -->
+		            <td>${cartlist.productName}<br>${cartlist.productOption}</td>
+		            <td>${cartlist.cartQuantity}</td>
+		            <!-- <fmt:formatNumber value="" pattern="#,###,###"/> -->
+		            <td>${cartlist.price}</td>
+		            <td>${cartlist.price*0.05}</td>
+		            <td>배송비</td>
+		        </tr>
+	        </c:forEach>
 	    </table>
+	    <%-- <c:if test=${${userId != null}}></c:if> --%>
+	   <%--  <c:if test=" ${startPage} > 1 " >
+			이전
+		</c:if>
+		<c:forEach begin="${startPage}"  end="${endPage}" step="1" var="i">
+			<a href="./sblist.ajax?pagenum=${i}"> ${i} </a>
+			<c:if test="${i } != ${endPage}">
+				,
+			</c:if>
+		</c:forEach>
+		<c:if test=" ${endPage} < ${pageCount}" >
+			다음
+		</c:if> --%>
 	    <table>
 	        <tr>
 	            <td align="right">
@@ -112,5 +147,43 @@
 	    <button type="button" id="btnAllDelete">전체구매</button>
 	    <button type="button" id="btnAllDelete">전체삭제</button>
 	</form>
+	<script>
+		<%-- $(document).ready(function(){
+	        $.ajax({
+	            type : "post",
+	            url : "<%=request.getContextPath()%>/sblist.ajax",
+	            dataType : "text",
+	            error : function(){
+	                alert('통신실패!!');
+	            },
+	            success : function(data){
+	                alert("통신데이터 값 : " + data) ;
+	                $("#dataArea").html(data) ;
+	            }
+	        });
+	    }); --%>
+	
+	    
+    	$(document).ready(ajaxf1);
+    	function ajaxf1() {
+    		
+			$.ajax({
+				type:"post",
+				url:"<%=request.getContextPath()%>/sblist.ajax",
+				data : {
+					pagenum : 1,
+				},
+				dataType : "json", // 전달받을 객체는 JSON 이다.
+				success: function(data){
+					console.log(data);
+				},
+				error : function(request,status,error) {
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+
+					"\n"+"error:"+error);
+					}
+			});
+		}
+    	
+    </script>
 </body>
 </html>

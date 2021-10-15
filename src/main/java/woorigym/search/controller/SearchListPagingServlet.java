@@ -1,6 +1,7 @@
 package woorigym.search.controller;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -58,6 +59,22 @@ public class SearchListPagingServlet extends HttpServlet {
 		int currentPage = 1;
 		int startRnum = 1; // 화면에 글
 		int endRnum = 1; // 화면에 글
+		String productName = request.getParameter("productName");
+		String parentCategory = request.getParameter("parentCategory");
+		String childCategory = request.getParameter("childCategory");
+		String minPriceStr = request.getParameter("minPrice");
+		String maxPriceStr = request.getParameter("maxPrice");
+		String selectRank = request.getParameter("selectRank");
+		int minPrice = -1;
+		int maxPrice = -1;
+		System.out.println(minPrice);
+		System.out.println(maxPrice);
+		try {
+			minPrice = Integer.parseInt(minPriceStr);
+			maxPrice = Integer.parseInt(maxPriceStr);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 
 		String pageNum = request.getParameter("pagenum");
 		if (pageNum != null) { // 눌려진 페이지가 있음.
@@ -87,8 +104,10 @@ public class SearchListPagingServlet extends HttpServlet {
 		System.out.println(startRnum);
 		System.out.println(endRnum);
 		System.out.println(endPage);
+		System.out.println(startPage);
+		System.out.println(pageCount);
 		// DB에서 값 읽어오기
-		ArrayList<ProductTable> productlist = new SearchListService().searchProductList(startRnum, endRnum);
+		ArrayList<ProductTable> productlist = new SearchListService().searchProductList(productName, parentCategory, minPrice, maxPrice, startRnum, endRnum);
 
 		// Data 전달을 위해서 request에 셋
 		request.setAttribute("productlist", productlist);

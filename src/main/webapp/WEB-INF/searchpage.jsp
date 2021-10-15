@@ -8,10 +8,11 @@
 <%@page import="java.util.ArrayList"%>
   <%
   String user_name = (String)request.getAttribute("user_name");
-  %>
-<%
 	ArrayList<ProductTable> productlist = (ArrayList<ProductTable>) request.getAttribute("productlist");
-%>
+	int startPage = (int)request.getAttribute("startPage");
+	int endPage = (int)request.getAttribute("endPage");
+	int pageCount = (int)request.getAttribute("pageCount");
+  %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -101,6 +102,7 @@
     </style> <!-- 2021.10.08 1차 추가완료 -->
     </head>
 <body>
+
 	<%@ include file="template_header.jsp"%> <!-- 2021-10-08 1차 추가시작 및 완료 -->
     <aside>
 		<form>
@@ -164,7 +166,8 @@
 		    		<td>이미지 : ${plist.productInfoUrl}<br>
 		    			상품명 : ${plist.productName}<br>
 		    			옵션 : ${plist.productOption}<br>
-		    			가격 : ${plist.price}<br><br>
+		    			가격 : ${plist.price}<br>
+		    			적립금 : ${plist.price*0.05}<br><br>
 		    		</td>
 		    	</tr>
 		    	
@@ -198,6 +201,9 @@
 			다음
 		</c:if>
     	<!-- 2021.10.11 1차 추가완료 -->
+    	console.log("${startPage}");
+    	console.log("${endPage}");
+    	console.log("${pageCount}");
     </section>
     <footer>
     </footer>
