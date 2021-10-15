@@ -15,21 +15,35 @@
          <li><a href="#" id="btncoupon" class="btnC">쿠폰 관리</a></li>
          <li><a href="#">상품 문의(Q&A)</a></li>
      </ul>
-       </div>
-      <div id="ajaxTable">
-            <!-- <div class="popup" id="pop1"> --> 
-             <div class="popup" id="lightbox-overlay">
-               <a href="#">닫기</a>
-               <p>보유 쿠폰 목록</p>
-               <ul>
-                <li id="c_name"></li>
-                <li id="c_discount"></li>
-                <li id="c_issue_date"></li>
-                <li id="c_expire_date"></li>
-               </ul>
-            </div>
-            <!--모달창 어두운 배경 레이어-->
-            <!-- <div class="dim"></div> -->
+     <!-- 쿠폰 Modal Box -->
+            <div class="modal">
+              <div class="modal-content">
+                    <span class="close">&times;</span> <!-- 닫기 -->
+                     <p>보유쿠폰 목록</p>
+                     <ul>
+                          <li id="c_name"></li>
+                          <li id="c_discount"></li>
+                          <li id="c_issue_date"></li>
+                          <li id="c_expire_date"></li>
+                     </ul>
+              </div>
+          </div>
  </div>
-
 </aside>
+<script>
+        $("#btncoupon").click(function(){
+           $(".modal").show(); 
+        });
+        $(".close").click(function(){
+           $(".modal").hide(); 
+        });
+        $(window).on("click",function(e){
+            console.log(e.target); 
+            //방법 1
+            //if(e.target == document.getElementById("modal-01")){};
+            //방법 2
+            if(e.target == $("modal").get(0)){
+                $(".modal").hide();
+            }
+        });
+    </script>

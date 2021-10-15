@@ -21,10 +21,8 @@ import woorigym.user.model.vo.UserTable;
 public class CouponListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public CouponListServlet() {
-        super();
-    }
-
+    public CouponListServlet() { super(); }
+       
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String viewPage = "/WEB-INF/mypage.jsp";
 		request.getRequestDispatcher(viewPage).forward(request, response);
@@ -32,8 +30,8 @@ public class CouponListServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
-		Object loginSS = request.getParameter("loginSS");
-		UserTable user = (UserTable)loginSS;// 서블릿 자체 리퀘스트에 담고있어서 화면에 노필요!!
+//		Object loginSS = request.getParameter("loginSS"); //getSession이 scope가 더 넓어 getParameter보단 getSession이 더 오래간다.
+		UserTable user = (UserTable)request.getSession().getAttribute("loginSS");// 서블릿 자체 리퀘스트에 담고있어서 화면에는 필요없음.
 		String user_id = user.getUser_id();
 		System.out.println(user_id);
 		
@@ -54,18 +52,4 @@ public class CouponListServlet extends HttpServlet {
 			System.out.println("쿠폰 목록 조회 실패");
 		}
 	}
-	
-//	public String getJson(String user_id) {
-//		if(user_id == null) user_id = "";
-//		StringBuffer result = new StringBuffer("");
-//		result.append("{\"result\":[");
-//		CouponDao couponDao = new CouponDao();
-//		ArrayList<CouponTable> volist = new CouponService().couponListAll(user_id);
-//		for(int i = 0; i<volist.size();i++) {
-//			result.append("{\"value\": \""+volist.get(i).getUser_id()+"\"},");
-//		}
-//		result.append("]}");
-//		return result.toString();
-//	}
-
 }

@@ -11,20 +11,24 @@
      #side-menu>ul>li:first-child{
          font-size: 25px;
      }
-     
-     #lightbox-overlay {
-     	opacity:0;
-     	pointer-events: none; /* 링크 있으면 링크 작동 X, 링크가 없어도 링크를 막지 않도록 */
-     	position: fixed;
-     	width: 100%;
-     	height: 100%;
-     	top: 0;
-     	left: 0;
-     	background-color: rgba(29,31,33, .95);
-     	transition: opacity .3s ease_in;
-     }
-     /* visible class를 추가시 바뀜 */
-      #lightbox-overlay.visible{
-     	opacity:1;
-      	pointer-events: auto;
-      }
+     /* 쿠폰 Modal Box */
+     .modal {
+            display: none;
+            width: 100%;
+            height: 100%;
+            top:0;
+            left: 0;
+            position: fixed;
+            z-index: 1;
+            background-color: rgba(44, 47, 58, .3);
+            
+        }
+        .modal-content {
+            width: 200px;
+            height: 300px;
+            top: 50px;
+            left: 50px;
+            position: relative;
+            background-color: #ffffbd;
+            padding: 10px;
+        }

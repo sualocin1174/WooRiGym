@@ -20,8 +20,10 @@
                 padding: 30px 0 30px 0;
             }
         
+        /* 신상품 | 인기상품 | 타임세일 */
             #main_bnb {
                 text-align: center;
+                margin-top: 15px; // 10/15(금) 추가
             }
             
             #main_bnb>ul {
@@ -33,7 +35,6 @@
                 display: inline-block;
             }
 
-        /* 신상품 | 인기상품 | 타임세일 */
             #main_bnb li::after{
                 padding: 10px;
                 content: "|";
@@ -72,17 +73,6 @@
 			  max-width: 1000px;
 			  position: relative;
 			  margin: auto;
-			}
-			
-			/* Caption text */
-			.text {
-			  color: #f2f2f2;
-			  font-size: 15px;
-			  padding: 8px 12px;
-			  position: absolute;
-			  bottom: 8px;
-			  width: 100%;
-			  text-align: center;
 			}
 			
 			/* Number text (1/3 etc) */
@@ -144,19 +134,16 @@
 		<div class="mySlides fade">
 		  <div class="numbertext">1 / 3</div>
 		  <img src="./images/메인_샘플1.jpg" style="width:100%">
-		  <div class="text">Caption Text</div>
 		</div>
 		
 		<div class="mySlides fade">
 		  <div class="numbertext">2 / 3</div>
 		  <img src="./images/메인_샘플2.jpg" style="width:100%">
-		  <div class="text">Caption Two</div>
 		</div>
 		
 		<div class="mySlides fade">
 		  <div class="numbertext">3 / 3</div>
 		  <img src="./images/메인_샘플3.jpg" style="width:100%">
-		  <div class="text">Caption Three</div>
 		</div>
 		
 		</div>

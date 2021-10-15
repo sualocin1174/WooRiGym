@@ -78,7 +78,6 @@
     	// TODO: 유효성검사 (선택사항)
     	console.log("ajax 시작");
     	console.log("<%=session.getAttribute("loginSS")%>");
-    	console.log("<%=session.getAttribute("loginSS")%>");
     	var loginSS = "<%=session.getAttribute("loginSS")%>";
     //레스트API CRUD 관점에서 해석
     //get 단순조회 , post 인서트할때, put 업데이트

@@ -34,16 +34,16 @@
     	console.log("오늘 날짜 : ", sysdate()); 
     	$("#order_search").on("click", ajaxF1());//검색 버튼
     	$("#1week").on("click", lastWeek); //1주일 버튼
-    	//TODO: 1,3,6개월
-		ajaxF1();
-    	
+    	$("#1month").on("click", lastMonth); //1개월 버튼
+    	$("#3month").on("click", last3M); //3개월 버튼
+    	$("#6month").on("click", last6M); //6개월 버튼
     });
     };
     	// 현재 날짜 및 시간
         var now = new Date();	
         console.log("현재 : ", now);
     function sysdate(){
-        //날짜 추출**********************************************************************
+        //날짜 추출
         var year = now.getFullYear();
     	var month = ("0"+(now.getMonth()+2)).slice(-2);
     	console.log("month: "+month); //왜 now랑 end_date는 이번달로 잘 나오고 month는 다음달로 나올까..
@@ -56,7 +56,7 @@
     }
         console.log("현재 : ", sysdate());
  
- 	 //한달 전
+ 	 //페이지 로드 시 기본 날짜: 현재~한달 전 자동조회
     var oneMonthAgo = new Date(now.setMonth(now.getMonth() - 1)); 
     console.log("한달 전 : ", oneMonthAgo);
     
@@ -70,7 +70,17 @@
     }
     console.log("한달 전 : ", default_date());
     
-    //1주일 전
+ 	 // 1개월 전
+    function lastMonth(){
+    	var year = oneMonthAgo.getFullYear();
+    	var month = ("0"+(1+oneMonthAgo.getMonth())).slice(-2);
+    	var day = ("0"+oneMonthAgo.getDate()).slice(-2);
+    	//확인
+    	console.log("lastMonth(): "+year+"-"+month+"-"+day);
+    	$("#start_date").val(year+"-"+month+"-"+day);
+    }
+    
+    // 1주일 전
     	function lastWeek() {
     		//날짜 추출
             var year = now.getFullYear();
@@ -83,9 +93,31 @@
         	$("#start_date").val(year+"-"+month+"-"+day);
         	
     	}
-        console.log("1주일 전 : ", lastWeek());
     
-    
+    //3개월 전
+    function last3M(){
+    	//날짜 추출
+        var year = now.getFullYear();
+    	var month = ("0"+(now.getMonth()-1)).slice(-2);
+    	var day = ("0"+(now.getDate())).slice(-2);
+    	
+    	//확인
+    	console.log("last3M(): "+year+"-"+month+"-"+day);
+	//원하는 날짜형식: yyyy/mm/dd
+    	$("#start_date").val(year+"-"+month+"-"+day);
+    }
+    //6개월 전
+    function last6M(){
+    	//날짜 추출
+        var year = now.getFullYear();
+    	var month = ("0"+(now.getMonth()-4)).slice(-2);
+    	var day = ("0"+(now.getDate())).slice(-2);
+    	
+    	//확인
+    	console.log("last6M(): "+year+"-"+month+"-"+day);
+	//원하는 날짜형식: yyyy/mm/dd
+    	$("#start_date").val(year+"-"+month+"-"+day);
+    }
     
     function ajaxF1(){ //검색버튼 클릭 시
     	// TODO: 유효성검사 해도되고 $("#start_date")")
@@ -104,41 +136,43 @@
     		},
     		dataType: "json", //전달받을 객체는 json이다.
     		success: function(data){
-    			$("#order_detail").html("");
+    			$("#order").html(""); //중복 결과 방지 위해 새로고침!
     			$("#order_detail").remove();
     			console.log(data);
     			console.log(data.length);
     				var empty ="";
+    				var cancel = "";
     			//console.log(data[0].product_name); 참고용
     			if(data!=""){
     				var html = "";
     				for(var i=0; i<data.length;i++){
     					console.log(data[i]);
     				//주문번호, 주문날짜+테이블 제목+내용
-    					 html+=  "<h4><a href='./orderDetailTable?order_no="+data[i].order_no+"'>"+data[i].order_no+"</a></h4>"
-							 + "<h5><a href='./orderTable?order_date='"+data[i].order_date+"'>"+data[i].order_date+"</a></h5>"
-    						 + "<table id='order_detail'><tr><td colspan='2'>상품명</td>"
-    						 + "<td>수량</td><td>상품금액</td><td>배송비</td><td>진행상태</td></tr>"
+    					 html+=  "<h3><a href='./orderDetailTable?order_no="+data[i].order_no+"'>"+data[i].order_no+"</a></h3>"
+							 + "<h4><a href='./orderTable?order_date='"+data[i].order_date+"'>"+data[i].order_date+"</a></h4>"
+							 + "<table id='order_detail'><tr><th colspan='2'>상품명</th>"
+						     + "<th>수량</th><th>상품금액</th><th>배송비</th><th>진행상태</th></tr>"
     						 
 	    					 //+ "<a href='./orderDetailTable?product_no="+data[i].product_no+"'>"
 		    	 			 + "<td><a href='./productTable?product_info_url="+data[i].product_info_url
-		    	 			 +"<img src='./images/1번 메인.jpg'></a></td><td>"+data[i].product_name+"</td>"	  //TODO: 이미지 경로 수정
+		    	 			//TODO: 이미지 경로 수정
+		    	 			 +"'><img src='./images/1번 메인.jpg'></a></td>"+"<td>"+data[i].product_name+"</td>"	  
 		    	       		 +"<td><a href='./orderDetailTable?buy_quantity="+data[i].buy_quantity+"'>"+data[i].buy_quantity+"</a></td>"
 		    	       		 +"<td><a href='./orderTable?order_total="+data[i].order_total+"'>"+data[i].order_total+"</a></td>"
 		    	       		 +"<td><a href='./orderTable?order_cost="+data[i].order_cost+"'>"+data[i].order_cost+"</a></td>"
 		    	       		 +"<td><a href='./orderTable?order_state="+data[i].order_state+"'>"+data[i].order_state+"</a></td>"
 		    	        	 +"</tr></table>";
-    				
     				}
-        		  //  $(html).insertAfter($("#btngroup"));
         		    $("#order").html(html);
-        		   // $(no_and_date).insertAfter($("#btngroup"));
-    				//var ol = data[0].product_name; //참고용
+    				if(data[i].order_state =='배송전'){
+    					cancel += "<tr><td><button>주문취소</button><td></tr>";
+    					$("#order_detail").html(cancel);
+    				}
     			} else {
 		    	      //결과 없을 때
-    				empty += "<table id='order_detail'><tr><td colspan='2'>상품명</td>"
-						  + "<td>수량</td><td>상품금액</td><td>배송비</td><td>진행상태</td></tr>"
-						  +"<td>결과가 없습니다</td>"
+    				empty += "<table id='order_detail'><tr><th colspan='2'>상품명</th>"
+					     + "<th>수량</th><th>상품금액</th><th>배송비</th><th>진행상태</th></tr>"
+						  +"<td colspan='6'>해당 기간의 주문내역이 없습니다</td>"
         			 $(empty).insertAfter($("#btngroup"));
     			}
     		},
@@ -153,39 +187,31 @@
  <style>
      section {
          width: 900px;
-         padding: 30px 0 30px 0;
+         padding: 0 0 30px 0;
          position: relative;
          bottom: 170px;
-         left: 300px;
+         left: 260px;
      }
-
-      table#order_detail{
-          text-align: center;
-          border-top: 1.5px solid black;
-          border-bottom: 1px solid #BDBDBD;
-        }
-        #order_detail td{
-            padding: 10px 30px 20px 0;
-      }
-      #order_detail img{
-          width: 80px;
-          height: 80px;
-      }
        /* 주문/배송조회 */
       section > h2 {
-          margin: 0;
+          margin: 20px;
           text-align: center;
       }
       /* 기간별 주문내역 검색 */
+      .date{
+      margin: 15px 10px;
+      padding: 4px;
+      }
       #btngroup{
           text-align: center;
+          margin-bottom: 20px;
       }
        .button{
         padding: 5px 25px;
         text-align: center;
         text-decoration: none;
         font-size: 16px;
-        margin: 10px 10px;
+        margin: 25px 10px;
         transition-duration: 0.3s;
         }
 
@@ -195,7 +221,7 @@
             border: 2px solid #e7e7e7;
         }
 
-        .button:hover{
+        .button:hover {
             background-color: #e7e7e7;
         }
 
@@ -210,6 +236,28 @@
         background-color: #555555;
         color: white;
         }
+      
+       /* 주문내역 테이블 */
+       #order h3, #order h4 {
+       padding-bottom: 5px;
+       }
+      	table#order_detail{
+		  width: 850px;
+          text-align: center;
+          margin-bottom: 15px;
+          border-top: 1.5px solid black;
+          border-bottom: 1px solid #BDBDBD;
+        }
+      	#order_detail th{
+      	padding: 10px;
+      	}
+        #order_detail td {
+        padding: 16px;
+      	}
+	   	 #order_detail img{
+          width: 80px;
+          height: 80px;
+      	}
 
  </style>
 </head>
@@ -221,15 +269,12 @@
 
 <section>
     <h2>주문/배송 조회</h2>
-    <h4>조회 기간</h4>
+    <h3>조회 기간</h3>
     <!-- 달력 -->
      <div id="btngroup">
-     <!-- $("#start_date").val() -->
-     <!-- $("#end_date").val() -->
-    <input type="date" id="start_date">
-    <input type="date" id="end_date">
-    <!--  클릭 시 end_date = sysdate() 기준으로 
-    start_date = 1주일, 1개월, 3개월, 6개월 전 날짜 자동선택 -->
+    <input type="date" id="start_date" class="date">
+    <input type="date" id="end_date" class="date">
+   <!-- 기간 선택 버튼 -->
     <input type="button" class="button" value="1주일" id="1week">
     <input type="button" class="button" value="1개월" id="1month">
     <input type="button" class="button" value="3개월" id="3month">
@@ -238,10 +283,9 @@
     <input type="submit" class="button" value="검색" id="order_search" onclick="ajaxF1()">
     </div>
     <div id="order">
-    
-    </div>
   	<!-- 주문번호, 주문일자 -->
   	<!-- 상품이미지, 상품명, 수량, 상품금액, 배송비, 주문상태  -->
+    </div>
 </section>
 </body>
 </html>

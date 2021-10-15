@@ -30,12 +30,13 @@
     </div> 
     </c:if>
   <script type="text/javascript">
-
+	window.onload = pageLoadedHandler();
+	function pageLoadedHandler(){
 	<!-- 로그인 상태+마이페이지 버튼 클릭=마이페이지 접근가능 -->
   $("#btnmy").on('click',function(){
 	  var a = "${loginSS}"; //"필수"
 	  console.log(a);
-	  if (a == ""){
+	  if (a == null){
 		  alert("로그인 상태가 아닙니다.\n로그인 해주세요.");
 		  //TODO: 로그인 페이지로 이동
 		  location.href = "login";
@@ -43,12 +44,13 @@
 		  // 해당 user_id의 마이페이지로 이동
 		  location.href = "mypage";
 	  }
-
   });
+	
+}
   </script>
         <div id="search_icon">
             <a href="<%=ctxPath %>/searchpage"> <!-- 2021.10.12 1차 내용수정 // /slist.ajax에서 /slist로 수정 -->
-                <img src='./images/검색_돋보기.png' alt="검색" width="18px"/><br>
+                <img src='./images/검색_돋보기.png' alt="검색" width="20px"/><br>
             </a>
         </div>
  <div class="navbar">
