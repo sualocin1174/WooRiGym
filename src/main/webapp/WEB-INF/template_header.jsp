@@ -29,25 +29,6 @@
         </ul>
     </div> 
     </c:if>
-  <script type="text/javascript">
-	window.onload = pageLoadedHandler();
-	function pageLoadedHandler(){
-	<!-- 로그인 상태+마이페이지 버튼 클릭=마이페이지 접근가능 -->
-  $("#btnmy").on('click',function(){
-	  var a = "${loginSS}"; //"필수"
-	  console.log(a);
-	  if (a == null){
-		  alert("로그인 상태가 아닙니다.\n로그인 해주세요.");
-		  //TODO: 로그인 페이지로 이동
-		  location.href = "login";
-	  } else{
-		  // 해당 user_id의 마이페이지로 이동
-		  location.href = "mypage";
-	  }
-  });
-	
-}
-  </script>
         <div id="search_icon">
             <a href="<%=ctxPath %>/searchpage"> <!-- 2021.10.12 1차 내용수정 // /slist.ajax에서 /slist로 수정 -->
                 <img src='./images/검색_돋보기.png' alt="검색" width="20px"/><br>
@@ -142,10 +123,10 @@
   <div class="subnav">
     <button class="subnavbtn">회원가입 <i class="fa fa-caret-down"></i></button>
     <div class="subnav-content">
-        <a href="login">로그인</a>
-        <a href="#">회원가입</a>
+        <a href="<%=ctxPath %>/login">로그인</a> <!-- 10/15 수정: 현재경로를 뜻하는 ctxPath 추가 -->
+        <a href="<%=ctxPath %>/join">회원가입</a><!-- 10/15 추가-->
         <a href="#">주문</a>
-        <a href="#">나의페이지</a>
+        <a href="<%=ctxPath %>/mypage">마이페이지</a>
     </div>
   </div>
 </div>

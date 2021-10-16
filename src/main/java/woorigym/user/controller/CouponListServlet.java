@@ -29,10 +29,19 @@ public class CouponListServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 로그인이 안되면 진입불가
+		UserTable loginSS = (UserTable)request.getSession().getAttribute("loginSS");
+		if(loginSS == null) {
+			System.out.println("loginSS~~~~~~~~~");
+			request.getRequestDispatcher("/WEB-INF/loginAlert.jsp").forward(request, response);
+			return;
+		}
+		
 		PrintWriter out = response.getWriter();
 //		Object loginSS = request.getParameter("loginSS"); //getSession이 scope가 더 넓어 getParameter보단 getSession이 더 오래간다.
 		UserTable user = (UserTable)request.getSession().getAttribute("loginSS");// 서블릿 자체 리퀘스트에 담고있어서 화면에는 필요없음.
 		String user_id = user.getUser_id();
+
 		System.out.println(user_id);
 		
 		ArrayList<CouponTable> volist = new CouponService().couponListAll(user_id);

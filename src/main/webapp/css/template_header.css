@@ -103,6 +103,11 @@ a:hover {
 	width: 180px;
 	height: 100px;
 }
+
+#main_tnb1>ul>li {
+	display: inline-block;
+	padding: 5px;
+}
 /* 공통헤더에 있던 부분인데 css로 따로 빼면 적용이 안되서 reset에 포함 */
 #main_tnb2 {
 	position: absolute;
@@ -111,7 +116,7 @@ a:hover {
 	right: 50px;
 	margin: 10px;
 	overflow: hidden;
-	width: 700px;
+	width: 550px;
 	height: 100px;
 }
 
@@ -137,7 +142,7 @@ a:hover {
 #search_icon a {
 	position: absolute;
 	top: 10px;
-	right: 30px;
+	right: 50px;
 	margin: 15px;
 	width: 25px;
 	height: 25px;

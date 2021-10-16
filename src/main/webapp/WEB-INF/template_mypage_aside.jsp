@@ -42,7 +42,7 @@
             //방법 1
             //if(e.target == document.getElementById("modal-01")){};
             //방법 2
-            if(e.target == $("modal").get(0)){
+            if(e.target == $(".modal").get(0)){
                 $(".modal").hide();
             }
         });

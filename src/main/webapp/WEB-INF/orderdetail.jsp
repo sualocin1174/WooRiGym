@@ -151,7 +151,6 @@
     				var html = "";
     				for(var i=0; i<data.length;i++){
     					console.log(data[i]);
-    					//버튼 태그를 생성할때 <input onclick=f1(order_no)>이런 식으로 order_no를 가져와서~
     				//주문번호, 주문날짜+테이블 제목+내용
     					 html+=  "<h3><a href='orderDetailTable?order_no="+data[i].order_no+"'>"+data[i].order_no+"</a></h3>"
 							 + "<h4><a href='./orderTable?order_date='"+data[i].order_date+"'>"+data[i].order_date+"</a></h4>"
@@ -187,9 +186,6 @@
     		}
     	});
 	};
-	
-	
-	
     </script>
  <!-- /* content */ -->
  <style>
@@ -233,14 +229,14 @@
             background-color: #e7e7e7;
         }
 
-        #order_search {
+        #go_list {
         padding: 6px 32px;
         margin: 4px 2px;
         background-color: white;
         color: black;
         border: 2px solid #555555;
         }
-        #order_search:hover {
+        #go_list:hover {
         background-color: #555555;
         color: white;
         }
@@ -277,42 +273,14 @@
 
 <section>
     <h2>주문/배송 조회</h2>
-    <h3>조회 기간</h3>
-    <!-- 달력 -->
-     <div id="btngroup">
-    <input type="date" id="start_date" class="date">
-    <input type="date" id="end_date" class="date">
-   <!-- 기간 선택 버튼 -->
-    <input type="button" class="button" value="1주일" id="1week">
-    <input type="button" class="button" value="1개월" id="1month">
-    <input type="button" class="button" value="3개월" id="3month">
-    <input type="button" class="button" value="6개월" id="6month">
-    <br>
-    <input type="submit" class="button" value="검색" id="order_search" onclick="ajaxF1()">
-    </div>
+    <h3>주문 상세보기</h3>
     <div id="order">
-  	<!-- 주문번호, 주문일자 -->
-  	<!-- 상품이미지, 상품명, 수량, 상품금액, 배송비, 주문상태  -->
+  	<!-- 결제정보 -->
+  	<!-- 배송정보  -->
     </div>
-    <div id="pageview">
-    <!-- 서블릿 -> 서비스-> Dao -> DB-> jsp 순으로 오기때문에 이미 데이터를 갖고있으니
-    서블릿에서 정의한 endPage, startPage 등 용어 사용 가능 -->
-    <script>
-    console.log("시작 페이지: "+<%=request.getAttribute("startPage") %>);
-    console.log("마지막 페이지"+<%=request.getAttribute("endPage") %>);
-    </script>
-   <c:if test=" ${startPage} > 1 " >
-	이전
-	</c:if>
-	<c:forEach begin="${startPage}"  end="${endPage}" step="1" var="i">
-		<a href="./orderlist?pagenum=${i}"> ${i} </a>
-		<c:if test="${i} != ${endPage}">
-			,
-		</c:if>
-	</c:forEach>
-	<c:if test=" ${endPage} < ${pageCount}" >
-	다음
-	</c:if>
+     <div id="btngroup">
+    <input type="submit" class="button" value="목록" id="go_list" onclick="ajaxF1()">
+    <input type="button" class="button" value="수정" id="insert_place">
     </div>
 </section>
 </body>

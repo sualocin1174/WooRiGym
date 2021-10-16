@@ -97,10 +97,10 @@
 					var couponlist = "";
 					for(var i=0; i<data.length;i++){
 						console.log(data[i]);
-						
+						//TODO: 성공시 원하는 데이터 출력
 					}
 				} else {
-					
+					//TODO: 실패시 "보유한 쿠폰이 없습니다" 출력
 				}
 			},
 			error : function(request,status,error) {
