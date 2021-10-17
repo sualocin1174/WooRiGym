@@ -425,6 +425,7 @@ var fixaddrno = "";
         };
     }
   //카드결제 선택 시
+  /*
   var openPay;
   
     function cardpay() {
@@ -437,8 +438,10 @@ var fixaddrno = "";
                 "childForm", "width=700, height=350, resizable = no, scrollbars = no, left=400px , top=300px" );
         
     };
+    */
     
     //무통장입금 선택 시
+    /*
     function transferpay() {
     	$("#paymethodno").val(1);
     	 // window.name = "부모창 이름"; 
@@ -450,13 +453,171 @@ var fixaddrno = "";
         
     };
     var timer = setInterval(checkChild, 500);
+    */
     
 	// 결제창이 닫히면 db에 주문내역, 주문상세내역 생성 후 화면 넘어가기 기능 10.11추가 10.12 기능 구현
-    function checkChild() { 
-        if (openPay.closed) {
-            console.log("Child window closed");   
-            clearInterval(timer);
-            (function(){
+   
+    
+</script>
+<style>
+.modal{
+        display: none;
+        
+        width: 100%; height: 100%;
+        
+        top: 0; left: 0;
+        position: fixed;
+        z-index: 1;
+        background-color: rgba(12, 12, 12, .3);
+    }
+    .modal-content{
+        width: 200px; height: 300px;
+        top: 50px;
+        margin: auto;
+        position: relative;
+        background-color: bisque;
+        padding: 10px;
+
+    }
+</style>
+    
+    </head>
+<body>
+		<!-- 공통헤더 템플릿 -->
+ 	<%@ include file="template_header.jsp"%>
+<section id="ordersection">
+  <div class="orderform">
+        ⦁ 주문 상품 정보 <br>
+        <table id="productinfo" style=" float: left;">
+            <tr>
+                <th>번호</th>
+                <th>상품 이름</th>
+                <th>가격</th>
+            </tr>
+            <tr id="productinfotd">
+            </tr>
+        </table>
+        <table id="cartinfo">
+            <tr>
+                <th>수량</th>
+                <th>총 가격</th>
+                <th>적립금</th>
+            </tr>
+        </table>
+
+        <span id="producttotal">▸ 총 결제 예상 금액 : </span>
+    </div>  
+     <div class="orderform">
+            ⦁ 주문자 정보 <br>
+            <table id="userinfo">
+                <tr>
+                    <th> 이름 </th>
+                    <td id="uname"></td>
+                </tr>
+                <tr>
+                    <th> 연락처 </th>
+                    <td id="uphone"> <input type="text" id="phone1" size="2"> - <input type="text" id="phone2" size="2"> - <input
+                            type="text" id="phone3" size="2"></td>
+                </tr>
+            </table>
+        </div>
+ 
+ <div class="orderform">
+            ⦁ 배송지 정보 입력
+            <table id="addressuinfo">
+                <tr>
+                    <th>배송지 선택</th>
+                    <td>기본 주소 선택 <input type="radio" name="addrtype" checked="checked" class="existaddr" onclick="fixedaddr()"> 배송주소록에서 선택 <input type="radio" name="addrtype" class="existaddr" onclick="selectAddr()">
+                    <!-- <select id="selectaddress" onchange="chageaddrSelect()">
+        <option>배송지 목록에서 선택</option> </select> -->
+ 새 주소 입력 <input type="radio" name="addrtype" id="newaddr" onclick="clearaddr()"></td>
+                </tr>
+                <tr>
+                    <th rowspan="2">주소</th>
+                    <td><input type="text" id="postcode" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"> <button onclick="findAddr()">우편번호 찾기</button></td>
+                </tr>
+                <tr>
+                    <td><input type="text" id="basicaddr"></td>
+                </tr>
+                <tr>
+                    <th>상세주소</th>
+                    <td><input type="text" id="detailaddr"></td>
+                </tr>
+                <tr>
+                    <th>전화번호</th>
+                    <td>나중에 구현</td>
+                </tr>
+                <tr>
+                    <th>요청사항</th>
+                    <td><textarea  cols="30" rows="5" style="resize: none;" id="ordermemo"></textarea></td>
+                </tr>
+            </table>
+            
+        </div>
+ <div class="orderform">
+            ⦁ 결제 정보 입력
+            <table id="payinfo">
+                <tr><th>총 상품 가격 </th><td><input type="text" id="totalprice" readonly></td></tr>
+                <tr><th>적립금 사용 </th><td id="usemile"><input type="text" value="0" id="insertmile" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>현재 금액 : <input type="text" id="availmile" readonly></td></tr>
+                <tr><th>쿠폰 사용 </th><td id="usecoupon"><select id="couponselect" onchange="chageacouSelect()"><option>쿠폰 선택</option></select>적용 금액 : <input id="coudiscount" value="0" readonly></td></tr>
+                <tr><th>배송비 </th><td> <input type="text"  id="shippingpay" readonly> </td></tr>
+                <tr><th>총 결제 금액</th><td><input type="text" id="finalpay" readonly> </td></tr>
+                <tr><th>결제 수단</th><td>신용카드 <input type="radio" name="paymethod" id="cardmodalbtn">무통장입금 <input type="radio" name="paymethod"  id="depomodalbtn"></td></tr>
+            </table>
+            
+        </div>
+</section>
+  <p>
+ 
+  <input type="submit" value="결제 완료" id="submitinfo">
+        </p>
+<input type="text" id="addressno">
+<input type="text" id="paymethodno">
+<input type="text" id="couponno">
+<input type="text" id="prono">
+<input type="text" id="proquan">
+
+<!--  modal box-->
+    <div id="modal_01" class="modal">
+        <div class="modal-content">
+            <p class="close">&#10006;</p>
+            <p>modal box content</p>
+                아아디 패스워드 <input type="text">
+                <button class="close" id="ordersubmit">완료</button>
+
+        </div>
+    </div>
+
+
+
+    <footer></footer>
+    <script>
+        $("#cardmodalbtn").click(function(){
+        	$("#paymethodno").val(0);
+            $(".modal").show();
+        });
+        $("#depomodalbtn").click(function(){
+        	$("#paymethodno").val(1);
+            $(".modal").show();
+        });
+
+        $(".close").click(function(){
+            $(".modal").hide();
+        });
+	
+        /*
+        $(window).on("click", function(e){
+            var modal = document.getElementById("modal_01");
+            if(e.target == modal){
+                $(".modal").hide();
+            }
+        });
+        */
+    </script>
+    
+    <script>
+    $("#ordersubmit").click(function(){
+    	
            	 console.log("정보넘기기");  
            	 console.log($(".existaddr").is(":checked"));  
            	 
@@ -641,111 +802,11 @@ var fixaddrno = "";
                 }
             });
            	
-           }()); // checkchild 끝
-        }
-    }
+           }); 
+        
     
-</script>
     
-    </head>
-<body>
-		<!-- 공통헤더 템플릿 -->
- 	<%@ include file="template_header.jsp"%>
-<section id="ordersection">
-  <div class="orderform">
-        ⦁ 주문 상품 정보 <br>
-        <table id="productinfo" style=" float: left;">
-            <tr>
-                <th>번호</th>
-                <th>상품 이름</th>
-                <th>가격</th>
-            </tr>
-            <tr id="productinfotd">
-            </tr>
-        </table>
-        <table id="cartinfo">
-            <tr>
-                <th>수량</th>
-                <th>총 가격</th>
-                <th>적립금</th>
-            </tr>
-        </table>
-
-        <span id="producttotal">▸ 총 결제 예상 금액 : </span>
-    </div>  
-     <div class="orderform">
-            ⦁ 주문자 정보 <br>
-            <table id="userinfo">
-                <tr>
-                    <th> 이름 </th>
-                    <td id="uname"></td>
-                </tr>
-                <tr>
-                    <th> 연락처 </th>
-                    <td id="uphone"> <input type="text" id="phone1" size="2"> - <input type="text" id="phone2" size="2"> - <input
-                            type="text" id="phone3" size="2"></td>
-                </tr>
-            </table>
-        </div>
- 
- <div class="orderform">
-            ⦁ 배송지 정보 입력
-            <table id="addressuinfo">
-                <tr>
-                    <th>배송지 선택</th>
-                    <td>기본 주소 선택 <input type="radio" name="addrtype" checked="checked" class="existaddr" onclick="fixedaddr()"> 배송주소록에서 선택 <input type="radio" name="addrtype" class="existaddr" onclick="selectAddr()">
-                    <!-- <select id="selectaddress" onchange="chageaddrSelect()">
-        <option>배송지 목록에서 선택</option> </select> -->
- 새 주소 입력 <input type="radio" name="addrtype" id="newaddr" onclick="clearaddr()"></td>
-                </tr>
-                <tr>
-                    <th rowspan="2">주소</th>
-                    <td><input type="text" id="postcode" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"> <button onclick="findAddr()">우편번호 찾기</button></td>
-                </tr>
-                <tr>
-                    <td><input type="text" id="basicaddr"></td>
-                </tr>
-                <tr>
-                    <th>상세주소</th>
-                    <td><input type="text" id="detailaddr"></td>
-                </tr>
-                <tr>
-                    <th>전화번호</th>
-                    <td>나중에 구현</td>
-                </tr>
-                <tr>
-                    <th>요청사항</th>
-                    <td><textarea  cols="30" rows="5" style="resize: none;" id="ordermemo"></textarea></td>
-                </tr>
-            </table>
-            
-        </div>
- <div class="orderform">
-            ⦁ 결제 정보 입력
-            <table id="payinfo">
-                <tr><th>총 상품 가격 </th><td><input type="text" id="totalprice" readonly></td></tr>
-                <tr><th>적립금 사용 </th><td id="usemile"><input type="text" value="0" id="insertmile" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>현재 금액 : <input type="text" id="availmile" readonly></td></tr>
-                <tr><th>쿠폰 사용 </th><td id="usecoupon"><select id="couponselect" onchange="chageacouSelect()"><option>쿠폰 선택</option></select>적용 금액 : <input id="coudiscount" value="0" readonly></td></tr>
-                <tr><th>배송비 </th><td> <input type="text"  id="shippingpay" readonly> </td></tr>
-                <tr><th>총 결제 금액</th><td><input type="text" id="finalpay" readonly> </td></tr>
-                <tr><th>결제 수단</th><td>신용카드 <input type="radio" name="paymethod" onclick="cardpay()">무통장입금 <input type="radio" name="paymethod" onclick="transferpay()"></td></tr>
-            </table>
-            <button id="modal">모달창 테스트</button>
-        </div>
-</section>
-  <p>
- 
-  <input type="submit" value="결제 완료" id="submitinfo">
-        </p>
-<input type="text" id="addressno">
-<input type="text" id="paymethodno">
-<input type="text" id="couponno">
-<input type="text" id="prono">
-<input type="text" id="proquan">
-
-
-
-    <footer></footer>
+    </script>
 </body>
 
 
