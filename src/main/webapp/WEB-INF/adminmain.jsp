@@ -230,70 +230,11 @@
 	$("#img_btn").on('click', function(){
 		stepId++;
 		stepImgId++;
-		$('#imgCollection').append('<div id="imgCollection_1"><img src="./css/alt.JPG" name="stepImg_'+stepId+'" id="stepImg_' + stepId + '"alt="상품 상세 정보 순서"'> <input type="file" name="uploadStepImg_'+stepId+'" required="required"></div>');
-        $("#stepCount").val(stepId);
+		//$('#imgCollection').append('<div id="imgCollection_1"><img src="./css/alt.JPG" name="stepImg_'+stepId+'" id="stepImg_' + stepId + '"alt="상품 상세 정보 순서"'> <input type="file" name="uploadStepImg_'+stepId+'" required="required"></div>');
+		$('#imgCollection').append('<div id="imgCollection_1"><img src="./css/alt.JPG" name="stepImg_'+stepId+'" id="stepImg_'+stepId+'"> <input type="file" name="uploadStepImg_'+stepId+'" required="required"></div>');
+		$("#stepCount").val(stepId);
         console.log(stepId);
 	});
-	
-	$('#uploadTitleImg').change(function(){
-        readTitle(this);
-     });
-    
-     function readTitle(input) {
-        if (input.files && input.files[0]) {
-           var reader = new FileReader();
-           
-           reader.onload = function (e) {
-              $('#titleImg').attr('src', e.target.result);  
-           }
-           reader.readAsDataURL(input.files[0]);
-        }
-     }
-     $("input[id^='uploadStepImg_']").change(function(){
-        console.log($(this).attr('id').charAt(14));
-        var num = $(this).attr('id').charAt(14);
-       readStep(this, num);
-     });
-     function readStep(input, num) {
-        console.log(num);
-        if (input.files && input.files[0]) {
-           var reader = new FileReader();
-           
-           reader.onload = function (e) {
-              $("#stepImg_"+num).prev().attr('src', e.target.result);
-           }
-           reader.readAsDataURL(input.files[0]);
-        }
-     }
-		
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	</script>
     <footer></footer>
 </body>
