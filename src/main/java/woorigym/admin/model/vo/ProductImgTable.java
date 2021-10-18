@@ -12,6 +12,11 @@ public class ProductImgTable {
 		
 	}
 
+	public ProductImgTable(String imgAddress) {
+		super();
+		this.imgAddress = imgAddress;
+	}
+	
 	@Override
 	public String toString() {
 		return "ProductImgTable [imgNo=" + imgNo + ", productNo=" + productNo + ", imgAddress=" + imgAddress

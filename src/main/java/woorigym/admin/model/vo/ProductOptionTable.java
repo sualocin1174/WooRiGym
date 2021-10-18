@@ -11,6 +11,11 @@ public class ProductOptionTable {
 	private String productNo;
 	private String optionContent;
 	
+	public ProductOptionTable(String optionContent) {
+		super();
+		this.optionContent = optionContent;
+	}
+	
 	@Override
 	public String toString() {
 		return "ProductOptionTable [optionNo=" + optionNo + ", productNo=" + productNo + ", optionContent="

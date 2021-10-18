@@ -58,8 +58,8 @@ public class ProductDao {
 		PreparedStatement pstmt = null;
 		
 		String productsql = "INSERT INTO PRODUCT VALUES(?,?,?,?,?,?,?,?)";
-		String optionsql = "INSERT INTO PRODUCT_OPTION VALUES(OPTION_NO.NEXTVAL,?,PRODUCT_NO.CURRVAL)";
-		String imgsql = "INSERT INTO PRODUCT_IMG VALUES(IMG_NO.NEXTVAL, PRODUCT_NO.CURRVAL, ?)";
+		String optionsql = "INSERT INTO PRODUCT_OPTION VALUES(OPTION_NO.NEXTVAL,?,PRODUCT_NO.NEXTVAL)";
+		String imgsql = "INSERT INTO PRODUCT_IMG VALUES(IMG_NO.NEXTVAL, PRODUCT_NO.NEXTVAL, ?)";
 		
 		try {
 			pstmt = conn.prepareStatement(productsql);
@@ -96,7 +96,7 @@ public class ProductDao {
 		}
 		return result;
 	}
-	
+
 	public int updateProduct(Connection conn, ProductTable vo) {
 		int result = -1;
 		String sqlUpdate = "UPDATE PRODUCT SET (PRODUCT_NAME=?, PARENT_CATEGORY=?, CHILD_CATEGORY=?, QUANTITY=?, PRICE=?, PRODUCT_INFO_URL=?, PRODUCT_OPTION=?) WHERE PRODUCT_NO=?"; 
