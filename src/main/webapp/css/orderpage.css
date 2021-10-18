@@ -2,80 +2,276 @@
     margin-top: 30px;
 }
 #productinfo {
-    border: 0.5px solid rgb(223, 185, 185);
-    border-collapse: collapse;
-	border-right: 0px solid black;
+	border-collapse: collapse; 
+	border-top : 3px double black;
 }
 
-#productinfo th {
-    background-color: rgb(243, 239, 234);
-    border-collapse: collapse;
-    border-right: 0px solid black;
+#productinfo tr:first-of-type{
+	border-bottom : 1px solid black;
 }
 
 
-#productinfo th, td {
-    border: 0.5px solid rgb(223, 185, 185);
-    border-collapse: collapse;
-    border-right: 0px solid black;
+
+#productinfo  th, td {
+	height :40px;
+	padding-top: 5px;
+    
 }
+
+#productinfo  tr  td:first-of-type{
+	width : 40px;
+	vertical-align : top;
+	text-align :center;
+	
+}
+#productinfo  tr  td:nth-of-type(2){
+	width : 250px;
+	overflow : hidden;
+	font-size: 15px;
+	white-space: nowrap;
+	text-overflow: ellipsis; 
+	display: block;
+	
+	
+}
+#productinfo  tr  td:nth-of-type(3){
+	width : 160px;
+	vertical-align : top;
+	text-align :center;
+	
+}
+#productinfo  tr  td:nth-of-type(4){
+	width : 0px;
+	vertical-align : top;
+	text-align :center;
+}
+
+
 #cartinfo {
-    border: 0.5px solid rgb(223, 185, 185);
-    border-collapse: collapse;
-
+	border-collapse: collapse; 
+	border-top : 3px double black;
 }
 
-#cartinfo th {
-    background-color: rgb(243, 239, 234);
-    border-collapse: collapse;
+#cartinfo tr:first-of-type{
+	border-bottom : 1px solid black;
 }
 
-#cartinfo th, td {
-    border: 0.5px solid rgb(223, 185, 185);
-    border-collapse: collapse;
+#cartinfo tr th:last-of-type{
+		width:50px;
+		
 }
+
+
+#cartinfo  th, td {
+	height :40px;
+    
+}
+#cartinfo  td {
+	height :45px;
+    
+}
+
+#cartinfo  tr  td:first-of-type{
+	width : 0px;
+	vertical-align : top;
+	text-align :center;
+	padding-top: 5px;
+	
+}
+#cartinfo  tr  td:nth-of-type(2){
+	width : 40px;
+	vertical-align : top;
+	text-align :center;
+	padding-top: 5px;
+	
+	
+}
+#cartinfo  tr  td:nth-of-type(3){
+	width : 150px;
+	vertical-align : top;
+	text-align :center;
+	padding-top: 5px;
+	
+}
+#cartinfo  tr  td:nth-of-type(4){
+	width : 120px;
+	vertical-align : top;
+	text-align :center;
+	padding-top: 5px;
+	
+}
+
+#cartinfo  tr  td:nth-of-type(5){
+	vertical-align : top;
+	padding-top: 5px;
+
+	
+}
+
+#cartinfo  tr  td:nth-of-type(5) button{
+	border: 1px solid rgb(141, 177, 165);
+	background-color:rgba(0,0,0,0);
+	color: rgb(141, 177, 165);
+	padding :  5px;
+	border-radius: 5px;
+}
+#cartinfo  tr  td:nth-of-type(5) button:hover{
+	background-color:rgb(141, 177, 165);
+	color: white;
+	padding :  5px;
+	border-radius: 5px;
+	cursor : pointer;
+}
+
+#totalspan {
+	margin-top:10px;
+	width:800px;
+	border-radius:5px;
+	padding:8px;
+	width:100%;
+	background-color: rgba(218, 200, 200, 0.385);
+}
+#totalspan input{
+	border:none;
+	background-color: rgba(0,0, 0, 0);
+	heigt:25px;
+}
+
+
+
 
 #userinfo {
-    border: 0.5px solid rgb(223, 185, 185);
-    border-collapse: collapse;
+	border-collapse: collapse; 
+	border-top : 3px double black;
 
 }
 
-#userinfo th {
-    background-color: rgb(243, 239, 234);
-    border-collapse: collapse;
+#userinfo  th {
+    width:80px;
+    text-align : right;
 }
 
-#userinfo th,td {
-    border: 0.5px solid rgb(223, 185, 185);
-    border-collapse: collapse;
+
+#userinfo td {
+	text-indent: 5px;
+	width:730px;
+   
 }
 #addressuinfo{
-    border: 0.5px solid rgb(223, 185, 185);
-    border-collapse: collapse;
+	border-collapse: collapse; 
+	border-top : 3px double black;
+    
 }
 #addressuinfo th {
-    background-color: rgb(243, 239, 234);
-    border-collapse: collapse;
+	width:100px;
+    text-align : right;
+    padding-right:10px;
+   
 }
 
-#addressuinfo th, td {
-    border: 0.5px solid rgb(223, 185, 185);
-    border-collapse: collapse;
+
+#addressuinfo td {
+    text-indent: 5px;
+    width: 700px;
+   
 }
+
+#addressuinfo tr:nth-of-type(1) td input{
+	width:15px;
+}
+#addressuinfo tr:nth-of-type(2) td input{
+	width:70px;
+	height:35px;
+}
+#addressuinfo  tr:nth-of-type(2) td button{
+	border: 1px solid rgb(141, 177, 165);
+	background-color:rgba(0,0,0,0);
+	color: rgb(141, 177, 165);
+	padding :  5px;
+	border-radius: 5px;
+	font-size:15px;
+}
+#addressuinfo  tr:nth-of-type(2) td button:hover{
+	background-color:rgb(141, 177, 165);
+	color: white;
+	padding :  5px;
+	border-radius: 5px;
+	cursor : pointer;
+	font-size:15px;
+}
+#addressuinfo tr:nth-of-type(3) td input{
+	width:250px;
+	height:35px;
+}
+#addressuinfo tr:nth-of-type(4) td input{
+	width:250px;
+	height:35px;
+}
+
+
+   
 #payinfo{
-    border: 0.5px solid rgb(223, 185, 185);
-    border-collapse: collapse;
-}
-#payinfo th {
-    background-color: rgb(243, 239, 234);
-    border-collapse: collapse;
+    border-collapse: collapse; 
+	border-top : 3px double black;
 }
 
-#payinfo th, td {
-    border: 0.5px solid rgb(223, 185, 185);
-    border-collapse: collapse;
+#payinfo  th {
+	width:100px;
+    text-align : right;
+    padding-right:10px;
+    
 }
+
+#payinfo  td {
+	text-indent: 5px;
+    width: 700px;
+   
+}
+
+#payinfo tr:nth-of-type(1) td input{
+	width:250px;
+	height:30px;
+	border: none;
+}
+#payinfo tr:nth-of-type(2) td input{
+	width:100px;
+	height:30px;
+}
+#payinfo tr:nth-of-type(3) td input:nth-of-type(1){
+	width:150px;
+	height:30px;
+}
+#payinfo tr:nth-of-type(3) td input:nth-of-type(2){
+	width:100px;
+	height:30px;
+}
+#payinfo tr:nth-of-type(4) td input{
+	width:100px;
+	height:30px;
+}
+#payinfo tr:nth-of-type(5) td input{
+	width:100px;
+	height:30px;
+}
+
+#couponmodal{
+	border: 1px solid rgb(141, 177, 165);
+	background-color:rgba(0,0,0,0);
+	color: rgb(141, 177, 165);
+	padding :  5px;
+	border-radius: 5px;
+	font-size:15px;
+}
+#couponmodal:hover{
+	background-color:rgb(141, 177, 165);
+	color: white;
+	padding :  5px;
+	border-radius: 5px;
+	cursor : pointer;
+	font-size:15px;
+}
+
+
  input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
         -webkit-appearance: none;

@@ -122,7 +122,7 @@
                 for (var i in product) {
                     let pricecomma = comma(product[i].price);
                     console.log(pricecomma);
-                    ptext += "<tr id='productinfos"+p+"'><td>" + (p + 1) + "<td>" + product[i].productName + "</td><td id=product" + p + ">" + pricecomma + "<td></tr>";
+                    ptext += "<tr id='productinfos"+p+"'><td>" + (p + 1) + "<td>" + product[i].productName + "</td><td id=product" + p + ">" + pricecomma + "원<td></tr>";
                     p++;
                 }
                 $("#productinfo").append(ptext);
@@ -144,7 +144,7 @@
                 var producttotal = 0;
                 for (var i in cart) { // 상품번호도 상세주문내역 생성 메소드 호출 시 넘길 수 있도록 td 태그 추가 --10.14
                     let priceXquant = ((1 * cart[i].cartQuantity) * (1 * minusComma($('#product' + p).text())));
-                    ctext += "<tr id='cartinfos"+p+"'><td style='display:none' id='cartprono"+p+"'>" + cart[i].productNo + "</td><td id='cartquan"+p+"'>" + cart[i].cartQuantity + "</td><td id='pXq"+p+"'>" + comma(priceXquant) + "원" + "</td><td>" + comma(priceXquant * 0.05) + "원</td><td><button onclick='delProduct("+p+")'>삭제</button></td><tr>";
+                    ctext += "<tr id='cartinfos"+p+"'><td style='display:none' id='cartprono"+p+"'>" + cart[i].productNo + "</td><td id='cartquan"+p+"'>" + cart[i].cartQuantity + "</td><td id='pXq"+p+"'>" + comma(priceXquant) + "원" + "</td><td>" + comma(priceXquant * 0.05) + "원</td><td><button onclick='delProduct("+p+")'>삭제</button></td></tr>";
                     producttotal += priceXquant;
                     p++;
                 }
@@ -167,7 +167,7 @@
         	   loop++;
            }while(loop<50);
            $("#totalprice").val(comma(sumPxQ) + "원");
-           $("#producttotal").text("▸ 총 결제 예상 금액 : "+comma(sumPxQ) + "원");
+           $("#producttotal").val(comma(sumPxQ));
         }, 100);
         
         
@@ -377,10 +377,11 @@ var fixaddrno = "";
                 var couponinfo = data;
                 // console.log(couponinfo[0].c_discount);
                 var p = 0;
+                var selcoun ="";
                 for (p in couponinfo) {
-                    var selcoun = " <option id='c_name" + p + "'>" + couponinfo[p].c_name + " </option>";
+                    selcoun = "<tr> <td id='c_name" + p + "'>" + couponinfo[p].c_name + " </td><td id='c_name" + p + "dis'>" + couponinfo[p].c_discount + " </td><td><button class='coupbtn'>적용하기</button></td></tr>";
                     var selcoup = " <span id='c_name" + p + "dis' style='display:none'>" + couponinfo[p].c_discount + " </span><span id='c_name" + p + "no' style='display:none'>" + couponinfo[p].coupon_no + " </span>";
-                    $("#couponselect").append(selcoun);
+                    $("#coupontable").append(selcoun);
                     $("#payinfo").append(selcoup);
                     p++;
                 }
@@ -407,23 +408,15 @@ var fixaddrno = "";
         }, 100);
         
         
+         
+       
+       
     }); //ready
-    function chageacouSelect() {
-        if ($("#couponselect option:selected")) {
-            if ($("#couponselect option:selected").val() != "쿠폰 선택") {
-                var couid = $("#couponselect option:selected").attr("id");
-                var coudis = "#" + couid + "dis";
-                var couno = "#" + couid + "no";
-                console.log("쿠폰 선택");
-                console.log($(coudis).text());
-                $("#coudiscount").val($(coudis).text());
-                $("#couponno").val($(couno).text());
-                
-            } else if ($("#couponselect option:selected").val() == "쿠폰 선택") {
-                $("#coudiscount").val(0);
-            }
-        };
-    }
+    
+    
+   
+    
+    
   //카드결제 선택 시
   /*
   var openPay;
@@ -471,7 +464,7 @@ var fixaddrno = "";
         background-color: rgba(12, 12, 12, .3);
     }
     .modal-content{
-        width: 200px; height: 300px;
+        width: 350px; height: 300px;
         top: 50px;
         margin: auto;
         position: relative;
@@ -479,7 +472,9 @@ var fixaddrno = "";
         padding: 10px;
 
     }
+   
 </style>
+
     
     </head>
 <body>
@@ -487,14 +482,13 @@ var fixaddrno = "";
  	<%@ include file="template_header.jsp"%>
 <section id="ordersection">
   <div class="orderform">
-        ⦁ 주문 상품 정보 <br>
+        
+        <h3> ⦁ 주문 상품 정보 </h3><br>
         <table id="productinfo" style=" float: left;">
             <tr>
                 <th>번호</th>
                 <th>상품 이름</th>
                 <th>가격</th>
-            </tr>
-            <tr id="productinfotd">
             </tr>
         </table>
         <table id="cartinfo">
@@ -502,13 +496,15 @@ var fixaddrno = "";
                 <th>수량</th>
                 <th>총 가격</th>
                 <th>적립금</th>
+                <th></th>
             </tr>
         </table>
-
-        <span id="producttotal">▸ 총 결제 예상 금액 : </span>
+	<br>
+        <span id="totalspan">▸ 총 결제 예상 금액 : <input type="text" id="producttotal"> 원</span>
     </div>  
+    <br>
      <div class="orderform">
-            ⦁ 주문자 정보 <br>
+          <br> <h3> ⦁ 주문자 정보</h3><br>
             <table id="userinfo">
                 <tr>
                     <th> 이름 </th>
@@ -521,9 +517,10 @@ var fixaddrno = "";
                 </tr>
             </table>
         </div>
- 
+ <br>
  <div class="orderform">
-            ⦁ 배송지 정보 입력
+<br> <h3>⦁ 배송지 정보 입력</h3><br>
+            
             <table id="addressuinfo">
                 <tr>
                     <th>배송지 선택</th>
@@ -533,7 +530,7 @@ var fixaddrno = "";
  새 주소 입력 <input type="radio" name="addrtype" id="newaddr" onclick="clearaddr()"></td>
                 </tr>
                 <tr>
-                    <th rowspan="2">주소</th>
+                    <th rowspan="2">주소<br><br><br>  </th>
                     <td><input type="text" id="postcode" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"> <button onclick="findAddr()">우편번호 찾기</button></td>
                 </tr>
                 <tr>
@@ -555,14 +552,15 @@ var fixaddrno = "";
             
         </div>
  <div class="orderform">
-            ⦁ 결제 정보 입력
+ <br><h3> ⦁ 결제 정보 입력</h3><br>
+          
             <table id="payinfo">
                 <tr><th>총 상품 가격 </th><td><input type="text" id="totalprice" readonly></td></tr>
-                <tr><th>적립금 사용 </th><td id="usemile"><input type="text" value="0" id="insertmile" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>현재 금액 : <input type="text" id="availmile" readonly></td></tr>
-                <tr><th>쿠폰 사용 </th><td id="usecoupon"><select id="couponselect" onchange="chageacouSelect()"><option>쿠폰 선택</option></select>적용 금액 : <input id="coudiscount" value="0" readonly></td></tr>
+                <tr><th>적립금 사용 </th><td id="usemile"><input type="text" value="0" id="insertmile" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>&nbsp&nbsp현재 잔액 : <input type="text" id="availmile" readonly></td></tr>
+                <tr><th>쿠폰 사용 </th><td id="usecoupon"><button id="couponmodal">쿠폰 선택</button> <input type="text" value="적용 안함" readonly id="appliedcpn">적용 금액 : <input id="coudiscount" value="0" readonly></td></tr>
                 <tr><th>배송비 </th><td> <input type="text"  id="shippingpay" readonly> </td></tr>
                 <tr><th>총 결제 금액</th><td><input type="text" id="finalpay" readonly> </td></tr>
-                <tr><th>결제 수단</th><td>신용카드 <input type="radio" name="paymethod" id="cardmodalbtn">무통장입금 <input type="radio" name="paymethod"  id="depomodalbtn"></td></tr>
+                <tr><th>결제 수단</th><td>신용카드 <input type="radio" name="paymethod" id="cardmodalbtn">&nbsp&nbsp무통장입금 <input type="radio" name="paymethod"  id="depomodalbtn"></td></tr>
             </table>
             
         </div>
@@ -580,13 +578,50 @@ var fixaddrno = "";
 <!--  modal box-->
     <div id="modal_01" class="modal">
         <div class="modal-content">
-            <p class="close">&#10006;</p>
-            <p>modal box content</p>
-                아아디 패스워드 <input type="text">
+            <p class="close" align="right">&#10006;</p>
+            <p>카드 결제</p>
+                카드번호 입력 <br>
+                <input type="text" size="3"> - <input type="text" size="3"> - <input type="text" size="3"> - <input type="text" size="3">
                 <button class="close" id="ordersubmit">완료</button>
 
         </div>
     </div>
+    <div id="modal_02" class="modal">
+        <div class="modal-content">
+            <p class="close" align="right">&#10006;</p>
+            <p>무통장입금</p>
+               아래 계좌로 입금해주시기 바랍니다. <br>
+                <input type="text" size="3"> - <input type="text" size="3"> - <input type="text" size="3"> - <input type="text" size="3">
+                <button class="close" id="ordersubmit">완료</button>
+
+        </div>
+    </div>
+    <!-- 쿠폰 목록 modal -->
+    <div id="modal_03" class="modal">
+        <div class="modal-content">
+            <p class="close" align="right">&#10006;</p>
+            <p>쿠폰목록</p>
+            <table>
+             <tr>
+            <td style='display : none'>적용 안함</td>
+            <td style='display : none'>0</td>
+            <td><button class="coupbtn">적용 취소</button></td>
+            </tr>
+            </table>
+           
+            <table id="coupontable">
+            <tr>
+            	<th>쿠폰명</th>
+            	<th>적용 금액</th>
+            </tr>
+            
+            	
+            </table>
+              
+
+        </div>
+    </div>
+    
 
 
 
@@ -594,16 +629,36 @@ var fixaddrno = "";
     <script>
         $("#cardmodalbtn").click(function(){
         	$("#paymethodno").val(0);
-            $(".modal").show();
+            $("#modal_01").show();
         });
         $("#depomodalbtn").click(function(){
         	$("#paymethodno").val(1);
-            $(".modal").show();
+            $("#modal_02").show();
         });
 
         $(".close").click(function(){
             $(".modal").hide();
         });
+        $("#couponmodal").click(function(){
+            $("#modal_03").show();
+        });
+        
+        $(document).on("click",".coupbtn",function(){ 
+        	var coupname= $(this).parent().parent().children().eq(0).text();
+        	var coupapply=$(this).parent().parent().children().eq(1).text();
+        	console.log(coupname);
+        	$("#appliedcpn").val(coupname);
+        	$("#coudiscount").val(coupapply);
+        	
+        	$("#modal_03").hide();
+        	
+
+
+        });
+
+
+        
+        
 	
         /*
         $(window).on("click", function(e){
@@ -790,7 +845,7 @@ var fixaddrno = "";
                 async: false,
                 data: { user_id: "<%=user.getUser_id() %>",
                 	productNo : 	$("#prono").val(),
-                	ProductQuan : $("#proquan").val()
+                	ProductQuan :  $("#proquan").val()
                 },
                 dataType: "json", // 전달받을 객체는 JSON 이다.
                 success: function (data) {
@@ -803,9 +858,6 @@ var fixaddrno = "";
             });
            	
            }); 
-        
-    
-    
     </script>
 </body>
 

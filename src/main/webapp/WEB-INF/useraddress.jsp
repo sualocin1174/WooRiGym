@@ -10,9 +10,92 @@
 <meta charset="UTF-8">
 <title>배송지관리</title>
 <style>
-	table th, td{
-		border : 1px solid black;
+	table {
+		 border-collapse: separate;
+  border-spacing: 1px;
+  text-align: center;
+  line-height: 1.5;
+  margin: 20px 10px;
 	}
+	
+	table tr th{
+  padding: 10px;
+  font-weight: bold;
+  vertical-align: top;
+  color: #fff;
+  background: #ce4869 ;
+	
+  }
+  table tr td:nth-of-type(1){
+  width: 65px;
+  padding: 10px;
+  vertical-align: top;
+  border-bottom: 1px solid #ccc;
+  background: #eee;
+		
+	}
+  table tr td:nth-of-type(2){
+  width: 200px;
+  padding: 10px;
+  vertical-align: top;
+  border-bottom: 1px solid #ccc;
+  background: #eee;
+		
+	}
+  table tr td:nth-of-type(3){
+  width: 150px;
+  padding: 10px;
+  vertical-align: top;
+  border-bottom: 1px solid #ccc;
+  background: #eee;
+		
+	}
+  table tr td:nth-of-type(5){
+  width: 50px;
+  padding: 10px;
+  vertical-align: top;
+		
+	}
+  table tr td:nth-of-type(6){
+  width: 50px;
+  padding: 10px 0px;
+  vertical-align: top;
+		
+	}
+
+	td button{
+	border: 1px solid #ce4869;
+	background-color:rgba(0,0,0,0);
+	color: #ce4869;
+	padding :  5px;
+	border-radius: 5px;
+	font-size:15px;
+	}
+	td button:hover{
+	background-color:#ce4869;
+	color: white;
+	padding :  5px;
+	border-radius: 5px;
+	cursor : pointer;
+	font-size:15px;
+	}
+	#newaddr{
+	border: 1px solid #ce4869;
+	background-color:rgba(0,0,0,0);
+	color: #ce4869;
+	padding :  5px;
+	border-radius: 5px;
+	font-size:15px;
+	}
+	#newaddr:hover{
+	background-color:#ce4869;
+	color: white;
+	padding :  5px;
+	border-radius: 5px;
+	cursor : pointer;
+	font-size:15px;
+	}
+	
 </style>
 <script
   src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -91,13 +174,14 @@
 </head>
 <body>
 <section>
+&nbsp&nbsp&nbsp<button onclick="insertAddr()" id="newaddr">새 주소지 추가</button>
 <table id="addrtable">
 	<tr>
 	<th>우편번호</th><th>기본주소</th><th>상세주소</th>
 </tr>
 </table>
 <br>
-<button onclick="insertAddr()">새 주소지 추가</button>
+
 
 
 </section>
