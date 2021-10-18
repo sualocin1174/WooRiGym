@@ -51,6 +51,56 @@
 .form-group{
 	text-align:center;
 }
+/* 10/18 추가 */
+/* style inputs and link buttons */
+input,
+.btn {
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  margin: 5px 0;
+  opacity: 0.85;
+  display: inline-block;
+  font-size: 17px;
+  line-height: 20px;
+  text-decoration: none; /* remove underline from anchors */
+}
+
+input{
+border: 2px solid #e7e7e7;
+}
+
+input:hover,
+.btn:hover {
+  opacity: 1;
+}
+/* add appropriate colors to fb, twitter and google buttons */
+.fb {
+  background-color: #3B5998;
+  color: white;
+}
+
+.twitter {
+  background-color: #55ACEE;
+  color: white;
+}
+
+.google {
+  background-color: #dd4b39;
+  color: white;
+}
+#login {
+        padding: 6px 32px;
+        margin: 4px 2px;
+        background-color: white;
+        color: black;
+        border: 2px solid #555555;
+        cursor: porinter
+        }
+#login:hover {
+        background-color: #555555;
+        color: white;
+        }
 
 </style>
 </head>
@@ -66,17 +116,9 @@
             <%@ include file="template_header.jsp" %>
 
                 <div class="container">
-                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                        <!-- Indicators -->
-                        <ol class="carousel-indicators">
-                            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                            <li data-target="#myCarousel" data-slide-to="1"></li>
-                            <li data-target="#myCarousel" data-slide-to="2"></li>
-                        </ol>
-
                         <div class="container">
                             <form id= "log-box" method="post" action="login">
-                                <h4 id="head">로그인</h4>
+                                <h3 id="head">로그인</h3>
 
                                 <div class="form-group">
                                     <input type="text" placeholder="아이디" name="user_id" maxlength="20"><br>
@@ -85,7 +127,19 @@
                                     <input type="password" placeholder="비밀번호" name="user_pwd" maxlength="20"><br>
                                 </div>
                                 <div class="form-group">
-                                <input type="submit" value="로그인">
+                                <input type="submit" value="로그인" id="login">
+                                <!-- 10/18 추가: 소셜로그인 -->
+                                <div class="col">
+                                    <a href="#" class="fb btn">
+                                      <i class="fa fa-facebook fa-fw"></i> Login with Facebook
+                                     </a>
+                                    <a href="#" class="twitter btn">
+                                      <i class="fa fa-twitter fa-fw"></i> Login with Twitter
+                                    </a>
+                                    <a href="#" class="google btn"><i class="fa fa-google fa-fw">
+                                      </i> Login with Google+
+                                    </a>
+                                  </div>
                                 </div>
                             </form>
                                 <div id="login-menu">
@@ -97,7 +151,6 @@
                                 </div>
 
                         </div>
-                    </div>
                 </div>
         </body>
 

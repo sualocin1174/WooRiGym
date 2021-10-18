@@ -201,11 +201,6 @@
           margin: 20px;
           text-align: center;
       }
-      /* 기간별 주문내역 검색 */
-      .date{
-      margin: 15px 10px;
-      padding: 4px;
-      }
       #btngroup{
           text-align: center;
           margin-bottom: 20px;
