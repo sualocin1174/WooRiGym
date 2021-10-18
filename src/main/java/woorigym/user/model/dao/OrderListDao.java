@@ -25,7 +25,7 @@ public class OrderListDao {
 		ArrayList<OrderList> volist = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String query = "SELECT oinfo.order_no,order_total,order_cost, to_char(order_date, 'yyyy-mm-dd hh:mm') order_date,order_state, ";
+		String query = "SELECT oinfo.order_no,order_total,order_cost, to_char(order_date, 'yyyy-mm-dd hh:mm') order_date,pay_state,order_state, ";
 		query += " odetail.product_no, buy_quantity, ";
 		query += " product.product_name, product.PRODUCT_INFO_URL";
 		query += " FROM ORDERINFO oinfo ";
@@ -38,6 +38,7 @@ public class OrderListDao {
 //		private int order_total;
 //		private int order_cost;
 //		private String order_date;
+//		private String pay_state;
 //		private String order_state;
 //		private String product_no;
 //		private int buy_quantity;
@@ -57,6 +58,7 @@ public class OrderListDao {
 					vo.setOrder_total(rset.getInt("order_total")); //가격(할인전)
 					vo.setOrder_cost(rset.getInt("order_cost")); //배송비
 					vo.setOrder_date(rset.getString("order_date")); //주문일자
+					vo.setOrder_state(rset.getString("pay_state")); //결제상태
 					vo.setOrder_state(rset.getString("order_state")); //배송상태
 					vo.setProduct_no(rset.getString("product_no")); //상품번호
 					vo.setBuy_quantity(rset.getInt("buy_quantity")); //구매수량

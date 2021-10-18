@@ -35,7 +35,7 @@ public class OrderDetailServlet extends HttpServlet {
 				
 				//order_no를 받아서 주문상세조회
 				OrderDetailTable volist = new OrderDetailService().OrderDetailList(order_no);
-				request.setAttribute("orderdetailvolist", volist);
+				request.setAttribute("detail", volist);
 				request.setAttribute("order_no", order_no);
 				
 				System.out.println("loginSS~~555555555~~~");

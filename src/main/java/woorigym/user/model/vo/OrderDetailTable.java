@@ -28,6 +28,7 @@ public class OrderDetailTable {
 	private int order_total;
 	private int order_cost;
 	private String order_date;
+	private String pay_state;
 	private String order_state;
 	private String product_name;
 	private String product_info_url;
@@ -39,19 +40,36 @@ public class OrderDetailTable {
 	private String postcode;
 	private String basic_address;
 	private String detail_address;
+	private String receiver_name; //10/18 추가
+	private String phone_no;
 	
 	public OrderDetailTable() {	}
-	
+
 	@Override
 	public String toString() {
 		return "OrderDetailTable [order_detail_no=" + order_detail_no + ", order_no=" + order_no + ", product_no="
-				+ product_no + ", order_total=" + order_total + ", order_cost=" + order_cost + ", order_date="
-				+ order_date + ", order_state=" + order_state + ", buy_quantity=" + buy_quantity + ", product_name="
-				+ product_name + ", product_info_url=" + product_info_url + ", coupon_discount=" + coupon_discount
-				+ ", add_mileage=" + add_mileage + ", point_discount=" + point_discount + ", discount_all="
-				+ discount_all + ", total_pay=" + total_pay + ", postcode=" + postcode + ", basic_address="
-				+ basic_address + ", detail_address=" + detail_address + "]";
+				+ product_no + ", buy_quantity=" + buy_quantity + ", order_total=" + order_total + ", order_cost="
+				+ order_cost + ", order_date=" + order_date + ", pay_state=" + pay_state + ", order_state="
+				+ order_state + ", product_name=" + product_name + ", product_info_url=" + product_info_url
+				+ ", coupon_discount=" + coupon_discount + ", add_mileage=" + add_mileage + ", point_discount="
+				+ point_discount + ", discount_all=" + discount_all + ", total_pay=" + total_pay + ", postcode="
+				+ postcode + ", basic_address=" + basic_address + ", detail_address=" + detail_address
+				+ ", receiver_name=" + receiver_name + ", phone_no=" + phone_no + ", getOrder_detail_no()="
+				+ getOrder_detail_no() + ", getOrder_no()=" + getOrder_no() + ", getProduct_no()=" + getProduct_no()
+				+ ", getOrder_total()=" + getOrder_total() + ", getOrder_cost()=" + getOrder_cost()
+				+ ", getOrder_date()=" + getOrder_date() + ", getPay_state()=" + getPay_state() + ", getOrder_state()="
+				+ getOrder_state() + ", getBuy_quantity()=" + getBuy_quantity() + ", getProduct_name()="
+				+ getProduct_name() + ", getProduct_info_url()=" + getProduct_info_url() + ", getCoupon_discount()="
+				+ getCoupon_discount() + ", getAdd_mileage()=" + getAdd_mileage() + ", getPoint_discount()="
+				+ getPoint_discount() + ", getDiscount_all()=" + getDiscount_all() + ", getTotal_pay()="
+				+ getTotal_pay() + ", getPostcode()=" + getPostcode() + ", getBasic_address()=" + getBasic_address()
+				+ ", getDetail_address()=" + getDetail_address() + ", getReceiver_name()=" + getReceiver_name()
+				+ ", getPhone_no()=" + getPhone_no() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
 	}
+
+
+
 	public String getOrder_detail_no() {
 		return order_detail_no;
 	}
@@ -88,6 +106,14 @@ public class OrderDetailTable {
 	public void setOrder_date(String order_date) {
 		this.order_date = order_date;
 	}
+	public String getPay_state() {
+		return pay_state;
+	}
+
+	public void setPay_state(String pay_state) {
+		this.pay_state = pay_state;
+	}
+
 	public String getOrder_state() {
 		return order_state;
 	}
@@ -159,5 +185,25 @@ public class OrderDetailTable {
 	}
 	public void setDetail_address(String detail_address) {
 		this.detail_address = detail_address;
+	}
+
+
+	public String getReceiver_name() {
+		return receiver_name;
+	}
+
+
+	public void setReceiver_name(String receiver_name) {
+		this.receiver_name = receiver_name;
+	}
+
+
+	public String getPhone_no() {
+		return phone_no;
+	}
+
+
+	public void setPhone_no(String phone_no) {
+		this.phone_no = phone_no;
 	}
 }

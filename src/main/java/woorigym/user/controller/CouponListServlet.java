@@ -52,7 +52,7 @@ public class CouponListServlet extends HttpServlet {
 		Gson coupon_gob = new GsonBuilder().setPrettyPrinting().create();
 		String gobstr = "";
 		if (volist != null) {
-			System.out.println("(쿠폰리스트 서블릿) 쿠폰 목록 조회 성공");
+			System.out.println("쿠폰 목록 조회 성공");
 			gobstr = coupon_gob.toJson(volist);
 			System.out.println(volist);
 			System.out.println(gobstr);

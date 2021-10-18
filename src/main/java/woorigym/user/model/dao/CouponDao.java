@@ -18,12 +18,11 @@ public class CouponDao {
 		ArrayList<CouponTable> volist = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
+					//c_expire_date가 오늘 이후(오늘 포함)날짜인 미사용쿠폰
 		String sql = "Select c_name, c_discount, c_issue_date, c_expire_date"; 
 				sql += " from coupon";
 				sql += " where user_id=? and c_use = 0 and c_expire_date >= sysdate";
 				//where절에 필요한 것(db조회시 필요한 조건절) = 화면에서 던져줘야 되는 것~~
-				
-				//TODO: and c_expire_date가 오늘 이후(오늘 포함)날짜
 				
 //				private String coupon_no;
 //				private String user_id;
@@ -32,7 +31,6 @@ public class CouponDao {
 //				private String c_issue_date;
 //				private String c_expire_date;
 //				private int c_use;
-				
 				try {
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1, uid);
@@ -58,7 +56,7 @@ public class CouponDao {
 						e.printStackTrace();
 					}
 				}
-				System.out.println("(쿠폰 DAO)volist 리턴");
+				System.out.println("(쿠폰)volist 리턴");
 				return volist;
 	}
 }

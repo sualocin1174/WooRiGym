@@ -67,51 +67,6 @@
              height: 200px;
          }
     </style>
-    <script>
-    window.onload = pageLoadedHandler;
-    function pageLoadedHandler(){
-    	
-    	$("#btncoupon").on("click", ajaxC1);
-    }
-    
-    function ajaxC1(){// 쿠폰관리 버튼 클릭 시
-    	// TODO: 유효성검사 (선택사항)
-    	console.log("ajax 시작");
-    	console.log("<%=session.getAttribute("loginSS")%>");
-    	var loginSS = "<%=session.getAttribute("loginSS")%>";
-    //레스트API CRUD 관점에서 해석
-    //get 단순조회 , post 인서트할때, put 업데이트
-    	$.ajax({
-    		type: "post", //서블릿은 post
-    		//데이터를 전송할 URL
-    		url : "<%=request.getContextPath()%>/couponlist" ,
-    		data: {loginSS : loginSS},
-    		dataType: "json",
-			//ajax 통신에 성공했을 때 호출될 이벤트 핸들러
-			success : function(data){
-				//확인용
-				console.log(data);
-    			console.log(data.length);
-    			
-				if(data!=null){
-					var couponlist = "";
-					for(var i=0; i<data.length;i++){
-						console.log(data[i]);
-						//TODO: 성공시 원하는 데이터 출력
-					}
-				} else {
-					//TODO: 실패시 "보유한 쿠폰이 없습니다" 출력
-				}
-			},
-			error : function(request,status,error) {
-				alert("code:"+request.status+"\n"+"message:"+request.responseText+
-				"\n"+"error:"+error);
-				}
-			});
-		}
-    
-   
-    </script>
 </head>
 
 <body>

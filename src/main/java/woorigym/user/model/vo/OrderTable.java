@@ -15,6 +15,9 @@ package woorigym.user.model.vo;
 //ORDER_STATE     NOT NULL VARCHAR2(30)  
 //ARRIVE_DATE              DATE          
 //ADD_MILEAGE              NUMBER   
+//RECEIVER_NAME            VARCHAR2(100) //10/18 추가: 받는사람, 폰번호 
+//PHONE_NO                 VARCHAR2(20) 
+
 public class OrderTable {
 	private String order_no;
 	private String user_id;
@@ -31,6 +34,8 @@ public class OrderTable {
 	private String order_state;
 	private String arrive_date;
 	private int add_mileage;
+	private String receiver_name;
+	private String phone_no;
 	
 	public OrderTable() {}
 
@@ -155,6 +160,26 @@ public class OrderTable {
 		this.add_mileage = add_mileage;
 	}
 
+	public String getReceiver_name() {
+		return receiver_name;
+	}
+
+
+	public void setReceiver_name(String receiver_name) {
+		this.receiver_name = receiver_name;
+	}
+
+
+	public String getPhone_no() {
+		return phone_no;
+	}
+
+
+	public void setPhone_no(String phone_no) {
+		this.phone_no = phone_no;
+	}
+
+
 	@Override
 	public String toString() {
 		return "OrderTable [order_no=" + order_no + ", user_id=" + user_id + ", address_no=" + address_no
@@ -162,8 +187,11 @@ public class OrderTable {
 				+ ", point_discount=" + point_discount + ", coupon_discount=" + coupon_discount + ", order_payment="
 				+ order_payment + ", order_method=" + order_method + ", order_date=" + order_date + ", pay_state="
 				+ pay_state + ", order_state=" + order_state + ", arrive_date=" + arrive_date + ", add_mileage="
-				+ add_mileage + "]";
+				+ add_mileage + ", receiver_name=" + receiver_name + ", phone_no=" + phone_no + "]";
 	}
+
+
+	
 	
 	
 	

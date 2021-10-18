@@ -119,10 +119,6 @@
 	//원하는 날짜형식: yyyy/mm/dd
     	$("#start_date").val(year+"-"+month+"-"+day);
     }
-    function ajaxDetail(order_no){
-    	console.log()
-    	console.log(order_no);
-    }
     function ajaxF1(){ //검색버튼 클릭 시
     	// TODO: 유효성검사 해도되고 $("#start_date")")
     	
@@ -156,7 +152,7 @@
     					 html+=  "<h3><a href='orderDetailTable?order_no="+data[i].order_no+"'>"+data[i].order_no+"</a></h3>"
 							 + "<h4><a href='./orderTable?order_date='"+data[i].order_date+"'>"+data[i].order_date+"</a></h4>"
 							 + "<table id='order_detail'><tr><th colspan='2'>상품명</th>"
-						     + "<th>수량</th><th>상품금액</th><th>배송비</th><th>진행상태</th></tr>"
+						     + "<th>수량</th><th>상품금액</th><th>배송비</th><th>결제상태</th><th>진행상태</th></tr>"
     						 
 	    					 //+ "<a href='./orderDetailTable?product_no="+data[i].product_no+"'>"
 		    	 			 + "<td><a href='./productTable?product_info_url="+data[i].product_info_url
@@ -165,11 +161,12 @@
 		    	       		 +"<td><a href='./orderDetailTable?buy_quantity="+data[i].buy_quantity+"'>"+data[i].buy_quantity+"</a></td>"
 		    	       		 +"<td><a href='./orderTable?order_total="+data[i].order_total+"'>"+data[i].order_total+"</a></td>"
 		    	       		 +"<td><a href='./orderTable?order_cost="+data[i].order_cost+"'>"+data[i].order_cost+"</a></td>"
+		    	       		 +"<td><a href='./orderTable?pay_state="+data[i].pay_state+"'>"+data[i].pay_state+"</a></td>"
 		    	       		 +"<td><a href='./orderTable?order_state="+data[i].order_state+"'>"+data[i].order_state+"</a></td>"
 		    	        	 +"</tr></table>";
     				}
         		    $("#order").html(html);
-    				//if(data[i].order_state =='배송전'){
+    				//if(data[i].pay_state =='주문완료'){
     					//cancel += "<tr><td><button>주문취소</button><td></tr>";
     				//	$("#order_detail").html(cancel);
     				//}

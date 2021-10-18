@@ -25,67 +25,16 @@
     function pageLoadedHandler(){
     $(function(){ 
        	// TODO
+    	console.log()
+    	console.log(order_no);
     	
     });
     };
     function order_detail(order_no){
     	// TODO: 유효성검사
-    	console.log()
-    	console.log(order_no);
     	
-    	$.ajax({
-    		type: "post",
-    		url: "<%=request.getContextPath()%>/orderlist",
-    		data: {
-    			startDate: startDate,
-    			endDate: endDate
-    		},
-    		dataType: "json", //전달받을 객체는 json이다.
-    		success: function(data){
-    			$("#order").html(""); //중복 결과 방지 위해 새로고침!
-    			$("#order_detail").remove();
-    			console.log(data);
-    			console.log(data.length);
-    				var empty ="";
-    				var cancel = "";
-    			//console.log(data[0].product_name); 참고용
-    			if(data!=""){
-    				var html = "";
-    				for(var i=0; i<data.length;i++){
-    					console.log(data[i]);
-    				//주문번호, 주문날짜+테이블 제목+내용
-    					 html+=  "<h3><a href='orderDetailTable?order_no="+data[i].order_no+"'>"+data[i].order_no+"</a></h3>"
-							 + "<h4><a href='./orderTable?order_date='"+data[i].order_date+"'>"+data[i].order_date+"</a></h4>"
-    						 
-	    					 //+ "<a href='./orderDetailTable?product_no="+data[i].product_no+"'>"
-		    	 			 + "<td><a href='./productTable?product_info_url="+data[i].product_info_url
-		    	 			//TODO: 이미지 경로 수정
-		    	 			 +"'><img src='./images/1번 메인.jpg'></a></td>"+"<td>"+data[i].product_name+"</td>"	  
-		    	       		 +"<td><a href='./orderDetailTable?buy_quantity="+data[i].buy_quantity+"'>"+data[i].buy_quantity+"</a></td>"
-		    	       		 +"<td><a href='./orderTable?order_total="+data[i].order_total+"'>"+data[i].order_total+"</a></td>"
-		    	       		 +"<td><a href='./orderTable?order_cost="+data[i].order_cost+"'>"+data[i].order_cost+"</a></td>"
-		    	       		 +"<td><a href='./orderTable?order_state="+data[i].order_state+"'>"+data[i].order_state+"</a></td>"
-		    	        	 +"</tr></table>";
-    				}
-        		    $("#order").html(html);
-    				//if(data[i].order_state =='배송전'){
-    					//cancel += "<tr><td><button>주문취소</button><td></tr>";
-    				//	$("#order_detail").html(cancel);
-    				//}
-    			} else {
-		    	      //결과 없을 때
-    				empty += "<table id='order_detail'><tr><th colspan='2'>상품명</th>"
-					     + "<th>수량</th><th>상품금액</th><th>배송비</th><th>진행상태</th></tr>"
-						  +"<td colspan='6'>해당 기간의 주문내역이 없습니다</td>"
-        			 $(empty).insertAfter($("#btngroup"));
-    			}
-    		},
-    		error:function(request,status,error){
-    			alert("code:"+request.status+"\n"+"message:"+request.responseText+
-    					"\n"+"error:"+error);
-    		}
-    	});
-	};
+    }
+
     </script>
  <!-- /* content */ -->
  <style>
@@ -101,7 +50,7 @@
           margin: 20px;
           text-align: center;
       }
-      #btngroup{
+      .btn{
           text-align: center;
           margin-bottom: 20px;
       }
@@ -130,6 +79,7 @@
         background-color: white;
         color: black;
         border: 2px solid #555555;
+        cursor: pointer;
         }
         #go_list:hover {
         background-color: #555555;
@@ -137,18 +87,25 @@
         }
       
        /* 주문내역 테이블 */
-       #order h3, #order h4 {
-       padding-bottom: 5px;
-       }
-      	table#order_detail{
+      	#order_detail, #olist, .order{
 		  width: 850px;
           text-align: center;
-          margin-bottom: 15px;
+          margin: 25px 0 25px 0;
           border-top: 1.5px solid black;
           border-bottom: 1px solid #BDBDBD;
         }
+      	#olist{
+      	border-top: none;
+      	margin: 0 0 15px 0;
+      	}
       	#order_detail th{
       	padding: 10px;
+      	}
+      	#olist, .order {
+      	padding-bottom: 8px;
+      	}
+      	#olist td, .order td {
+      	padding: 5px;
       	}
         #order_detail td {
         padding: 16px;
@@ -157,7 +114,6 @@
           width: 80px;
           height: 80px;
       	}
-      	
  </style>
 </head>
 <body>
@@ -174,28 +130,90 @@
                 <th colspan="2">상품명</th>
                 <th>수량</th>
                 <th>상품금액</th>
-                <th>포인트</th>
-                <th>쿠폰</th>
                 <th>배송비</th>
+                <th>결제상태</th>
                 <th>진행상태</th>
             </tr>
-            <tr id="olist">
-         <td colspan="2" id="product_name">${product_name}</td>
-            <td id="buy_quantity">${buy_quantity}</td>
-            <td id="order_total">${order_total}</td>
-            <td id="point_discount">${point_discount}</td>
-            <td id="coupon_discount">${coupon_discount}</td>
-            <td id="order_cost">${order_cost}</td>
-            <td id="order_state">${order_state}</td>
+            <tr>
+         <!-- TODO: 이미지 경로 수정 -->
+         <td><a href="#"><img src="./images/01번 메인_2.jpg"></a></td>
+         <td>${detail.product_name}</td>
+            <td>${detail.buy_quantity}</td>
+            <td>${detail.order_total}</td>
+            <td>${detail.order_cost}</td>
+            <td>${detail.pay_state}</td>
+            <td>${detail.order_state}</td>
         </tr>
             </table>
-    <div id="order">
-  	<!-- 결제정보 -->
-  	<!-- 배송정보  -->
-    </div>
-     <div id="btngroup">
-    <input type="button" class="button" value="수정" id="insert_place">
+            <table id="olist">
+                <tr>
+                    <th>쿠폰 할인</th>
+                    <td>${detail.coupon_discount}원</td>
+                    <th>상품 금액</th>
+                    <td>${detail.order_total}원</td>
+                </tr>
+                <tr>
+                    <th>결제 후 적립</th>
+                    <td>${detail.add_mileage}P</td>
+                    <th>할인 금액</th>
+                    <td>${detail.discount_all}원</td>
+                </tr>
+                <tr>
+                    <th>포인트 사용</th>
+                    <td>${detail.point_discount}P</td>
+                    <th>배송비</th>
+                    <td>${detail.order_cost}원</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <th>총 결제 금액</th>
+                    <td>${detail.total_pay}원</td>
+                </tr>
+            </table>
+  	<h3>결제 정보</h3>
+<table class="order">
+        <tr>
+            <th>주문 번호</th>
+            <td>${detail.order_no}</td>
+            <th>주문 일자</th>
+            <td>${detail.order_date}</td>
+        </tr>
+        <tr>
+            <th>포인트 할인</th>
+            <td>${detail.point_discount}P</td>
+            <th>쿠폰 할인</th>
+            <td>${detail.coupon_discount}원</td>
+        </tr>
+        <tr>
+            <th>결제 정보</th>
+            <td></td>
+            <th>결제 방식</th>
+            <td></td>
+        </tr>
+    </table>
     <br>
+  	<h3>배송 정보</h3>
+      <table class="order">
+        <tr>
+            <th>주문하시는 분</th>
+            <td>${loginSS.user_name}</td>
+        </tr>
+        <tr>
+            <th>받으시는 분</th>
+            <td>${detail.receiver_name} (${detail.phone_no})</td>
+        </tr>
+        <tr>
+            <th>배송지 주소</th>
+            <td>[${detail.postcode}] ${detail.basic_address} ${detail.detail_address}</td>
+    <c:if test="${detail.pay_state= '주문완료'}">
+    <td>
+    <input type="button" class="button" value="수정" id="insert_place">
+    </td></c:if>
+        </tr>
+      </table>
+    <br>
+    <div class="btn">
     <input type="submit" class="button" value="목록" id="go_list" onclick="history.go(-1)">
     </div>
 </section>
