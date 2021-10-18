@@ -16,9 +16,7 @@ import woorigym.user.model.vo.UserTable;
 public class OrderDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public OrderDetailServlet() {
-        super();
-    }
+    public OrderDetailServlet() { super(); }
     
     //화면 뜰때 바로 가져오는건 get방식, 화면 이미 불러왔는데 바꿔야하면 post방식
 //oderdetial.jsp 가기 전에 -> 서블릿 들러서 setAttribute에서 설정한 값을 ->jsp에서 사용가능
@@ -26,6 +24,11 @@ public class OrderDetailServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		// 로그인이 안되면 진입불가
 				UserTable loginSS = (UserTable)request.getSession().getAttribute("loginSS");
+				if(loginSS == null) {
+					System.out.println("loginSS가 null이므로 진입불가 -> login화면으로 이동");
+					request.getRequestDispatcher("/WEB-INF/loginAlert.jsp").forward(request, response);
+					return;
+				}
 				//(url에 있는)쿼리스트링을 가져오려면 getParameter!
 				String order_no = request.getParameter("order_no");
 				System.out.println(order_no);
@@ -34,12 +37,6 @@ public class OrderDetailServlet extends HttpServlet {
 				OrderDetailTable volist = new OrderDetailService().OrderDetailList(order_no);
 				request.setAttribute("orderdetailvolist", volist);
 				request.setAttribute("order_no", order_no);
-				
-				if(loginSS == null) {
-					System.out.println("loginSS~~~~~~~~~");
-					request.getRequestDispatcher("/WEB-INF/loginAlert.jsp").forward(request, response);
-					return;
-				}
 				
 				System.out.println("loginSS~~555555555~~~");
 				String ViewPage = "/WEB-INF/orderdetail.jsp";

@@ -14,6 +14,17 @@ public class OrderDetailTable {
 	private int buy_quantity;
 	
 	// 10/18 추가: 주문상세보기 화면에 필요한 내용(product, address테이블과 조인)
+//	SELECT oinfo.order_no,order_total,order_cost, to_char(order_date, 'yyyy-mm-dd hh:mm') order_date,order_state, 
+//    odetail.product_no, buy_quantity
+//		,  product.product_name, product.PRODUCT_INFO_URL,
+//       coupon_discount, add_mileage, point_discount, (coupon_discount+point_discount) discount_all, (order_total-(coupon_discount+point_discount)+order_cost) total_pay
+//   ,postcode, basic_address, detail_address
+//	 FROM ORDERINFO oinfo
+//	join order_detail odetail on oinfo.order_no = odetail.order_no
+//		join product product on odetail.PRODUCT_NO = product.PRODUCT_NO
+//       join address on oinfo.address_no = address.address_no
+//		 WHERE 
+//	 oinfo.order_no = 'GYM2021090101';
 	private int order_total;
 	private int order_cost;
 	private String order_date;
@@ -28,8 +39,6 @@ public class OrderDetailTable {
 	private String postcode;
 	private String basic_address;
 	private String detail_address;
-	
-	
 	
 	public OrderDetailTable() {	}
 	
@@ -151,5 +160,4 @@ public class OrderDetailTable {
 	public void setDetail_address(String detail_address) {
 		this.detail_address = detail_address;
 	}
-	
 }

@@ -14,45 +14,10 @@
 <style>
 #head {
 	text-align: center;
-	position: relative;
-	top: 10px;
+	margin-bottom: 15px;
 }
 table{
 	margin: auto;
-}
-
-#login-btn {
-	text-emphasis-color: gray;
-	background-color: black;
-}
-
-#login-menu {
-	text-align: center;
-}
-
-#login-menu>ul {
-	list-style-type: none;
-	position: relative;
-}
-
-#login-menu li {
-	display: inline-block;
-}
-
-/* 아이디 | 비밀번호 찾기 | 회원가입 */
-#login-menu li::after {
-	padding: 10px;
-	content: "|";
-}
-
-#login-menu li:last-child::after {
-	padding: 15px;
-	content: "";
-}
-.form-group{
-	text-align: center;
-	position: relative;
-	top: 10px;
 }
 input,
 .btn {
@@ -73,6 +38,11 @@ input:hover,
 .btn:hover {
   opacity: 1;
 }
+
+/* 라디오 버튼 */
+input[radio]{
+padding: 5px;
+}
 select{
   padding: 12px;
   border-radius: 4px;
@@ -83,28 +53,51 @@ select{
   line-height: 20px;
   text-decoration: none; /* remove underline from anchors */
 }
+/* 중복확인 버튼 */
+#checkId{
+ border-color: #2196F3;
+ background: white;
+  color: dodgerblue;
+  cursor: pointer;
+}
+
+#checkId:hover{
+background: #2196F3;
+  color: white;
+}
+
+/* 회원가입, 취소 버튼 */
+#btnJoin{
+text-align: center;
+}
+
+#btnJoin>input{
+        padding: 6px 32px;
+        margin: 10px 2px;
+        background-color: white;
+        color: black;
+        border: 2px solid #555555;
+        cursor: pointer;
+        }
+#btnJoin>input:hover {
+        background-color: #555555;
+        color: white;
+        }
 </style>
 </head>
 <body>
 	<!-- 공통헤더 템플릿 -->
 	<%@ include file="template_header.jsp"%>
-	
-			<!-- Indicators -->
-			<ol class="carousel-indicators">
-				<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-			</ol>
-			
-			 <div id="wrap">   
-                <h2 align = "center">회원가입</h2>
-                <br><br>
-                      
+		<div id="wrap">   
+           <h2 id= "head">회원가입</h2>
+            <br><br>
                 <form action="join" method="post">        
                     <table>        
                         <tr>        
                             <td id="title">아이디</td>       
                             <td>       
                                 <input type="text" id="user_id" name="user_id" placeholder="아이디" maxlength="20">        
-                                <input type="button" value="중복확인" >            
+                                <input type="button" value="중복확인" id="checkId">            
                             </td>        
                         </tr>                                        
         
@@ -191,17 +184,16 @@ select{
                             <td id="title">이메일 수신동의</td>        
                             <td>       
                                 <input type="radio" name="email_ynStr" value= "0" checked>거부        
-                                
                                 <input type="radio" name="email_ynStr" value= "1" checked>동의        
                             </td>        
                         </tr>                                           
                     </table>        
-                    <br>        
+                    <br> 
+            <div id="btnJoin">
                     <input class="btn" type="submit" value="회원가입"/>  
                     <input class="btn" type="button" onclick="history.back()" value="취소">
-                </form>
-        
-            </div>
+			</div>
+</form>
+</div>
 </body>
-
 </html>

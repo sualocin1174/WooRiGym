@@ -221,6 +221,7 @@
         font-size: 16px;
         margin: 25px 10px;
         transition-duration: 0.3s;
+        cursor: pointer;
         }
 
         .button{
@@ -232,7 +233,7 @@
         .button:hover {
             background-color: #e7e7e7;
         }
-
+		/* 검색 버튼 */
         #order_search {
         padding: 6px 32px;
         margin: 4px 2px;
@@ -245,10 +246,15 @@
         color: white;
         }
       
-       /* 주문내역 테이블 */
        #order h3, #order h4 {
        padding-bottom: 5px;
        }
+       /* 주문일자 */
+       #order h4 {
+       margin: 0 0 10px 0;
+       }
+       
+       /* 주문내역 테이블 */
       	table#order_detail{
 		  width: 850px;
           text-align: center;
@@ -266,7 +272,18 @@
           width: 80px;
           height: 80px;
       	}
-
+      	/* 페이징 버튼 */
+      	#pageview{
+      	text-align: center;
+      	}
+      	#pageview a{
+      	padding: 4px 8px;
+      	background: black;
+      	color: white;
+      	}
+      	#pageview a:hover{
+      	background: black;
+      	}
  </style>
 </head>
 <body>

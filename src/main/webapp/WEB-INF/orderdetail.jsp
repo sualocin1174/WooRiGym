@@ -20,117 +20,19 @@
     <title>마이페이지-주문/배송조회</title>
     <script>
 
-    //페이지 로드 시 오늘날짜 기준 1달 이내의 주문내역 출력
+    //페이지 로드 시 주문상세내역 출력
     window.onload = pageLoadedHandler();
     function pageLoadedHandler(){
     $(function(){ 
        	// TODO
-    	//$("#start_date").val(1달전날짜);
-    	//$("#end_date").val(오늘날짜);
-    	console.log($("#start_date"));
-    	$("#start_date").val(default_date());
-    	$("#end_date").val(sysdate());
-    	console.log("1달전 : ", default_date()); 
-    	console.log("오늘 날짜 : ", sysdate()); 
-    	$("#order_search").on("click", ajaxF1());//검색 버튼
-    	$("#1week").on("click", lastWeek); //1주일 버튼
-    	$("#1month").on("click", lastMonth); //1개월 버튼
-    	$("#3month").on("click", last3M); //3개월 버튼
-    	$("#6month").on("click", last6M); //6개월 버튼
     	
     });
     };
-    	// 현재 날짜 및 시간
-        var now = new Date();	
-        console.log("현재 : ", now);
-    function sysdate(){
-        //날짜 추출
-        var year = now.getFullYear();
-    	var month = ("0"+(now.getMonth()+2)).slice(-2);
-    	console.log("month: "+month); //왜 now랑 end_date는 이번달로 잘 나오고 month는 다음달로 나올까..
-    	var day = ("0"+now.getDate()).slice(-2);
-    	
-    	//확인
-    	console.log("sysdate(): "+year+"-"+month+"-"+day);
-		//원하는 날짜형식: yyyy/mm/dd
-    	return year+"-"+month+"-"+day;
-    }
-        console.log("현재 : ", sysdate());
- 
- 	 //페이지 로드 시 기본 날짜: 현재~한달 전 자동조회
-    var oneMonthAgo = new Date(now.setMonth(now.getMonth() - 1)); 
-    console.log("한달 전 : ", oneMonthAgo);
-    
-    function default_date(){
-    	var year = oneMonthAgo.getFullYear();
-    	var month = ("0"+(1+oneMonthAgo.getMonth())).slice(-2);
-    	var day = ("0"+oneMonthAgo.getDate()).slice(-2);
-    	//확인
-    	console.log("default_date(): "+year+"-"+month+"-"+day);
-    	return year+"-"+month+"-"+day;
-    }
-    console.log("한달 전 : ", default_date());
-    
- 	 // 1개월 전
-    function lastMonth(){
-    	var year = oneMonthAgo.getFullYear();
-    	var month = ("0"+(1+oneMonthAgo.getMonth())).slice(-2);
-    	var day = ("0"+oneMonthAgo.getDate()).slice(-2);
-    	//확인
-    	console.log("lastMonth(): "+year+"-"+month+"-"+day);
-    	$("#start_date").val(year+"-"+month+"-"+day);
-    }
-    
-    // 1주일 전
-    	function lastWeek() {
-    		//날짜 추출
-            var year = now.getFullYear();
-        	var month = ("0"+(2+now.getMonth())).slice(-2);
-        	var day = ("0"+(-7+now.getDate())).slice(-2);
-        	
-        	//확인
-        	console.log("lastWeek(): "+year+"-"+month+"-"+day);
-    	//원하는 날짜형식: yyyy/mm/dd
-        	$("#start_date").val(year+"-"+month+"-"+day);
-        	
-    	}
-    
-    //3개월 전
-    function last3M(){
-    	//날짜 추출
-        var year = now.getFullYear();
-    	var month = ("0"+(now.getMonth()-1)).slice(-2);
-    	var day = ("0"+(now.getDate())).slice(-2);
-    	
-    	//확인
-    	console.log("last3M(): "+year+"-"+month+"-"+day);
-	//원하는 날짜형식: yyyy/mm/dd
-    	$("#start_date").val(year+"-"+month+"-"+day);
-    }
-    //6개월 전
-    function last6M(){
-    	//날짜 추출
-        var year = now.getFullYear();
-    	var month = ("0"+(now.getMonth()-4)).slice(-2);
-    	var day = ("0"+(now.getDate())).slice(-2);
-    	
-    	//확인
-    	console.log("last6M(): "+year+"-"+month+"-"+day);
-	//원하는 날짜형식: yyyy/mm/dd
-    	$("#start_date").val(year+"-"+month+"-"+day);
-    }
-    function ajaxDetail(order_no){
+    function order_detail(order_no){
+    	// TODO: 유효성검사
     	console.log()
     	console.log(order_no);
-    }
-    function ajaxF1(){ //검색버튼 클릭 시
-    	// TODO: 유효성검사 해도되고 $("#start_date")")
     	
-    	console.log("#start_date: "+$("#start_date"));
-		var startDate = $("#start_date").val();
-    	var endDate =  $("#end_date").val();
-    	console.log(startDate);
-    	console.log(endDate);
     	$.ajax({
     		type: "post",
     		url: "<%=request.getContextPath()%>/orderlist",
@@ -154,8 +56,6 @@
     				//주문번호, 주문날짜+테이블 제목+내용
     					 html+=  "<h3><a href='orderDetailTable?order_no="+data[i].order_no+"'>"+data[i].order_no+"</a></h3>"
 							 + "<h4><a href='./orderTable?order_date='"+data[i].order_date+"'>"+data[i].order_date+"</a></h4>"
-							 + "<table id='order_detail'><tr><th colspan='2'>상품명</th>"
-						     + "<th>수량</th><th>상품금액</th><th>배송비</th><th>진행상태</th></tr>"
     						 
 	    					 //+ "<a href='./orderDetailTable?product_no="+data[i].product_no+"'>"
 		    	 			 + "<td><a href='./productTable?product_info_url="+data[i].product_info_url
@@ -257,7 +157,7 @@
           width: 80px;
           height: 80px;
       	}
-
+      	
  </style>
 </head>
 <body>
@@ -269,13 +169,34 @@
 <section>
     <h2>주문/배송 조회</h2>
     <h3>주문 상세보기</h3>
+     <table id="order_detail">
+            <tr>
+                <th colspan="2">상품명</th>
+                <th>수량</th>
+                <th>상품금액</th>
+                <th>포인트</th>
+                <th>쿠폰</th>
+                <th>배송비</th>
+                <th>진행상태</th>
+            </tr>
+            <tr id="olist">
+         <td colspan="2" id="product_name">${product_name}</td>
+            <td id="buy_quantity">${buy_quantity}</td>
+            <td id="order_total">${order_total}</td>
+            <td id="point_discount">${point_discount}</td>
+            <td id="coupon_discount">${coupon_discount}</td>
+            <td id="order_cost">${order_cost}</td>
+            <td id="order_state">${order_state}</td>
+        </tr>
+            </table>
     <div id="order">
   	<!-- 결제정보 -->
   	<!-- 배송정보  -->
     </div>
      <div id="btngroup">
-    <input type="submit" class="button" value="목록" id="go_list" onclick="ajaxF1()">
     <input type="button" class="button" value="수정" id="insert_place">
+    <br>
+    <input type="submit" class="button" value="목록" id="go_list" onclick="history.go(-1)">
     </div>
 </section>
 </body>

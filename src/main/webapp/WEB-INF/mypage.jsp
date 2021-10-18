@@ -123,7 +123,6 @@
 <section>
   <c:if test="${loginSS != null}">
     <h1>${loginSS.user_name}님 즐거운 쇼핑 되세요!</h1>
-    <!-- ${user_name}는 이름출력안됨. -->
     <a href="#">회원정보 수정 ></a><hr>
   </c:if>
 <table class="coupon">
