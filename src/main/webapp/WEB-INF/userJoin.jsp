@@ -3,19 +3,22 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
    <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<% response.setStatus(HttpServletResponse.SC_OK); %>
+
 
 <!DOCTYPE html>
 <html lang="ko">
 
 <head>
 <meta charset="UTF-8">
-<title>login page</title>
+<title>회원가입</title>
 <style>
 #head {
 	text-align: center;
 	position: relative;
 	top: 10px;
+}
+table{
+	margin: auto;
 }
 
 #login-btn {
@@ -51,6 +54,35 @@
 	position: relative;
 	top: 10px;
 }
+input,
+.btn {
+  padding: 12px;
+  border-radius: 4px;
+  margin: 5px 0;
+  opacity: 0.85;
+  display: inline-block;
+  font-size: 17px;
+  line-height: 20px;
+  text-decoration: none; /* remove underline from anchors */
+}
+input{
+border: 2px solid #e7e7e7;
+}
+
+input:hover,
+.btn:hover {
+  opacity: 1;
+}
+select{
+  padding: 12px;
+  border-radius: 4px;
+  margin: 5px 0;
+  opacity: 0.85;
+  display: inline-block;
+  font-size: 17px;
+  line-height: 20px;
+  text-decoration: none; /* remove underline from anchors */
+}
 </style>
 </head>
 <body>
@@ -60,18 +92,14 @@
 			<!-- Indicators -->
 			<ol class="carousel-indicators">
 				<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-				<li data-target="#myCarousel" data-slide-to="1"></li>
-				<li data-target="#myCarousel" data-slide-to="2"></li>
 			</ol>
 			
-			 <div id="wrap">
-
-                <br><br>
+			 <div id="wrap">   
                 <h2 align = "center">회원가입</h2>
                 <br><br>
                       
                 <form action="join" method="post">        
-                    <table id = "">        
+                    <table>        
                         <tr>        
                             <td id="title">아이디</td>       
                             <td>       

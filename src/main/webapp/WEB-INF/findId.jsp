@@ -1,10 +1,6 @@
-
-<!-- 헤더 CSS -->
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_header.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@page import="woorigym.user.model.vo.UserTable"%>
@@ -12,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>login page</title>
+<title>아이디 찾기</title>
 <style>
 #head {
 	text-align: center;
@@ -50,6 +46,24 @@
 	text-align:center;
 }
 
+input{
+border: 2px solid #e7e7e7;
+}
+input,
+.btn {
+  padding: 12px;
+  border-radius: 4px;
+  margin: 5px 0;
+  opacity: 0.85;
+  display: inline-block;
+  font-size: 17px;
+  line-height: 20px;
+  text-decoration: none; /* remove underline from anchors */
+}
+input:hover,
+.btn:hover {
+  opacity: 1;
+}
 </style>
 </head>
 <body>
@@ -61,22 +75,15 @@
 
                 <div class="container">
                     <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                        <!-- Indicators -->
-                        <ol class="carousel-indicators">
-                            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                            <li data-target="#myCarousel" data-slide-to="1"></li>
-                            <li data-target="#myCarousel" data-slide-to="2"></li>
-                        </ol>
 
                         <div class="container">
                             <form id= "log-box" method="post" action="findId">
-                                <h4 id="head">아이디 찾기</h4>
-
+                                <h3 id="head">아이디 찾기</h3>
                                 <div class="form-group">
-                                   	이름<input type="text" placeholder="이름" name="user_name"><br>
+                                   	  <input type="text" placeholder="이름" name="user_name"><br>
                                 </div>
                                 <div class="form-group">
-                                        휴대폰 번호<input type="text" placeholder="ex)010-1111-2222" name="phone" maxlength="20"><br>
+                                       <input type="text" placeholder="ex)010-1111-2222" name="phone" maxlength="20"><br>
                                 </div>
                                 <div class="form-group">
                                 <input type="submit" value="아이디 찾기">

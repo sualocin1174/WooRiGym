@@ -1,19 +1,15 @@
 
 <!-- 헤더 CSS -->
-<link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/css/template_header.css" />
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<!-- 부트스트랩 CDN -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_header.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>login page</title>
+<title>비밀번호 찾기</title>
 <style>
 #head {
 	text-align: center;
@@ -49,8 +45,25 @@
 }
 .form-group{
 	text-align:center;
+	}
+input{
+border: 2px solid #e7e7e7;
 }
-
+input,
+.btn {
+  padding: 12px;
+  border-radius: 4px;
+  margin: 5px 0;
+  opacity: 0.85;
+  display: inline-block;
+  font-size: 17px;
+  line-height: 20px;
+  text-decoration: none; /* remove underline from anchors */
+}
+input:hover,
+.btn:hover {
+  opacity: 1;
+}
 </style>
 </head>
 <body>
@@ -59,22 +72,14 @@
 
                 <div class="container">
                     <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                        <!-- Indicators -->
-                        <ol class="carousel-indicators">
-                            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                            <li data-target="#myCarousel" data-slide-to="1"></li>
-                            <li data-target="#myCarousel" data-slide-to="2"></li>
-                        </ol>
-
                         <div class="container">
                             <form id= "log-box" method="post" action="findPwd">
-                                <h4 id="head">비밀번호 찾기</h4>
-
+                                <h3 id="head">비밀번호 찾기</h3>
                                 <div class="form-group">
-                                    	아이디<input type="text" placeholder="아이디" name="user_id"><br>
+                                    	<input type="text" placeholder="아이디" name="user_id"><br>
                                 </div>
                                 <div class="form-group">
-                                    	이메일<input type="text" placeholder="@포함" name="email" maxlength="30"><br>
+                                    	<input type="text" placeholder="이메일@xxx.com" name="email" maxlength="30"><br>
                                 </div>
                                 <div class="form-group">
                                 <input type="submit" value="비밀번호 찾기">

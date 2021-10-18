@@ -51,8 +51,8 @@ public class LoginServlet extends HttpServlet {
 		if(vo != null) {		
 			System.out.println("로그인 성공");
 			request.setAttribute("result", "로그인성공");
-			HttpSession sessionId = request.getSession();
-			sessionId.setAttribute("loginSS", vo);
+			HttpSession session = request.getSession();
+			session.setAttribute("loginSS", vo);
 			request.getRequestDispatcher("/WEB-INF/loginAction.jsp").forward(request, response);;
 		}
 		else {

@@ -55,6 +55,25 @@ public class UserFindIdServlect extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String user_name = request.getParameter("user_name");
+		String phone = request.getParameter("phone");
+		
+		UserService userSvc = new UserService();
+		String user_id = userSvc.findId(user_name, phone);
+		
+		if(user_id != null) {
+			System.out.println("아이디 찾기 성공");
+			request.setAttribute("result", "아이디 찾기 성공");
+			HttpSession sessionId = request.getSession();
+			sessionId.setAttribute("user_id", user_id);
+			request.getRequestDispatcher("/WEB-INF/findIdView.jsp").forward(request, response);
+			}
+		else {
+			System.out.println("아이디 찾기 실패");
+			request.setAttribute("result", "아이디 찾기 실패");
+			request.getRequestDispatcher("/WEB-INF/findId.jsp");
+		}
+		
 //		response.setCharacterEncoding("UTF-8");
 //		response.setContentType("text/html; charset=UTF-8");
 //		String user_name = request.getParameter("user_name");
