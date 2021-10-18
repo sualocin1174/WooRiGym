@@ -1,10 +1,8 @@
-
 <!-- 헤더 CSS -->
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_header.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -82,6 +80,19 @@ background-color: #555555;
 }
 </style>
 </head>
+<script>
+	
+	var result = "${user_pwd}";	
+	console.log(result);
+	
+	if(result == "비밀번호 찾기 실패"){
+		alert("정보가 올바르지 않습니다. 다시 입력해주세요");
+	}
+	else if(result != ""){
+		alert("비밀번호는: " +"${user_pwd}" + "입니다. 다시 로그인해주세요.");
+		location.href = "login";
+	}
+</script>
 <body>
 <!-- 공통헤더 템플릿 -->
     <%@ include file="template_header.jsp" %>

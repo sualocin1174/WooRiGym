@@ -190,7 +190,7 @@ text-align: center;
                     </table>        
                     <br> 
             <div id="btnJoin">
-                    <input class="btn" type="submit" value="회원가입"/>  
+                    <input class="btn" type="submit" value="회원가입">  
                     <input class="btn" type="button" onclick="history.back()" value="취소">
 			</div>
 </form>

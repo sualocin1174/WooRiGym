@@ -30,31 +30,28 @@ public class UserFindPwdServlect extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		request.getRequestDispatcher("/WEB-INF/findPwd.jsp").forward(request, response);
-//		response.setCharacterEncoding("UTF-8");
-//		response.setContentType("text/html; charset=UTF-8");
-//		PrintWriter out = response.getWriter();
-//		UserService findPwd = new UserService();
-//		String user_id = request.getParameter("user_id");
-//		String email = request.getParameter("email");
-//		String result = findPwd.findPwd(user_id, email);
-//		if(result != null) {
-//			// ?user_id=user01&email=user01@a.com      -->   임시 확인
-//			out.println("비밀번호 찾기 성공");
-//			System.out.println(user_id + "님의 비밀번호는" + result + "입니다");
-//		}
-//		else {
-//			System.out.println("정보가 올바르지 않습니다.");
-//		}
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8");
+		String user_id = request.getParameter("user_id");
+		String email = request.getParameter("email");
+		
+		UserService userSvc = new UserService();
+		String user_pwd = userSvc.findPwd(user_id, email);
+		if(user_pwd != null) {
+			System.out.println("비밀번호 찾기 성공");
+			request.setAttribute("user_pwd", user_pwd);
+			request.getRequestDispatcher("/WEB-INF/findPwd.jsp").forward(request, response);
+		}
+		else {
+			System.out.println("비밀번호 찾기 실패");
+			request.setAttribute("user_pwd", "비밀번호 찾기 실패");
+			request.getRequestDispatcher("/WEB-INF/findPwd.jsp").forward(request, response);
+		}
 	}
 
 }

@@ -46,7 +46,7 @@ public class UserService {
 	// 비밀번호 찾기
 	public String findPwd(String user_id, String email) {
 		Connection conn = jdbcTemplate.getConnection();
-		String user_pwd = new UserDao().findId(conn, user_id, email);
+		String user_pwd = new UserDao().findPwd(conn, user_id, email);
 		jdbcTemplate.close(conn);
 		return user_pwd;
 	}

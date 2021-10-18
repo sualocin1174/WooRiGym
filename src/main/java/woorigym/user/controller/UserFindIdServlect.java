@@ -33,22 +33,6 @@ public class UserFindIdServlect extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("/WEB-INF/findId.jsp").forward(request, response);
-//		response.setCharacterEncoding("UTF-8");
-//		response.setContentType("text/html; charset=UTF-8");
-//		PrintWriter out = response.getWriter();
-//		UserService findID = new UserService();
-//		String user_name = request.getParameter("user_name");
-//		String phone = request.getParameter("phone");
-//		String result = findID.findId(user_name, phone);
-//		if(result != null) {
-//			// ?user_name=user01&phone=010-1111-2222       -->   임시확인
-//			out.println("아이디 찾기 성공");
-//			System.out.println(user_name + "님의 아이디는" + result + "입니다.");
-//		}
-//		else {
-//			System.out.println("정보가 올바르지 않습니다.");
-//		}
-		
 	}
 
 	/**
@@ -63,36 +47,15 @@ public class UserFindIdServlect extends HttpServlet {
 		
 		if(user_id != null) {
 			System.out.println("아이디 찾기 성공");
-			request.setAttribute("result", "아이디 찾기 성공");
-			HttpSession sessionId = request.getSession();
-			sessionId.setAttribute("user_id", user_id);
-			request.getRequestDispatcher("/WEB-INF/findIdView.jsp").forward(request, response);
+			request.setAttribute("user_id", user_id);
+			request.getRequestDispatcher("/WEB-INF/findId.jsp").forward(request, response);
 			}
 		else {
 			System.out.println("아이디 찾기 실패");
-			request.setAttribute("result", "아이디 찾기 실패");
-			request.getRequestDispatcher("/WEB-INF/findId.jsp");
+			request.setAttribute("user_id", "아이디 찾기 실패");
+			request.getRequestDispatcher("/WEB-INF/findId.jsp").forward(request, response);
 		}
-		
-//		response.setCharacterEncoding("UTF-8");
-//		response.setContentType("text/html; charset=UTF-8");
-//		String user_name = request.getParameter("user_name");
-//		String phone = request.getParameter("phone");
-//		UserService userSvc = new UserService();
-//		String result = userSvc.findId(user_name, phone);
-//		
-//		if(result != null) {
-//			request.setAttribute("user_id", result);
-//			System.out.println("아이디 찾기 성공");
-//			request.getSession().setAttribute("user_id", result);
-//			request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);;
-//			
-//		}
-//		else {
-//			
-//		}
-		
-		
+
 	}
 
 }
