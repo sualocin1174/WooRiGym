@@ -13,7 +13,7 @@
 
 
 #productinfo  th, td {
-	height :40px;
+	height :60px;
 	padding-top: 5px;
     
 }
@@ -22,6 +22,7 @@
 	width : 40px;
 	vertical-align : top;
 	text-align :center;
+	padding-right:5px;
 	
 }
 #productinfo  tr  td:nth-of-type(2){
@@ -31,7 +32,6 @@
 	white-space: nowrap;
 	text-overflow: ellipsis; 
 	display: block;
-	
 	
 }
 #productinfo  tr  td:nth-of-type(3){
@@ -44,6 +44,18 @@
 	width : 0px;
 	vertical-align : top;
 	text-align :center;
+}
+#productinfo  tr  th:first-of-type{
+	width : 55px;
+}
+#productinfo  tr  th:nth-of-type(2){
+	width : 250px;
+}
+#productinfo  tr  th:nth-of-type(3){
+	width : 160px;
+}
+#productinfo  tr  th:nth-of-type(4){
+	width : 0px;
 }
 
 
@@ -62,14 +74,17 @@
 }
 
 
-#cartinfo  th, td {
-	height :40px;
+#cartinfo th{
+	height :60px;
+	padding:5px 0px;
     
 }
-#cartinfo  td {
-	height :45px;
+#cartinfo td {
+	height :65px;
+	padding:5px;
     
 }
+
 
 #cartinfo  tr  td:first-of-type{
 	width : 0px;
@@ -82,7 +97,7 @@
 	width : 40px;
 	vertical-align : top;
 	text-align :center;
-	padding-top: 5px;
+	padding-top: 5px 0px;
 	
 	
 }
@@ -104,19 +119,30 @@
 #cartinfo  tr  td:nth-of-type(5){
 	vertical-align : top;
 	padding-top: 5px;
+}
+#cartinfo  tr  th:first-of-type{
+	width : 50px;
+}
+#cartinfo  tr  th:nth-of-type(2){
+	width : 160px;
+}
+#cartinfo  tr  th:nth-of-type(3){
+	width : 130px;
+}
 
-	
+#cartinfo  tr  th:nth-of-type(4){
+	width : 50px;
 }
 
 #cartinfo  tr  td:nth-of-type(5) button{
-	border: 1px solid rgb(141, 177, 165);
+	border: 1px solid rgb(140, 130, 228);
 	background-color:rgba(0,0,0,0);
-	color: rgb(141, 177, 165);
+	color: rgb(140, 130, 228);
 	padding :  5px;
 	border-radius: 5px;
 }
 #cartinfo  tr  td:nth-of-type(5) button:hover{
-	background-color:rgb(141, 177, 165);
+	background-color:rgb(140, 130, 228);
 	color: white;
 	padding :  5px;
 	border-radius: 5px;
@@ -135,6 +161,7 @@
 	border:none;
 	background-color: rgba(0,0, 0, 0);
 	heigt:25px;
+	font-size:15px;
 }
 
 
@@ -155,7 +182,7 @@
 #userinfo td {
 	text-indent: 5px;
 	width:730px;
-   
+	padding:0px;
 }
 #addressuinfo{
 	border-collapse: collapse; 
@@ -182,17 +209,18 @@
 #addressuinfo tr:nth-of-type(2) td input{
 	width:70px;
 	height:35px;
+	font-size:15px;
 }
 #addressuinfo  tr:nth-of-type(2) td button{
-	border: 1px solid rgb(141, 177, 165);
+	border: 1px solid rgb(140, 130, 228);
 	background-color:rgba(0,0,0,0);
-	color: rgb(141, 177, 165);
+	color:rgb(140, 130, 228);
 	padding :  5px;
 	border-radius: 5px;
 	font-size:15px;
 }
 #addressuinfo  tr:nth-of-type(2) td button:hover{
-	background-color:rgb(141, 177, 165);
+	background-color:rgb(140, 130, 228);
 	color: white;
 	padding :  5px;
 	border-radius: 5px;
@@ -202,10 +230,12 @@
 #addressuinfo tr:nth-of-type(3) td input{
 	width:250px;
 	height:35px;
+	font-size:15px;
 }
 #addressuinfo tr:nth-of-type(4) td input{
 	width:250px;
 	height:35px;
+	font-size:15px;
 }
 
 
@@ -253,17 +283,20 @@
 	width:100px;
 	height:30px;
 }
+#payinfo tr:nth-of-type(4) td{
+	font-size: 7px;
+}
 
 #couponmodal{
-	border: 1px solid rgb(141, 177, 165);
+	border: 1px solid rgb(140, 130, 228);
 	background-color:rgba(0,0,0,0);
-	color: rgb(141, 177, 165);
+	color: rgb(140, 130, 228);
 	padding :  5px;
 	border-radius: 5px;
 	font-size:15px;
 }
 #couponmodal:hover{
-	background-color:rgb(141, 177, 165);
+	background-color:rgb(140, 130, 228);
 	color: white;
 	padding :  5px;
 	border-radius: 5px;
@@ -276,3 +309,80 @@
     input::-webkit-inner-spin-button {
         -webkit-appearance: none;
     }
+    
+#submitAll{
+	margin:30px 350px;
+}
+#submitAll input{
+	border: 1px solid brown;
+	background-color:rgba(0,0,0,0);
+	color: brown;
+	padding :  5px;
+	border-radius: 5px;
+	font-size:15px;
+}
+#submitAll input:hover{
+	background-color:brown;
+	color: white;
+	padding :  5px;
+	border-radius: 5px;
+	cursor : pointer;
+	font-size:15px;
+}
+
+
+.modal{
+        display: none;
+        
+        width: 100%; height: 100%;
+        
+        top: 0; left: 0;
+        position: fixed;
+        z-index: 1;
+        background-color: rgba(12, 12, 12, .3);
+    }
+    .modal-content{
+        width: 450px; height: 300px;
+        top: 50px;
+        margin: auto;
+        position: relative;
+        padding: 10px;
+
+    }
+    #modal-coupon{
+        background-color: white;
+        box-shadow: 10px 10px 5px grey;
+        border: 1px solid grey;
+        overflow:scroll;
+    }
+    
+    #modal-coupon button{
+	border: 1px solid rgb(140, 130, 228);
+	background-color:rgba(0,0,0,0);
+	color: rgb(140, 130, 228);
+	padding :  5px;
+	border-radius: 5px;
+	font-size:15px;
+}
+#modal-coupon button:hover{
+	background-color:rgb(140, 130, 228);
+	color: white;
+	padding :  5px;
+	border-radius: 5px;
+	cursor : pointer;
+	font-size:15px;
+}
+#modal-coupon table td {
+	height:40px;
+	padding :0px 5px;
+}
+#modal-coupon table, th,td {
+	border-collapse: collapse;
+}
+#modal-coupon table th{
+	border-bottom : 1px solid black;
+}
+#modal-coupon td{
+	text-align: right;
+}
+   

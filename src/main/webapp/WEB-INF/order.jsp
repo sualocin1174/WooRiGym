@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_header.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/orderpage.css"/>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import = "woorigym.user.model.vo.UserTable" %>
     <%
@@ -95,10 +96,12 @@
               width: 250px;
           }
             </style>
-            <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/orderpage.css"/>
+            
 <style>
 #ordersection{
-	margin : 50px 100px;
+	margin : auto;
+	width : 1000px;
+	
 }
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -122,7 +125,7 @@
                 for (var i in product) {
                     let pricecomma = comma(product[i].price);
                     console.log(pricecomma);
-                    ptext += "<tr id='productinfos"+p+"'><td>" + (p + 1) + "<td>" + product[i].productName + "</td><td id=product" + p + ">" + pricecomma + "원<td></tr>";
+                    ptext += "<tr id='productinfos"+p+"'><td><img src='http://via.placeholder.com/50'> <td>" + product[i].productName + "</td><td id=product" + p + ">" + pricecomma + "원<td></tr>";
                     p++;
                 }
                 $("#productinfo").append(ptext);
@@ -276,13 +279,23 @@ var fixaddrno = "";
     	$("#postcode").val(fixaddr0);
         $("#basicaddr").val(fixaddr1);
         $("#detailaddr").val(fixaddr2);
+        $("#ordermemo").val("");
     	
+        $("#postcode").attr("readonly" ,true);
+        $("#basicaddr").attr("readonly",true);
+        $("#detailaddr").attr("readonly",true);
+        
     }
     function clearaddr(){
+    	$("#postcode").attr("readonly" ,false);
+        $("#basicaddr").attr("readonly",false);
+        $("#detailaddr").attr("readonly",false);
+        
     	$("#addressno").val("");
     	$("#postcode").val("");
         $("#basicaddr").val("");
         $("#detailaddr").val("");
+        $("#ordermemo").val("");
     	
     }
     /*
@@ -336,6 +349,17 @@ var fixaddrno = "";
     
         function selectAddr()
         {
+        	$("#addressno").val("");
+        	$("#postcode").val("");
+            $("#basicaddr").val("");
+            $("#detailaddr").val("");
+            $("#ordermemo").val("");
+            
+        	$("#postcode").attr("readonly" ,true);
+            $("#basicaddr").attr("readonly",true);
+            $("#detailaddr").attr("readonly",true);
+            
+            
             // window.name = "부모창 이름"; 
             window.name = "parentForm";
             // window.open("open할 window", "자식창 이름", "팝업창 옵션");
@@ -452,28 +476,7 @@ var fixaddrno = "";
    
     
 </script>
-<style>
-.modal{
-        display: none;
-        
-        width: 100%; height: 100%;
-        
-        top: 0; left: 0;
-        position: fixed;
-        z-index: 1;
-        background-color: rgba(12, 12, 12, .3);
-    }
-    .modal-content{
-        width: 350px; height: 300px;
-        top: 50px;
-        margin: auto;
-        position: relative;
-        background-color: bisque;
-        padding: 10px;
 
-    }
-   
-</style>
 
     
     </head>
@@ -486,8 +489,8 @@ var fixaddrno = "";
         <h3> ⦁ 주문 상품 정보 </h3><br>
         <table id="productinfo" style=" float: left;">
             <tr>
-                <th>번호</th>
-                <th>상품 이름</th>
+                <th></th>
+                <th>상품명</th>
                 <th>가격</th>
             </tr>
         </table>
@@ -500,7 +503,7 @@ var fixaddrno = "";
             </tr>
         </table>
 	<br>
-        <span id="totalspan">▸ 총 결제 예상 금액 : <input type="text" id="producttotal"> 원</span>
+        <span id="totalspan">▸ 총 결제 예상 금액 : <input type="text" id="producttotal" readonly> 원</span>
     </div>  
     <br>
      <div class="orderform">
@@ -531,22 +534,19 @@ var fixaddrno = "";
                 </tr>
                 <tr>
                     <th rowspan="2">주소<br><br><br>  </th>
-                    <td><input type="text" id="postcode" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"> <button onclick="findAddr()">우편번호 찾기</button></td>
+                    <td><input type="text" id="postcode" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" readonly> <button onclick="findAddr()">우편번호 찾기</button></td>
                 </tr>
                 <tr>
-                    <td><input type="text" id="basicaddr"></td>
+                    <td><input type="text" id="basicaddr" readonly></td>
                 </tr>
                 <tr>
                     <th>상세주소</th>
-                    <td><input type="text" id="detailaddr"></td>
+                    <td><input type="text" id="detailaddr" readonly></td>
                 </tr>
-                <tr>
-                    <th>전화번호</th>
-                    <td>나중에 구현</td>
-                </tr>
+               
                 <tr>
                     <th>요청사항</th>
-                    <td><textarea  cols="30" rows="5" style="resize: none;" id="ordermemo"></textarea></td>
+                    <td><textarea  cols="32" rows="5" style="resize: none;" id="ordermemo"></textarea></td>
                 </tr>
             </table>
             
@@ -557,23 +557,23 @@ var fixaddrno = "";
             <table id="payinfo">
                 <tr><th>총 상품 가격 </th><td><input type="text" id="totalprice" readonly></td></tr>
                 <tr><th>적립금 사용 </th><td id="usemile"><input type="text" value="0" id="insertmile" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>&nbsp&nbsp현재 잔액 : <input type="text" id="availmile" readonly></td></tr>
-                <tr><th>쿠폰 사용 </th><td id="usecoupon"><button id="couponmodal">쿠폰 선택</button> <input type="text" value="적용 안함" readonly id="appliedcpn">적용 금액 : <input id="coudiscount" value="0" readonly></td></tr>
-                <tr><th>배송비 </th><td> <input type="text"  id="shippingpay" readonly> </td></tr>
+                <tr><th>쿠폰 사용 </th><td id="usecoupon"><button id="couponmodal">쿠폰 선택</button> <input type="text" value="적용 안함" readonly id="appliedcpn">&nbsp&nbsp적용 금액 : <input id="coudiscount" value="0" readonly></td></tr>
+                <tr><th>배송비 </th><td> <input type="text"  id="shippingpay" readonly> &nbsp&nbsp*총 상품 가격 10만원 이상이면 배송비 무료</td></tr>
                 <tr><th>총 결제 금액</th><td><input type="text" id="finalpay" readonly> </td></tr>
                 <tr><th>결제 수단</th><td>신용카드 <input type="radio" name="paymethod" id="cardmodalbtn">&nbsp&nbsp무통장입금 <input type="radio" name="paymethod"  id="depomodalbtn"></td></tr>
             </table>
             
         </div>
-</section>
-  <p>
- 
+          <p id="submitAll">
   <input type="submit" value="결제 완료" id="submitinfo">
         </p>
-<input type="text" id="addressno">
-<input type="text" id="paymethodno">
-<input type="text" id="couponno">
-<input type="text" id="prono">
-<input type="text" id="proquan">
+</section>
+
+<input type="text" id="addressno" style='display:none'>
+<input type="text" id="paymethodno" style='display:none'>
+<input type="text" id="couponno" style='display:none'>
+<input type="text" id="prono" style='display:none'>
+<input type="text" id="proquan" style='display:none'>
 
 <!--  modal box-->
     <div id="modal_01" class="modal">
@@ -598,10 +598,11 @@ var fixaddrno = "";
     </div>
     <!-- 쿠폰 목록 modal -->
     <div id="modal_03" class="modal">
-        <div class="modal-content">
+        <div class="modal-content" id="modal-coupon">
             <p class="close" align="right">&#10006;</p>
-            <p>쿠폰목록</p>
-            <table>
+            <br>
+          
+            <table style="float:right">
              <tr>
             <td style='display : none'>적용 안함</td>
             <td style='display : none'>0</td>
@@ -613,11 +614,9 @@ var fixaddrno = "";
             <tr>
             	<th>쿠폰명</th>
             	<th>적용 금액</th>
+            	<th></th>
             </tr>
-            
-            	
             </table>
-              
 
         </div>
     </div>

@@ -23,7 +23,7 @@
   font-weight: bold;
   vertical-align: top;
   color: #fff;
-  background: #ce4869 ;
+  background: rgb(140, 130, 228) ;
 	
   }
   table tr td:nth-of-type(1){
@@ -64,15 +64,15 @@
 	}
 
 	td button{
-	border: 1px solid #ce4869;
+	border: 1px solid rgb(140, 130, 228);
 	background-color:rgba(0,0,0,0);
-	color: #ce4869;
+	color: rgb(140, 130, 228);
 	padding :  5px;
 	border-radius: 5px;
 	font-size:15px;
 	}
 	td button:hover{
-	background-color:#ce4869;
+	background-color:rgb(140, 130, 228);
 	color: white;
 	padding :  5px;
 	border-radius: 5px;
@@ -80,15 +80,15 @@
 	font-size:15px;
 	}
 	#newaddr{
-	border: 1px solid #ce4869;
+	border: 1px solid rgb(140, 130, 228);
 	background-color:rgba(0,0,0,0);
-	color: #ce4869;
+	color: rgb(140, 130, 228);
 	padding :  5px;
 	border-radius: 5px;
 	font-size:15px;
 	}
 	#newaddr:hover{
-	background-color:#ce4869;
+	background-color:rgb(140, 130, 228);
 	color: white;
 	padding :  5px;
 	border-radius: 5px;

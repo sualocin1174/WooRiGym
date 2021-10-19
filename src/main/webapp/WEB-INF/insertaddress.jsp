@@ -56,14 +56,55 @@
        
 
 </script>
+<style>
+	button{
+	border: 1px solid #ce4869;
+	background-color:rgba(0,0,0,0);
+	color: #ce4869;
+	padding :  5px;
+	border-radius: 5px;
+	font-size:15px;
+	}
+	button:hover{
+	background-color:#ce4869;
+	color: white;
+	padding :  5px;
+	border-radius: 5px;
+	cursor : pointer;
+	font-size:15px;
+	}
+	#insert{
+	border: 1px solid #ce4869;
+	background-color:rgba(0,0,0,0);
+	color: #ce4869;
+	padding :  5px;
+	border-radius: 5px;
+	font-size:15px;
+	}
+	#insert:hover{
+	background-color:#ce4869;
+	color: white;
+	padding :  5px;
+	border-radius: 5px;
+	cursor : pointer;
+	font-size:15px;
+	}
+	.infos{
+	width : 200px;
+	height : 35px;
+	margin : 5px 5px;
+	}
+	
+</style>
 <body>
 
 <section>
 	<button onclick="findAddr()">우편번호 찾기</button><br>
-	우편번호 : <input type="text" id="postcode" name="postcode"> <br>
-	기본주소 : <input type="text" id="basicaddr" name="basicaddr"> <br>
-	상세주소 : <input type="text" id="detailaddr" name="detailaddr"> <br>
-	<p><input type="submit" value="추가" onclick="closeWindow()"></p>
+	<br>
+	우편번호 : <input type="text" id="postcode" name="postcode" class="infos"> <br>
+	기본주소 : <input type="text" id="basicaddr" name="basicaddr" class="infos"> <br>
+	상세주소 : <input type="text" id="detailaddr" name="detailaddr" class="infos"> <br>
+	<p><input type="submit" id="insert" value="추가" onclick="closeWindow()"></p>
 	
 </section>
 
