@@ -92,11 +92,11 @@ public class OrderService {
 		return result;
 	}
 	
-	public int insertOrderinfo(String user_id,int address_no,String order_memo,int order_total,int order_cost,int point_discount,int coupon_discount,int order_payment,int order_method,String pay_state,int add_mileage ) {
+	public int insertOrderinfo(String user_id,int address_no,String order_memo,int order_total,int order_cost,int point_discount,int coupon_discount,int order_payment,int order_method,String pay_state,int add_mileage, String receiver_name, String phone_no ) {
 		int result=-1;
 		
 		Connection conn = getConnection();
-		result = new OrderDao().insertOrderinfo(user_id, address_no, order_memo, order_total, order_cost, point_discount, coupon_discount, order_payment, order_method,pay_state, add_mileage, conn);
+		result = new OrderDao().insertOrderinfo(user_id, address_no, order_memo, order_total, order_cost, point_discount, coupon_discount, order_payment, order_method,pay_state, add_mileage, receiver_name, phone_no, conn);
 		close(conn);
 		return result; 
 		

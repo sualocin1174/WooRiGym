@@ -255,10 +255,10 @@ public class OrderDao {
 
 	public int insertOrderinfo(String user_id, int address_no, String order_memo, int order_total, int order_cost,
 			int point_discount, int coupon_discount, int order_payment, int order_method, String pay_state,
-			int add_mileage, Connection conn) {
+			int add_mileage, String receiver_name, String phone_no, Connection conn) {
 		int result = -1;
 
-		String sql = "insert into ORDERINFO values ('GYM'||to_char(sysdate, 'yyyymmdd')||'-'||ORDER_SEQ.nextval, ? , ? , ? , ? , ? ,? ,? ,? ,? ,sysdate , ?,'배송전',null, ? )";
+		String sql = "insert into ORDERINFO values ('GYM'||to_char(sysdate, 'yyyymmdd')||'-'||ORDER_SEQ.nextval, ? , ? , ? , ? , ? ,? ,? ,? ,? ,sysdate , ?,'배송전',null, ? ,?,?)";
 
 		PreparedStatement pstmt = null;
 
@@ -275,6 +275,8 @@ public class OrderDao {
 			pstmt.setInt(9, order_method);
 			pstmt.setString(10, pay_state);
 			pstmt.setInt(11, add_mileage);
+			pstmt.setString(12, receiver_name);
+			pstmt.setString(13, phone_no);
 
 			result = pstmt.executeUpdate();
 			conn.commit();

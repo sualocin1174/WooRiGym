@@ -152,16 +152,16 @@
 #totalspan {
 	margin-top:10px;
 	width:800px;
-	border-radius:5px;
 	padding:8px;
 	width:100%;
-	background-color: rgba(218, 200, 200, 0.385);
+	border-top : 1px solid grey;
 }
 #totalspan input{
 	border:none;
 	background-color: rgba(0,0, 0, 0);
 	heigt:25px;
 	font-size:15px;
+	width:100px;
 }
 
 
@@ -193,6 +193,7 @@
 	width:100px;
     text-align : right;
     padding-right:10px;
+    height : 50px;
    
 }
 
@@ -200,6 +201,7 @@
 #addressuinfo td {
     text-indent: 5px;
     width: 700px;
+    height : 50px;
    
 }
 
@@ -207,11 +209,19 @@
 	width:15px;
 }
 #addressuinfo tr:nth-of-type(2) td input{
+	width:100px;
+	height:35px;
+}
+#addressuinfo tr:nth-of-type(3) td input{
+	width:40px;
+	height:25px;
+}
+#addressuinfo tr:nth-of-type(4) td input{
 	width:70px;
 	height:35px;
 	font-size:15px;
 }
-#addressuinfo  tr:nth-of-type(2) td button{
+#addressuinfo  tr:nth-of-type(4) td button{
 	border: 1px solid rgb(140, 130, 228);
 	background-color:rgba(0,0,0,0);
 	color:rgb(140, 130, 228);
@@ -219,7 +229,7 @@
 	border-radius: 5px;
 	font-size:15px;
 }
-#addressuinfo  tr:nth-of-type(2) td button:hover{
+#addressuinfo  tr:nth-of-type(4) td button:hover{
 	background-color:rgb(140, 130, 228);
 	color: white;
 	padding :  5px;
@@ -227,12 +237,12 @@
 	cursor : pointer;
 	font-size:15px;
 }
-#addressuinfo tr:nth-of-type(3) td input{
+#addressuinfo tr:nth-of-type(5) td input{
 	width:250px;
 	height:35px;
 	font-size:15px;
 }
-#addressuinfo tr:nth-of-type(4) td input{
+#addressuinfo tr:nth-of-type(6) td input{
 	width:250px;
 	height:35px;
 	font-size:15px;
@@ -249,12 +259,14 @@
 	width:100px;
     text-align : right;
     padding-right:10px;
+    height : 50px;
     
 }
 
 #payinfo  td {
 	text-indent: 5px;
     width: 700px;
+    height : 50px;
    
 }
 
@@ -341,22 +353,23 @@
         z-index: 1;
         background-color: rgba(12, 12, 12, .3);
     }
-    .modal-content{
+.modal-content{
         width: 450px; height: 300px;
         top: 50px;
         margin: auto;
         position: relative;
         padding: 10px;
 
-    }
-    #modal-coupon{
+}
+#modal-coupon{
         background-color: white;
         box-shadow: 10px 10px 5px grey;
         border: 1px solid grey;
         overflow:scroll;
+        border-radius:10px;
     }
     
-    #modal-coupon button{
+#modal-coupon button{
 	border: 1px solid rgb(140, 130, 228);
 	background-color:rgba(0,0,0,0);
 	color: rgb(140, 130, 228);
@@ -385,4 +398,18 @@
 #modal-coupon td{
 	text-align: right;
 }
-   
+
+#cardmodaldiv{
+        background-color: white;
+        box-shadow: 10px 10px 5px grey;
+        border: 1px solid grey;
+        border-radius:10px;
+
+    }  
+#depomodaldiv{
+        background-color: white;
+        box-shadow: 10px 10px 5px grey;
+        border: 1px solid grey;
+        border-radius:10px;
+
+    }  

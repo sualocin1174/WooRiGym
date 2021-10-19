@@ -138,21 +138,25 @@
     }
    
     function delAddr(n){
-    	console.log($("#postcode"+n+"").text());
-    	$.ajax({ // JQuery 를 통한 ajax 호출 방식 사용
-            type: "get",
-            url: "orderdeleteaddress",
-            data: { user_id: "<%=user.getUser_id() %>",
-         		   postcode : $("#postcode"+n+"").text(),
-         		   basicaddr : $("#basicaddr"+n+"").text(),
-         		   detailaddr : $("#detailaddr"+n+"").text(),
-        		   addressno : $("#addressno"+n+"").text()
-            },
-            success: function (data) {
-         	  window.location.reload();
-                }
-            });
-    	 	
+    	if(n==0){
+    		alert("회원정보에 등록된 주소는 삭제할 수 없습니다.")
+    	} else {
+    		console.log($("#postcode"+n+"").text());
+        	$.ajax({ // JQuery 를 통한 ajax 호출 방식 사용
+                type: "get",
+                url: "orderdeleteaddress",
+                data: { user_id: "<%=user.getUser_id()%>",
+             		   postcode : $("#postcode"+n+"").text(),
+             		   basicaddr : $("#basicaddr"+n+"").text(),
+             		   detailaddr : $("#detailaddr"+n+"").text(),
+            		   addressno : $("#addressno"+n+"").text()
+                },
+                success: function (data) {
+             	  window.location.reload();
+                    }
+                });
+    	}
+    	
     };
     	 
     

@@ -63,6 +63,9 @@ public class OrderPaymentServlet extends HttpServlet {
 		int order_payment = Integer.parseInt(request.getParameter("order_payment"));
 		int order_method = Integer.parseInt(request.getParameter("order_method"));
 		int add_mileage = Integer.parseInt(request.getParameter("add_mileage"));
+		String receiver_name = request.getParameter("receiver_name");
+		String phone_no = request.getParameter("phone_no");
+		
 		
 		String pay_state ="";
 		if(order_method == 0 ) {
@@ -72,7 +75,7 @@ public class OrderPaymentServlet extends HttpServlet {
 		}
 		//System.out.println("orderpayment진입"+order_total);
 		int result = -1;
-		result = new OrderService().insertOrderinfo(user_id, address_no,order_memo,order_total,order_cost,point_discount,coupon_discount,order_payment,order_method,pay_state, add_mileage );
+		result = new OrderService().insertOrderinfo(user_id, address_no,order_memo,order_total,order_cost,point_discount,coupon_discount,order_payment,order_method,pay_state, add_mileage,receiver_name,phone_no);
 		
 		
 		PrintWriter out = response.getWriter();

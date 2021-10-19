@@ -212,6 +212,14 @@
                 console.log(userinfo);
                 $("#uname").text(userinfo.user_name);
                 $("#uphone").text(userinfo.phone.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, "$1-$2-$3"));
+				var totalphone = userinfo.phone;
+				var phone1 = totalphone.substring(0,3);
+				var phone2 = totalphone.substring(3,7);
+				var phone3 = totalphone.substring(7,11);
+				$("#phone_no1").val(phone1);
+				$("#phone_no2").val(phone2);
+				$("#phone_no3").val(phone3);
+
                 $("#availmile").val(userinfo.mileage);
  				$("#insertmile").on("propertychange change keyup paste input", function () {
                 	
@@ -270,7 +278,6 @@ var fixaddrno = "";
                 */
             }
         });
-        
         
     }); // ready
     function fixedaddr(){
@@ -503,7 +510,7 @@ var fixaddrno = "";
             </tr>
         </table>
 	<br>
-        <span id="totalspan">▸ 총 결제 예상 금액 : <input type="text" id="producttotal" readonly> 원</span>
+        <span id="totalspan">▸ 총 결제 예상 금액 : <input type="text" id="producttotal" readonly>원</span>
     </div>  
     <br>
      <div class="orderform">
@@ -531,6 +538,14 @@ var fixaddrno = "";
                     <!-- <select id="selectaddress" onchange="chageaddrSelect()">
         <option>배송지 목록에서 선택</option> </select> -->
  새 주소 입력 <input type="radio" name="addrtype" id="newaddr" onclick="clearaddr()"></td>
+                </tr>
+                <tr>
+                    <th>받는 이</th>
+                    <td><input type="text" id="receiver_name" value="<%=user.getUser_name() %>"></td>
+                </tr>
+                <tr>
+                    <th>전화번호</th>
+                    <td><input type="text" class="phone_no" id="phone_no1" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"> - <input type="text" class="phone_no" id="phone_no2" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"> - <input type="text" class="phone_no" id="phone_no3" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"></td>
                 </tr>
                 <tr>
                     <th rowspan="2">주소<br><br><br>  </th>
@@ -577,22 +592,22 @@ var fixaddrno = "";
 
 <!--  modal box-->
     <div id="modal_01" class="modal">
-        <div class="modal-content">
+        <div class="modal-content" id="cardmodaldiv">
             <p class="close" align="right">&#10006;</p>
             <p>카드 결제</p>
                 카드번호 입력 <br>
                 <input type="text" size="3"> - <input type="text" size="3"> - <input type="text" size="3"> - <input type="text" size="3">
-                <button class="close" id="ordersubmit">완료</button>
+                <button class="close" name="ordersubmit">완료</button>
 
         </div>
     </div>
     <div id="modal_02" class="modal">
-        <div class="modal-content">
+        <div class="modal-content" id="depomodaldiv">
             <p class="close" align="right">&#10006;</p>
             <p>무통장입금</p>
                아래 계좌로 입금해주시기 바랍니다. <br>
                 <input type="text" size="3"> - <input type="text" size="3"> - <input type="text" size="3"> - <input type="text" size="3">
-                <button class="close" id="ordersubmit">완료</button>
+                <button class="close" name="ordersubmit">완료</button>
 
         </div>
     </div>
@@ -626,13 +641,20 @@ var fixaddrno = "";
 
     <footer></footer>
     <script>
-        $("#cardmodalbtn").click(function(){
-        	$("#paymethodno").val(0);
-            $("#modal_01").show();
-        });
-        $("#depomodalbtn").click(function(){
-        	$("#paymethodno").val(1);
-            $("#modal_02").show();
+        $("#submitinfo").click(function(){
+        	//카드결제
+        	if($("input[id=cardmodalbtn]:radio").is(":checked")) {
+        		$("#paymethodno").val(0);
+                $("#modal_01").show();
+        		
+        	} else if($("input[id=depomodalbtn]:radio").is(":checked")){
+        		//무통장입금
+            	$("#paymethodno").val(1);
+                $("#modal_02").show();
+        	} else{
+        		alert("결제 수단을 선택해 주세요.");
+        	}
+        	
         });
 
         $(".close").click(function(){
@@ -670,8 +692,8 @@ var fixaddrno = "";
     </script>
     
     <script>
-    $("#ordersubmit").click(function(){
-    	
+    $("button[name=ordersubmit]").click(function(){
+    	 
            	 console.log("정보넘기기");  
            	 console.log($(".existaddr").is(":checked"));  
            	 
@@ -693,11 +715,14 @@ var fixaddrno = "";
                 	 	coupon_discount : minusComma($("#coudiscount").val())+"",
                 	 	order_payment : minusComma($("#finalpay").val()),
                 	 	order_method : $("#paymethodno").val(),
-                	 	add_mileage : 0.05 * minusComma($("#totalprice").val())
+                	 	add_mileage : 0.05 * minusComma($("#totalprice").val()),
+                		receiver_name : $("#receiver_name").val(),
+                 	 	phone_no : $("#phone_no1").val() + $("#phone_no2").val() + $("#phone_no3").val()
                 	 	
                  },
                  dataType: "json", // 전달받을 객체는 JSON 이다.
                  success: function (data) {
+                	 alert($("#phone_no1").val() + $("#phone_no2").val() + $("#phone_no3").val());
                 	 alert("주문내역 기록 성공\n" + data);
                 	 //TODO 마이페이지로 넘어가기
                  },
@@ -734,7 +759,7 @@ var fixaddrno = "";
                       async: false,
                    // 주문내역 만들기 10.12 내용추가
                       data: { user_id: "<%=user.getUser_id() %>",
-                     	 	 address_no : $("#addressno").val(), //String으로 넘어간거 주의
+                     	 	address_no : $("#addressno").val(), //String으로 넘어간거 주의
                      	 	order_memo : $("#ordermemo").val()+"",
                      	 	order_total : minusComma($("#totalprice").val()),
                      	 	order_cost : $("#shippingpay").val()+"",
@@ -742,12 +767,15 @@ var fixaddrno = "";
                      	 	coupon_discount : minusComma($("#coudiscount").val())+"",
                      	 	order_payment : minusComma($("#finalpay").val()),
                      	 	order_method : $("#paymethodno").val(),
-                     	 	add_mileage : 0.05 * minusComma($("#totalprice").val())
+                     	 	add_mileage : 0.05 * minusComma($("#totalprice").val()),
+                     	 	receiver_name : $("#receiver_name").val(),
+                     	 	phone_no : $("#phone_no1").val() + $("#phone_no2").val() + $("#phone_no3").val()
                      	 	
                       },
                       dataType: "json", // 전달받을 객체는 JSON 이다.
                       success: function (data) {
-                     	 alert("주문내역 기록 성공\n" + data);
+                    	  alert($("#phone_no1").val() + $("#phone_no2").val() + $("#phone_no3").val());
+                    	  alert("주문내역 기록 성공\n" + data);
                      	 //TODO 마이페이지로 넘어가기
                       },
                       error : function(request,status,error) {
@@ -849,6 +877,7 @@ var fixaddrno = "";
                 dataType: "json", // 전달받을 객체는 JSON 이다.
                 success: function (data) {
                	 alert("주문상세내역 기록 성공" + data);
+               	window.location.href = "/wooRiGym/mypage";
                 },
                 error : function(request,status,error) {
                 alert("code:"+request.status+"\n"+"message:"+request.responseText+
@@ -856,7 +885,8 @@ var fixaddrno = "";
                 }
             });
            	
-           }); 
+           });
+
     </script>
 </body>
 
