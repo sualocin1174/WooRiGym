@@ -219,12 +219,9 @@
         margin: 25px 10px;
         transition-duration: 0.3s;
         cursor: pointer;
-        }
-
-        .button{
-            background-color: white;
-            color: black;
-            border: 2px solid #e7e7e7;
+        background-color: white;
+        color: black;
+        border: 2px solid #e7e7e7;
         }
 
         .button:hover {

@@ -14,7 +14,7 @@ public class OrderDetailTable {
 	private int buy_quantity;
 	
 	// 10/18 추가: 주문상세보기 화면에 필요한 내용(product, address테이블과 조인)
-//	SELECT oinfo.order_no,order_total,order_cost, to_char(order_date, 'yyyy-mm-dd hh:mm') order_date,order_state, 
+//	SELECT oinfo.order_no,order_total,order_cost, to_char(order_date, 'yyyy-mm-dd hh:mm') order_date,pay_state,order_state, 
 //    odetail.product_no, buy_quantity
 //		,  product.product_name, product.PRODUCT_INFO_URL,
 //       coupon_discount, add_mileage, point_discount, (coupon_discount+point_discount) discount_all, (order_total-(coupon_discount+point_discount)+order_cost) total_pay
