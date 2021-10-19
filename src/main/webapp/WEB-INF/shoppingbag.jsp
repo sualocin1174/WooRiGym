@@ -40,7 +40,6 @@
 	        display: inline-block;
 	        padding: 5px;
 	    }
-	  
 	    /* 로그인 후: OOO님 | 로그아웃 | 마이페이지 | 장바구니 | 최근본상품 */
 	    #main_tnb2 li::after {
 	        padding-left: 10px;
@@ -96,28 +95,40 @@
 
 	<div id="" style="display: none"></div>
 	<h2>장바구니</h2>
-	[[[${cartTableVolist}]]
 	<form id="form1" name="form1" method="post">
-	    <table border="1" width="400px">
-	    	<c:forEach var="cartlist" items="${cartTableVolist}">
+	    <table border="1" width="100%">
+	    	<%-- <c:forEach var="cartlist" items="${cartTableVolist}"> --%> <!-- 2021.10.15 1차 내용삭제 -->
+	    	<!-- 2021.10.15 2차 내용추가 시작 -->
 		        <tr>
-		        	<th><input type ="checkbox" name="mainCB" id="mainCB"> 체크박스</th> <!-- 2021.10.13 1차 내용수정 id값 추가 -->
-		            <th>상품명/옵션</th>
-		            <th>수량</th>
-		            <th>상품금액</th>
-		            <th>적립금</th>
-		            <th>배송비</th>
+		        	<th style="display: none">장바구니번호</th>
+		        	<th width="10%"><input type ="checkbox" name="mainCB" id="mainCB"> 체크박스</th> <!-- 2021.10.13 1차 내용수정 id값 추가 -->
+		            <th width="50%">상품명/옵션</th>
+		            <th width="5%">수량</th>
+		            <th width="10%">상품금액</th>
+		            <th width="10%">적립금</th>
+		            <th width="15%">배송비</th>
 		        </tr>
-		        <tr align="center">
-		        	<td><input type ="checkbox" name="subCB" id="subCB"></td> <!-- 2021.10.13 1차 내용수정 id값 추가 -->
-		            <td>${cartlist.productName}<br>${cartlist.productOption}</td>
+		        <tr id="test">
+		        	<!-- <td><input type ="checkbox" name="subCB" id="subCB"></td> --> <!-- 2021.10.13 1차 내용수정 id값 추가 -->
+		        	
+		        	<td id="test1" style="display: none"></td>
+		        	<td id="test2"></td>
+		        	<td id="test3"></td>
+		        	<td id="test4"></td>
+		        	<td id="test5"></td>
+		        	<td id="test6"></td>
+		        	<td id="test7"></td>
+		        	<!-- 2021.10.15 2차 내용추가 완료 -->
+		            <!-- 2021.10.15 1차 내용삭제 시작 -->
+		            <%-- <td>${cartlist.productName}<br>${cartlist.productOption}</td>
 		            <td>${cartlist.cartQuantity}</td>
 		            <!-- <fmt:formatNumber value="" pattern="#,###,###"/> -->
 		            <td>${cartlist.price}</td>
 		            <td>${cartlist.price*0.05}</td>
-		            <td>배송비</td>
+		            <td>배송비</td> --%>
+		            <!-- 2021.10.15 1차 내용삭제 종료 -->
 		        </tr>
-	        </c:forEach>
+	        <%-- </c:forEach> --%>  <!-- 2021.10.15 1차 내용삭제 -->
 	    </table>
 	    <%-- <c:if test=${${userId != null}}></c:if> --%>
 	   <%--  <c:if test=" ${startPage} > 1 " >
@@ -174,8 +185,35 @@
 					pagenum : 1,
 				},
 				dataType : "json", // 전달받을 객체는 JSON 이다.
+				// 2021.10.15 2차 내용추가 시작
 				success: function(data){
 					console.log(data);
+					// let str = JSON.stringify(data.cartTableVolist); // <> parse()
+					// alert(str);
+					// var key = Object.keys(data["cartTableVolist"][0]);
+					// alert(key);
+					$.each(data.cartTableVolist, function(i, cartlist) { // 데이터 = cartlist에 담음
+						$("#test1").append(cartlist.cartNo+" ");
+						$("#test2").append("<input type ='checkbox' name='subCB' id='subCB'>");
+						$("#test3").append(cartlist.productName+"<br>"+cartlist.productOption + " ");
+						$("#test4").append(cartlist.cartQuantity+"개");
+						$("#test5").append(cartlist.price+"원");
+						$("#test6").append(cartlist.price*0.05+"원");
+						/* $("#test").append("<td style='display: none'>"+cartlist.cartNo+"</td>");
+						$("#test").append("<input type ='checkbox' name='subCB' id='subCB'>");
+						$("#test").append("<td>"+cartlist.productName+"<br>"+cartlist.productOption+"</td>");
+						$("#test").append("<td>"+cartlist.cartQuantity+"개</td>");
+						$("#test").append("<td>"+cartlist.price+"원/<td>");
+						$("#test").append("<td>"+cartlist.price*0.05+"원</td>"); */
+						// console.log(cartlist);
+					});
+					// var key = Object.keys(data["orderCost"][0]);
+					// alert(key);
+					$.each(data.orderCost, function(i, ordercost) {
+						$("#test7").append(ordercost.ordercost);
+						// $("#test").append("<td>"+ordercost.ordercost+"</td>");
+						// 2021.10.15 2차 내용추가 완료
+					});
 				},
 				error : function(request,status,error) {
 					alert("code:"+request.status+"\n"+"message:"+request.responseText+

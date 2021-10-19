@@ -19,24 +19,26 @@ public class CartTable {
 	private String productOption;
 	private int price;
 	// 2021.10.13 1차 내용추가완료
+	private String ordercost; // 2021.10.15 2차 내용추가 시작 및 완료
 
 	public static void main(String[] args) {
 	}
 
-	// 2021.10.13 1차 내용수정시작
+	// 2021.10.15 2차 내용수정시작
 	@Override
 	public String toString() {
 		return "CartTable [cartNo=" + cartNo + ", userId=" + userId + ", productNo=" + productNo + ", cartQuantity="
 				+ cartQuantity + ", checked=" + checked + ", productName=" + productName + ", productOption="
-				+ productOption + ", price=" + price + "]";
-	}
-	// 2021.10.13 1차 내용수정완료
+				+ productOption + ", price=" + price + ", ordercost=" + ordercost + "]";
+	}	
+	// 2021.10.15 2차 내용수정완료
 
 
 
 	public int getCartNo() {
 		return cartNo;
 	}
+
 
 	public void setCartNo(int cartNo) {
 		this.cartNo = cartNo;
@@ -99,4 +101,14 @@ public class CartTable {
 		this.price = price;
 	}
 	// 2021.10.13 1차 내용추가완료
+
+	// 2021.10.15 2차 내용추가시작
+	public String getOrdercost() {
+		return ordercost;
+	}
+
+	public void setOrdercost(String ordercost) {
+		this.ordercost = ordercost;
+	}
+	// 2021.10.15 2차 내용추가완료
 }

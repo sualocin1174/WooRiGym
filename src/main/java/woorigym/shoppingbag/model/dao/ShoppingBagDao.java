@@ -40,6 +40,7 @@ public class ShoppingBagDao {
 				volist = new ArrayList<CartTable>();
 				do {
 					CartTable vo = new CartTable();
+					vo.setCartNo(rset.getInt("cart_no")); // 2021.10.15 2차 내용추가 시작 및 완료
 					vo.setChecked(rset.getInt("checked"));
 					vo.setProductName(rset.getString("product_name"));
 					vo.setProductOption(rset.getString("product_option"));
@@ -210,9 +211,9 @@ public class ShoppingBagDao {
 		ArrayList<CartTable> volist = null;
 		String sql = "SELECT c.checked, c.user_id, p.price,"
 				+ "       CASE"
-				+ "          WHEN p.price >= 100000  THEN '무료배송'"
-				+ "          WHEN p.price < 100000  THEN '배송비 2,500원'"
-				+ "       END as 배송비" + " from cart c join product p on c.product_no = p.product_no"
+				+ "          WHEN p.price >= 100000  THEN '개별구매시 무료배송'"
+				+ "          WHEN p.price < 100000  THEN '개별구매시 배송비 2,500원'"
+				+ "       END as ordercost" + " from cart c join product p on c.product_no = p.product_no"
 				+ " where user_id = ? ";
 		System.out.println(sql);
 
@@ -229,11 +230,14 @@ public class ShoppingBagDao {
 				volist = new ArrayList<CartTable>();
 				do {
 					CartTable vo = new CartTable();
-					vo.setChecked(rset.getInt("checked"));
-					vo.setProductName(rset.getString("product_name"));
-					vo.setProductOption(rset.getString("product_option"));
-					vo.setCartQuantity(rset.getInt("cart_quantity"));
-					vo.setPrice(rset.getInt("price"));
+					vo.setOrdercost(rset.getNString("ordercost"));
+					// 2021.10.15 2차 내용삭제 시작
+//					vo.setChecked(rset.getInt("checked"));
+//					vo.setProductName(rset.getString("product_name"));
+//					vo.setProductOption(rset.getString("product_option"));
+//					vo.setCartQuantity(rset.getInt("cart_quantity"));
+//					vo.setPrice(rset.getInt("price"));
+					// 2021.10.15 2차 내용삭제 완료
 					volist.add(vo);
 					System.out.println("orderCost executeQuery over++ 1");
 				} while (rset.next());

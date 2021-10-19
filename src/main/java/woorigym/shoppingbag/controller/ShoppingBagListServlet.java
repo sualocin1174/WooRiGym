@@ -114,6 +114,7 @@ public class ShoppingBagListServlet extends HttpServlet {
 		ArrayList<CartTable> volist = new ShoppingBagService().ShoppingBagList(userId, startRnum, endRnum);
 		System.out.println("22222@@@@@@@@@@@@@@@===============");
 		System.out.println(volist);
+		ArrayList<CartTable> orderCost = new ShoppingBagService().orderCost(userId); // 2021.10.15 2차 내용추가 시작 및 완
 
 		// Data 전달을 위해서 request에 셋
 //		request.setAttribute("cartTableVolist", volist);
@@ -129,6 +130,7 @@ public class ShoppingBagListServlet extends HttpServlet {
 		map1.put("endPage", endPage);
 		map1.put("pageCount", pageCount);
 		map1.put("userId", userId);
+		map1.put("orderCost", orderCost); // 2021.10.15 2차 내용추가 시작 및 완
 
 		Gson gson = new GsonBuilder().create();
 		String jsonListVo = gson.toJson(map1);
