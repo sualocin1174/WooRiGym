@@ -1,16 +1,21 @@
 package woorigym.product.controller;
 
-import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
+import org.apache.commons.net.ftp.FTPReply;
 
 import woorigym.product.model.service.ProductService;
 import woorigym.product.model.vo.ProductTable;
@@ -91,9 +96,18 @@ public class ProductListServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			}
+//			 "https://"+api_key+":"+api_secret+"@api.cloudinary.com/v1_1/"+cloud_name+"/resources/image/upload?prefix=sample&max_results=500&next_cursor=1"
+//			 https://api.cloudinary.com/v1_1/<your_gitcloud_name>/folders/<subfolder>
+//			 https://api.cloudinary.com/v1_1/my_cloud_name/folders?api_key=1234&timestamp=1529697857&signature=4b569a0f8322b3a285296b3b8c2908c2a1cb1937
+//			 https://api.cloudinary.com/v1_1/"+cloud_name+"/folders?api_key="+api_key+"&signature=4b569a0f8322b3a285296b3b8c2908c2a1cb1937
+//			https://res.cloudinary.com/dgyk0qhqc/image/upload/v1634640976/woorigym/CARDIO-RN-0001/65%EB%B2%88_tv2d9u.jpg
+//예시..참고
+//			cloudinary.uploader().upload(new File("예시..https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg"),
+//					  ObjectUtils.asMap("public_id", "olympic_flag"));
 		request.setAttribute("productvolist", volist);
 		String ViewPage = "/WEB-INF/productlist.jsp";
 		request.getRequestDispatcher(ViewPage).forward(request, response);
+	}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
