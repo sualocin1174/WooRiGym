@@ -262,7 +262,7 @@ public class ShoppingBagDao {
 		System.out.println("cartList 1");
 		System.out.println(userId);
 		ArrayList<CartTable> volist = null;
-		String sql = "c.checked, p.product_name, p.product_option, c.cart_quantity, p.price, p.price *0.01,"
+		String sql = "select c.cart_no, c.checked, p.product_name, p.product_option, c.cart_quantity, p.price, p.price *0.01,"
 				+ "       CASE"
 				+ "          WHEN p.price >= 100000  THEN '개별구매시 무료배송'"
 				+ "          WHEN p.price < 100000  THEN '개별구매시 배송비 2,500원'"
@@ -284,11 +284,13 @@ public class ShoppingBagDao {
 				volist = new ArrayList<CartTable>();
 				do {
 					CartTable vo = new CartTable();
+					vo.setCartNo(rset.getInt("cart_no"));
 					vo.setChecked(rset.getInt("checked"));
 					vo.setProductName(rset.getString("product_name"));
 					vo.setProductOption(rset.getString("product_option"));
 					vo.setCartQuantity(rset.getInt("cart_quantity"));
 					vo.setPrice(rset.getInt("price"));
+					vo.setOrdercost(rset.getNString("ordercost"));
 					volist.add(vo);
 					System.out.println("cartList executeQuery over++ 1");
 				} while (rset.next());

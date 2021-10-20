@@ -139,7 +139,11 @@
 	    <!-- </table> -->
 	    <!-- 2021.10.19 1차 내용삭제 완료 -->
 	    <%-- <c:if test=${${userId != null}}></c:if> --%>
-	   <%--  <c:if test=" ${startPage} > 1 " >
+	    <%-- <script>
+	   	console.log("시작 페이지: "+<%=request.getAttribute("startPage") %>);
+    	console.log("마지막 페이지"+<%=request.getAttribute("endPage") %>);
+    	</script>
+	   <c:if test=" ${startPage} > 1 " >
 			이전
 		</c:if>
 		<c:forEach begin="${startPage}"  end="${endPage}" step="1" var="i">
@@ -151,7 +155,7 @@
 		<c:if test=" ${endPage} < ${pageCount}" >
 			다음
 		</c:if> --%>
-	    <table>
+	    <!-- <table>
 	        <tr>
 	            <td align="right">
 	                장바구니 금액 합계 :
@@ -160,11 +164,11 @@
 	                총합계 : 
 	            </td>
 	        </tr>
-	    </table>                
+	    </table>   -->              
 	    <button type="button" id="btnSelectBuy">선택구매</button>
 	    <button type="button" id="btnSelectDelete">선택삭제</button>
 	    <button type="button" id="btnAllBuy">전체구매</button>
-	    <button type="button" id="btnAllDelete">전체삭제</button>
+	    <button type="button" id="btnAllDelete" onclick="ajaxF1()">전체삭제</button>
 	</form>
 	<script type="text/javascript">
     	$(document).ready(ajaxf1);
@@ -220,6 +224,7 @@
 			html += "<tr>";
 			html += "<th style='display: none'>장바구니번호</th>";
 			html += "<th width='10%'><input type ='checkbox' name='mainCB' id='mainCB'> 체크박스</th>";
+			// html += "<th style='display: none' width='10%'><input type ='hidden' name='mainCB' id='mainCB_hidden'> 체크박스</th>";
 			html += "<th width='50%'>상품명/옵션</th>";
 			html += "<th width='5%'>수량</th>";
 			html += "<th width='10%'>상품금액</th>";
@@ -230,7 +235,8 @@
 			$.each(data.cartTableVolist, function(i, cartlist){
 				html += "<tr>";
 				html += "<td style='display: none'>" + cartlist.cartNo + "</td>";
-				html += "<td><input type ='checkbox' name='subCB' id='subCB'></td>";
+				html += "<td><input type ='checkbox' name='subCB' value="+cartlist.cartNo+" id='subCB'>"+cartlist.cartNo+"</td>";
+				// html += "<td style='display: none'><input type ='hidden' name='subCB' value='0' id='subCB_hidden'></td>";
 				html += "<td>" + cartlist.productName+"<br>"+cartlist.productOption + "</td>";
 				html += "<td>" + cartlist.cartQuantity + "개</td>";
 				html += "<td>" + cartlist.price + "원</td>";
@@ -239,6 +245,15 @@
 				html += "</tr>";
 			});
 			html += "</table>";
+			var costhtml = "<table>"
+			$.each(data.cartTableVolist, function(i, cartlist){
+				costhtml += "<tr>"
+				costhtml += "<td align='right'>"
+				costhtml += "장바구니 금액 합계 : <br>"
+				costhtml += "배송료 : <br>"
+				costhtml += "총합계 : "
+				costhtml += "</td></tr></table>" 
+			});
 	    	$("#sblist").empty(); 
 			$("#sblist").append(html);
 	
@@ -280,12 +295,13 @@
     	/* 장바구니 전체삭제 */
     </script>
     	<script type="text/javascript">
+    	// 2021.10.20 1차 내용수정 시작
     	$("#btnAllDelete").click( function () {
-    		alert("클릭 성공");
+  			alert("전체삭제완료");
 			$.ajax({
 				type:"post",
 				url:"<%=request.getContextPath()%>/sbdelete.ajax",
-				data : {user_id: "<%=user.getUser_id() %>"
+				data : {
 				},
 				dataType : "json", // 전달받을 객체는 JSON 이다.
 				success: function(data){
@@ -295,9 +311,11 @@
 				error : function(request,status,error) {
 					alert("code:"+request.status+"\n"+"message:"+request.responseText+
 					"\n"+"error:"+error);
-					}
-				});
-			}
+				}
+			});
+			location.reload(); // 페이지 새로고침
+    	});
+    	// 2021.10.20 1차 내용수정 완료
 	// 2021.10.19 1차 내용추가 및 수정 시작
     </script>
 </body>
