@@ -32,7 +32,6 @@ public class OrderListServlet extends HttpServlet {
 		if(userTableSessionAttr == null) {
 			out.append("로그인 상태가 아닙니다!\n로그인 해주세요!");
 			String viewPage = "/WEB-INF/loginAlert.jsp";
-			request.getRequestDispatcher(viewPage).forward(request, response);
 			out.flush();
 			out.close();
 			return;

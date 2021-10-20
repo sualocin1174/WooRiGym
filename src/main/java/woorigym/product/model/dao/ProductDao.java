@@ -15,6 +15,43 @@ public class ProductDao {
 		// TODO Auto-generated constructor stub
 	}
 
+	public ArrayList<ProductTable> readProductList(Connection conn){
+		ArrayList<ProductTable> productlist = null;
+		String sql = "select * from product";
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			System.out.println("product-1");
+			if(rset.next()) {
+				productlist = new ArrayList<ProductTable>();
+				System.out.println("product-2");
+				do {
+					ProductTable vo = new ProductTable();
+					vo.setProductNo(rset.getString("PRODUCT_NO"));
+					vo.setProductName(rset.getString("PRODUCT_NAME"));
+					vo.setParentCategory(rset.getString("PARENT_CATEGORY"));
+					vo.setChildCategory(rset.getString("CHILD_CATEGORY"));
+					vo.setQuantity(rset.getInt("QUANTITY"));
+					vo.setPrice(rset.getInt("PRICE"));
+					vo.setProductInfoUrl(rset.getString("PRODUCT_INFO_URL"));
+					vo.setProductOption(rset.getString("PRODUCT_OPTION"));
+					productlist.add(vo);
+					System.out.println("product-3");
+				} while(rset.next());
+			}
+		} catch(Exception e) {
+			System.out.println("product-4");
+			e.printStackTrace();
+		} finally {
+				jdbcTemplate.close(rset);
+				jdbcTemplate.close(pstmt);
+			}
+		System.out.println("product 리턴은" + productlist);
+		return productlist;
+	}
+
 	public ArrayList<ProductTable> readProductList(Connection conn, String productNo){
 		ArrayList<ProductTable> productlist = null;
 		String sql = "select * from product where product_No=?";
@@ -52,7 +89,6 @@ public class ProductDao {
 		System.out.println("product 리턴은" + productlist);
 		return productlist;
 	}
-	
 	public int addProduct(Connection conn, ProductTable productVo, ArrayList<ProductOptionTable> productOption, ArrayList<ProductImgTable> productImg) {
 		int result = -1;
 		PreparedStatement pstmt = null;

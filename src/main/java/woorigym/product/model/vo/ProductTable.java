@@ -1,5 +1,7 @@
 package woorigym.product.model.vo;
 
+import java.util.List;
+
 //CREATE TABLE "PRODUCT" (
 //		"PRODUCT_NO"	VARCHAR2(30)		NOT NULL,
 //		"PRODUCT_NAME"	VARCHAR2(300)		NOT NULL,
@@ -27,6 +29,10 @@ public class ProductTable {
 	private int maxPrice;
 	private String selectRank; // 2021.10.11 1차 내용추가
 	// 2021.10.07 추가완료
+	
+	
+	// TODO 주석
+	private List<String> imagesFilePath;
 	
 	// 2021.10.13 추가
 	public ProductTable() {
@@ -190,6 +196,14 @@ public class ProductTable {
 		this.selectRank = selectRank;
 	}
 	// 2021.10.11 1차 추가완료
+
+	public List<String> getImagesFilePath() {
+		return imagesFilePath;
+	}
+
+	public void setImagesFilePath(List<String> imagesFilePath) {
+		this.imagesFilePath = imagesFilePath;
+	}
 	
 	
 

@@ -58,7 +58,7 @@ public class OrderListDao {
 					vo.setOrder_total(rset.getInt("order_total")); //가격(할인전)
 					vo.setOrder_cost(rset.getInt("order_cost")); //배송비
 					vo.setOrder_date(rset.getString("order_date")); //주문일자
-					vo.setOrder_state(rset.getString("pay_state")); //결제상태
+					vo.setPay_state(rset.getString("pay_state")); //결제상태
 					vo.setOrder_state(rset.getString("order_state")); //배송상태
 					vo.setProduct_no(rset.getString("product_no")); //상품번호
 					vo.setBuy_quantity(rset.getInt("buy_quantity")); //구매수량

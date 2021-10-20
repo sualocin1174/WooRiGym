@@ -28,19 +28,25 @@
             width: 900px;
             padding: 30px 0 30px 0;
             position: relative;
-            bottom: 170px;
+            bottom: 200px;
             left: 300px;
         }
-        #side-menu>ul>li{
+        #side-menu>ul>li {
             padding: 5px;
         }
         /* 마이페이지 폰트 크게 */
         #side-menu>ul>li:first-child{
             font-size: 25px;
         }
-
+		.coupon, #order_info {
+			width: 800px;
+			text-align: center;
+        	margin: 15px 0 15px 0;
+        	border-top: 1.5px solid black;
+          	border-bottom: 1px solid #BDBDBD;
+		}
         .coupon td {
-            padding: 0 100px 5px 0;
+            padding: 0 10px 5px 0;
         }
          #order_info tr:first-child>td {
             font-size: 50px;
@@ -48,7 +54,7 @@
         }
         #order_info tr:nth-child(2)>td{
             text-align: center;
-            padding: 0 20px 0 20px;
+            padding: 0 20px 20px 20px;
          }
          /* 취소/교환/반품 */
          #delivery_info > li{
@@ -58,9 +64,17 @@
             border: 1px solid #BDBDBD;
             padding: 10px 50px;
          }
+         #delivery_info {
+         width: 800px;
+         text-align: center;
+         }
+         /* 최근 본 상품*/
           .recent_product{
              position: relative;
-             top: 40px
+             top: 40px;
+         }
+         h3.recent_product, #uname {
+         margin: 0 0 15px 0;
          }
          .recent_product > img {
              width: 200px;
@@ -77,13 +91,13 @@
  	
 <section>
   <c:if test="${loginSS != null}">
-    <h1>${loginSS.user_name}님 즐거운 쇼핑 되세요!</h1>
-    <a href="#">회원정보 수정 ></a><hr>
+    <h1 id="uname">${loginSS.user_name}님 즐거운 쇼핑 되세요!</h1>
+    <a href="#">회원정보 수정 ></a>
   </c:if>
 <table class="coupon">
     <tr>
-        <td colspan="2"><a href="#">쿠폰</a></td>
-        <td colspan="2"><a href="#">적립금</a></td>
+        <td colspan="3"><a href="#">쿠폰</a></td>
+        <td colspan="3"><a href="#">적립금</a></td>
     </tr>
     <tr>
         <td>보유 쿠폰</td>
@@ -102,8 +116,7 @@
         <td>P</td>
     </tr>
 </table>
-<hr>
-<h4>주문/배송</h4>
+<h3>주문/배송</h3>
 <table id="order_info">
     <tr>
         <!-- 주문/배송조회에서 갯수 체크해서 불러오기 -->
@@ -139,8 +152,9 @@
     건
 </li>
 </ul>
-<h4 class="recent_product">최근 본 상품</h4>
+<h3 class="recent_product">최근 본 상품</h3>
 <div class="recent_product">
+	<!-- TODO: 이미지 경로 수정 -->
     <img src="./images/01번 메인 841,500.jpg">
     <img src="./images/1번 메인.jpg">
     <img src="./images/01번 메인_2.jpg">
