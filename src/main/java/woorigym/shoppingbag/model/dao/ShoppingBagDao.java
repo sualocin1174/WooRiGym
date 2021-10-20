@@ -18,7 +18,11 @@ public class ShoppingBagDao {
 		ArrayList<CartTable> volist = null;
 		String sql = "select *"
 				+ " from (select rownum r, t1.*"
-				+ "      from(select *"
+				+ "      from(select c.cart_no, c.checked, p.product_name, p.product_option, c.cart_quantity, p.price, p.price *0.01,"
+				+ "       		 CASE"
+				+ "         		 WHEN p.price >= 100000  THEN '개별구매시 무료배송'"
+				+ "       		   WHEN p.price < 100000  THEN '개별구매시 배송비 2,500원'"
+				+ "      		 END as ordercost"
 				+ "           from cart c join product p on c.product_no = p.product_no"
 				+ "           where user_id = ?"
 				+ "           )"
@@ -46,6 +50,7 @@ public class ShoppingBagDao {
 					vo.setProductOption(rset.getString("product_option"));
 					vo.setCartQuantity(rset.getInt("cart_quantity"));
 					vo.setPrice(rset.getInt("price"));
+					vo.setOrdercost(rset.getNString("ordercost"));
 					volist.add(vo);			
 					System.out.println("ShoppingBagList executeQuery over 2");
 				} while (rset.next());
@@ -257,8 +262,13 @@ public class ShoppingBagDao {
 		System.out.println("cartList 1");
 		System.out.println(userId);
 		ArrayList<CartTable> volist = null;
-		String sql = "select c.checked, p.product_name, p.product_option, c.cart_quantity, p.price, p.price *0.05"
-				+ " from cart c join product p on c.product_no = p.product_no " + " where user_id = ? ";
+		String sql = "c.checked, p.product_name, p.product_option, c.cart_quantity, p.price, p.price *0.01,"
+				+ "       CASE"
+				+ "          WHEN p.price >= 100000  THEN '개별구매시 무료배송'"
+				+ "          WHEN p.price < 100000  THEN '개별구매시 배송비 2,500원'"
+				+ "       END as ordercost"
+				+ " from cart c join product p on c.product_no = p.product_no"
+				+ " where user_id = ? ";
 		System.out.println(sql);
 
 		PreparedStatement pstmt = null;
