@@ -42,7 +42,10 @@ public class UserJoinServlet extends HttpServlet {
 		String user_pwd = request.getParameter("user_pwd");
 		String user_pwdtest = request.getParameter("user_pwdtest");
 		String user_name = request.getParameter("user_name");
-		String phone = request.getParameter("phone");
+		String phone01 = request.getParameter("phone01");
+		String phone02 = request.getParameter("phone02");
+		String phone03 = request.getParameter("phone03");
+		String phone = phone01 + "-" + phone02 + "-" + phone03;
 		String identity_number = request.getParameter("identity_number");
 		int mileage = 0;
 		String genderStr = request.getParameter("genderStr");
@@ -58,7 +61,7 @@ public class UserJoinServlet extends HttpServlet {
 		int email_yn = Integer.parseInt(email_ynStr);
 		
 		
-		UserService userSvc = new UserService();
+//		UserService userSvc = new UserService();
 		
 		UserTable user = new UserTable();
 		if (user_pwd.equals(user_pwdtest)) {
@@ -73,14 +76,14 @@ public class UserJoinServlet extends HttpServlet {
 			user.setIdentity_number(identity_number);
 			user.setGender(gender);
 		} else {
-
+			
 		}
-		int result = userSvc.userInsert(user);
-		int result_id = userSvc.dupidChk(user_id);
+		int result = new UserService().userInsert(user);
+//		int result_id = userSvc.dupidChk(user_id);
 		
-		if(result_id != 0) {
-			request.getRequestDispatcher("/WEB-INF/userJoin.jsp").forward(request, response);
-		}
+//		if(result_id != 0) {
+//			request.getRequestDispatcher("/WEB-INF/userJoin.jsp").forward(request, response);
+//		}
 		
 		if (result == 1) {
 			response.sendRedirect("login");

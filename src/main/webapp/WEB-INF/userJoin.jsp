@@ -98,35 +98,38 @@ text-align: center;
                             <td id="title">아이디</td>       
                             <td>       
                                 <input type="text" id="user_id" name="user_id" placeholder="아이디" maxlength="20">        
-                                <input type="button" value="중복확인" id="checkId">            
+                                <input type="button" value="중복확인" id="checkId">
+                                <span id="id_check"></span>            
                             </td>        
                         </tr>                                        
         
                         <tr>        
                             <td id="title">비밀번호</td>       
                             <td>       
-                                <input type="password" name= user_pwd placeholder="비밀번호" maxlength="15">        
+                                <input type="password" id = "pw1" name= user_pwd placeholder="비밀번호" maxlength="15">        
                             </td>        
                         </tr>
                                       
                         <tr>       
                             <td id="title">비밀번호 확인</td>      
                             <td>        
-                                <input type="password" name="user_pwdtest" placeholder="비밀번호 확인" maxlength="15">       
+                                <input type="password" id = "pw2" name="user_pwdtest" placeholder="비밀번호 확인" maxlength="15">       
                             </td>       
                         </tr>
                                             
                         <tr>        
                             <td id="title">이름</td>        
                             <td>        
-                                <input type="text" name="user_name" placeholder="이름"  maxlength="40">       
+                                <input type="text" id = "name" name="user_name" placeholder="이름"  maxlength="40">       
                             </td>        
                         </tr>
                                             
                         <tr>       
                             <td id="title">연락처</td>       
                             <td>        
-                                <input type="text" name="phone" placeholder="ex)010-1111-2222" maxlength="40">        
+                                <input type="text" name="phone01" placeholder="010" maxlength="3" size = "3"> -
+                                <input type="text" name="phone02" placeholder="0000" maxlength="4" size = "4"> -
+                                <input type="text" name="phone03" placeholder="0000" maxlength="4" size = "4">       
                             </td>        
                         </tr>
                          
@@ -140,8 +143,8 @@ text-align: center;
                         <tr>        
                             <td id="title">성별</td>       
                             <td>       
-                                <input type="radio" name="genderStr" value= 1 checked>남        
-                                <input type="radio" name="genderStr" value= 0 checked>여       
+                                <input type="radio" name="genderStr" value= 1 >남        
+                                <input type="radio" name="genderStr" value= 0 >여       
                             </td>       
                         </tr>
                                            
@@ -184,26 +187,54 @@ text-align: center;
                         <tr>        
                             <td id="title">이메일 수신동의</td>        
                             <td>       
-                                <input type="radio" name="email_ynStr" value= "0" checked>거부        
-                                <input type="radio" name="email_ynStr" value= "1" checked>동의        
+                                <input type="radio" name="email_ynStr" value= "1" >동의        
+                                <input type="radio" name="email_ynStr" value= "0" >거부        
                             </td>        
                         </tr>                                           
                     </table>        
                     <br> 
             <div id="btnJoin">
-                    <input class="btn" type="submit" value="회원가입">  
+                    <input class="joinbtn" id = "joinbtn" type="submit" value="회원가입">  
                     <input class="btn" type="button" onclick="history.back()" value="취소">
 			</div>
 </form>
 </div>
-<script>
-	$("#checkId").click(function(){
-		console.log("${loginSS}");
-		if($('#user_id').val() == "${loginSS}")
-			alert("이미 사용하고있는 아이디 입니다.");
-		else{
-			alert("사용 가능한 아이디입니다.")
-		}
+
+<script type="text/javascript">
+//아이디 유효성 검사(1 = 중복 / 0 != 중복)
+var idck = "${result}";
+$("#checkId").click(function() {
+	// name = "user_id"
+	var user_id = $('#user_id').val();
+	console.log("받아온 result: "+ idck);
+	console.log(user_id);
+	$.ajax({
+		type: "post",
+		url : "<%=request.getContextPath()%>/DupIdChkServlet" ,
+		data : {user_id : user_id} ,
+		
+		success : function(idck) {
+				console.log("1 = 중복o / 0 = 중복x : "+ idck);							
+				
+				if(idck == 2){
+					$("#id_check").html("아이디를 입력해주세요");
+					$("#id_check").css("color","red");
+				}
+				
+				if (idck == 1) {
+					// 1 : 아이디가 중복되는 문구
+					$("#id_check").html("중복된 아이디입니다.");
+					$("#id_check").css("color","red");
+				} else if(idck == 0){
+					$("#id_check").html("중복확인 완료");
+					$("#id_check").css("color","green");
+				}
+			}, 
+		error:function(request,status,error){
+    			alert("code:"+request.status+"\n"+"message:"+request.responseText+
+    					"\n"+"error:"+error);
+			}
+		});
 	});
 		
 </script>
