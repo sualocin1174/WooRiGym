@@ -31,7 +31,7 @@
 	function ajaxF1(){
 		$.ajax({
 			type:"post",
-			url:"<%=request.getContextPath()%>/pulist.ajax",
+			url:"<%=request.getContextPath()%>/apulist.ajax",
 			data:{
 				notice_no:0,
 				n_title:"",

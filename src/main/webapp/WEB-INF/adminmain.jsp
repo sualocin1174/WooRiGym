@@ -23,7 +23,7 @@
        <!-- /* content */-->
        <style>
             section {
-                width: 1200px;
+                width: 900px;
                 padding: 0 0 30px 0;
                 position: relative;
 		        bottom: 250px;
@@ -130,7 +130,7 @@
      <ul>
          <li>메인페이지</li>
          <li><a href="#">상품관리</a></li>
-         <li><a href="#">팝업공지</a></li>
+         <li><a href="apupage">팝업공지</a></li>
          <li><a href="#">매출관리</a></li>
          <li><a href="#">주문내역 확인</a></li>
          <li><a href="#">배송현황 관리</a></li>
