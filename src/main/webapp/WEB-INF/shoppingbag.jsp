@@ -235,7 +235,7 @@
 			$.each(data.cartTableVolist, function(i, cartlist){
 				html += "<tr>";
 				html += "<td style='display: none'>" + cartlist.cartNo + "</td>";
-				html += "<td><input type ='checkbox' name='subCB' value="+cartlist.cartNo+" id='subCB'>"+cartlist.cartNo+"</td>";
+				html += "<td><input type ='checkbox' name='subCB' value="+cartlist.cartNo+" class='subCB'>"+cartlist.cartNo+"</td>";
 				// html += "<td style='display: none'><input type ='hidden' name='subCB' value='0' id='subCB_hidden'></td>";
 				html += "<td>" + cartlist.productName+"<br>"+cartlist.productOption + "</td>";
 				html += "<td>" + cartlist.cartQuantity + "개</td>";
@@ -246,23 +246,33 @@
 			});
 			html += "</table>";
 			var costhtml = "<table>"
-			$.each(data.cartTableVolist, function(i, cartlist){
-				costhtml += "<tr>"
-				costhtml += "<td align='right'>"
-				costhtml += "장바구니 금액 합계 : <br>"
-				costhtml += "배송료 : <br>"
-				costhtml += "총합계 : "
-				costhtml += "</td></tr></table>" 
-			});
+			//$.each(data.cartTableVolist, function(i, cartlist){
+				costhtml += "<tr align='right'>"
+				costhtml += "<tr><td>장바구니 금액 합계 : </td><td name='bprice' id='bprice'>0원</td></tr>"
+				costhtml += "<tr><td>배송료 : </td><td name='dprice' id='dprice'>테스트</td></tr>"
+				costhtml += "<tr><td>총합계 : </td><td name='totalprice' id='totalprice'>테스트</td></tr>"
+				costhtml += "</tr></table>" 
+			//});
 	    	$("#sblist").empty(); 
 			$("#sblist").append(html);
+			$("#sblist").append(costhtml);
 	
-			function allCheckFunc( obj ) {
-				$("[name=subCB]").prop("checked", $(obj).prop("checked") );
+			$("[class=subCB]").click(oneCheckFunc);
+			
+			$("[name=mainCB]").click(allCheckFunc);
+			
+			function allCheckFunc() {
+				$("[name=subCB]").prop("checked", $(this).prop("checked") );
+				
+				
 			}
 	
 			/* 체크박스 체크시 전체선택 체크 여부 */
 			function oneCheckFunc( obj ) {
+				console.log("oneCheckFunc");
+				console.log(obj);
+				
+				//console.log($(this).parents().children().eq(5).html().replace("원",""));
 				var allObj = $("[name=mainCB]");
 				var objName = $(obj).attr("name");
 		
@@ -278,18 +288,25 @@
 				} else {
 					allObj.prop("checked", false);
 				}
+				
+			//var totalnum = 1 * $("#bprice").append($(this).parents().children().eq(5).html().replace("원","");
+   
+				// console.log("ssss:"+ $("[name=subCB]:checked"));
+				var totalPrice = 0;
+			    $("[name=subCB]:checked").each(function(){
+					// console.log(this);
+					// console.log($(this).parent().next().next().next().text());
+					var priceText = $(this).parent().next().next().next().text();
+					priceText = priceText.substring(0,priceText.length-1);
+					// console.log(priceText);
+					var thisPrice = priceText*1;
+					totalPrice += thisPrice;
+					$("#bprice").html(totalPrice+"원");
+				});
+				
 			}
 		
-			$(function(){
-				$("[name=mainCB]").click(function(){
-					allCheckFunc( this );
-				});
-				$("[name=subCB]").each(function(){
-					$(this).click(function(){
-						oneCheckFunc( $(this) );
-					});
-				});
-			});
+
 
 		}
     	/* 장바구니 전체삭제 */
