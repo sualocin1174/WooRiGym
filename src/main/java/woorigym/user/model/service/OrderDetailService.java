@@ -1,9 +1,10 @@
-package woorigym.user.controller;
+package woorigym.user.model.service;
 
 import static woorigym.common.jdbcTemplate.*;
 
 import java.sql.Connection;
 
+import woorigym.user.model.dao.OrderDetailDao;
 import woorigym.user.model.vo.OrderDetailTable;
 
 
