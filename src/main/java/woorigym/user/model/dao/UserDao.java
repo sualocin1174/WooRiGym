@@ -27,8 +27,11 @@ public class UserDao {
 				if(rset.getString("user_pwd").equals(user_pwd)) {
 					vo = new UserTable();
 					vo.setUser_id(rset.getString("user_id"));
+					vo.setUser_pwd(rset.getString("user_pwd"));
 					vo.setUser_name(rset.getString("user_name"));
 					vo.setEmail(rset.getString("email"));
+					vo.setEmail_yn(rset.getInt("email_yn"));
+					vo.setPhone(rset.getString("phone"));
 				}
 			}
 		}catch(Exception e) {
@@ -154,10 +157,10 @@ public class UserDao {
 	}
 	
 	public int updateUser(Connection conn, UserTable user) {
-		String sql ="update member set ";
+		String sql ="update member set user_pwd=? user_name=? ";
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		System.out.println("로그인 dao 진입");
+		System.out.println("회원정보수정 dao 진입");
 		try {
 			
 			return -1; //아이디 없음

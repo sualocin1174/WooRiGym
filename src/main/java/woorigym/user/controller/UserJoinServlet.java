@@ -56,7 +56,10 @@ public class UserJoinServlet extends HttpServlet {
 		String email = email_1 + "@" + email_2;
 		String email_ynStr = request.getParameter("email_ynStr");
 		int email_yn = Integer.parseInt(email_ynStr);
-
+		
+		
+		UserService userSvc = new UserService();
+		
 		UserTable user = new UserTable();
 		if (user_pwd.equals(user_pwdtest)) {
 			user.setUser_id(user_id);
@@ -72,7 +75,13 @@ public class UserJoinServlet extends HttpServlet {
 		} else {
 
 		}
-		int result = new UserService().userInsert(user);
+		int result = userSvc.userInsert(user);
+		int result_id = userSvc.dupidChk(user_id);
+		
+		if(result_id != 0) {
+			request.getRequestDispatcher("/WEB-INF/userJoin.jsp").forward(request, response);
+		}
+		
 		if (result == 1) {
 			response.sendRedirect("login");
 		} else {

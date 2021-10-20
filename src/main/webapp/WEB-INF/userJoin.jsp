@@ -2,6 +2,7 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_header.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
    <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
@@ -195,5 +196,16 @@ text-align: center;
 			</div>
 </form>
 </div>
+<script>
+	$("#checkId").click(function(){
+		console.log("${loginSS}");
+		if($('#user_id').val() == "${loginSS}")
+			alert("이미 사용하고있는 아이디 입니다.");
+		else{
+			alert("사용 가능한 아이디입니다.")
+		}
+	});
+		
+</script>
 </body>
 </html>
