@@ -1,4 +1,4 @@
-package woorigym.user.controller;
+package woorigym.user.model.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

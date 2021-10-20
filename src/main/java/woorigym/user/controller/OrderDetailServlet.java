@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import woorigym.user.model.service.OrderDetailService;
 import woorigym.user.model.vo.OrderDetailTable;
 import woorigym.user.model.vo.UserTable;
 
