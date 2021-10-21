@@ -37,34 +37,98 @@ public class SearchListDao {
 	}
 	
 	// 2021.10.15 1차 내용수정 시작
-	public ArrayList<ProductTable> searchProductList(Connection conn, String productName, String parentCategory, int minprice, int maxprice, int start, int end) {
+	public ArrayList<ProductTable> searchProductList(Connection conn, ProductTable searchKeyVo, int start, int end) {
 		System.out.println("searchProductList 1");
 		ArrayList<ProductTable> productlist = null;
 		String sql = "select *"
 				+ " from (select rownum r, t1.*"
-				+ "      from(select p.product_info_url, p.product_name, p.product_option, p.price, p.product_no, count(o.buy_quantity), sum(r.score)"
-				+ "           from product p"
-				+ "           inner join order_detail o on p.product_no = o.product_no"
-				+ "           inner join review r on o.order_detail_no = r.order_detail_no"
-				+ "           where  p.product_name like '%?%'"
-				+ "           and  p.parent_category like '%?%'"
-				+ "           and  p.price between ? and ?"
-				+ "           group by p.product_info_url, p.product_name, p.product_option, p.price, p.product_no"
-				+ "           order by count(o.buy_quantity) desc" // 조건에 따라 바뀌어야함
-				+ "           )"
-				+ "      t1) t2"
-				+ " where r between ? and ?";
+				+ "      from(select p.product_info_url, p.product_name, p.product_option, p.price, p.product_no"
+				+ "           from product p";
+//				+ "           inner join order_detail o on p.product_no = o.product_no"
+//				+ "           inner join review r on o.order_detail_no = r.order_detail_no"
+//				+ "           where  p.product_name like '%?%'"
+//				+ "           and  p.parent_category like '%?%'"
+//				+ "           and  p.price between ? and ?"
+//				+ "           group by p.product_info_url, p.product_name, p.product_option, p.price, p.product_no"
+//				+ "           order by count(o.buy_quantity) desc" // 조건에 따라 바뀌어야함
+//				+ "           )"
+//				+ "      t1) t2"
+//				+ " where r between ? and ?";
+
+		String productName = searchKeyVo.getProductName();
+		String parentCategory = searchKeyVo.getParentCategory();
+		String selectRank = searchKeyVo.getSelectRank();
+		String childCategory = searchKeyVo.getChildCategory();	
+		int minPrice = searchKeyVo.getMinPrice();
+		int maxPrice = searchKeyVo.getMaxPrice();
+		boolean flag = false;
+		boolean flag1 = false;
+		
+		if (selectRank != null && !selectRank.equals("")) {
+			if (!flag1) {
+				sql += " inner join order_detail o on p.product_no = o.product_no ";
+				sql += " inner join review r on o.order_detail_no = r.order_detail_no ";
+				flag1 = true;
+			}
+		}
+		if (productName != null && !productName.equals("")) {
+			if (!flag) {
+				sql += " where ";
+				flag = true;
+			} else {
+				sql += " and ";
+			}
+			sql += " p.product_name like '%" + productName + "%'";
+		}
+		if (parentCategory != null && !parentCategory.equals("")) {
+			if (!flag) {
+				sql += " where ";
+				flag = true;
+			} else {
+				sql += " and ";
+			}
+			sql += " p.parent_category like '%" + parentCategory + "%'";
+		}
+		if (childCategory != null && !childCategory.equals("")) {
+			if (!flag) {
+				sql += " where ";
+				flag = true;
+			} else {
+				sql += " and ";
+			}
+			sql += " p.child_category like '%" + childCategory + "%'";
+		}
+		if (minPrice >= 0 || maxPrice >= 0) {
+			if (!flag) {
+				sql += " where ";
+				flag = true;
+			} else {
+				sql += " and ";
+			}
+			sql += " p.price between " + minPrice + " and " + maxPrice;
+		}
+		if (selectRank != null && selectRank.equals("인기순")) {
+				sql += " group by p.product_info_url, p.product_name, p.product_option, p.price, p.product_no"
+						+ " order by count(o.buy_quantity) desc)t1) t2 where r between ? and ?";
+		}
+		else if (selectRank != null && selectRank.equals("평점순")) {
+				sql += " group by p.product_info_url, p.product_name, p.product_option, p.price, p.product_no"
+						+ " order by sum(r.score) desc)t1) t2 where r between ? and ?";
+		}
+		
+		System.out.println(sql);
+		
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		try {
 			System.out.println("searchProductList executeQuery 1");
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, productName);
-			pstmt.setString(2, parentCategory);
-			pstmt.setInt(3, minprice);
-			pstmt.setInt(4, maxprice);
-			pstmt.setInt(5, start);
-			pstmt.setInt(6, end);
+//			pstmt.setString(1, productName);
+//			pstmt.setString(2, parentCategory);
+//			pstmt.setInt(3, minprice);
+//			pstmt.setInt(4, maxprice);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
 			rset = pstmt.executeQuery();
 			System.out.println("searchProductList executeQuery 2");
 			if (rset.next()) {

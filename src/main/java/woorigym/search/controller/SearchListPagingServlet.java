@@ -106,11 +106,19 @@ public class SearchListPagingServlet extends HttpServlet {
 		System.out.println(endPage);
 		System.out.println(startPage);
 		System.out.println(pageCount);
+		
+		ProductTable searchKeyVo = new ProductTable();
+		if(productName != null && !productName.equals(""))	searchKeyVo.setProductName(productName);
+		if(parentCategory != null && !parentCategory.equals(""))   searchKeyVo.setParentCategory(parentCategory);
+		if(selectRank != null && !selectRank.equals(""))   searchKeyVo.setSelectRank(selectRank);
+		if(childCategory != null && !childCategory.equals(""))   searchKeyVo.setChildCategory(childCategory);
+		searchKeyVo.setMinPrice(minPrice);
+		searchKeyVo.setMaxPrice(maxPrice);
 		// DB에서 값 읽어오기
-		ArrayList<ProductTable> productlist = new SearchListService().searchProductList(productName, parentCategory, minPrice, maxPrice, startRnum, endRnum);
+		ArrayList<ProductTable> productlist1 = new SearchListService().searchProductList(searchKeyVo, startRnum, endRnum);
 
 		// Data 전달을 위해서 request에 셋
-		request.setAttribute("productlist", productlist);
+		request.setAttribute("productlist", productlist1);
 		request.setAttribute("startPage", startPage);
 		request.setAttribute("endPage", endPage);
 		request.setAttribute("pageCount", pageCount);

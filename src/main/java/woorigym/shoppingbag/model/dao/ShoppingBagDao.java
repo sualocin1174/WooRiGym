@@ -147,10 +147,10 @@ public class ShoppingBagDao {
 	}
 
 	// 장바구니 전체삭제
-	public int allDeleteCartList(Connection conn, String userId) {
+	public ArrayList<CartTable> allDeleteCartList(Connection conn, String userId) {
 		System.out.println("deleteCartList 1");
 		System.out.println(userId);
-		int result = -1;
+		ArrayList<CartTable> volist = null;
 		String sql = "delete from cart where user_id = ? ";
 		System.out.println(sql);
 
@@ -171,8 +171,8 @@ public class ShoppingBagDao {
 			jdbcTemplate.close(rset);
 			jdbcTemplate.close(pstmt);
 		}
-		System.out.println("allDeleteCartList 2" + result);
-		return result;
+		System.out.println("allDeleteCartList 2" + volist);
+		return volist;
 	}
 	// 2021.10.14 1차 내용추가 완료
 

@@ -18,16 +18,16 @@ import woorigym.shoppingbag.model.vo.CartTable;
 import woorigym.user.model.vo.UserTable;
 
 /**
- * Servlet implementation class ShoppingBagDeleteServlet
+ * Servlet implementation class ShoppingBagSelectDeleteServlet
  */
-@WebServlet("/sbdelete.ajax")
-public class ShoppingBagDeleteServlet extends HttpServlet {
+@WebServlet("/sbsdelete.ajax")
+public class ShoppingBagSelectDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShoppingBagDeleteServlet() {
+    public ShoppingBagSelectDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -45,19 +45,22 @@ public class ShoppingBagDeleteServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		execute(request, response);
 	}
 	
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = response.getWriter();
+		int cartNo = 0;
+		String sbsdelete = request.getParameter("cartNo");
+		cartNo = Integer.parseInt(sbsdelete);
+		System.out.println("장바구니 번호2"+cartNo);
 		
-		String userId = request.getParameter("userId");
+		// DB에서 값 읽어오기
+		int selectDeleteCartList = new ShoppingBagService().selectDeleteCartList(cartNo);
 		
-		ArrayList<CartTable> allDeleteCartList = new ShoppingBagService().allDeleteCartList(userId);
-		System.out.println("아이디"+allDeleteCartList);
 		Gson gson = new GsonBuilder().create();
-		String jsonListVo = gson.toJson(allDeleteCartList);
+		String jsonListVo = gson.toJson(selectDeleteCartList);
 		out.print(jsonListVo);
 		out.flush();
 		out.close();

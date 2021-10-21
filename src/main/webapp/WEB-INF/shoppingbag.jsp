@@ -52,6 +52,13 @@
 	        padding-left: 10px;
 	        content: "";
 	    }
+	    #form1 {
+         width: 1000px;
+         padding: 0 0 30px 0;
+         position: relative;
+         bottom: 20px;
+         left: 50px;
+     	}
 	     /* 공통헤더~reset에 포함  끝*/
 	</style>
 	<!-- 2021.10.19 내용삭세 시작 -->
@@ -99,8 +106,8 @@
 <%@ include file="template_header.jsp"%>
 
 	<div id="" style="display: none"></div>
-	<h2>장바구니</h2>
 	<form id="form1" name="form1" method="post">
+	<h2>장바구니</h2>
 	    <!-- 2021.10.19 1차 내용삭제 시작 -->
 	    <div id="sblist"></div>
 	    <!-- <table border="1" width="100%" id="test"> -->
@@ -168,7 +175,7 @@
 	    <button type="button" id="btnSelectBuy">선택구매</button>
 	    <button type="button" id="btnSelectDelete">선택삭제</button>
 	    <button type="button" id="btnAllBuy">전체구매</button>
-	    <button type="button" id="btnAllDelete" onclick="ajaxF1()">전체삭제</button>
+	    <button type="button" id="btnAllDelete">전체삭제</button>
 	</form>
 	<script type="text/javascript">
     	$(document).ready(ajaxf1);
@@ -184,7 +191,7 @@
 				// 2021.10.15 2차 내용추가 시작
 				// 2021.10.19 1차 내용추가 및 수정 시작
 				success: function(data){
-					console.log(data);
+					// console.log(data);
 					resultHtml(data);
 					// let str = JSON.stringify(data.cartTableVolist); // <> parse()
 					// alert(str);
@@ -237,10 +244,10 @@
 				html += "<td style='display: none'>" + cartlist.cartNo + "</td>";
 				html += "<td><input type ='checkbox' name='subCB' value="+cartlist.cartNo+" class='subCB'>"+cartlist.cartNo+"</td>";
 				// html += "<td style='display: none'><input type ='hidden' name='subCB' value='0' id='subCB_hidden'></td>";
-				html += "<td>" + cartlist.productName+"<br>"+cartlist.productOption + "</td>";
+				html += "<td>" + cartlist.productName+"<br>"+cartlist.productOption + "<br><button type='button' id='btnoption'>옵션변경</button></td>";
 				html += "<td>" + cartlist.cartQuantity + "개</td>";
-				html += "<td>" + cartlist.price + "원</td>";
-				html += "<td>" + cartlist.price*0.05 + "원</td>";
+				html += "<td>" + cartlist.price*cartlist.cartQuantity + "원</td>";
+				html += "<td>" + (cartlist.price*cartlist.cartQuantity)*0.05 + "원</td>";
 				html += "<td>" + cartlist.ordercost + "</td>";
 				html += "</tr>";
 			});
@@ -249,8 +256,8 @@
 			//$.each(data.cartTableVolist, function(i, cartlist){
 				costhtml += "<tr align='right'>"
 				costhtml += "<tr><td>장바구니 금액 합계 : </td><td name='bprice' id='bprice'>0원</td></tr>"
-				costhtml += "<tr><td>배송료 : </td><td name='dprice' id='dprice'>테스트</td></tr>"
-				costhtml += "<tr><td>총합계 : </td><td name='totalprice' id='totalprice'>테스트</td></tr>"
+				costhtml += "<tr><td>배송료 : </td><td name='dprice' id='dprice'>0원</td></tr>"
+				costhtml += "<tr><td>총합계 : </td><td name='totalprice' id='totalprice'>0원</td></tr>"
 				costhtml += "</tr></table>" 
 			//});
 	    	$("#sblist").empty(); 
@@ -261,10 +268,23 @@
 			
 			$("[name=mainCB]").click(allCheckFunc);
 			
+			var bprice = 0;
+			var dprice = 0;
 			function allCheckFunc() {
 				$("[name=subCB]").prop("checked", $(this).prop("checked") );
-				
-				
+			    $("[name=subCB]:checked").each(function(){
+					// console.log(this);
+					// console.log($(this).parent().next().next().next().text());
+					var priceText = $(this).parent().next().next().next().text();
+					priceText = priceText.substring(0,priceText.length-1);
+					// console.log(priceText);
+					var thisPrice = priceText*1;
+					bprice += thisPrice;
+					dprice = ((bprice < 100000) ? 2500 : 0);
+				});
+				$("#bprice").html(bprice+"원");
+				$("#dprice").html(dprice+"원");
+				$("#totalprice").html(bprice+dprice+"원");
 			}
 	
 			/* 체크박스 체크시 전체선택 체크 여부 */
@@ -292,7 +312,8 @@
 			//var totalnum = 1 * $("#bprice").append($(this).parents().children().eq(5).html().replace("원","");
    
 				// console.log("ssss:"+ $("[name=subCB]:checked"));
-				var totalPrice = 0;
+				var bprice = 0;
+				var dprice = 0;
 			    $("[name=subCB]:checked").each(function(){
 					// console.log(this);
 					// console.log($(this).parent().next().next().next().text());
@@ -300,29 +321,32 @@
 					priceText = priceText.substring(0,priceText.length-1);
 					// console.log(priceText);
 					var thisPrice = priceText*1;
-					totalPrice += thisPrice;
-					$("#bprice").html(totalPrice+"원");
+					bprice += thisPrice;
+					dprice = ((bprice < 100000) ? 2500 : 0);
 				});
+				$("#bprice").html(bprice+"원");
+				$("#dprice").html(dprice+"원");
+				$("#totalprice").html(bprice+dprice+"원");
 				
 			}
 		
 
 
 		}
-    	/* 장바구니 전체삭제 */
     </script>
-    	<script type="text/javascript">
+   	<!-- 장바구니 전체삭제 -->
+   	<script>
     	// 2021.10.20 1차 내용수정 시작
-    	$("#btnAllDelete").click( function () {
-  			alert("전체삭제완료");
+	  	$("#btnAllDelete").click(ajaxf2);
+    	function ajaxf2() {
 			$.ajax({
 				type:"post",
 				url:"<%=request.getContextPath()%>/sbdelete.ajax",
 				data : {
+					userId : "<%=user.getUser_id()%>"
 				},
 				dataType : "json", // 전달받을 객체는 JSON 이다.
 				success: function(data){
-					console.log(data);
 					alert("전체삭제가 완료되었습니다.");
 				},
 				error : function(request,status,error) {
@@ -331,9 +355,80 @@
 				}
 			});
 			location.reload(); // 페이지 새로고침
-    	});
+    	}
     	// 2021.10.20 1차 내용수정 완료
 	// 2021.10.19 1차 내용추가 및 수정 시작
     </script>
+   	<!-- 2021.10.21 1차 내용추가 시작 -->
+    <!-- 장바구니 선택삭제 -->
+   	<script>
+   	$("#btnSelectDelete").click(sdelete);
+	var sDeleteList = [];
+	function sdelete(){
+		// alert($("[name=subCB]:checked").val());
+		if($("[name=subCB]:checked").val() == undefined) {
+			alert("삭제할 품목을 체크해주세요.");
+			return;
+		}
+		ajaxsdelete();
+	}
+	
+	$("[class=subCB]").click(test);
+	function test() {
+		$("[name=subCB]:checked").each(function(){
+			consle.log("장바구니번호 : "+$("[name=subCB]:checked"));
+			sDeleteList.push($(this).val());
+			consle.log(sDeleteList.push($(this).val()));
+		});
+	}
+	console.log("배열에 담겨진 값 : "+sDeleteList);
+	
+  	function ajaxsdelete(){
+   		$.ajax({
+			type:"post",
+			url:"<%=request.getContextPath()%>/sbsdelete.ajax",
+			data : {
+				cartNo : sDeleteList
+			},
+			dataType : "json", // 전달받을 객체는 JSON 이다.
+			success: function(data){
+				alert("선택삭제가 완료되었습니다.");
+				console.log(data);
+			},
+			error : function(request,status,error) {
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+
+				"\n"+"error:"+error);
+			}
+		});
+		location.reload(); // 페이지 새로고침
+   	};
+<%--    	$("#btnSelectDelete").click( function () {
+   		// alert($("[name=subCB]:checked").val());
+   		let cartNo = $("[name=subCB]:checked").val();
+   		alert(cartNo);
+   		if($("[name=subCB]:checked").val() == "undefined") {
+			alert("삭제할 품목을 체크해주세요.");
+			return;
+		} 
+   		$.ajax({
+			type:"post",
+			url:"<%=request.getContextPath()%>/sbsdelete.ajax",
+			data : {
+				cartNo
+			},
+			dataType : "json", // 전달받을 객체는 JSON 이다.
+			success: function(data){
+				alert("선택삭제가 완료되었습니다.");
+				console.log(data);
+			},
+			error : function(request,status,error) {
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+
+				"\n"+"error:"+error);
+			}
+		});
+		location.reload(); // 페이지 새로고침
+   	}); --%>
+    </script>
+   	<!-- 2021.10.21 1차 내용추가 시작 -->
 </body>
 </html>

@@ -48,12 +48,12 @@ public class ShoppingBagService {
 	}
 
 	// 장바구니 전체삭제
-	public int allDeleteCartList(String userId) {
-		int result = -1;
+	public ArrayList<CartTable> allDeleteCartList(String userId) {
+		ArrayList<CartTable> volist = null;
 		Connection conn = jdbcTemplate.getConnection();
-		result = new ShoppingBagDao().allDeleteCartList(conn, userId);
+		volist = new ShoppingBagDao().allDeleteCartList(conn, userId);
 		jdbcTemplate.close(conn);
-		return result;
+		return volist;
 	}
 
 	// 장바구니 담기

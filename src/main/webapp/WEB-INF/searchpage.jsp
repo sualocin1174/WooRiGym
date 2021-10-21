@@ -8,7 +8,7 @@
 <%@page import="java.util.ArrayList"%>
   <%
   String user_name = (String)request.getAttribute("user_name");
-	ArrayList<ProductTable> productlist = (ArrayList<ProductTable>) request.getAttribute("productlist");
+	ArrayList<ProductTable> productlist1 = (ArrayList<ProductTable>) request.getAttribute("productlist1");
 	int startPage = (int)request.getAttribute("startPage");
 	int endPage = (int)request.getAttribute("endPage");
 	int pageCount = (int)request.getAttribute("pageCount");
@@ -152,9 +152,9 @@
 		</p> --%>
     	<h2 id="productlist">상품목록</h2> <!-- 2021.10.08 1차 내용추가 및 추가완료 -->
     	<!-- 2021.10.11 1차 추가시작 -->
-    	<table>
+    	<div id="prolist">
     	<!-- 2021.10.13 1차 추가시작 -->
-    		<c:forEach var="plist" items="${productlist}">
+    		<c:forEach var="plist" items="${productlist1}">
 	    		<!-- 2021.10.13 2차 추가시작 -->
 		    	<%-- <tr><td>이미지 : ${plist.productInfoUrl}</td></tr>
 		    	<tr><td>상품명 : ${plist.productName}</td></tr>
@@ -187,7 +187,7 @@
 		    		for(ProductTable vo : productlist){
 	    	%> --%>
 	    	
-    	</table>
+    	</div>
     	<c:if test=" ${startPage} > 1 " >
 			이전
 		</c:if>
@@ -236,6 +236,7 @@
 				success: function(data){
 					console.log(data);
 					alert("상품이 검색되었습니다."); /* 2021.10.11 1차 내용수정 */
+					resultHtml(data);
 				},
 				error : function(request,status,error) {
 					alert("code:"+request.status+"\n"+"message:"+request.responseText+
@@ -243,6 +244,24 @@
 					}
 			});
 		});
+    
+    	function resultHtml(data){
+			var html="<table border='1' id='test'>";
+			
+			$.each(data, function(key, value){
+				html += "<tr>";
+				html += "<td>이미지 : " + value.productInfoUrl + "<br>";
+				html += "상품명 : " + value.productName + "<br>";
+				html += "옵션 : " + value.productOption + "<br>";
+				html += "가격 : " + value.price + "<br>";
+				html += "적립금 : " + value.price*0.05 + "<br><br>";
+				html += "</td></tr>";
+			});
+			
+		html += "</table>";
+		$("#prolist").empty(); 
+		$("#prolist").append(html);
+	}
     	/* 2021-10-07 수정완료 */
     </script>
 </body>
