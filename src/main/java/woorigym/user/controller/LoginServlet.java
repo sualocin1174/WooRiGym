@@ -53,12 +53,12 @@ public class LoginServlet extends HttpServlet {
 			request.setAttribute("result", "로그인성공");
 			HttpSession session = request.getSession();
 			session.setAttribute("loginSS", vo);
-			request.getRequestDispatcher("/WEB-INF/loginAction.jsp").forward(request, response);;
+			request.getRequestDispatcher("/WEB-INF/loginAction.jsp").forward(request, response);
 		}
 		else {
 			System.out.println("로그인 실패");
 			request.setAttribute("result", "로그인실패");
-			request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);;
+			request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
 		}		
 	}
 }

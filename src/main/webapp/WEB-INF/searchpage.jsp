@@ -201,9 +201,11 @@
 			다음
 		</c:if>
     	<!-- 2021.10.11 1차 추가완료 -->
+    	<script>
     	console.log("${startPage}");
     	console.log("${endPage}");
     	console.log("${pageCount}");
+    	</script>
     </section>
     <footer>
     </footer>

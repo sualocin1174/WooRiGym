@@ -12,14 +12,32 @@
 </head>
 <body>
 <!-- 공통헤더 템플릿 -->
- 	 <%@ include file="template_header.jsp"%>
-    ${productvolist[0].imagesFilePath[0]}
-   <c:forEach items="${productvolist}" var="vo">
-      <p>${vo.productName }<p>
-      <c:forEach items="${vo.imagesFilePath }" var="imgfile">
-         <img src="${imgfile }" width="200" height="200">
-      </c:forEach>
-      <hr>
-   </c:forEach>
+ 	<%@ include file="template_header.jsp"%>
+ 	${productvolist[0].imagesFilePath[0]}
+	<c:forEach items="${productvolist}" var="vo">
+		<p>${vo.productName }<p>
+		<c:forEach items="${vo.imagesFilePath }" var="imgfile">
+			<img src="${imgfile }" width="200" height="200">
+		</c:forEach>
+		<hr>
+	</c:forEach>
+	
+	
+<script>
+/*
+	var cloudinary = require('cloudinary');
+
+	cloudinary.config({
+	 cloud_name: "chsh9410@gmail.com", // add your cloud_name
+	 api_key: "248355888283262", // add your api_key
+	 api_secret: "6MzXp7Z0dJL-DLzN1Y5JAXKtnwg", // add your api_secret
+	 secure: true
+	});
+	var folder1 = "${productvolist[0].productInfoUrl}";
+	cloudinary.v2.search.expression(
+	  'folder:woorigym/CARDIO-RN-0001/*' // add your folder
+	  ).sort_by('public_id','desc').max_results(30).execute().then(result=>console.log(result));
+	*/
+	</script>
 </body>
 </html>

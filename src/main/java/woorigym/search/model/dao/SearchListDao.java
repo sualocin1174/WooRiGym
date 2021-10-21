@@ -121,10 +121,10 @@ public class SearchListDao {
 
 		ArrayList<ProductTable> productlist = null;
 		// 2021.10.11 1차 내용수정 시작
-		String sql = "select p.product_info_url, p.product_name, p.product_option, p.price, p.product_no, count(o.buy_quantity), sum(r.score)"
-				+ " from product p"
-				+ " inner join order_detail o on p.product_no = o.product_no"
-				+ " inner join review r on o.order_detail_no = r.order_detail_no";
+		String sql = "select p.product_info_url, p.product_name, p.product_option, p.price, p.product_no"
+				+ " from product p";
+//				+ " inner join order_detail o on p.product_no = o.product_no"
+//				+ " inner join review r on o.order_detail_no = r.order_detail_no";
 		// 2021.10.11 1차 내용수정 완료
 		
 		String productName = searchKeyVo.getProductName();
@@ -134,8 +134,16 @@ public class SearchListDao {
 		int minPrice = searchKeyVo.getMinPrice();
 		int maxPrice = searchKeyVo.getMaxPrice();
 		boolean flag = false;
+		boolean flag1 = false;
 
 		// 2021.10.11 1차 내용수정 시작
+		if (selectRank != null && !selectRank.equals("")) {
+			if (!flag1) {
+				sql += " inner join order_detail o on p.product_no = o.product_no ";
+				sql += " inner join review r on o.order_detail_no = r.order_detail_no ";
+				flag1 = true;
+			}
+		}
 		if (productName != null && !productName.equals("")) {
 			if (!flag) {
 				sql += " where ";
