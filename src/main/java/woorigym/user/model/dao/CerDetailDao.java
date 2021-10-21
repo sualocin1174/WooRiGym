@@ -30,17 +30,17 @@ public class CerDetailDao {
 				pstmt.setString(2, ono);
 				rset = pstmt.executeQuery();
 				if(rset.next()) {
-					vo.setOrder_detail_no(rset.getString("order_detail_no"));
-					vo.setClaim_date(rset.getString("claim_date"));
-					vo.setClaim_kind(rset.getString("claim_kind"));
-					vo.setClaim_process(rset.getString("claim_process"));
-					vo.setDone_date(rset.getString("done_date"));
-					vo.setProduct_no(rset.getString("product_no"));
-					vo.setBuy_quantity(rset.getInt("buy_quantity"));
-					vo.setOrder_total(rset.getInt("order_total"));
-					vo.setOrder_cost(rset.getInt("order_cost"));
-					vo.setOrder_date(rset.getString("order_date"));
-					vo.setArrive_date(rset.getString("arrive_date"));
+					vo.setOrder_detail_no(rset.getString("order_detail_no"));//주문상세번호
+					vo.setClaim_date(rset.getString("claim_date"));//신청일자
+					vo.setClaim_kind(rset.getString("claim_kind"));//분류
+					vo.setClaim_process(rset.getString("claim_process"));//처리상태
+					vo.setDone_date(rset.getString("done_date"));//처리일자
+					vo.setProduct_no(rset.getString("product_no"));//상품번호
+					vo.setBuy_quantity(rset.getInt("buy_quantity"));//수량
+					vo.setOrder_total(rset.getInt("order_total"));//상품금액
+					vo.setOrder_cost(rset.getInt("order_cost"));//배송비
+					vo.setOrder_date(rset.getString("order_date"));//주문일자
+					vo.setArrive_date(rset.getString("arrive_date"));//도착일자
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

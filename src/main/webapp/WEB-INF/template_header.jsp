@@ -54,8 +54,7 @@
         <a href="#">런닝머신</a>
         <a href="#">사이클</a>
         <a href="#">로잉머신</a>
-        <a href="#">일립티컬</a>
-        <a href="#">샌드백</a>
+        <a href="#">일립티컬</a><!-- 10/21 샌드백 삭제 SH -->
     </div>
   </div> 
   <div class="subnav">

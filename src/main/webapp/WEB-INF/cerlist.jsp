@@ -147,19 +147,20 @@
     					console.log(data[i]);
     					//버튼 태그를 생성할때 <input onclick=f1(order_no)>이런 식으로 order_no를 가져와서~
     				//주문번호, 주문날짜+테이블 제목+내용
-    					 html+=  "<h3><a href='cerDetailServlet?order_no="+data[i].order_no+"'>"+data[i].order_no+"</a></h3>"
-							 + "<h4><a href='./orderTable?order_date='"+data[i].order_date+"'>"+data[i].order_date+"</a></h4>"
+    					 html+=  "<h3><a href='cerDetail?order_no="+data[i].order_no+"'>"+data[i].order_no+"</a></h3>"
+							 + "<h4><a>"+data[i].order_date+"</a></h4>"
 							 + "<table id='order_detail'><tr><th colspan='2'>상품명</th>"
 						     + "<th>수량</th><th>상품금액</th><th>배송비</th><th>처리상태</th></tr>"
     						 
 	    					 //+ "<a href='./orderDetailTable?product_no="+data[i].product_no+"'>"
 		    	 			 + "<td><a href='./productTable?product_info_url="+data[i].product_info_url
 		    	 			//TODO: 이미지 경로 수정
-		    	 			 +"'><img src='./images/1번 메인.jpg'></a></td>"+"<td>"+data[i].product_name+"</td>"	  
-		    	       		 +"<td><a href='./orderDetailTable?buy_quantity="+data[i].buy_quantity+"'>"+data[i].buy_quantity+"</a></td>"
-		    	       		 +"<td><a href='./orderList?order_total="+data[i].order_total+"'>"+data[i].order_total+"</a></td>"
-		    	       		 +"<td><a href='./orderList?order_cost="+data[i].order_cost+"'>"+data[i].order_cost+"</a></td>"
-		    	       		 +"<td><a href='./cerList?claim_process="+data[i].claim_process+"'>"+data[i].claim_process+"</a></td>"
+		    	 			 +"'><img src='./images/1번 메인.jpg'></a></td>"
+		    	 			 +"<td><a>"+data[i].product_name+"</a></td>"	  
+		    	       		 +"<td>"+data[i].buy_quantity+"</td>"
+		    	       		 +"<td>"+data[i].order_total+"</td>"
+		    	       		 +"<td>"+data[i].order_cost+"</td>"
+		    	       		 +"<td>"+data[i].claim_process+"</td>"
 		    	        	 +"</tr></table>";
     				}
         		    $("#order").html(html);
@@ -211,11 +212,12 @@
         cursor: pointer;
         background-color: white;
         color: black;
-        border: 2px solid #e7e7e7;
+        border: 2px solid #DFE0DF;
+        border-radius: 5px;
         }
 
         .button:hover {
-            background-color: #e7e7e7;
+            background-color: #DFE0DF;
         }
 		/* 검색 버튼 */
         #order_search {
@@ -262,11 +264,11 @@
       	}
       	#pageview a{
       	padding: 4px 8px;
-      	background: black;
+      	background: #2F4858;
       	color: white;
       	}
       	#pageview a:hover{
-      	background: black;
+      	background: #FEA500;
       	}
  </style>
 </head>

@@ -37,6 +37,7 @@
     	$("#1month").on("click", lastMonth); //1개월 버튼
     	$("#3month").on("click", last3M); //3개월 버튼
     	$("#6month").on("click", last6M); //6개월 버튼
+    	$("#cancel").onclick(cancel);//주문취소
     	
     });
     };
@@ -141,7 +142,6 @@
     			console.log(data);
     			console.log(data.length);
     				var empty ="";
-    				var cancel = "";
     			//console.log(data[0].product_name); 참고용
     			if(data!=""){
     				var html = "";
@@ -157,17 +157,19 @@
 	    					 //+ "<a href='./orderDetailTable?product_no="+data[i].product_no+"'>"
 		    	 			 + "<td><a href='./productTable?product_info_url="+data[i].product_info_url
 		    	 			//TODO: 이미지 경로 수정
-		    	 			 +"'><img src='./images/1번 메인.jpg'></a></td>"+"<td>"+data[i].product_name+"</td>"	  
-		    	       		 +"<td><a href='./orderDetailTable?buy_quantity="+data[i].buy_quantity+"'>"+data[i].buy_quantity+"</a></td>"
-		    	       		 +"<td><a href='./orderTable?order_total="+data[i].order_total+"'>"+data[i].order_total+"</a></td>"
-		    	       		 +"<td><a href='./orderTable?order_cost="+data[i].order_cost+"'>"+data[i].order_cost+"</a></td>"
-		    	       		 +"<td><a href='./orderTable?pay_state="+data[i].pay_state+"'>"+data[i].pay_state+"</a></td>"
-		    	       		 +"<td><a href='./orderTable?order_state="+data[i].order_state+"'>"+data[i].order_state+"</a></td>"
+		    	 			 +"'><img src='./images/1번 메인.jpg'></a></td>"
+		    	 			 +"<td><a>"+data[i].product_name+"</a></td>"	  
+		    	       		 +"<td>"+data[i].buy_quantity+"</td>"
+		    	       		 +"<td>"+data[i].order_total+"</td>"
+		    	       		 +"<td>"+data[i].order_cost+"</td>"
+		    	       		 +"<td>"+data[i].pay_state+"</td>"
+		    	       		 +"<td>"+data[i].order_state+"</td>"
 		    	        	 +"</tr>";
     				if(data[i].order_state =='주문완료'){
-    					html += "<tr><td><button>주문취소</button><td></tr></table>";
-    					//$("#order_detail").html(cancel);
-    				}else{
+    					html += "<tr><td colspan='7'><button class='sub-button' id='cancel'>주문취소</button></td></tr></table>";
+    				}else if(data[i].order_state =='배송완료'){
+    					html += "<tr><td colspan='7'><button class='sub-button'>교환/환불</button></td></tr></table>";
+    				}else {
     					html += "</table>";
     				}
     				}
@@ -186,7 +188,11 @@
     		}
     	});
 	};
-	
+	//주문 취소 버튼 클릭 시
+	function cancel(){
+		alert("주문을 취소하시겠습니까?");
+		//TODO: 확인 클릭 -> alert("주문이 취소되었습니다."); & 진행상태->'주문취소'로 변경
+	};
     </script>
  <!-- /* content */ -->
  <style>
@@ -221,11 +227,12 @@
         cursor: pointer;
         background-color: white;
         color: black;
-        border: 2px solid #e7e7e7;
+        border: 2px solid #DFE0DF;
+        border-radius: 5px;
         }
 
         .button:hover {
-            background-color: #e7e7e7;
+            background-color: #DFE0DF;
         }
 		/* 검색 버튼 */
         #order_search {
@@ -266,17 +273,33 @@
           width: 80px;
           height: 80px;
       	}
+      	/* 취소/교환/환불 버튼 */
+      	.sub-button{
+      	border: 2px solid #BDBDBD;
+      	text-align: center;
+      	background: white;
+      	cursor: pointer;
+      	padding: 5px;
+        text-decoration: none;
+		border-radius: 5px;
+      	}
+      	.sub-button:hover {
+      	border: 2px solid #FEA500;
+      	background: #FEA500;
+      	color: white;
+      	}
+ 
       	/* 페이징 버튼 */
       	#pageview{
       	text-align: center;
       	}
       	#pageview a{
       	padding: 4px 8px;
-      	background: black;
+      	background: #2F4858;
       	color: white;
       	}
       	#pageview a:hover{
-      	background: black;
+      	background: #FEA500;
       	}
  </style>
 </head>
