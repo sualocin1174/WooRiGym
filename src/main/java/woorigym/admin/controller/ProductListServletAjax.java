@@ -46,7 +46,7 @@ public class ProductListServletAjax extends HttpServlet {
 		String childCategory = request.getParameter("childCategory");
 		String quantity = request.getParameter("quantity");
 		String price = request.getParameter("price");
-		String productInfoUrl = request.getParameter("productInfoUrl");  //""
+		String productInfoUrl = request.getParameter("productInfoUrl");
 		String productOption = request.getParameter("productOption");
 
 		int quantityInt = 0;

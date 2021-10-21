@@ -133,20 +133,20 @@ public class ProductDao {
 		return result;
 	}
 
-	public int updateProduct(Connection conn, ProductTable vo) {
+	public int updateProduct(Connection conn, ProductTable productVo) {
 		int result = -1;
 		String sqlUpdate = "UPDATE PRODUCT SET (PRODUCT_NAME=?, PARENT_CATEGORY=?, CHILD_CATEGORY=?, QUANTITY=?, PRICE=?, PRODUCT_INFO_URL=?, PRODUCT_OPTION=?) WHERE PRODUCT_NO=?"; 
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = conn.prepareStatement(sqlUpdate);
-			pstmt.setString(1, vo.getProductName());
-			pstmt.setString(2, vo.getParentCategory());
-			pstmt.setString(3, vo.getChildCategory());
-			pstmt.setInt(4, vo.getQuantity());
-			pstmt.setInt(5, vo.getPrice());
-			pstmt.setString(6, vo.getProductInfoUrl());
-			pstmt.setString(7, vo.getProductOption());
-			pstmt.setString(8, vo.getProductNo());
+			pstmt.setString(1, productVo.getProductName());
+			pstmt.setString(2, productVo.getParentCategory());
+			pstmt.setString(3, productVo.getChildCategory());
+			pstmt.setInt(4, productVo.getQuantity());
+			pstmt.setInt(5, productVo.getPrice());
+			pstmt.setString(6, productVo.getProductInfoUrl());
+			pstmt.setString(7, productVo.getProductOption());
+			pstmt.setString(8, productVo.getProductNo());
 			
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -173,14 +173,14 @@ public class ProductDao {
 		return result;
 	}
 	
-	public int checkDuplicatedProduct(Connection conn, ProductTable vo) {
+	public int checkDuplicatedProduct(Connection conn, ProductTable productVo) {
 		int result =-1;
 		String sql = "select PRODUCT_NO from PRODUCT where PRODUCT_NO=?";
 		PreparedStatement pstmt= null;
 		ResultSet rset = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, vo.getProductNo());
+			pstmt.setString(1, productVo.getProductNo());
 			rset = pstmt.executeQuery();
 			if(rset.next()) {
 				result = 1;  //  기존 상품이 있으면

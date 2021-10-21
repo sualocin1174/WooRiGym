@@ -41,7 +41,6 @@ public class ProductAddServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //		request.getRequestDispatcher("/WEB-INF/adminmain.jsp").forward(request, response);
-		System.out.println("여기 nono 들어오면 안됨~~~");
 	}
 
 	
