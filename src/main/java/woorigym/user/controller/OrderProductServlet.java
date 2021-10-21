@@ -37,7 +37,7 @@ public class OrderProductServlet extends HttpServlet {
 
 		response.setContentType("application/json;charset=UTF-8");
 		String userid = request.getParameter("user_id");
-
+		
 		PrintWriter out = response.getWriter();
 
 		ArrayList<ProductTable> volistProduct = new OrderService().getProductinfo(userid);
