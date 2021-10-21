@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import woorigym.user.model.service.UserService;
+import woorigym.user.model.vo.AddressTable;
 import woorigym.user.model.vo.UserTable;
 
 /**
@@ -60,10 +61,15 @@ public class UserJoinServlet extends HttpServlet {
 		String email_ynStr = request.getParameter("email_ynStr");
 		int email_yn = Integer.parseInt(email_ynStr);
 		
+		String postcode = request.getParameter("postcode");
+		String basic_address = request.getParameter("basic_address");
+		String detail_address = request.getParameter("detail_address");
 		
-//		UserService userSvc = new UserService();
+		
+		UserService userSvc = new UserService();
 		
 		UserTable user = new UserTable();
+		AddressTable address = new AddressTable();
 		if (user_pwd.equals(user_pwdtest)) {
 			user.setUser_id(user_id);
 			user.setUser_pwd(user_pwd);
@@ -75,17 +81,22 @@ public class UserJoinServlet extends HttpServlet {
 			user.setBirthday(birthday);
 			user.setIdentity_number(identity_number);
 			user.setGender(gender);
+			address.setUser_id(user_id);
+			address.setPostcode(postcode); // 우편번호
+			address.setBasic_address(basic_address); // 기본 주소지
+			address.setDetail_address(detail_address); // 상세 주소지
 		} else {
 			
 		}
-		int result = new UserService().userInsert(user);
+		int userResult = userSvc.userInsert(user);
+		int addressResult = userSvc.adressInsert(address);
 //		int result_id = userSvc.dupidChk(user_id);
 		
 //		if(result_id != 0) {
 //			request.getRequestDispatcher("/WEB-INF/userJoin.jsp").forward(request, response);
 //		}
 		
-		if (result == 1) {
+		if (userResult == addressResult) {
 			response.sendRedirect("login");
 		} else {
 			response.sendRedirect("join");

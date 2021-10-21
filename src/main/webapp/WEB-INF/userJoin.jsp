@@ -5,7 +5,7 @@
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
+<%@include file = "/WEB-INF/joinError.jsp" %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -92,7 +92,7 @@ text-align: center;
 		<div id="wrap">   
            <h2 id= "head">회원가입</h2>
             <br><br>
-                <form action="join" method="post">        
+                <form id = "joinform" action="join" method="post">        
                     <table>        
                         <tr>        
                             <td id="title">아이디</td>       
@@ -106,21 +106,24 @@ text-align: center;
                         <tr>        
                             <td id="title">비밀번호</td>       
                             <td>       
-                                <input type="password" id = "pw1" name= user_pwd placeholder="비밀번호" maxlength="15">        
+                                <input type="password" id = "user_pwd" name= user_pwd placeholder="비밀번호" maxlength="15">
+                                <div class = "user_pwd regex"></div>        
                             </td>        
                         </tr>
                                       
                         <tr>       
                             <td id="title">비밀번호 확인</td>      
                             <td>        
-                                <input type="password" id = "pw2" name="user_pwdtest" placeholder="비밀번호 확인" maxlength="15">       
+                                <input type="password" id = "user_pwdTest" name="user_pwdtest" placeholder="비밀번호 확인" maxlength="15">
+                                <div class = "user_pwdTest"></div>        
                             </td>       
                         </tr>
                                             
                         <tr>        
                             <td id="title">이름</td>        
                             <td>        
-                                <input type="text" id = "name" name="user_name" placeholder="이름"  maxlength="40">       
+                                <input type="text" id = "name" name="user_name" placeholder="이름"  maxlength="40">
+                                <div class="name"></div>       
                             </td>        
                         </tr>
                                             
@@ -194,7 +197,7 @@ text-align: center;
                     </table>        
                     <br> 
             <div id="btnJoin">
-                    <input class="joinbtn" id = "joinbtn" type="submit" value="회원가입">  
+                    <input class="joinbtn" id = "joinbtn" type="button" value="회원가입">  
                     <input class="btn" type="button" onclick="history.back()" value="취소">
 			</div>
 </form>
@@ -202,41 +205,12 @@ text-align: center;
 
 <script type="text/javascript">
 //아이디 유효성 검사(1 = 중복 / 0 != 중복)
-var idck = "${result}";
-$("#checkId").click(function() {
-	// name = "user_id"
-	var user_id = $('#user_id').val();
-	console.log("받아온 result: "+ idck);
-	console.log(user_id);
-	$.ajax({
-		type: "post",
-		url : "<%=request.getContextPath()%>/DupIdChkServlet" ,
-		data : {user_id : user_id} ,
-		
-		success : function(idck) {
-				console.log("1 = 중복o / 0 = 중복x : "+ idck);							
-				
-				if(idck == 2){
-					$("#id_check").html("아이디를 입력해주세요");
-					$("#id_check").css("color","red");
-				}
-				
-				if (idck == 1) {
-					// 1 : 아이디가 중복되는 문구
-					$("#id_check").html("중복된 아이디입니다.");
-					$("#id_check").css("color","red");
-				} else if(idck == 0){
-					$("#id_check").html("중복확인 완료");
-					$("#id_check").css("color","green");
-				}
-			}, 
-		error:function(request,status,error){
-    			alert("code:"+request.status+"\n"+"message:"+request.responseText+
-    					"\n"+"error:"+error);
-			}
-		});
-	});
-		
+
+
+	
+
+
+
 </script>
 </body>
 </html>
