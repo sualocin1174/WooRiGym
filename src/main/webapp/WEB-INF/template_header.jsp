@@ -34,19 +34,7 @@
                 <img src='./images/검색_돋보기.png' alt="검색" width="20px"/><br>
             </a>
         </div>
- <div class="navbar">
-  <div class="subnav">
-    <button class="subnavbtn">패키지 <i class="fa fa-caret-down"></i></button>
-    <div class="subnav-content">
-      <a href="#">전체</a>
-      <a href="#">스미스짐 패키지</a>
-      <a href="#">멀티짐 패키지</a>
-      <a href="#">멀티랙 패키지</a>
-      <a href="#">벤치 패키지</a>
-      <a href="#">벤치프레스 패키지</a>
-      <a href="#">웨이트리프팅 패키지</a>
-    </div>
-  </div> 
+ <div class="navbar"> <!-- 10/21 삭제: 패키지, 세일 -->
   <div class="subnav">
     <button class="subnavbtn">근력기구 <i class="fa fa-caret-down"></i></button>
     <div class="subnav-content">
@@ -66,8 +54,7 @@
         <a href="#">런닝머신</a>
         <a href="#">사이클</a>
         <a href="#">로잉머신</a>
-        <a href="#">일립티컬</a>
-        <a href="#">샌드백</a>
+        <a href="#">일립티컬</a><!-- 10/21 샌드백 삭제 SH -->
     </div>
   </div> 
   <div class="subnav">
@@ -85,28 +72,16 @@
     <button class="subnavbtn">어시스트 <i class="fa fa-caret-down"></i></button>
     <div class="subnav-content">
         <a href="#">전체</a>
-        <a href="#">거꾸리</a>
         <a href="#">트레이닝보조</a>
         <a href="#">스트랩&패드</a>
         <a href="#">매트</a>
         <a href="#">튜빙밴드</a>
-        <a href="#">마사지</a>
-        <a href="#">케이블손잡이</a>
-        <a href="#">부속품</a>
+        <a href="#">마사지</a> <!-- 10/21 삭제: 거꾸리, 케이블손잡이, 부속품 SH-->
     </div>
   </div>
   <div class="subnav">
     <button class="subnavbtn">전시상품 </i></button>
     </div>
-  <div class="subnav">
-    <button class="subnavbtn">세일 <i class="fa fa-caret-down"></i></button>
-    <div class="subnav-content">
-        <a href="#">신상품</a>
-        <a href="#">프로모션</a>
-        <a href="#">예약주문</a>
-        <a href="#">라이프스타일</a>
-    </div>
-  </div>
   <div class="subnav">
     <button class="subnavbtn">게시판 <i class="fa fa-caret-down"></i></button>
     <div class="subnav-content">
@@ -115,17 +90,15 @@
         <a href="#">이벤트</a>
         <a href="#">공지사항</a>
         <a href="#">사용후기</a>
-        <a href="#">Q & A</a>
-        <a href="#">1:1문의</a>
-        <a href="#">개인결제창</a>
+        <a href="#">Q & A</a> <!--  10/21 삭제: 1:1 문의, 개인결제창 SH -->
     </div>
   </div>
   <div class="subnav">
     <button class="subnavbtn">회원가입 <i class="fa fa-caret-down"></i></button>
     <div class="subnav-content">
         <a href="<%=ctxPath %>/login">로그인</a> <!-- 10/15 수정: 현재경로를 뜻하는 ctxPath 추가 -->
-        <a href="<%=ctxPath %>/join">회원가입</a><!-- 10/15 추가-->
-        <a href="#">주문</a>
+        <a href="<%=ctxPath %>/join">회원가입</a>
+        <a href="<%=ctxPath %>/orderlist">주문</a>
         <a href="<%=ctxPath %>/mypage">마이페이지</a>
     </div>
   </div>

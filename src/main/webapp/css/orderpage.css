@@ -406,10 +406,96 @@
         border-radius:10px;
 
     }  
+#cardmodaldiv button{
+	border: 1px solid rgb(140, 130, 228);
+	background-color:rgba(0,0,0,0);
+	color: rgb(140, 130, 228);
+	padding :  5px;
+	border-radius: 5px;
+	font-size:15px;
+}    
+#cardmodaldiv button:hover{
+	background-color: rgb(140, 130, 228);
+	color: white;
+	padding :  5px;
+	border-radius: 5px;
+	cursor : pointer;
+	font-size:15px;
+}   
+#finalpay2{
+	font-size : 15;
+	border:none;
+}   
+#finalpay2:focus {outline:none;}
+ 
+
 #depomodaldiv{
         background-color: white;
         box-shadow: 10px 10px 5px grey;
         border: 1px solid grey;
         border-radius:10px;
 
-    }  
+} 
+    
+#whichcard {
+	border: 1px solid grey;
+	width : 400px;
+	border-collapse: collapse; 
+	border-radius: 5px;
+} 
+#whichcard th,#whichcard td {
+	height : 35px;
+	border: 1px solid grey;
+	padding : 3px 3px 3px 10px;
+}
+#whichcard th{
+	background-color: rgba(140, 130, 228, 0.5);
+}
+#whichbank {
+	border: 1px solid grey;
+	width : 400px;
+	border-collapse: collapse; 
+	border-radius: 5px;
+} 
+#whichbank th,#whichbank td {
+	height : 35px;
+	border: 1px solid grey;
+	padding : 3px 3px 3px 10px;
+}
+#whichbank th{
+	background-color: rgba(140, 130, 228, 0.5);
+}
+#finalpay3{
+	font-size : 15;
+	border:none;
+}   
+#finalpay3:focus {outline:none;}
+
+
+#depomodaldiv button{
+	border: 1px solid rgb(140, 130, 228);
+	background-color:rgba(0,0,0,0);
+	color: rgb(140, 130, 228);
+	padding :  5px;
+	border-radius: 5px;
+	font-size:15px;
+}    
+#depomodaldiv button:hover{
+	background-color: rgb(140, 130, 228);
+	color: white;
+	padding :  5px;
+	border-radius: 5px;
+	cursor : pointer;
+	font-size:15px;
+}
+#depomodaldiv span{
+	margin : 200px 200px;
+}
+#cardmodaldiv span{
+	margin : 200px 200px;
+}
+
+.xbtn:hover {
+	cursor: pointer;
+	
+}

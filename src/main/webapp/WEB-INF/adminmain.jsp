@@ -23,7 +23,7 @@
        <!-- /* content */-->
        <style>
             section {
-                width: 1200px;
+                width: 900px;
                 padding: 0 0 30px 0;
                 position: relative;
 		        bottom: 250px;
@@ -129,8 +129,8 @@
  <div id="side-menu">
      <ul>
          <li>메인페이지</li>
-         <li><a href="#">상품관리</a></li>
-         <li><a href="#">팝업공지</a></li>
+         <li><a href="amain">상품관리</a></li>
+         <li><a href="apupage">팝업공지</a></li>
          <li><a href="#">매출관리</a></li>
          <li><a href="#">주문내역 확인</a></li>
          <li><a href="#">배송현황 관리</a></li>
@@ -145,10 +145,10 @@
     <button type="button" id="btn_insert" class="button" name="btn_insert">추가</button>
     <button type="button" id="btn_update" class="button" name="btn_update">수정</button>
     <button type="button" id="btn_delete" class="button" name="btn_delete">삭제</button>
-	<div id="product">검색한 상품 출력하는 위치</div>
+	<div id="productList" style="display:none"></div>
 	<br><br>
 	<form id="form1" name="form1" action="apadd" method="post" enctype="multipart/form-data">
-		<div id = "header">
+		<div id = "productInsert">
 			<div id = "imgCollection">
 				<div id = "imgCollection_1">
 					<label>이미지 추가</label>
@@ -158,12 +158,12 @@
 				</div>
 			</div>
 			<input type="hidden" name="stepCount" id="stepCount" readonly value="1">
-			<div id="content">
-				<br><label>상품 번호</label>
-				<input type="text" name="productNo" id="prodNo" required="required" placeholder="상품 번호를 입력해주세요."><br><br>
-		
-	<div id="productOption">
+	<div id="productOption" >
 		<table id="product_table">
+			<tr>
+			<td>상품 번호</td>
+			<td><input type="text" name="productNo" id="productNo" required="required" placeholder="상품 번호를 입력해주세요."></td>
+			</tr>
 			<tr>
                 <td>상품명</td>
                 <td><input type="text" name="productName" id="productName" required="required" placeholder="상품명을 입력해주세요."></td>
@@ -220,12 +220,11 @@
 			</select></td>
             </tr>
 		</table>
-	</div>
-			</div>
 		</div>
 		<div class="btn_collection"><br>
 			<input type="submit" id="save" value="등록">
 			<button type="reset" id="cancle">취소</button>
+		</div>
 		</div>
 	</form>
 </section>
@@ -233,11 +232,10 @@
 	$("#btn_search").click(searchF1);
 	 
 	function searchF1(){
-		/* if(("#input").val()==""){
-			alert("값을 입력해주세요.");
-			return;
-		} */
 		ajaxF1();
+		$("#productInsert").hide();
+		$("#productDelete").hide();
+		$("#productUpdate").hide();
 	}
 		
 		function ajaxF1(){
@@ -263,10 +261,11 @@
 						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 					}
 				});
+				$("#productList").show();
 		}
 		
 		function resultHtml(data){
-			var html="<table border='1' id='tsearch'>";
+			var html="<table border='1' id='productList'>";
 			html += "<tr>";
 			html += "<th>상품번호</th>";
 			html += "<th>상품이름</th>";
@@ -292,8 +291,8 @@
 			});
 			
 		html += "</table>";
-		$("#product").empty(); 
-		$("#product").append(html);
+		$("#productList").empty(); 
+		$("#productList").append(html);
 	}
 	
 	var stepId= 1;
@@ -306,6 +305,14 @@
 		$("#stepCount").val(stepId);
         console.log(stepId);
 	});
+	
+	$("#btn_insert").click(InsertShow);
+	function InsertShow(){
+		$("#productInsert").show();
+		$("#productList").hide();
+		$("#noticeDelete").hide();
+		$("#noticeUpdate").hide();
+	}
 	</script>
     <footer></footer>
 </body>

@@ -129,6 +129,14 @@ public class OrderService {
 		close(conn);
 		return result; 
 	}
+	public int deleteCartList(int[] list) {
+		int result=-1;
+		
+		Connection conn = getConnection();
+		result = new OrderDao().deleteCartList(list, conn);
+		close(conn);
+		return result; 
+	}
 	
 
 } // class

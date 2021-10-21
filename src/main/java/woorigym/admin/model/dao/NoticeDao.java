@@ -16,7 +16,7 @@ public class NoticeDao {
 
 	public ArrayList<NoticeTable> NoticeListAll(Connection conn){
 		ArrayList<NoticeTable> volist = null;
-		String sql = "SELECT * FROM NOTICE";
+		String sql = "SELECT * FROM NOTICE ORDER BY NOTICE_NO ASC";
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
@@ -29,12 +29,12 @@ public class NoticeDao {
 				volist = new ArrayList<NoticeTable>();
 				System.out.println("notice-2");
 				do {
-					NoticeTable vo = new NoticeTable();
-					vo.setNotice_no(rset.getInt("notice_no"));
-					vo.setN_title(rset.getString("n_title"));
-					vo.setN_content(rset.getString("n_content"));
-					vo.setN_date(rset.getString("n_date"));
-					volist.add(vo);
+					NoticeTable noticeVo = new NoticeTable();
+					noticeVo.setNotice_no(rset.getInt("notice_no"));
+					noticeVo.setN_title(rset.getString("n_title"));
+					noticeVo.setN_content(rset.getString("n_content"));
+					noticeVo.setN_date(rset.getString("n_date"));
+					volist.add(noticeVo);
 					System.out.println("notice-3");
 				} while(rset.next());
 			}
@@ -49,38 +49,39 @@ public class NoticeDao {
 		return volist;
 	}
 	
-	public int addNotice(Connection conn, NoticeTable vo) {
+	public int addNotice(Connection conn, NoticeTable noticeVo) {
 		int result = -1;
 		String sqlInsert = "INSERT INTO"
 				+ " NOTICE"
-				+ " (NOTICE_NO, N_TITLE, N_CONTENT, N_DATE)"
 				+ " VALUES (?, ?, ?, ?)";
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = conn.prepareStatement(sqlInsert);
-			pstmt.setInt(1, vo.getNotice_no());
-			pstmt.setString(2, vo.getN_title());
-			pstmt.setString(3, vo.getN_content());
-			pstmt.setString(4, vo.getN_date());
+			pstmt.setInt(1, noticeVo.getNotice_no());
+			pstmt.setString(2, noticeVo.getN_title());
+			pstmt.setString(3, noticeVo.getN_content());
+			pstmt.setString(4, noticeVo.getN_date());
 			
 			result = pstmt.executeUpdate();
+			System.out.println("DB 등록이 성공되었습니다.");
 		} catch(Exception e) {
 			e.printStackTrace();
+			//System.out.println("DB 등록이 되지않았습니다.");
 		} finally {
 			jdbcTemplate.close(pstmt);
 		}
 		return result;
 	}
 	
-	public int updateNotice(Connection conn, NoticeTable vo) {
+	public int updateNotice(Connection conn, NoticeTable noticeVo) {
 		int result = -1;
 		String sqlUpdate = "UPDATE NOTICE SET (N_TITLE=?, N_CONTENT=?) WHERE NOTICE_NO=?"; 
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = conn.prepareStatement(sqlUpdate);
-			pstmt.setString(1, vo.getN_title());
-			pstmt.setString(2, vo.getN_content());
-			pstmt.setInt(3, vo.getNotice_no());
+			pstmt.setString(1, noticeVo.getN_title());
+			pstmt.setString(2, noticeVo.getN_content());
+			pstmt.setInt(3, noticeVo.getNotice_no());
 
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -91,17 +92,42 @@ public class NoticeDao {
 		return result;
 	}
 	
-	public int deleteNotice(Connection conn, String notice_no) {
+	public int deleteNotice(Connection conn, int notice_no) {
 		int result = -1;
 		String sqlDelete = "DELETE FROM NOTICE WHERE NOTICE_NO=?";
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = conn.prepareStatement(sqlDelete);
-			pstmt.setString(1, notice_no);
+			pstmt.setInt(1, notice_no);
 			result = pstmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
+			jdbcTemplate.close(pstmt);
+		}
+		return result;
+	}
+	
+	public int checkDuplicatedNotice(Connection conn, NoticeTable noticeVo) {
+		int result =-1;
+		String sql = "select NOTICE_NO from NOTICE where NOTICE_NO=?";
+		PreparedStatement pstmt= null;
+		ResultSet rset = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, noticeVo.getNotice_no());
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				result = 1;  //  기존 상품이 있으면
+			} else {
+				result = 0;
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("오류 발생");
+			// 여기 -1
+		} finally {
+			jdbcTemplate.close(rset);
 			jdbcTemplate.close(pstmt);
 		}
 		return result;

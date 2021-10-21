@@ -49,7 +49,7 @@ public class OrderUsedCouponServlet extends HttpServlet {
 
 		Gson usecou_gob = new GsonBuilder().setPrettyPrinting().create();
 		String usecou_gobStr = "";
-		if (result != -1) {
+		if (result > 0) {
 			usecou_gobStr = usecou_gob.toJson(result);
 			out.println(usecou_gobStr);
 			System.out.println("사용된 쿠폰 변경 성공");

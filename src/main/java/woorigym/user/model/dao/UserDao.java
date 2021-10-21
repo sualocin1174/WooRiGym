@@ -93,7 +93,7 @@ public class UserDao {
 	
 	public int dupidChk(Connection conn, String user_id) {
 		int result = 0;
-		String sql = "select count(*) from member where user_id";
+		String sql = "select count(*) from member where user_id=?";
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		System.out.println("중복체크 dao 진입");
@@ -112,7 +112,7 @@ public class UserDao {
 			jdbcTemplate.close(rset);
 			jdbcTemplate.close(pstmt);
 		}
-		
+		System.out.println("return result: "+result);
 		return result; 
 	}
 	
@@ -120,7 +120,8 @@ public class UserDao {
 		int result = 0;
 //TODO
 		String tempDate = "2021/05/31";
-		String sql ="insert into member values(?, ?, ?, ?, ?, ?, to_date('"+tempDate+"','yyyy/mm/dd'), ?, to_date(? ,'yyyy/mm/dd'), ?, ?)";
+//		String sql ="insert into member values(?, ?, ?, ?, ?, ?, to_date('"+tempDate+"','yyyy/mm/dd'), ?, to_date(? ,'yyyy/mm/dd'), ?, ?)";
+		String sql ="insert into member values(?, ?, ?, ?, ?, ?, to_char(sysdate, 'yyyy/mm/dd'), ?, to_date(? ,'yyyy/mm/dd'), ?, ?)";
 //		String sql ="insert into user values(?, ?, ?, ?, ?, ?, sysdate, ?, to_date(? ,'yyyy/mm/dd'), ?, ?)";
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;

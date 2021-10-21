@@ -51,7 +51,6 @@ public class OrderUsedMileageSerlvet extends HttpServlet {
 			System.out.println("사용한 적립금 빼기 성공");
 			usemile_gobStr = usemile_gob.toJson(result);
 			out.println(usemile_gobStr);
-			// System.out.println(cart_gobStr);
 		} else {
 			System.out.println("사용한 적립금 빼기 실패");
 		}

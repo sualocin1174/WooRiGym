@@ -19,32 +19,29 @@ import woorigym.user.model.service.UserService;
 public class DupIdChkServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public DupIdChkServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		UserService UserSVC = new UserService();
-		int result = UserSVC.dupidChk(request.getParameter("user_id"));
-		PrintWriter out = response.getWriter();
+    	PrintWriter out = response.getWriter();
+		String uid = request.getParameter("user_id");
+		System.out.println("uid: "+uid);
+		int result = new UserService().dupidChk(uid);
+		
 		if (result > 0) {
-			out.append("fail"); // 만약 dupIdChk()의 결과값이 0 이상이면 ‘fail’
-		} else {
-			out.append("ok"); // 결과값이 0 보다 크지 않으면, ‘ok’를 담아서 보낸다.
+			//아이디 중복
+			System.out.println("아이디 중복: " + result);
+		} else if(result == 0){
+			if(uid == "") {
+				result = 2; //입력받은 아이디가 존재x
+				System.out.println("아이디가 존재하지 않습니다");
+			} else { // 사용가능
+				System.out.println("사용 가능: " + result);
+			}
 		}
+		out.print(result);
 		out.flush();
 		out.close();
 	}

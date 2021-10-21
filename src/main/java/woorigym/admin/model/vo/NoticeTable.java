@@ -1,5 +1,4 @@
 package woorigym.admin.model.vo;
-import java.sql.Date;
 
 public class NoticeTable {
 	private int notice_no; // 공지사항 번호
@@ -24,6 +23,11 @@ public class NoticeTable {
 		this.n_date = n_date;
 	}
 
+	public NoticeTable(int notice_no) {
+		super();
+		this.notice_no = notice_no;
+	}
+	
 	@Override
 	public String toString() {
 		return "NoticeTable [notice_no=" + notice_no + ", n_title=" + n_title + ", n_content=" + n_content + ", n_date="

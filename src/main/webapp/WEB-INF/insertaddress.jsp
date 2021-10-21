@@ -39,19 +39,33 @@
             }).open();
         }
        function closeWindow(){
-    	   $.ajax({ // JQuery 를 통한 ajax 호출 방식 사용
-               type: "get",
-               url: "orderinsertaddress",
-               data: { user_id: "<%=user.getUser_id() %>",
-            		   postcode : $("#postcode").val(),
-            		   basicaddr : $("#basicaddr").val(),
-            		   detailaddr : $("#detailaddr").val()
-               },
-               success: function (data) {
-            	  opener.location.reload();
-                  window.close();
-                   }
-               });
+    	   if($("#postcode").val()==""){
+    		   alert("우편번호를 입력해주세요.");
+    	   } else if($("#basicaddr").val()==""){
+    		   alert("기본주소를 입력해주세요.");
+    	   } else if($("#detailaddr").val()==""){
+    		   alert("상세주소를 입력해주세요.");
+    	   } else{
+    		   $.ajax({ // JQuery 를 통한 ajax 호출 방식 사용
+                   type: "get",
+                   url: "orderinsertaddress",
+                   data: { user_id: "<%=user.getUser_id() %>",
+                		   postcode : $("#postcode").val(),
+                		   basicaddr : $("#basicaddr").val(),
+                		   detailaddr : $("#detailaddr").val()
+                   },
+                   success: function (data) {
+                	  opener.location.reload();
+                      window.close();
+                       },
+                       error : function(request,status,error) {
+                           alert("code:"+request.status+"\n"+"message:"+request.responseText+
+                           "\n"+"error:"+error+"주소지 추가 실패");
+                           }
+                   });
+    		   
+    	   }
+    	  
            }
        
 

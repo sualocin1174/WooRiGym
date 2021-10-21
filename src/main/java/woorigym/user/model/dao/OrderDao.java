@@ -20,13 +20,14 @@ public class OrderDao {
 
 	public ArrayList<UserTable> getUserInfo(String userid, Connection conn) {
 		ArrayList<UserTable> volist;
-		String sql = "SELECT USER_NAME, PHONE , MILEAGE  FROM MEMBER";
+		String sql = "SELECT USER_NAME, PHONE , MILEAGE  FROM MEMBER WHERE USER_ID = ?";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		volist = new ArrayList<UserTable>();
 
 		try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userid);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 
@@ -87,7 +88,7 @@ public class OrderDao {
 	public ArrayList<CartTable> getCart(String userid, Connection conn) {
 		ArrayList<CartTable> volist;
 
-		String sql = "SELECT PRODUCT_NO, CART_QUANTITY FROM CART WHERE USER_ID=? AND CHECKED = 1 ORDER BY cart_no ASC";
+		String sql = "SELECT PRODUCT_NO, CART_QUANTITY, CART_NO FROM CART WHERE USER_ID=? AND CHECKED = 1 ORDER BY cart_no ASC";
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -103,6 +104,7 @@ public class OrderDao {
 					CartTable vo = new CartTable();
 					vo.setProductNo(rs.getString(1));
 					vo.setCartQuantity(rs.getInt(2));
+					vo.setCartNo(rs.getInt(3));
 					volist.add(vo);
 				} while (rs.next());
 			}
@@ -359,11 +361,6 @@ public class OrderDao {
 	public int orderDeatilInsert(String user_id,String[] proNoArr,String[] proQuanArr, Connection conn) {
 		int result=0;
 		
-		for(int i = 0 ; i < proNoArr.length;i++ ) {
-			
-			
-		}
-		
 		String sql = "INSERT INTO order_detail values (" + 
 				"(SELECT ORDER_NO FROM ORDERINFO " + 
 				"WHERE ORDER_DATE = (SELECT MAX(ORDER_DATE) FROM ORDERINFO WHERE user_id = ?))||'-'|| ORDER_DETAIL_SEQ.nextval ," + 
@@ -392,6 +389,31 @@ public class OrderDao {
 			close(pstmt);
 		}
 		
+		return result; 
+	}
+	
+	public int deleteCartList(int[] list, Connection conn) {
+		int result=-1;
+		
+		String sql = "DELETE CART WHERE cart_no = ?";
+		
+		PreparedStatement pstmt = null;
+		
+		try {
+			result=0;
+			for(int i = 0 ; i < list.length;i++ ) {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, list[i]);
+				result += pstmt.executeUpdate();
+			}
+			conn.commit();
+			
+		} catch (Exception e) {
+			result= -1;
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
 		return result; 
 	}
 

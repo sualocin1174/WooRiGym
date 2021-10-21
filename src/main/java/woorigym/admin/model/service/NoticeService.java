@@ -22,4 +22,24 @@ public class NoticeService {
 		jdbcTemplate.close(conn);
 		return volist;
 	}
+	
+	public int addNotice(NoticeTable noticeVo) {
+		int result = -1;
+		Connection conn = jdbcTemplate.getConnection();
+	
+		result = new NoticeDao().addNotice(conn, noticeVo);
+		jdbcTemplate.close(conn);
+		
+		return result;
+	}
+	
+	public int deleteNotice(int notice_no) {
+		int result = -1;
+		Connection conn = jdbcTemplate.getConnection();
+		
+		result = new NoticeDao().deleteNotice(conn, notice_no);
+		jdbcTemplate.close(conn);
+		
+		return result;
+	}
 }

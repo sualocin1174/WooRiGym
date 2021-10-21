@@ -29,17 +29,10 @@ public class LoginServlet extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
@@ -53,12 +46,12 @@ public class LoginServlet extends HttpServlet {
 			request.setAttribute("result", "로그인성공");
 			HttpSession session = request.getSession();
 			session.setAttribute("loginSS", vo);
-			request.getRequestDispatcher("/WEB-INF/loginAction.jsp").forward(request, response);;
+			request.getRequestDispatcher("/WEB-INF/loginAction.jsp").forward(request, response);
 		}
 		else {
 			System.out.println("로그인 실패");
 			request.setAttribute("result", "로그인실패");
-			request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);;
+			request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
 		}		
 	}
 }
