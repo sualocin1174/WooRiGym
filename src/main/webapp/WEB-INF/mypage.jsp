@@ -101,15 +101,15 @@
     </tr>
     <tr>
         <td>보유 쿠폰</td>
-        <td>0</td>
+        <td>${myCoupon.have_coupon}</td>
         <td>장</td>
         <td>보유 적립금</td>
-        <td>0</td>
+        <td>${myCoupon.have_mileage}</td>
         <td>P</td>
     </tr>
     <tr>
         <td>소멸 예정 쿠폰</td>
-        <td>0</td>
+        <td>${myCoupon.goodbye_coupon}</td>
         <td>장</td>
         <td>소멸 예정 적립금</td>
         <td>0</td>
@@ -121,10 +121,10 @@
     <tr>
         <!-- 주문/배송조회에서 갯수 체크해서 불러오기 -->
         <!-- 아래 0은 시범용(삭제예정) -->
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
+        <td>${MyDeliveryVo.order_complete}</td>
+        <td>${MyDeliveryVo.order_ready}</td>
+        <td>${MyDeliveryVo.order_ing}</td>
+        <td>${MyDeliveryVo.order_arrive}</td>
     </tr>
     <tr>
         <td>주문완료</td>
@@ -138,17 +138,17 @@
 <!-- 아래 0은 시범용(삭제예정) -->
 <li onclick="">
     <span>취소:</span>
-    <span>0</span>
+    <span>${MyCerlistVo.order_cancel}</span>
     건
 </li>
 <li onclick="">
     <span>교환:</span>
-    <span>0</span>
+    <span>${MyCerlistVo.order_change}</span>
     건
 </li>
 <li onclick="">
     <span>반품:</span>
-    <span>0</span>
+    <span>${MyCerlistVo.order_refund}</span>
     건
 </li>
 </ul>

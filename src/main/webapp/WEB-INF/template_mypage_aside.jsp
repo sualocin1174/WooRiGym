@@ -10,7 +10,7 @@
      <ul>
          <li>마이페이지</li>
          <li><a href="<%=request.getContextPath()%>/orderlist" id="btnList">주문/배송조회</a></li>
-         <li><a href="#">취소/교환/반품</a></li>
+         <li><a href="<%=request.getContextPath()%>/clist">취소/교환/반품</a></li>
          <li><a href="#">상품 후기</a></li>
          <li><a href="#" id="btncoupon" class="btnC">쿠폰 관리</a></li>
          <li><a href="#">상품 문의(Q&A)</a></li>

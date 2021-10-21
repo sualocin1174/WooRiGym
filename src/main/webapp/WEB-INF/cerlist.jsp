@@ -7,8 +7,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
-<%@ page import = "woorigym.user.model.vo.OrderTable" %>
-<%@ page import = "woorigym.user.model.vo.OrderDetailTable" %>
+<%@ page import = "woorigym.user.model.vo.CerList" %>
 <%@ page import = "java.util.ArrayList"%>
 
 <!DOCTYPE html>
@@ -17,7 +16,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>마이페이지-주문/배송조회</title>
+    <title>마이페이지-취소/교환/반품 조회</title>
     <script>
 
     //페이지 로드 시 오늘날짜 기준 1달 이내의 주문내역 출력
@@ -121,7 +120,6 @@
     }
     function ajaxF1(){ //검색버튼 클릭 시
     	// TODO: 유효성검사 해도되고 $("#start_date")")
-    	
     	console.log("#start_date: "+$("#start_date"));
 		var startDate = $("#start_date").val();
     	var endDate =  $("#end_date").val();
@@ -129,7 +127,7 @@
     	console.log(endDate);
     	$.ajax({
     		type: "post",
-    		url: "<%=request.getContextPath()%>/orderlist",
+    		url: "<%=request.getContextPath()%>/clist",
     		data: {
     			startDate: startDate,
     			endDate: endDate
@@ -149,34 +147,27 @@
     					console.log(data[i]);
     					//버튼 태그를 생성할때 <input onclick=f1(order_no)>이런 식으로 order_no를 가져와서~
     				//주문번호, 주문날짜+테이블 제목+내용
-    					 html+=  "<h3><a href='orderDetailTable?order_no="+data[i].order_no+"'>"+data[i].order_no+"</a></h3>"
+    					 html+=  "<h3><a href='cerDetailServlet?order_no="+data[i].order_no+"'>"+data[i].order_no+"</a></h3>"
 							 + "<h4><a href='./orderTable?order_date='"+data[i].order_date+"'>"+data[i].order_date+"</a></h4>"
 							 + "<table id='order_detail'><tr><th colspan='2'>상품명</th>"
-						     + "<th>수량</th><th>상품금액</th><th>배송비</th><th>결제상태</th><th>진행상태</th></tr>"
+						     + "<th>수량</th><th>상품금액</th><th>배송비</th><th>처리상태</th></tr>"
     						 
 	    					 //+ "<a href='./orderDetailTable?product_no="+data[i].product_no+"'>"
 		    	 			 + "<td><a href='./productTable?product_info_url="+data[i].product_info_url
 		    	 			//TODO: 이미지 경로 수정
 		    	 			 +"'><img src='./images/1번 메인.jpg'></a></td>"+"<td>"+data[i].product_name+"</td>"	  
 		    	       		 +"<td><a href='./orderDetailTable?buy_quantity="+data[i].buy_quantity+"'>"+data[i].buy_quantity+"</a></td>"
-		    	       		 +"<td><a href='./orderTable?order_total="+data[i].order_total+"'>"+data[i].order_total+"</a></td>"
-		    	       		 +"<td><a href='./orderTable?order_cost="+data[i].order_cost+"'>"+data[i].order_cost+"</a></td>"
-		    	       		 +"<td><a href='./orderTable?pay_state="+data[i].pay_state+"'>"+data[i].pay_state+"</a></td>"
-		    	       		 +"<td><a href='./orderTable?order_state="+data[i].order_state+"'>"+data[i].order_state+"</a></td>"
-		    	        	 +"</tr>";
-    				if(data[i].order_state =='주문완료'){
-    					html += "<tr><td><button>주문취소</button><td></tr></table>";
-    					//$("#order_detail").html(cancel);
-    				}else{
-    					html += "</table>";
-    				}
+		    	       		 +"<td><a href='./orderList?order_total="+data[i].order_total+"'>"+data[i].order_total+"</a></td>"
+		    	       		 +"<td><a href='./orderList?order_cost="+data[i].order_cost+"'>"+data[i].order_cost+"</a></td>"
+		    	       		 +"<td><a href='./cerList?claim_process="+data[i].claim_process+"'>"+data[i].claim_process+"</a></td>"
+		    	        	 +"</tr></table>";
     				}
         		    $("#order").html(html);
     			} else {
 		    	      //결과 없을 때
     				empty += "<table id='order_detail'><tr><th colspan='2'>상품명</th>"
-					     + "<th>수량</th><th>상품금액</th><th>배송비</th><th>진행상태</th></tr>"
-						  +"<td colspan='6'>해당 기간의 주문내역이 없습니다</td>"
+					     + "<th>수량</th><th>상품금액</th><th>배송비</th><th>처리상태</th></tr>"
+						  +"<td colspan='6'>해당 기간의 교환/반품내역이 없습니다</td>"
         			 $(empty).insertAfter($("#btngroup"));
     			}
     		},
@@ -186,7 +177,6 @@
     		}
     	});
 	};
-	
     </script>
  <!-- /* content */ -->
  <style>
@@ -285,9 +275,8 @@
  	<%@ include file="template_header.jsp"%>
 	<!--마이페이지 공통사이드 템플릿 -->
  	<%@ include file="template_mypage_aside.jsp"%>
-
 <section>
-    <h2>주문/배송 조회</h2>
+    <h2>취소/교환/반품 조회</h2>
     <h3>조회 기간</h3>
     <!-- 달력 -->
      <div id="btngroup">
@@ -316,7 +305,7 @@
 	이전
 	</c:if>
 	<c:forEach begin="${startPage}"  end="${endPage}" step="1" var="i">
-		<a href="./orderlist?pagenum=${i}"> ${i} </a>
+		<a href="./clist?pagenum=${i}"> ${i} </a>
 		<c:if test="${i} != ${endPage}">
 			,
 		</c:if>

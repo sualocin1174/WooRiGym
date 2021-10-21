@@ -17,7 +17,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>마이페이지-주문/배송조회</title>
+    <title>주문상세보기</title>
     <script>
 
     //페이지 로드 시 주문상세내역 출력

@@ -13,7 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import woorigym.user.model.dao.MyCerlistVo;
+import woorigym.user.model.service.MypageService;
 import woorigym.user.model.service.OrderListService;
+import woorigym.user.model.vo.MyCoupon;
+import woorigym.user.model.vo.MyDeliveryVo;
 import woorigym.user.model.vo.OrderList;
 import woorigym.user.model.vo.UserTable;
 
@@ -32,6 +36,22 @@ public class MyPageServlet extends HttpServlet {
 			return;
 		}
 		System.out.println("loginSS~~555555555~~~");//확인
+		
+		String uid = loginSS.getUser_id();
+		
+		MyCoupon mc = new MypageService().mypageCoupon(uid);
+		MyDeliveryVo md = new MypageService().mydelivery(uid);
+		MyCerlistVo mcv = new MypageService().mycer(uid);
+		
+		request.setAttribute("myCoupon", mc);
+		request.setAttribute("MyDeliveryVo", md);
+		request.setAttribute("MyCerlistVo", mcv);
+		
+		
+		System.out.println("mc: "+mc);
+		System.out.println("md: "+md);
+		System.out.println("mcv: "+mcv);
+		
 		String ViewPage = "/WEB-INF/mypage.jsp";
 		request.getRequestDispatcher(ViewPage).forward(request, response);
 	}
