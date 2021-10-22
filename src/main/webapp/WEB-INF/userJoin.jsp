@@ -247,7 +247,7 @@ text-align: center;
                         <tr>        
                             <th id="title">이메일 수신동의</th>        
                             <td>       
-                                <label class="container" for="email_yes"><input type="radio" id = "email_yes" name="email_ynStr" value= "1"  checked>동의<span class="checkmark"></span></label>        
+                                <label class="container" for="email_yes"><input type="radio" id = "email_yes" name="email_ynStr" value= "1" >동의<span class="checkmark"></span></label>        
                                 <label class="container" for="email_no"><input type="radio" id = "email_no" name="email_ynStr" value= "0" >거부<span class="checkmark"></span></label>         
                             </td>        
                         </tr>

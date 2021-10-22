@@ -92,7 +92,7 @@
 <section>
   <c:if test="${loginSS != null}">
     <h1 id="uname">${loginSS.user_name}님 즐거운 쇼핑 되세요!</h1>
-    <a href="#">회원정보 수정 ></a>
+    <a href="<%=ctxPath %>/userModify">회원정보 수정 ></a>
   </c:if>
 <table class="coupon">
     <tr>
