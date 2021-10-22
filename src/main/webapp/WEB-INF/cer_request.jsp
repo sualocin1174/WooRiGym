@@ -96,7 +96,7 @@
   border-color: #fff transparent transparent transparent;
 }
 
-/*point the arrow upwards when the select box is open (active):*/
+/*선택 상자가 열려 있을 때 화살표를 위쪽으로*/
 .select-selected.select-arrow-active:after {
   border-color: transparent transparent #fff transparent;
   top: 7px;
@@ -123,7 +123,7 @@
   z-index: 99;
 }
 
-/*hide the items when the select box is closed:*/
+/*선택 상자를 닫을 때 항목 숨기기*/
 .select-hide {
   display: none;
 }
