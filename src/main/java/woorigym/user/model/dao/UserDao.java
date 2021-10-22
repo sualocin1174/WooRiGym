@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import woorigym.common.jdbcTemplate;
+import woorigym.user.model.vo.AddressTable;
 import woorigym.user.model.vo.UserTable;
 
 public class UserDao {
@@ -115,10 +116,9 @@ public class UserDao {
 		System.out.println("return result: "+result);
 		return result; 
 	}
-	
+	// 회원가입 dao
 	public int userInsert(Connection conn, UserTable user) {
 		int result = 0;
-//TODO
 		String tempDate = "2021/05/31";
 //		String sql ="insert into member values(?, ?, ?, ?, ?, ?, to_date('"+tempDate+"','yyyy/mm/dd'), ?, to_date(? ,'yyyy/mm/dd'), ?, ?)";
 		String sql ="insert into member values(?, ?, ?, ?, ?, ?, to_char(sysdate, 'yyyy/mm/dd'), ?, to_date(? ,'yyyy/mm/dd'), ?, ?)";
@@ -156,7 +156,39 @@ public class UserDao {
 		}
 		return result; 
 	}
-	
+	// 주소지 입력 dao
+	public int adressInsert(Connection conn, AddressTable address) {
+		int result = 0;
+		String sql ="insert into address values(ADDRESS_SEQ.NEXTVAL,?,?,?,?,1)";
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		System.out.println("주소지 입력 dao 진입");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, address.getUser_id());
+			pstmt.setString(2, address.getPostcode());
+			pstmt.setString(3, address.getBasic_address());
+			pstmt.setString(4, address.getDetail_address());
+			
+			
+			
+			result = pstmt.executeUpdate();
+			if(result > 0) {
+				System.out.println("주소지 입력 성공");
+			}
+			else {
+				System.out.println("주소지 입력 실패");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			jdbcTemplate.close(rset);
+			jdbcTemplate.close(pstmt);
+		}
+		return result; 
+	}
+	// 회원정보 수정
 	public int updateUser(Connection conn, UserTable user) {
 		String sql ="update member set user_pwd=? user_name=? ";
 		PreparedStatement pstmt = null;

@@ -7,22 +7,31 @@ import java.util.ArrayList;
 
 import woorigym.common.jdbcTemplate;
 import woorigym.user.model.dao.UserDao;
+import woorigym.user.model.vo.AddressTable;
 import woorigym.user.model.vo.UserTable;
 
 public class UserService {
 
 	public UserService() {
 	}
+	// 로그인
 	public UserTable Login(String user_id, String user_pwd) {
 		Connection conn = jdbcTemplate.getConnection();
 		UserTable vo = new UserDao().login(conn, user_id, user_pwd);
 		jdbcTemplate.close(conn);
 		return vo;
 	}
-	
+	// 회원가입
 	public int userInsert(UserTable user) {
 		Connection conn = jdbcTemplate.getConnection();
 		int result = new UserDao().userInsert(conn, user);
+		jdbcTemplate.close(conn);
+		return result;
+	}
+	// 주소지 입력
+	public int adressInsert(AddressTable address) {
+		Connection conn = jdbcTemplate.getConnection();
+		int result = new UserDao().adressInsert(conn, address);
 		jdbcTemplate.close(conn);
 		return result;
 	}
