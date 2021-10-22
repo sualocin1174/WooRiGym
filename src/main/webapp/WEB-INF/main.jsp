@@ -1,3 +1,7 @@
+<!-- 웹폰트: Noto Sans Korean -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
    <!-- 헤더 CSS -->
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_header.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -15,6 +19,9 @@
     <title>우리짐 메인페이지</title>
        <!-- /* content */-->
         <style>
+        body{
+        font-family: 'Noto Sans KR', sans-serif;
+        }
             section {
                 width: 1200px;
                 padding: 30px 0 30px 0;
@@ -64,7 +71,6 @@
             <!-- Slideshow / Carousel -->
             <style>
 			* {box-sizing: border-box;}
-			body {font-family: Verdana, sans-serif;}
 			.mySlides {display: none;}
 			img {vertical-align: middle;}
 			
@@ -73,15 +79,6 @@
 			  max-width: 1000px;
 			  position: relative;
 			  margin: auto;
-			}
-			
-			/* Number text (1/3 etc) */
-			.numbertext {
-			  color: #f2f2f2;
-			  font-size: 12px;
-			  padding: 8px 12px;
-			  position: absolute;
-			  top: 0;
 			}
 			
 			/* The dots/bullets/indicators */
@@ -132,17 +129,15 @@
     <!-- Slideshow / Carousel -->
         <div class="slideshow-container">
 		<div class="mySlides fade">
-		  <div class="numbertext">1 / 3</div>
+		<!-- TODO: 이미지 변경 -->
 		  <img src="./images/메인_샘플1.jpg" style="width:100%">
 		</div>
 		
 		<div class="mySlides fade">
-		  <div class="numbertext">2 / 3</div>
 		  <img src="./images/메인_샘플2.jpg" style="width:100%">
 		</div>
 		
 		<div class="mySlides fade">
-		  <div class="numbertext">3 / 3</div>
 		  <img src="./images/메인_샘플3.jpg" style="width:100%">
 		</div>
 		

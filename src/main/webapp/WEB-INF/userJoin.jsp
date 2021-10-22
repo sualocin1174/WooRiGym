@@ -18,14 +18,19 @@
 	text-align: center;
 	margin-bottom: 15px;
 }
-table{
+/* 회원가입 테이블 */
+#joinform table{
 	margin: auto;
+}
+#joinform th{
+text-align: left;
+padding: 20px;
 }
 input,
 .btn {
   padding: 12px;
   border-radius: 4px;
-  margin: 5px 0;
+  margin: 8px 0;
   opacity: 0.85;
   display: inline-block;
   font-size: 17px;
@@ -41,10 +46,6 @@ input:hover,
   opacity: 1;
 }
 
-/* 라디오 버튼 */
-input[radio]{
-padding: 5px;
-}
 select{
   padding: 12px;
   border-radius: 4px;
@@ -55,19 +56,73 @@ select{
   line-height: 20px;
   text-decoration: none; /* remove underline from anchors */
 }
-/* 중복확인 버튼 */
-#checkId{
+/* 중복확인, 우편번호 찾기 버튼 */
+.button {
  border-color: #2196F3;
  background: white;
   color: dodgerblue;
   cursor: pointer;
 }
 
-#checkId:hover{
+.button:hover{
 background: #2196F3;
   color: white;
 }
-
+  /* 체크박스 */
+        .container {
+	  position: relative;
+	  padding-left: 35px;
+	  margin-bottom: 12px;
+	    margin-right: 8px;
+	  cursor: pointer;
+	  font-size: 1rem;
+	  -webkit-user-select: none;
+	  -moz-user-select: none;
+	  -ms-user-select: none;
+	  user-select: none;
+	}
+	/* Hide the browser's default radio button */
+	.container input {
+	  position: absolute;
+	  opacity: 0;
+	  cursor: pointer;
+	}
+	/* Create a custom radio button */
+	.checkmark {
+	  position: absolute;
+	  left: 0;
+	  height: 20px;
+	  width: 20px;
+	  background-color: #eee;
+	  border-radius: 50%;
+	}
+	/* On mouse-over, add a grey background color */
+	.container:hover input ~ .checkmark {
+	  background-color: #ccc;
+	}
+	/* When the radio button is checked, add a blue background */
+	.container input:checked ~ .checkmark {
+	  background-color: dodgerblue;
+	}
+	/* Create the indicator (the dot/circle - hidden when not checked) */
+	.checkmark:after {
+	  content: "";
+	  position: absolute;
+	  display: none;
+	}
+	/* Show the indicator (dot/circle) when checked */
+	.container input:checked ~ .checkmark:after {
+	  display: block;
+	}
+	/* Style the indicator (dot/circle) */
+	.container .checkmark:after {
+	 	top: 6px;
+		left: 6px;
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		background: white;
+	}
 /* 회원가입, 취소 버튼 */
 #btnJoin{
 text-align: center;
@@ -96,16 +151,16 @@ text-align: center;
                 <form id = "joinform" action="join" method="post">        
                     <table>        
                         <tr>        
-                            <td id="title">아이디</td>       
+                            <th id="title">아이디</th>       
                             <td>       
                                 <input type="text" id="user_id" name="user_id" placeholder="아이디" maxlength="20">        
-                                <input type="button" value="중복확인" id="checkId">
+                                <input type="button" value="중복확인" class="button">
                                 <span id="id_check"></span>            
                             </td>        
                         </tr>                                        
         
                         <tr>        
-                            <td id="title">비밀번호</td>       
+                            <th id="title">비밀번호</th>       
                             <td>       
                                 <input type="password" id = "user_pwd" name= user_pwd placeholder="비밀번호" maxlength="15">
                                 <div class = "user_pwd regex"></div>        
@@ -113,7 +168,7 @@ text-align: center;
                         </tr>
                                       
                         <tr>       
-                            <td id="title">비밀번호 확인</td>      
+                            <th id="title">비밀번호 확인</th>      
                             <td>        
                                 <input type="password" id = "user_pwdtest" name="user_pwdtest" placeholder="비밀번호 확인" maxlength="15">
                                 <div class = "user_pwdtest regex"></div>        
@@ -121,7 +176,7 @@ text-align: center;
                         </tr>
                                             
                         <tr>        
-                            <td id="title">이름</td>        
+                            <th id="title">이름</th>        
                             <td>        
                                 <input type="text" id = "name" name="user_name" placeholder="이름"  maxlength="40">
                                 <div class="name regex"></div>       
@@ -129,7 +184,7 @@ text-align: center;
                         </tr>
                                             
                         <tr>       
-                            <td id="title">연락처</td>       
+                            <th id="title">연락처</th>       
                             <td>        
                                 <input type="text" id = "phone01" name="phone01" placeholder="010" maxlength="3" size = "3"> -
                                 <input type="text" id = "phone02" name="phone02" placeholder="0000" maxlength="4" size = "4"> -
@@ -138,7 +193,7 @@ text-align: center;
                         </tr>
                          
                         <tr>       
-                            <td id="title">주민등록번호</td>        
+                            <th id="title">주민등록번호</th>        
                             <td>       
                                 <input type="text" id = "identity_number" name="identity_number" placeholder="뒷자리 7자리" maxlength="7">
                                 <div class="identity_number regex"></div>        
@@ -146,15 +201,15 @@ text-align: center;
                         </tr>
                          
                         <tr>        
-                            <td id="title">성별</td>       
+                            <th id="title">성별</th>       
                             <td>       
-                                <input type="radio" id = "gender" name="genderStr" value= 1 >남
-                                <input type="radio" id = "gender" name="genderStr" value= 0 >여       
+                                <label class="container" for="male"><input type="radio" id = "male" name="genderStr" value= 1 >남<span class="checkmark"></span></label>
+                                <label class="container" for="female"><input type="radio" id = "female" name="genderStr" value= 0 >여<span class="checkmark"></span></label>       
                             </td>       
                         </tr>
                                            
                         <tr>       
-                            <td id="title">생년월일</td>        
+                            <th id="title">생년월일</th>        
                             <td>        
                                 <input type="text" id = "birthday_yy" name="birthday_yy" maxlength="4" placeholder="년(4자)" size="6" >       
                                 <select id = "birthday_mm" name= "birthday_mm">        
@@ -177,7 +232,7 @@ text-align: center;
                         </tr>
                                             
                         <tr>        
-                            <td id="title">이메일</td>       
+                            <th id="title">이메일</th>       
                             <td>       
                                 <input type="text" id = "email_1" name="email_1" maxlength="30">@       
                                 <select id = "email_2" name="email_2">       
@@ -190,17 +245,17 @@ text-align: center;
                         </tr>
                                         
                         <tr>        
-                            <td id="title">이메일 수신동의</td>        
+                            <th id="title">이메일 수신동의</th>        
                             <td>       
-                                <input type="radio" id = "email_yn" name="email_ynStr" value= "1" >동의        
-                                <input type="radio" id = "email_yn" name="email_ynStr" value= "0" >거부        
+                                <label class="container" for="email_yes"><input type="radio" id = "email_yes" name="email_ynStr" value= "1"  checked>동의<span class="checkmark"></span></label>        
+                                <label class="container" for="email_no"><input type="radio" id = "email_no" name="email_ynStr" value= "0" >거부<span class="checkmark"></span></label>         
                             </td>        
                         </tr>
                         <tr>
-                        <td id="title">배송지</td>
+                        <th id="title">배송지</th>
                         <td>
                         <input type="text" id="sample6_postcode" name = "postcode" placeholder="우편번호">
-						<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+						<input type="button" onclick="sample6_execDaumPostcode()" class="button" value="우편번호 찾기"><br>
 						<input type="text" name = "basic_address" id="sample6_address" placeholder="주소"><br>
 						<input type="text" name = "detail_address" id="sample6_detailAddress" placeholder="상세주소">
 						<input type="text" id="sample6_extraAddress" placeholder="참고항목">

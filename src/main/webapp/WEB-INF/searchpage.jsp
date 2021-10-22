@@ -87,10 +87,13 @@
 		}
 		
 		.select-selected {
-		 /* background-color: DodgerBlue;*/
-		 background: #FEA500;
-		}
+		background-color: #DFE0DF;
+        color: black;
+		 border: 2px solid #DFE0DF;
+        border-radius: 5px;
 		
+		}
+		/*삼각형*/
 		/*style the arrow inside the select element:*/
 		.select-selected:after {
 		  position: absolute;
@@ -111,7 +114,8 @@
 		
 		/*style the items (options), including the selected item:*/
 		.select-items div,.select-selected {
-		  color: #ffffff;
+		  /*카테고리별 검색 - 옵션*/
+		  color: black;
 		  padding: 5px 10px;
 		  border: 1px solid transparent;
 		  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
@@ -122,8 +126,7 @@
 		/*style items (options):*/
 		.select-items {
 		  position: absolute;
-		 /* background-color: DodgerBlue;*/
-		  background-color: #FEA500;
+		  background-color: #FFF8F0;
 		  top: 100%;
 		  left: 0;
 		  right: 0;
@@ -172,14 +175,13 @@
         cursor: pointer;
         background-color: white;
         color: black;
-        border: 2px solid #2F4858;
+        border: 2px solid #555555;;
         border-radius: 5px;
         }
 
         #searchBtn:hover {
-        border: 2px solid #FEA500;
-           background: #FEA500;
-      	color: white;
+          background-color: #555555;
+        color: white;
         }
 		/* 페이징 버튼 */
       	#pageview{
@@ -253,7 +255,7 @@
     	<div id="test"></div>
     	<table border='1' id="prolist">
     	<!-- 2021.10.13 1차 추가시작 -->
-    		<c:forEach var="plist" items="${productlist}">
+    		<c:forEach var="plist" items="${productlist1}">
 	    		<!-- 2021.10.13 2차 추가시작 -->
 		    	<%-- <tr><td>이미지 : ${plist.productInfoUrl}</td></tr>
 		    	<tr><td>상품명 : ${plist.productName}</td></tr>
@@ -289,7 +291,7 @@
     	</table>
     	<div id="pageview"> <!-- 2021.10.22 추가 SH -->
     	<c:if test=" ${startPage} > 1 " >
-			이전
+			<p>이전</p>
 		</c:if>
 		<c:forEach begin="${startPage}"  end="${endPage}" step="1" var="i">
 			<a href="./searchpage?pagenum=${i}"> ${i} </a>

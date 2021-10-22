@@ -33,7 +33,9 @@
             top: 50px;
             left: 450px;
             position: relative;
-            background-color: #ffffbd;
+            border-radius: 20px;
+            background-color: #FFC0B7;
+            color: white;
             padding: 30px;
         }
 		.modal-coupon td {

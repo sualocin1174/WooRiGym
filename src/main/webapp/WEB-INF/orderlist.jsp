@@ -257,7 +257,7 @@
        
        /* 주문내역 테이블 */
       	table#order_detail{
-		  width: 850px;
+		  width: 900px;
           text-align: center;
           margin-bottom: 15px;
           border-top: 1.5px solid black;

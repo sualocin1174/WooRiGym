@@ -26,40 +26,67 @@
 	        margin: 0;
 	        padding: 0;
 	    }
-	    
-	       /* 공통헤더에 있던 부분인데 css로 따로 빼면 적용이 안되서 reset에 포함 */
-	    #main_tnb2 {
-	        position: absolute;
-	        top: 10px;
-	        bottom: 10px;
-	        right: 30px;
-	        margin: 10px;
-	        overflow: hidden;
-	        width: 500px;
-	        height: 100px;
-	    }
-	
-	    #main_tnb2>ul>li {
-	        display: inline-block;
-	        padding: 5px;
-	    }
-	    /* 로그인 후: OOO님 | 로그아웃 | 마이페이지 | 장바구니 | 최근본상품 */
-	    #main_tnb2 li::after {
-	        padding-left: 10px;
-	        content: "|";
-	    }
-	    #main_tnb2 li:last-child::after {
-	        padding-left: 10px;
-	        content: "";
-	    }
-	    #form1 {
-         width: 1000px;
+	    section {
+         width: 900px;
          padding: 0 0 30px 0;
          position: relative;
-         bottom: 20px;
-         left: 50px;
-     	}
-	     /* 공통헤더~reset에 포함  끝*/
+         top: 20px;
+         left: 170px;
+     }
+	    /* 장바구니 테이블*/
+	    #bag_table{
+	     width: 950px;
+          text-align: center;
+          margin: 15px 0 15px 0;
+          border: 1.5px solid black;
+          border-collapse: collapse;
+	    }
+	    #bag_table th{
+      	padding: 10px;
+      	}
+        #bag_table td {
+        padding: 16px;
+      	}
+	   	 #bag_table img{
+          width: 80px;
+          height: 80px;
+      	}
+      	#bag_price{
+      	width: 400px;
+      	margin: 25px 0 25px 0;
+      	}
+      	/*버튼*/
+      	 .button{
+        padding: 5px 25px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 16px;
+        margin: 25px 10px;
+        transition-duration: 0.3s;
+        cursor: pointer;
+        background-color: white;
+        color: black;
+        border: 2px solid #555555;
+        border-radius: 5px;
+        }
+        .button:hover {
+        background-color: #555555;
+        color: white;
+        }
+        /* 옵션변경 버튼 */
+        #btnoption {
+        margin: 5px 0 2px 0;
+        border: 2px solid #DFE0DF;
+        background-color: #DFE0DF;
+        padding: 2px;
+        cursor: pointer;
+        }
+        #btnoption:hover {
+        border: 2px solid #555555;
+        background-color: #555555;
+        color: white;
+        }
+        
 	</style>
 	<!-- 2021.10.19 내용삭세 시작 -->
 	<!-- <script>
@@ -104,7 +131,7 @@
 <body>
 <!-- 공통헤더 템플릿 -->
 <%@ include file="template_header.jsp"%>
-
+<section>
 	<div id="" style="display: none"></div>
 	<form id="form1" name="form1" method="post">
 	<h2>장바구니</h2>
@@ -172,11 +199,12 @@
 	            </td>
 	        </tr>
 	    </table>   -->              
-	    <button type="button" id="btnSelectBuy">선택구매</button>
-	    <button type="button" id="btnSelectDelete">선택삭제</button>
-	    <button type="button" id="btnAllBuy">전체구매</button>
-	    <button type="button" id="btnAllDelete">전체삭제</button>
+	    <button type="button" class="button" id="btnSelectBuy">선택구매</button>
+	    <button type="button" class="button" id="btnSelectDelete">선택삭제</button>
+	    <button type="button" class="button" id="btnAllBuy">전체구매</button>
+	    <button type="button" class="button" id="btnAllDelete">전체삭제</button>
 	</form>
+	</section>
 	<script type="text/javascript">
     	$(document).ready(ajaxf1);
     	function ajaxf1() {
@@ -227,13 +255,13 @@
 				});
 			}
     	function resultHtml(data){
-			var html="<table border='1' width=100%>";
+			var html="<table border='1' width=100% id='bag_table'>";
 			html += "<tr>";
 			html += "<th style='display: none'>장바구니번호</th>";
 			html += "<th width='10%'><input type ='checkbox' name='mainCB' id='mainCB'> 체크박스</th>";
 			// html += "<th style='display: none' width='10%'><input type ='hidden' name='mainCB' id='mainCB_hidden'> 체크박스</th>";
-			html += "<th width='50%'>상품명/옵션</th>";
-			html += "<th width='5%'>수량</th>";
+			html += "<th colspan='2' width='50%'>상품명/옵션</th>";
+			html += "<th width='8%'>수량</th>";
 			html += "<th width='10%'>상품금액</th>";
 			html += "<th width='10%'>적립금</th>";
 			html += "<th width='15%'>배송비</th>";
@@ -244,6 +272,7 @@
 				html += "<td style='display: none'>" + cartlist.cartNo + "</td>";
 				html += "<td><input type ='checkbox' name='subCB' value="+cartlist.cartNo+" class='subCB'>"+cartlist.cartNo+"</td>";
 				// html += "<td style='display: none'><input type ='hidden' name='subCB' value='0' id='subCB_hidden'></td>";
+				html += "<td><img src='./images/1번 메인.jpg'></td>"; 
 				html += "<td>" + cartlist.productName+"<br>"+cartlist.productOption + "<br><button type='button' id='btnoption'>옵션변경</button></td>";
 				html += "<td>" + cartlist.cartQuantity + "개</td>";
 				html += "<td>" + cartlist.price*cartlist.cartQuantity + "원</td>";
@@ -252,7 +281,7 @@
 				html += "</tr>";
 			});
 			html += "</table>";
-			var costhtml = "<table>"
+			var costhtml = "<table id='bag_price'>"
 			//$.each(data.cartTableVolist, function(i, cartlist){
 				costhtml += "<tr align='right'>"
 				costhtml += "<tr><td>장바구니 금액 합계 : </td><td name='bprice' id='bprice'>0원</td></tr>"
@@ -268,14 +297,14 @@
 			
 			$("[name=mainCB]").click(allCheckFunc);
 			
+			function allCheckFunc() {
 			var bprice = 0;
 			var dprice = 0;
-			function allCheckFunc() {
 				$("[name=subCB]").prop("checked", $(this).prop("checked") );
 			    $("[name=subCB]:checked").each(function(){
 					// console.log(this);
 					// console.log($(this).parent().next().next().next().text());
-					var priceText = $(this).parent().next().next().next().text();
+					var priceText = $(this).parent().next().next().next().next().text();
 					priceText = priceText.substring(0,priceText.length-1);
 					// console.log(priceText);
 					var thisPrice = priceText*1;
@@ -317,7 +346,7 @@
 			    $("[name=subCB]:checked").each(function(){
 					// console.log(this);
 					// console.log($(this).parent().next().next().next().text());
-					var priceText = $(this).parent().next().next().next().text();
+					var priceText = $(this).parent().next().next().next().next().text();
 					priceText = priceText.substring(0,priceText.length-1);
 					// console.log(priceText);
 					var thisPrice = priceText*1;
