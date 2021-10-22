@@ -3,6 +3,8 @@ package woorigym.search.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -71,9 +73,14 @@ public class SearchListServletAjax extends HttpServlet {
 		searchKeyVo.setMaxPrice(maxPrice);
 		
 		ArrayList<ProductTable> productlist = new SearchListService().productSearch(searchKeyVo);
-		request.setAttribute("productlist", productlist);
-		Gson gson = new GsonBuilder().create();
-		String jsonListVo = gson.toJson(productlist);
+//		request.setAttribute("productlist", productlist);
+		
+		Map<String, Object> map1 = new HashMap<String, Object>();
+		map1.put("productlist", productlist);
+		map1.put("searchKeyVo", searchKeyVo);
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		String jsonListVo = gson.toJson(map1);
+		System.out.println(jsonListVo);
 		out.print(jsonListVo);
 		out.flush();
 		out.close();

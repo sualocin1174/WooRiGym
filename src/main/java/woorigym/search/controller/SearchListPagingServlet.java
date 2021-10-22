@@ -118,7 +118,7 @@ public class SearchListPagingServlet extends HttpServlet {
 		ArrayList<ProductTable> productlist1 = new SearchListService().searchProductList(searchKeyVo, startRnum, endRnum);
 
 		// Data 전달을 위해서 request에 셋
-		request.setAttribute("productlist", productlist1);
+		request.setAttribute("productlist1", productlist1);
 		request.setAttribute("startPage", startPage);
 		request.setAttribute("endPage", endPage);
 		request.setAttribute("pageCount", pageCount);

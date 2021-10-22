@@ -209,7 +209,7 @@
 				<table id='search_detail'> <!-- 2021-10-22 div 삭제 후 table로 교체 SH -->
 				<tr>
 				<th>카테고리별 검색</th>
-				<td><div class="custom-select" style="width:150px;">
+				<td><div class="custom-select" style="width:140px;">
 				<select name="category" id="category">
 						<option value="0">선택목록</option>
 						<option value="1">근력기구</option>
@@ -220,7 +220,7 @@
 					</select>
 				</div></td>
 				<th>순위별 검색</th>
-				<td><div class="custom-select" style="width:150px;">
+				<td><div class="custom-select" style="width:140px;">
 				<select name="rank" id="rank">
 						<option value="0">선택목록</option>
 						<option value="1">인기순</option>
@@ -250,9 +250,10 @@
 		</p> --%>
     	<h2 id="productlist">상품목록</h2> <!-- 2021.10.08 1차 내용추가 및 추가완료 -->
     	<!-- 2021.10.11 1차 추가시작 -->
-    	<div id="prolist">
+    	<div id="test"></div>
+    	<table border='1' id="prolist">
     	<!-- 2021.10.13 1차 추가시작 -->
-    		<c:forEach var="plist" items="${productlist1}">
+    		<c:forEach var="plist" items="${productlist}">
 	    		<!-- 2021.10.13 2차 추가시작 -->
 		    	<%-- <tr><td>이미지 : ${plist.productInfoUrl}</td></tr>
 		    	<tr><td>상품명 : ${plist.productName}</td></tr>
@@ -285,7 +286,7 @@
 		    		for(ProductTable vo : productlist){
 	    	%> --%>
 	    	
-    	</div>
+    	</table>
     	<div id="pageview"> <!-- 2021.10.22 추가 SH -->
     	<c:if test=" ${startPage} > 1 " >
 			이전
@@ -333,8 +334,12 @@
 					maxPrice: $("#maxprice_input").val()
 					/* 2021.10.11 1차 수정완료 */
 				},
+				datatype:"json",
 				success: function(data){
-					console.log(data);
+					console.log(data.productlist);
+					for(var i = 0 ; i < data.productlist.lehgth; i++) {
+						console.log(data.productlist[i].productName);
+					}
 					alert("상품이 검색되었습니다."); /* 2021.10.11 1차 내용수정 */
 					resultHtml(data);
 				},
@@ -348,7 +353,9 @@
     	function resultHtml(data){
 			var html="<table border='1' id='test'>";
 			
-			$.each(data, function(key, value){
+			$.each(data.productlist, function(i, value){
+				console.log(i);
+				console.log(value);
 				html += "<tr>";
 				html += "<td>이미지 : " + value.productInfoUrl + "<br>";
 				html += "상품명 : " + value.productName + "<br>";
@@ -359,8 +366,8 @@
 			});
 			
 		html += "</table>";
-		$("#prolist").empty(); 
-		$("#prolist").append(html);
+		$("#test").empty(); 
+		$("#test").append(html);
 	}
     	/* 2021-10-07 수정완료 */
     	/*2021-10-22 추가 SH*/

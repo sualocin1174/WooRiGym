@@ -109,12 +109,13 @@ public class SearchListDao {
 		}
 		if (selectRank != null && selectRank.equals("인기순")) {
 				sql += " group by p.product_info_url, p.product_name, p.product_option, p.price, p.product_no"
-						+ " order by count(o.buy_quantity) desc)t1) t2 where r between ? and ?";
+						+ " order by count(o.buy_quantity) desc";
 		}
 		else if (selectRank != null && selectRank.equals("평점순")) {
 				sql += " group by p.product_info_url, p.product_name, p.product_option, p.price, p.product_no"
-						+ " order by sum(r.score) desc)t1) t2 where r between ? and ?";
+						+ " order by sum(r.score) desc";
 		}
+		sql += " )t1) t2 where r between ? and ?";
 		
 		System.out.println(sql);
 		
