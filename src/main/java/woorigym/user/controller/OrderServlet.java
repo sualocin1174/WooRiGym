@@ -51,7 +51,11 @@ public class OrderServlet extends HttpServlet {
 		//1. 로그인된 유저 아이디
 //		String userid = "gym11"; //일단 임의로 정함
 		UserTable user = (UserTable)request.getSession().getAttribute("loginSS");
-		
+		if(user == null) {
+			System.out.println("login정보 없음");//확인
+			request.getRequestDispatcher("/WEB-INF/loginAlert.jsp").forward(request, response);
+			return;
+		}
 		try {
 			String userid = user.getUser_id();
 			System.out.println(user.getUser_id());

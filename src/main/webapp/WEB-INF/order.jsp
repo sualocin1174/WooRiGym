@@ -8,6 +8,7 @@
 <%@page import = "woorigym.user.model.vo.UserTable" %>
     <%
     UserTable user = (UserTable)session.getAttribute("loginSS");
+    
   %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -110,6 +111,8 @@
     // cart 와 product 불러와서 상품 정보 불러오는 js
     var totalpro = "";
     $(document).ready(function () {
+    	
+    	
         //해당하는 상품정보 불러오기
         $.ajax({ // JQuery 를 통한 ajax 호출 방식 사용
             type: "post",
@@ -125,7 +128,7 @@
                 for (var i in product) {
                     let pricecomma = comma(product[i].price);
                     console.log(pricecomma);
-                    ptext += "<tr id='productinfos"+p+"'><td><img src='http://via.placeholder.com/50'> <td>" + product[i].productName + "</td><td id=product" + p + ">" + pricecomma + "원<td></tr>";
+                    ptext += "<tr id='productinfos"+p+"'><td><img src='http://via.placeholder.com/50'></td> <td id=productno" + p + ">" + product[i].productNo + "</td><td>" + product[i].productName + "</td><td id=product" + p + ">" + pricecomma + "원<td></tr>";
                     p++;
                 }
                 $("#productinfo").append(ptext);
@@ -151,7 +154,7 @@
                 var producttotal = 0;
                 for (var i in cart) { // 상품번호도 상세주문내역 생성 메소드 호출 시 넘길 수 있도록 td 태그 추가 --10.14
                     let priceXquant = ((1 * cart[i].cartQuantity) * (1 * minusComma($('#product' + p).text())));
-                    ctext += "<tr id='cartinfos"+p+"'><td style='display:none' id='cartprono"+p+"'>" + cart[i].productNo + "</td><td id='cartquan"+p+"'>" + cart[i].cartQuantity + "</td><td id='pXq"+p+"'>" + comma(priceXquant) + "원" + "</td><td>" + comma(priceXquant * 0.05) + "원</td><td><button onclick='delProduct("+p+")'>삭제</button></td><td style='display:none' id='cartno"+p+"'>" + cart[i].cartNo + "</td></tr>";
+                    ctext += "<tr id='cartinfos"+p+"'><td style='display:none' id='cartprono"+p+"'>" + cart[i].productNo + "</td><td id='cartquan"+p+"'>" + cart[i].cartQuantity + "</td><td id='pXq"+p+"'>" + comma(priceXquant) + "원" + "</td><td>" + comma(priceXquant * 0.05) + "원</td><td><button onclick='delProduct("+p+")' class='delproduct'>삭제</button></td><td style='display:none' id='cartno"+p+"'>" + cart[i].cartNo + "</td></tr>";
                     producttotal += priceXquant;//cart[i].cartNo; <td style='display:none' id='cartno"+p+"'>" + cart[i].cartNo + "</td>
                     p++;
                 }
@@ -166,7 +169,7 @@
             
         });
         
-        setInterval(function () {
+       /* setInterval(function () {
            //TODO 총 결제 예상 금액 반복 계산
 		   var loop = 0;
            var sumPxQ = 0;
@@ -177,9 +180,59 @@
            $("#totalprice").val(comma(sumPxQ) + "원");
            $("#producttotal").val(comma(sumPxQ));
         }, 100);
+        */
         
+        //setinterval 을 활용하지 않는 상품 금액 계산으로 수정
+        var sumPxQ_1 = 0;
+    	for(var i = 0 ; i < $("#productinfo > tbody > tr").length ; i++) {
+    		sumPxQ_1 += 1 * minusComma($("#pXq"+i+"").text());
+    	};
+        $("#totalprice").val(comma(sumPxQ_1) + "원");
+        $("#producttotal").val(comma(sumPxQ_1));
+
+        
+        //상품번호 리스트 만들기
+        var pnolist = ""
+    	for(var i = 0 ; i < $("#productinfo > tbody > tr").length-1  ; i++) {
+    		pnolist += $("#productno"+i+"").text()+",";
+    	};
+    	$("#pnolist").val(pnolist);
+    	// 상품 썸네일 불러오기
+    	$.ajax({ // JQuery 를 통한 ajax 호출 방식 사용
+            type: "post",
+            url: "orderproductimg",
+            async: false,
+            data: { pnoList : pnolist },
+            dataType: "json", // 전달받을 객체는 JSON 이다.
+            success: function (data) {
+                alert("성공 : "+data);
+                $("#imgtest").html("<img src="+data[0]+">");
+               
+            },
+            error : function(request,status,error) {
+                alert("code:"+request.status+"\n"+"message:"+request.responseText+
+                "\n"+"error:"+error+"구매상품 이미지 불러오기 실패");
+                }
+        });
+    	
         
     }); // ready
+    
+    $(document).on("click", ".delproduct", function() {
+      //TODO 총 결제 예상 금액 반복 계산
+		   var loop = 0;
+     var sumPxQ = 0;
+     do{
+  	   sumPxQ += 1 * minusComma($("#pXq"+loop+"").text());
+  	   loop++;
+     }while(loop< $("#productinfo > tbody > tr").length +3);
+     $("#totalprice").val(comma(sumPxQ) + "원");
+     $("#producttotal").val(comma(sumPxQ));
+     
+    });
+    
+    
+   
     //콤마 제거
     function minusComma(value) {
         value = value.replace(/[^\d]+/g, "");
@@ -195,7 +248,6 @@
     function delProduct(n){
     	$("#productinfos"+n+"").remove();
     	$("#cartinfos"+n+"").remove();
-    	
     	
     }
 
@@ -244,6 +296,8 @@
                 "\n"+"error:"+error+"주문자 정보 불러오기 실패");
                 }
         });
+        
+        
     }); // ready
 </script>
 
@@ -437,6 +491,7 @@ var fixaddrno = "";
                 }
         });
 
+    	/*
         var totalnum = 1 * $("#totalprice").text().replace(/[^0-9]/g, '');
         console.log("확인 : " + totalnum);
 	
@@ -450,21 +505,56 @@ var fixaddrno = "";
         },100);
 
         setInterval(function () {
-            var finalpay = 1*minusComma($("#totalprice").val()) - (1 * $("#insertmile").val()) - (1 * $("#coudiscount").val()) + (1 * $("#shippingpay").val())
+           	
+        	var finalpay = 1*minusComma($("#totalprice").val()) - (1 * $("#insertmile").val()) - (1 * $("#coudiscount").val()) + (1 * $("#shippingpay").val())
             if(finalpay<0) finalpay = 0;
             $("#finalpay").val(comma(finalpay)+"원");
             $("#finalpay2").val(comma(finalpay)+"원");
             $("#finalpay3").val(comma(finalpay)+"원");
-
+ 
         }, 100);
         
-        
+        */
+    	 var totalnum = 1 * $("#totalprice").text().replace(/[^0-9]/g, '');
+         console.log("확인 : " + totalnum);
+ 	
          
-       
+         	 if (1*minusComma($("#totalprice").val()) >= 100000) {
+                  $("#shippingpay").val(0);
+              } else {
+                  $("#shippingpay").val(2500);
+              }
+         	 //$("#totalprice").val(comma(sumPxQ) + "원");
+            	
+         	var finalpay = 1*minusComma($("#totalprice").val()) - (1 * $("#insertmile").val()) - (1 * $("#coudiscount").val()) + (1 * $("#shippingpay").val())
+             if(finalpay<0) finalpay = 0;
+             $("#finalpay").val(comma(finalpay)+"원");
+             $("#finalpay2").val(comma(finalpay)+"원");
+             $("#finalpay3").val(comma(finalpay)+"원");
        
     }); //ready
     
+    $(document).on("click", ".delproduct", calculation);
+    //$(document).on("click", ".coupbtn", calculation);
+    $(document).on("keyup", "#insertmile", calculation);
     
+    function calculation() {
+   	 var totalnum = 1 * $("#totalprice").text().replace(/[^0-9]/g, '');
+        console.log("확인 : " + totalnum);
+	
+        
+        	 if (1*minusComma($("#totalprice").val()) >= 100000) {
+                 $("#shippingpay").val(0);
+             } else {
+                 $("#shippingpay").val(2500);
+             }
+        	 //$("#totalprice").val(comma(sumPxQ) + "원");
+        	var finalpay = 1*minusComma($("#totalprice").val()) - (1 * $("#insertmile").val()) - (1 * $("#coudiscount").val()) + (1 * $("#shippingpay").val())
+            if(finalpay<0) finalpay = 0;
+            $("#finalpay").val(comma(finalpay)+"원");
+            $("#finalpay2").val(comma(finalpay)+"원");
+            $("#finalpay3").val(comma(finalpay)+"원");
+   }
    
     
     
@@ -500,8 +590,6 @@ var fixaddrno = "";
     */
     
 	// 결제창이 닫히면 db에 주문내역, 주문상세내역 생성 후 화면 넘어가기 기능 10.11추가 10.12 기능 구현
-   
-    
 </script>
 
 
@@ -553,10 +641,10 @@ var fixaddrno = "";
             <table id="addressuinfo">
                 <tr>
                     <th>배송지 선택</th>
-                    <td>기본 주소 선택 <input type="radio" name="addrtype" checked="checked" class="existaddr" onclick="fixedaddr()"> 배송주소록에서 선택 <input type="radio" name="addrtype" class="existaddr" onclick="selectAddr()">
+                    <td><input type="radio" name="addrtype" checked="checked" class="existaddr" onclick="fixedaddr()" id="addrid1"><label for="addrid1">기본 주소 선택</label> &nbsp&nbsp <input type="radio" name="addrtype" class="existaddr" onclick="selectAddr()" id="addrid2"><label for="addrid2">배송주소록에서 선택</label>&nbsp&nbsp 
                     <!-- <select id="selectaddress" onchange="chageaddrSelect()">
         <option>배송지 목록에서 선택</option> </select> -->
- 새 주소 입력 <input type="radio" name="addrtype" id="newaddr" onclick="clearaddr()"></td>
+ <input type="radio" name="addrtype" id="newaddr" onclick="clearaddr()"> <label for="newaddr">새 주소 입력</label></td>
                 </tr>
                 <tr>
                     <th>받는 이</th>
@@ -594,7 +682,7 @@ var fixaddrno = "";
                 <tr><th>쿠폰 사용 </th><td id="usecoupon"><button id="couponmodal">쿠폰 선택</button> <input type="text" value="적용 안함" readonly id="appliedcpn">&nbsp&nbsp적용 금액 : <input id="coudiscount" value="0" readonly></td></tr>
                 <tr><th>배송비 </th><td> <input type="text"  id="shippingpay" readonly> &nbsp&nbsp*총 상품 가격 10만원 이상이면 배송비 무료</td></tr>
                 <tr><th>총 결제 금액</th><td><input type="text" id="finalpay" readonly> </td></tr>
-                <tr><th>결제 수단</th><td>신용카드 <input type="radio" name="paymethod" id="cardmodalbtn">&nbsp&nbsp무통장입금 <input type="radio" name="paymethod"  id="depomodalbtn"></td></tr>
+                <tr><th>결제 수단</th><td> <input type="radio" name="paymethod" id="cardmodalbtn"><label for="cardmodalbtn">신용카드</label>&nbsp&nbsp&nbsp <input type="radio" name="paymethod"  id="depomodalbtn"><label for="depomodalbtn">무통장입금</label></td></tr>
             </table>
             
         </div>
@@ -608,7 +696,9 @@ var fixaddrno = "";
 <input type="text" id="couponno" style='display:none'>
 <input type="text" id="prono" style='display:none'>
 <input type="text" id="proquan" style='display:none'>
-<input type="text" id="cartnolist" style='display:none'>
+<input type="text" id="cartnolist">
+<input type="text" id="pnolist">
+<div id="imgtest">ㅋㅋㅋ</div>
 
 <!--  modal box-->
     <div id="modal_01" class="modal">
@@ -697,27 +787,47 @@ var fixaddrno = "";
         $("#submitinfo").click(function(){
         	 if($("#postcode").val()==""){
         		   alert("우편번호를 입력해주세요.");
+        		   $("#postcode").focus();
         	   } else if($("#basicaddr").val()==""){
         		   alert("주소를 입력해주세요.");
+        		   $("#basicaddr").focus();
         	   } else if($("#detailaddr").val()==""){
         		   alert("상세주소를 입력해주세요.");
+        		   $("#detailaddr").focus();
         	   } else if($("#receiver_name").val()==""){
         		   alert("받는 사람 이름을 입력해주세요.");
+        		   $("#receiver_name").focus();
         	   } else if($("#phone_no1").val()==""){
         		   alert("전화번호를 정확히 입력해주세요.");
+        		   $("#phone_no1").focus();
         	   }  else if($("#phone_no2").val()==""){
         		   alert("전화번호를 정확히 입력해주세요.");
+        		   $("#phone_no2").focus();
         	   } else if($("#phone_no3").val()==""){
         		   alert("전화번호를 정확히 입력해주세요.");
+        		   $("#phone_no3").focus();
         	   } else if($("#productinfo > tbody > tr").length < 2){
         		   alert("최소 1개 이상의 구매 상품이 있어야 합니다.");
+        		   $("#productinfo").focus();
         	   } else {
-        		   
+        		   //카드결제
+                  	if($("input[id=cardmodalbtn]:radio").is(":checked")) {
+                  		$("#paymethodno").val(0);
+                          $("#modal_01").show();
+                  		
+                  	} else if($("input[id=depomodalbtn]:radio").is(":checked")){
+                  		//무통장입금
+                      	$("#paymethodno").val(1);
+                          $("#modal_02").show();
+                  	} else{
+                  		alert("결제 수단을 선택해 주세요.");
+                  	}
         	   }
        
         		   
         	 
         		 //카드결제
+               	/*
                	if($("input[id=cardmodalbtn]:radio").is(":checked")) {
                		$("#paymethodno").val(0);
                        $("#modal_01").show();
@@ -729,6 +839,7 @@ var fixaddrno = "";
                	} else{
                		alert("결제 수단을 선택해 주세요.");
                	}
+        		 */
         		   
         	   
         });
@@ -748,6 +859,9 @@ var fixaddrno = "";
         	$("#appliedcpn").val(coupname);
         	$("#coudiscount").val(coupapply);
         	$("#couponno").val(coupapplyno);
+        	
+        	calculation();
+        	
         	
         	if($("#couponno").val() == "적용 취소"){
         		$("#couponno").val("");
@@ -775,6 +889,7 @@ var fixaddrno = "";
     </script>
     
     <script>
+    
     $("button[name=ordersubmit]").click(function(){
 
            	 console.log("정보넘기기");  
@@ -995,9 +1110,27 @@ var fixaddrno = "";
                 "\n"+"error:"+error+"구매한 상품 장바구에서 삭제 실패");
                 }
             });      
+           	/*
+           	// 썸네일 이미지 불러오기
+           	$.ajax({ // JQuery 를 통한 ajax 호출 방식 사용
+                type: "post",
+                url: "orderproductimg",
+                async: false,
+                data: { cart_nolist: $("#cartnolist").val()
+                },
+                dataType: "json", // 전달받을 객체는 JSON 이다.
+                success: function (data) {
+               	 alert("구매한 상품 장바구에서 삭제 성공" + data);
+               	window.location.href = "/wooRiGym/mypage";
+                },
+                error : function(request,status,error) {
+                alert("code:"+request.status+"\n"+"message:"+request.responseText+
+                "\n"+"error:"+error+"구매한 상품 장바구에서 삭제 실패");
+                }
+            });
+           	*/
     
     });
-
     </script>
 </body>
 

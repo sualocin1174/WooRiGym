@@ -121,7 +121,7 @@ public class OrderDao {
 	public ArrayList<ProductTable> getProductinfo(String userid, Connection conn) {
 		ArrayList<ProductTable> volist;
 
-		String sql = "SELECT PRODUCT_NAME, price" + " FROM CART C JOIN PRODUCT P ON c.product_no = p.product_no"
+		String sql = "SELECT PRODUCT_NAME, price, c.product_no" + " FROM CART C JOIN PRODUCT P ON c.product_no = p.product_no"
 				+ " WHERE C.USER_ID=? AND C.CHECKED = 1 ORDER BY c.cart_no ASC";
 
 		PreparedStatement pstmt = null;
@@ -138,6 +138,7 @@ public class OrderDao {
 					ProductTable vo = new ProductTable();
 					vo.setProductName(rs.getString(1));
 					vo.setPrice(rs.getInt(2));
+					vo.setProductNo(rs.getString(3));
 					volist.add(vo);
 				} while (rs.next());
 			}
@@ -260,7 +261,7 @@ public class OrderDao {
 			int add_mileage, String receiver_name, String phone_no, Connection conn) {
 		int result = -1;
 
-		String sql = "insert into ORDERINFO values ('GYM'||to_char(sysdate, 'yyyymmdd')||'-'||ORDER_SEQ.nextval, ? , ? , ? , ? , ? ,? ,? ,? ,? ,sysdate , ?,'배송전',null, ? ,?,?)";
+		String sql = "insert into ORDERINFO values ('GYM'||to_char(sysdate, 'yyyymmdd')||'-'||ORDER_SEQ.nextval, ? , ? , ? , ? , ? ,? ,? ,? ,? ,sysdate , ?,'주문완료',null, ? ,?,?)";
 
 		PreparedStatement pstmt = null;
 
