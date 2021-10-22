@@ -82,9 +82,9 @@ public class UserJoinServlet extends HttpServlet {
 			user.setIdentity_number(identity_number);
 			user.setGender(gender);
 			address.setUser_id(user_id);
-			address.setPostcode(postcode); // 우편번호
-			address.setBasic_address(basic_address); // 기본 주소지
-			address.setDetail_address(detail_address); // 상세 주소지
+			address.setPostcode(postcode); 
+			address.setBasic_address(basic_address); 
+			address.setDetail_address(detail_address); 
 		} else {
 			
 		}

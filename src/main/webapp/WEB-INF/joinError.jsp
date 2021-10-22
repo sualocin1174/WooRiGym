@@ -4,13 +4,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title></title>
 </head>
 <body>
 	<script>
 		$(function(){
 			//아이디 유효성 검사(1 = 중복 / 0 != 중복)
 			var idck = "${result}";
+			var result = false;
 			$("#checkId").click(function() {
 				// name = "user_id"
 				var user_id = $('#user_id').val();
@@ -48,64 +49,77 @@
 			// 비밀번호 유호성검사
 			$("#user_pwd").on("input" , pwdTest);
 			 function pwdTest(){
-					var regex  = /^[A-Za-z0-9]{7,15}$/;
-					var result = regex.exec($("#user_pwd").val());
+					var regex  = /^[A-Za-z0-9]{7,17}$/;
+					result = regex.test($("#user_pwd").val());
 					console.log("유효검사-> " + result);
 					
-					if(result != null){
-						$(".user_pwd.regex").html("");
-					} else {
-						$(".user_pwd.regex").html("영어 대소문자 + 숫자  조건에 맞게 입력해주세요.");
+					if(result == false){
+						$(".user_pwd.regex").html("영대소문자나 숫자를 이용하여 최소 8~16자 까지 입력하세요.");
 						$(".user_pwd.regex").css("color", "red");
+					} else {
+						$(".user_pwd.regex").html("");
+						return result;
 					}
 				};
 			// 비밀번호 확인
-			$("#user_pwdTest").on("input" , function(){
-				var regex  = /^[A-Z][A-za-z0-9]{7,15}$/;
-				if(!regex .test(pw1)){
-					alert("영어 대소문자 + 숫자  조건에 맞게 입력해주세요.");
-					return false;
+			$("#user_pwdtest").on("input", pwdAgreement);
+			function pwdAgreement(){
+				var user_pwd = $("#user_pwd").val();
+				var user_pwdTest = $("#user_pwdtest").val();
+				console.log("비밀번호->" + user_pwd);
+				console.log("비밀번호확인->" + user_pwdTest);
+				if($("#user_pwd").val() == $("#user_pwdtest").val()){
+					$(".user_pwdtest.regex").html("비밀번호가 일치합니다.");
+					$(".user_pwdtest.regex").css("color", "green");
+				} else{
+					$(".user_pwdtest.regex").html("비밀번호가 일치하지 않습니다.");
+					$(".user_pwdtest.regex").css("color", "red");
+					result = false;
+					return result;
 				}
-			});
+			};
 			
 			// 이름 유효성 검사
 			$("#name").on("input", function(){
 				var regex = /[가-힣]{2,}/;
-				var result = regex.exec($("#name").val())
+				result = regex.test($("#name").val())
 				
-				if(result != null){
-					$(".name.regex").html("");
-				} else{
+				if(result == false){
 					$(".name.regex").html("한글만 입력 가능합니다.");
 					$(".name.regex").css("color","red");
+				} else{
+					$(".name.regex").html("");
+					return result;
 				}
 			});
-			// 비밀번호 유효성 검사
-			$("#pw1").on("input" , function(){
-				var regex = /^[a-zA-Z0-9]{9,17}$/;
-				var result = regex.exec()
-			
-				if(result != null){
-					$(".pw1.regex").html("");
-				} else {
-					$(".pw1.regex").html("영대소문자 및 숫자를 이용하여 최소 8~16자 까지 입력하세요");
-					$(".pw1.regex").css("color","red");
-				}
-			});
-			// 비밀번호 확인
-			$("#pw2").on("input" , function(){
-				var regex = /^[a-zA-Z0-9]{9,17}$/;
-				var result = regex.exec()
-			
-				if(result != null){
-					$(".pwd1.regex").html("");
-				} else {
-					$(".user_pwd.regex").html("영대소문자 및 숫자를 이용하여 최소 8~16자 까지 입력하세요");
-					$(".user_pwd.regex").css("color","red");
-				}
-			});
-			$("#joinbtn").on("click", function(){
+			// 주민등록번호 확인
+			$("#identity_number").on("input", function(){
 				
+				var regex = /^[1-4][0-9]{6}$/;
+				result = regex.test($("#identity_number").val());
+				var identity_number = $("#identity_number").val();
+				console.log("주민등록번호->" + $("#identity_number").val());
+				console.log("result 값 -> " + result);
+				console.log(identity_number.charAt(0));
+				if(result == false){
+					$(".identity_number.regex").html("올바르게 입력하세요");
+					$(".identity_number.regex").css("color", "red");
+					return result;
+				} else{
+					$(".identity_number.regex").html("");	
+				}
+			});
+			
+			//모두 입력 되어있으면 회원가입
+			
+			$("#joinbtn").on("click", function(){
+				if(result == true && idck == 0){
+					alert("회원가입이 완료되었습니다.");
+					$("#joinform").submit();
+				} else{
+					alert("정보를 다시한번 확인해주세요.");
+					return;
+				}
 				
 			});
 		});
