@@ -115,7 +115,7 @@ public class OrderListDao {
 				"SELECT oinfo.order_no,order_total,order_cost,to_char(order_date, 'yyyy-mm-dd hh:mm') order_date,order_state," + 
 				"    odetail.product_no, buy_quantity, " + 
 				"    product.product_name, product.PRODUCT_INFO_URL" + 
-				"FROM ORDERINFO oinfo " + 
+				" FROM ORDERINFO oinfo " + 
 				"    join order_detail odetail on oinfo.order_no = odetail.order_no" + 
 				"    join product product on odetail.PRODUCT_NO = product.PRODUCT_NO" + 
 				"WHERE " + 

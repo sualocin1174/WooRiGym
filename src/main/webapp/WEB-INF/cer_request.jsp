@@ -80,8 +80,7 @@
 }
 
 .select-selected {
- /* background-color: DodgerBlue;*/
- background: #FEA500;
+ background: dodgerblue;
 }
 
 /*style the arrow inside the select element:*/
@@ -115,8 +114,7 @@
 /*style items (options):*/
 .select-items {
   position: absolute;
- /* background-color: DodgerBlue;*/
-  background-color: #FEA500;
+  background-color: dodgerblue;
   top: 100%;
   left: 0;
   right: 0;
@@ -166,7 +164,7 @@
 	}
 	/* When the radio button is checked, add a blue background */
 	.container input:checked ~ .checkmark {
-	  background-color: #FEA500;
+	  background-color: dodgerblue;
 	}
 	/* Create the indicator (the dot/circle - hidden when not checked) */
 	.checkmark:after {

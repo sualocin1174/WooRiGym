@@ -154,7 +154,7 @@ text-align: center;
                             <th id="title">아이디</th>       
                             <td>       
                                 <input type="text" id="user_id" name="user_id" placeholder="아이디" maxlength="20">        
-                                <input type="button" value="중복확인" class="button">
+                                <input type="button" value="중복확인" class="button" id="checkId">
                                 <span id="id_check"></span>            
                             </td>        
                         </tr>                                        

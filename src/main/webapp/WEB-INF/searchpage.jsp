@@ -213,20 +213,20 @@
 				<th>카테고리별 검색</th>
 				<td><div class="custom-select" style="width:140px;">
 				<select name="category" id="category">
-						<option value="0">선택목록</option>
-						<option value="1">근력기구</option>
-						<option value="2">어시스트</option>
-						<option value="3">웨이트리프팅</option>
-						<option value="4">유산소기구</option>
-						<option value="5">전시상품</option>
+						<option value="">선택목록</option>
+						<option value="근력기구">근력기구</option>
+						<option value="어시스트">어시스트</option>
+						<option value="웨이트리프팅">웨이트리프팅</option>
+						<option value="유산소기구">유산소기구</option>
+						<option value="전시상품">전시상품</option>
 					</select>
 				</div></td>
 				<th>순위별 검색</th>
 				<td><div class="custom-select" style="width:140px;">
 				<select name="rank" id="rank">
-						<option value="0">선택목록</option>
-						<option value="1">인기순</option>
-						<option value="2">평점순</option>
+						<option value="">선택목록</option>
+						<option value="인기순">인기순</option>
+						<option value="평점순">평점순</option>
 					</select>
 					</div></td>
 					<td id=""><input type="text" name = "minprice" class="price_input" id="minprice_input" placeholder="최소금액"> ~ 

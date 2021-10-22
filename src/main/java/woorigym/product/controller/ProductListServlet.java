@@ -76,11 +76,11 @@ public class ProductListServlet extends HttpServlet {
 						if (infoUrl != null && !infoUrl.equals("")) {
 							infoUrl = infoUrl.substring(0, infoUrl.length() - 4);
 							// lists files and directories in the current working directory
-							FTPFile[] files = ftpClient.listFiles("/html/images" + "/" + infoUrl);
+							FTPFile[] files = ftpClient.listFiles("/html/product" + "/" + infoUrl);
 							for (FTPFile file : files) {
 								String details = file.getName();
 								imagesFilePath
-										.add(prop.getProperty("url") + "/images" + "/" + infoUrl + "/" + details);
+										.add(prop.getProperty("url") + "/product" + "/" + infoUrl + "/" + details);
 								System.out.println("details:" + details);
 							}
 							System.out.println("imagesFilePath:" + imagesFilePath + ": "+ infoUrl);
