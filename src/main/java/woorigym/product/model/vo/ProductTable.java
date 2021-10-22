@@ -204,7 +204,4 @@ public class ProductTable {
 	public void setImagesFilePath(List<String> imagesFilePath) {
 		this.imagesFilePath = imagesFilePath;
 	}
-	
-	
-
 }

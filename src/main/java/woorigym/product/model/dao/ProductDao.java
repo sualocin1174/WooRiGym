@@ -173,20 +173,17 @@ public class ProductDao {
 		return result;
 	}
 	
-	public int checkDuplicatedProduct(Connection conn, ProductTable productVo) {
-		int result =-1;
-		String sql = "select PRODUCT_NO from PRODUCT where PRODUCT_NO=?";
+	public int checkDuplicatedProduct(Connection conn, String productNo) {
+		int result = 0;
+		String sql = "select count(*) from PRODUCT where PRODUCT_NO=?";
 		PreparedStatement pstmt= null;
 		ResultSet rset = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, productVo.getProductNo());
+			pstmt.setString(1, productNo);
 			rset = pstmt.executeQuery();
 			if(rset.next()) {
-				result = 1;  //  기존 상품이 있으면
-				System.out.println("이미 상품이 존재합니다.");
-			} else {
-				result = 0;
+				result=rset.getInt(1);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();

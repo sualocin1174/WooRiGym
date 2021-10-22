@@ -39,24 +39,21 @@ public class ProductService {
 	
 	public int addProduct(ProductTable productVo, ArrayList<ProductOptionTable> productOption, ArrayList<ProductImgTable> productImg){
 		int result = -1;
-		int result2 = -1;
 		Connection conn = getConnection();
-		jdbcTemplate.setAutoCommit(conn, false);
-		result2 = new ProductDao().checkDuplicatedProduct(conn, productVo);
-		
-		if(result == 0) {
-			result = new ProductDao().addProduct(conn, productVo, productOption, productImg);
+
+		result = new ProductDao().addProduct(conn, productVo, productOption, productImg);
 			
-			if(result >0 && result2 >0) {
-				jdbcTemplate.commit(conn);
-			}
-			else
-				jdbcTemplate.rollback(conn);
-		}
 		jdbcTemplate.close(conn);
 		return result; //오류발생:-1 상품등록성공:1, 상품등록실패:0. 기존에 등록되어 있던 상품:2 
 	}
 	
+	public int checkDuplicatedProduct(String productNo) {
+		Connection conn = jdbcTemplate.getConnection();
+		int result = new ProductDao().checkDuplicatedProduct(conn, productNo);
+		jdbcTemplate.close(conn);
+		return result;
+	}
+
 	public int updateProduct(ProductTable vo) {
 		int result = -1;
 		Connection conn = getConnection();

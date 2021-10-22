@@ -144,78 +144,104 @@
      		</ul>
  		</div>
 	</aside>
+	
 	<section>
-	<button type="button" id="btn_list"  class="button" name="btn_list">리스트</button>
-	<button type="button" id="btn_insert" class="button" name="btn_insert">추가</button>
-	<button type="button" id="btn_update" class="button" name="btn_update">수정</button>
-	<button type="button" id="btn_delete" class="button" name="btn_delete">삭제</button>
-	<br><br><br>
-	<div id="noticeList" style="display:none"></div>
-	<form id="formInsert" name="formInsert" action="apuadd" method="post">
+		<button type="button" id="btn_list"  class="button" name="btn_list">리스트</button>
+		<button type="button" id="btn_insert" class="button" name="btn_insert">추가</button>
+		<button type="button" id="btn_update" class="button" name="btn_update">수정</button>
+		<button type="button" id="btn_delete" class="button" name="btn_delete">삭제</button>
+		<br><br>
+	</section>
+	
+	<section>
+		<div id="noticeList" style="display:none"></div>
+	</section>
+	
+	<section>
 		<div id="noticeInsert" style="display:none">
-		<table id="notice_insert" class="notice_table">
-			<tr>
-			<td>공지사항 번호</td>
-			<td><input type="text" name="notice_no" id="notice_no" class = "input" required="required" placeholder="번호를 입력해주세요."><br><br></td>	
-			</tr>
-			<tr>
-			<td>제목</td>
-			<td><input type="text" name="n_title" id="n_title" class = "input" required="required" placeholder="제목을 입력해주세요."><br><br></td>
-			</tr>
-			<tr>
-			<td>내용</td>
-			<td><input type="text" name="n_content" id="n_content" class = "input" required="required" placeholder="내용을 입력해주세요."><br><br></td>
-			</tr>
-			<tr>
-			<td>작성일</td>
-			<td><input type="text" name="n_date" id="n_date" class = "input" required="required" placeholder="게시일을 입력해주세요."><br><br></td>
-			</tr>
-		</table>
-		<div class="btn_collection"><br>
-			<input type="submit" id="save" value="등록">
-			<button type="reset" id="cancle">취소</button>
-		</div>		
-		</div>
-	</form>
-	</section>
-	<section>
-		<form id="formDelete" name="formDelete" method="post" action="apudelete.ajax">
-			<div id="noticeDelete" style="display:none">
-				<table id="notice_delete" class="notice_table">
+			<form id="formInsert" name="formInsert" action="apuadd" method="post">
+				<table id="notice_insert" class="notice_table">
 					<tr>
-						<td>공지사항 번호</td>
-						<td><input type="text" name="notice_no" id="notice_no" class = "input" required="required" placeholder="번호를 입력해주세요."><br><br></td>
+						<td>제목</td>
+						<td><input type="text" name="n_title" id="n_title" class = "input" required="required" placeholder="제목을 입력해주세요."><br><br></td>
+					</tr>
+					<tr>
+						<td>내용</td>
+						<td><input type="text" name="n_content" id="n_content" class = "input" required="required" placeholder="내용을 입력해주세요."><br><br></td>
 					</tr>
 				</table>
-			<div class="btn_collection"><br>
-				<input type="submit" id="save" value="등록">
-				<button type="reset" id="cancle">취소</button>
-			</div>
-			</div>
-		</form>
 		
-		<form id="formUpdate" name="formUpdate" method="post" action="apuupdate">
-			<div id="noticeUpdate" style="display:none">
+				<div class="btn_collection"><br>
+					<input type="submit" id="save" value="등록">
+					<button type="reset" id="cancle">취소</button>
+				</div>
+			</form>
+		</div>
+	</section>
+	
+	<section>
+		<div id="noticeSelect" style="display:none">
+			<form id="formSelect" name="formSelect" action="#" method="post">
+				<table id="notice_Select" class="notice_Select">
+					<tr>
+						<td>공지사항 번호</td>
+						<td><input type="text" name="notice_no1" id="notice_no1" class = "input" required="required" placeholder="번호를 입력해주세요."><br><br></td>	
+						<td><input type="button" id="checkNo" value="확인">
+						<span id="check_NN"></span>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</section>
+	
+	<section>
+		<div id="noticeUpdate" style="display:none">
+			<form id="formUpdate" name="formUpdate" action="apuupdate" method="post">
+				<table id="notice_Update" class="notice_Update">
+					<tr>
+						<td>제목</td>
+						<td><input type="text" name="notice_no2" id="notice_no2" class="input"><br><br></td>
+					</tr>
+					<tr>
+						<td>내용</td>
+						<td><input type="text" name="notice_content" id="notice_content" class="input"><br><br></td>
+					</tr>
+				</table>
+				<div class="btn_collection"><br>
+					<input type="submit" id="save" value="등록">
+					<button type="reset" id="cancle">취소</button>
+				</div>
+			</form>
+		</div>
+	</section>
+	
+	<section>
+		<div id="noticeDelete" style="display:none">
+		<form id="formDelete" name="formDelete" method="post" action="apudelete">
 				<table id="notice_delete" class="notice_table">
 					<tr>
 						<td>공지사항 번호</td>
-						<td><input type="text" name="notice_no" id="notice_no" class = "input" required="required" placeholder="번호를 입력해주세요."><br><br></td>
+						<td><input type="text" name="notice_no2" id="notice_no2" class = "input" required="required" placeholder="번호를 입력해주세요."><br><br></td>
 					</tr>
 				</table>
 			<div class="btn_collection"><br>
-				<input type="submit" id="save" value="등록">
+				<input type="submit" id="delete" value="삭제">
 				<button type="reset" id="cancle">취소</button>
 			</div>
-			</div>
 		</form>
+		</div>
 	</section>
+	
 	<script>
 	$("#btn_list").click(listF1);
+	
 	function listF1(){
 		ajaxF1();
 		$("#noticeInsert").hide();
 		$("#noticeDelete").hide();
-		$("#noticeUpdate").hide();
+		$("#noticeSelect").hide();
+		$("noticeUpdate").hide();
 	}
 	
 	function ajaxF1(){
@@ -245,7 +271,7 @@
 		html += "<th>공지사항번호</th>";
 		html += "<th>제목</th>";
 		html += "<th>내용</th>";
-		html += "<th>게시일</th>";
+		html += "<th>작성일</th>";
 		html += "</tr>";
 		
 		$.each(data, function(key, value){
@@ -267,7 +293,8 @@
 		$("#noticeInsert").show();
 		$("#noticeList").hide();
 		$("#noticeDelete").hide();
-		$("#noticeUpdate").hide();
+		$("#noticeSelect").hide();
+		$("noticeUpdate").hide();
 	};
 	
 	$("#btn_delete").click(DeleteShow);
@@ -275,16 +302,57 @@
 		$("#noticeDelete").show();
 		$("#noticeInsert").hide();
 		$("#noticeList").hide();
-		$("#noticeUpdate").hide();
+		$("#noticeSelect").hide();
+		$("noticeUpdate").hide();
 	};
 	
 	$("#btn_update").click(UpdateShow);
 	function UpdateShow(){
-		$("#noticeUpdate").show();
+		$("#noticeSelect").show();
 		$("#noticeDelete").hide();
 		$("#noticeInsert").hide();
 		$("#noticeList").hide();
+		$("noticeUpdate").hide();
 	}
+	</script>
+	
+	<script type="text/javascript">
+	var NN = "${result}";
+	$("#checkNo").click(select);
+	
+	function select(){
+		var notice_no1 = $('#notice_no1').val();
+		console.log("받아온 result: "+ NN);
+		console.log(notice_no1);
+		$.ajax({
+			type: "post",
+			url : "<%=request.getContextPath()%>/SelectNotice",
+			data : {
+					notice_no1 : notice_no1
+			},
+			
+			success : function(NN) {
+					console.log("1 = 중복o / 0 = 중복x : "+ NN);							
+					
+					if(NN == 2){
+						$("#check_NN").html("공지사항 번호를 입력해주세요");
+						$("#check_NN").css("color","red");
+					}
+					else if (NN == 1) {
+						$("noticeUpdate").show();
+						$("noticeSelect").hide();
+					}
+					else if(idck == 0){
+						$("#check_NN").html("존재하지 않는 공지사항입니다.");
+						$("#check_NN").css("color","green");
+					}
+				}, 
+			error:function(request,status,error){
+	    			alert("code:"+request.status+"\n"+"message:"+request.responseText+
+	    					"\n"+"error:"+error);
+				}
+			});
+		};
 	</script>
 </body>
 </html>

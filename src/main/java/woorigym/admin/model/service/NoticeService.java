@@ -42,4 +42,34 @@ public class NoticeService {
 		
 		return result;
 	}
+	
+	public int updateNotice(NoticeTable noticeVo) {
+		int result = -1;
+		Connection conn = jdbcTemplate.getConnection();
+		
+		result = new NoticeDao().updateNotice(conn, noticeVo);
+		jdbcTemplate.close(conn);
+		
+		return result;
+	}
+	
+	public int checkDuplicatedNotice(int notice_no) {
+		int result = 0;
+		Connection conn = jdbcTemplate.getConnection();
+		
+		result = new NoticeDao().checkDuplicatedNotice(conn, notice_no);
+		jdbcTemplate.close(conn);
+		
+		return result;
+	}
+	
+	public ArrayList<NoticeTable> selectNotice(int notice_no){
+		ArrayList<NoticeTable> noticelist = null;
+		Connection conn = jdbcTemplate.getConnection();
+		
+		noticelist = new NoticeDao().selectNotice(conn, notice_no);
+		
+		jdbcTemplate.close(conn);
+		return noticelist;
+	}
 }

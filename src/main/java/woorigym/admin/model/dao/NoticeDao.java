@@ -53,14 +53,12 @@ public class NoticeDao {
 		int result = -1;
 		String sqlInsert = "INSERT INTO"
 				+ " NOTICE"
-				+ " VALUES (?, ?, ?, ?)";
+				+ " VALUES (NOTICE_SEQ.NEXTVAL, ?, ?, TO_CHAR(SYSDATE, 'MM-DD-YYYY'))";
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = conn.prepareStatement(sqlInsert);
-			pstmt.setInt(1, noticeVo.getNotice_no());
-			pstmt.setString(2, noticeVo.getN_title());
-			pstmt.setString(3, noticeVo.getN_content());
-			pstmt.setString(4, noticeVo.getN_date());
+			pstmt.setString(1, noticeVo.getN_title());
+			pstmt.setString(2, noticeVo.getN_content());
 			
 			result = pstmt.executeUpdate();
 			System.out.println("DB 등록이 성공되었습니다.");
@@ -108,19 +106,17 @@ public class NoticeDao {
 		return result;
 	}
 	
-	public int checkDuplicatedNotice(Connection conn, NoticeTable noticeVo) {
-		int result =-1;
+	public int checkDuplicatedNotice(Connection conn, int notice_no) {
+		int result = 0;
 		String sql = "select NOTICE_NO from NOTICE where NOTICE_NO=?";
 		PreparedStatement pstmt= null;
 		ResultSet rset = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, noticeVo.getNotice_no());
+			pstmt.setInt(1, notice_no);
 			rset = pstmt.executeQuery();
 			if(rset.next()) {
 				result = 1;  //  기존 상품이 있으면
-			} else {
-				result = 0;
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -131,5 +127,40 @@ public class NoticeDao {
 			jdbcTemplate.close(pstmt);
 		}
 		return result;
+	}
+	
+	public ArrayList<NoticeTable> selectNotice(Connection conn, int notice_no){
+		ArrayList<NoticeTable> noticelist = null;
+		String sql = "SELECT N_TITLE, N_CONTENT, N_DATE FROM NOTICE WHERE NOTICE_NO = ?";
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, notice_no);
+			rset = pstmt.executeQuery();
+	
+			System.out.println("notice-1");
+			if(rset.next()) {
+				noticelist = new ArrayList<NoticeTable>();
+				System.out.println("notice-2");
+				do {
+					NoticeTable vo = new NoticeTable();
+					vo.setN_title(rset.getString("N_TITLE"));
+					vo.setN_content(rset.getString("N_CONTENT"));
+					vo.setN_date(rset.getNString("N_DATE"));
+					noticelist.add(vo);
+					System.out.println("notice-3");
+				} while(rset.next());
+			}
+		} catch (Exception e) {
+			System.out.println("notice-4");
+			e.printStackTrace();
+		} finally {
+			jdbcTemplate.close(rset);
+			jdbcTemplate.close(pstmt);
+		}
+		System.out.println("notice 리턴은 " + noticelist);
+		return noticelist;
 	}
 }
