@@ -14,7 +14,7 @@ public class CerDetailDao {
 	}
 
 	 public CerDetailVo CerDetail(Connection conn, String uid, String ono) {
-		 String sql = "select claim.*, product_no, buy_quantity, order_total, order_cost, order_date, arrive_date from claim\r\n" + 
+		 String sql = "select claim.*, product_no, buy_quantity, order_total, order_cost, order_method, order_date, arrive_date from claim\r\n" + 
 		 		" join order_detail odetail on odetail.order_detail_no = claim.order_detail_no\r\n" + 
 		 		" join orderinfo on orderinfo.order_no = odetail.order_no\r\n" + 
 		 		" where user_id = ? and orderinfo.order_no=?";
@@ -39,6 +39,7 @@ public class CerDetailDao {
 					vo.setBuy_quantity(rset.getInt("buy_quantity"));//수량
 					vo.setOrder_total(rset.getInt("order_total"));//상품금액
 					vo.setOrder_cost(rset.getInt("order_cost"));//배송비
+					vo.setOrder_method(rset.getInt("order_method"));//결제수단
 					vo.setOrder_date(rset.getString("order_date"));//주문일자
 					vo.setArrive_date(rset.getString("arrive_date"));//도착일자
 				}

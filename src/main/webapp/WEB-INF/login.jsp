@@ -1,3 +1,7 @@
+<!-- 웹폰트: Noto Sans Korean -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
 <!-- 헤더 CSS -->
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_header.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -11,6 +15,14 @@
 <meta charset="UTF-8">
 <title>로그인 페이지</title>
 <style>
+/* reset */
+ * {
+            margin: 0;
+            padding: 0;
+}
+ body{
+    font-family: 'Noto Sans KR', sans-serif;
+}
 #head {
 	text-align: center;
 	margin-bottom: 15px;

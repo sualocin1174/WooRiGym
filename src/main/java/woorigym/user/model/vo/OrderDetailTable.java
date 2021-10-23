@@ -14,7 +14,8 @@ public class OrderDetailTable {
 	private int buy_quantity;
 	
 	// 10/18 추가: 주문상세보기 화면에 필요한 내용(product, address테이블과 조인)
-//	SELECT oinfo.order_no,order_total,order_cost, to_char(order_date, 'yyyy-mm-dd hh:mm') order_date,pay_state,order_state, 
+//	SELECT oinfo.order_no,order_total,order_cost, to_char(order_date, 'yyyy-mm-dd hh:mm') order_date,
+	//  order_method, pay_state,order_state, 
 //    odetail.product_no, buy_quantity
 //		,  product.product_name, product.PRODUCT_INFO_URL,
 //       coupon_discount, add_mileage, point_discount, (coupon_discount+point_discount) discount_all, (order_total-(coupon_discount+point_discount)+order_cost) total_pay
@@ -27,6 +28,7 @@ public class OrderDetailTable {
 //	 oinfo.order_no = 'GYM2021090101';
 	private int order_total;
 	private int order_cost;
+	private int order_method;
 	private String order_date;
 	private String pay_state;
 	private String order_state;
@@ -45,15 +47,18 @@ public class OrderDetailTable {
 	
 	public OrderDetailTable() {	}
 
+	
+
+
 	@Override
 	public String toString() {
 		return "OrderDetailTable [order_detail_no=" + order_detail_no + ", order_no=" + order_no + ", product_no="
 				+ product_no + ", buy_quantity=" + buy_quantity + ", order_total=" + order_total + ", order_cost="
-				+ order_cost + ", order_date=" + order_date + ", pay_state=" + pay_state + ", order_state="
-				+ order_state + ", product_name=" + product_name + ", product_info_url=" + product_info_url
-				+ ", coupon_discount=" + coupon_discount + ", add_mileage=" + add_mileage + ", point_discount="
-				+ point_discount + ", discount_all=" + discount_all + ", total_pay=" + total_pay + ", postcode="
-				+ postcode + ", basic_address=" + basic_address + ", detail_address=" + detail_address
+				+ order_cost + ", order_method=" + order_method + ", order_date=" + order_date + ", pay_state="
+				+ pay_state + ", order_state=" + order_state + ", product_name=" + product_name + ", product_info_url="
+				+ product_info_url + ", coupon_discount=" + coupon_discount + ", add_mileage=" + add_mileage
+				+ ", point_discount=" + point_discount + ", discount_all=" + discount_all + ", total_pay=" + total_pay
+				+ ", postcode=" + postcode + ", basic_address=" + basic_address + ", detail_address=" + detail_address
 				+ ", receiver_name=" + receiver_name + ", phone_no=" + phone_no + ", getOrder_detail_no()="
 				+ getOrder_detail_no() + ", getOrder_no()=" + getOrder_no() + ", getProduct_no()=" + getProduct_no()
 				+ ", getOrder_total()=" + getOrder_total() + ", getOrder_cost()=" + getOrder_cost()
@@ -68,7 +73,13 @@ public class OrderDetailTable {
 				+ ", toString()=" + super.toString() + "]";
 	}
 
+	public int getOrder_method() {
+		return order_method;
+	}
 
+	public void setOrder_method(int order_method) {
+		this.order_method = order_method;
+	}
 
 	public String getOrder_detail_no() {
 		return order_detail_no;

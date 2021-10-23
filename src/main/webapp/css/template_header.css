@@ -7,13 +7,12 @@
    }
    
 body {
-  font-family: Arial, Helvetica, sans-serif;
   margin: 0;
 }
 
 header {
 	width: 1200px;
-	margin: 0 auto; /* 21.10.22 추가 SH */
+	margin: 0 auto; /* 21.10.22 추가: 이렇게 해야 큰 화면에서 가운데 정렬됨 SH */
 	/* margin-right: 0;; */
 	height: 160px;
 	position: relative;
@@ -109,7 +108,6 @@ a:hover {
 	display: inline-block;
 	padding: 5px;
 }
-/* 공통헤더에 있던 부분인데 css로 따로 빼면 적용이 안되서 reset에 포함 */
 #main_tnb2 {
 	position: absolute;
 	top: 10px;
@@ -139,12 +137,37 @@ a:hover {
 	content: "";
 }
 /* 로그인 전 후 CSS 다름  끝*/
-/* 공통헤더~reset에 포함  끝*/
-#search_icon a {
-	position: absolute;
-	top: 10px;
-	right: 50px;
-	margin: 15px;
-	width: 25px;
-	height: 25px;
+/* 21-10-23 추가: 상단 네비바-검색창 SH*/
+#keyword_input_var{
+	width: 150px;
+  border: 2px solid #e7e7e7;
+  border-radius: 4px;
+  font-size: 1rem;
+  padding: 12px 20px;
+  line-height: 20px;
+  opacity: 0.85;
+  transition: width 0.4s ease-in-out;
 }
+#keyword_input_var:hover,#searchBtn:hover {
+	opacity: 1;
+}
+#keyword_input_var:focus {
+	 width: 100%;
+}
+/* 돋보기 버튼*/
+#searchBtn_var{
+      	padding: 6px;
+        margin: 4px;
+        text-align: center;
+        text-decoration: none;
+        transition-duration: 0.3s;
+        cursor: pointer;
+        background-color: white;
+        color: black;
+        border: 2px solid #555555;
+        border-radius: 5px;
+        }
+#searchBtn_var:hover {
+        border: 2px solid #FEA500;
+        background-color: #FEA500;
+        }

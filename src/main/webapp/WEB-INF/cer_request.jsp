@@ -1,4 +1,8 @@
- <!-- 헤더 CSS -->
+ <!-- 웹폰트: Noto Sans Korean -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
+<!-- 헤더 CSS -->
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_header.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- 마이페이지 사이드 CSS -->
@@ -13,6 +17,9 @@
 <meta charset="UTF-8">
 <title>교환/반품 신청폼</title>
 <style>
+body{
+        font-family: 'Noto Sans KR', sans-serif;
+        }
  section {
          width: 900px;
          padding: 0 0 30px 0;
@@ -144,6 +151,35 @@
 		border-radius: 50%;
 		background: white;
 	}
+<!-- /* 배송지 Modal Box */-->
+.modal-a {
+            display: none;
+            width: 100%;
+            height: 100%;
+            top:0;
+            left: 0;
+            position: fixed;
+            z-index: 1;
+            background-color: rgba(44, 47, 58, .3);
+            
+}
+.modal-content-a {
+            width: 300px;
+            height: 300px;
+            top: 50px;
+            left: 450px;
+            position: relative;
+            border: 2px solid dodgerblue;
+            border-radius: 20px;
+            box-shadow: 2px rgba(44, 47, 58, .3);
+            background-color: white;
+            color: dodgerblue;
+            padding: 30px;
+        }
+.modal-address td {
+		padding: 5px;
+		margin: 5px;
+}   
 </style>
 </head>
 <body>
@@ -151,6 +187,17 @@
  	<%@ include file="template_header.jsp"%>
 	<!--마이페이지 공통사이드 템플릿 -->
  	<%@ include file="template_mypage_aside.jsp"%>
+<!-- 배송지 Modal Box -->
+            <div class="modal-a">
+              <div class="modal-content-a">
+                    <span class="close">&times;</span> <!-- 닫기 -->
+                     <h3>배송지 목록</h3>
+                     <br>
+                     <table class="modal-address">
+                        <!-- 배송지 목록 -->
+                     </table>
+              </div>
+          </div>
 <section>
 	<h2>교환/반품 신청</h2>
 	
@@ -181,17 +228,6 @@
 <p id="a1" style="display:none">${order_total}</p>
 <p id="a2" style="display:none">${order_cost}</p>
 
-<!-- 배송지 Modal Box -->
-            <div class="modal">
-              <div class="modal-content">
-                    <span class="close">&times;</span> <!-- 닫기 -->
-                     <h3>배송지 목록</h3>
-                     <br>
-                     <table class="modal-address">
-                        <!-- 배송지 목록 -->
-                     </table>
-              </div>
-          </div>
 <script>
 	$("input[name='choice']").change(function(){
 	var exchange ='';
@@ -253,21 +289,21 @@
     	});
 	};
 	function showlist(){
-		  $(".modal").show(); 
+		  $(".modal-a").show(); 
 			console.log("ajax 시작show");
 			ajaxA1(); //이벤트함수 호출
 	}
    
      $(".close").click(function(){
-        $(".modal").hide(); 
+        $(".modal-a").hide(); 
      });
      $(window).on("click",function(e){
          console.log(e.target); 
          //방법 1
          //if(e.target == document.getElementById("modal-01")){};
          //방법 2
-         if(e.target == $(".modal").get(0)){
-             $(".modal").hide();
+         if(e.target == $(".modal-a").get(0)){
+             $(".modal-a").hide();
          }
      });
     function submitA1(){
@@ -278,11 +314,12 @@
 </script>
 
 <!-- 3단계 -->
+<div id='third depth'>
 <h3>교환/반품 신청이 접수되었습니다.</h3>
 <p>상품 회수 정보: 서울시 성동구 XX동</p>
 <h3>회수 요청사항: 부재시 문 앞</h3>
 <h3>상품 회수일: 9월 22일(수)</h3>
-
+</div>
 <div id="btngroup">
 <a href="#" class="nextbtn">이전 단계</a>
 <!--  <a href="#" class="nextbtn">다음 단계</a> -->

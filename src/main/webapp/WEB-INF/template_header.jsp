@@ -28,12 +28,7 @@
             <li><a href="#">최근본상품</a></li>
         </ul>
     </div> 
-    </c:if>
-        <div id="search_icon">
-            <a href="<%=ctxPath %>/searchpage"> <!-- 2021.10.12 1차 내용수정 // /slist.ajax에서 /slist로 수정 -->
-                <img src='./images/검색_돋보기.png' alt="검색" width="20px"/><br>
-            </a>
-        </div>
+    </c:if> <!-- 21.10.23 검색버튼 네비게이션바로 이동 SH -->
  <div class="navbar"> <!-- 10/21 삭제: 패키지, 세일 -->
   <div class="subnav">
     <button class="subnavbtn">근력기구 <i class="fa fa-caret-down"></i></button>
@@ -102,5 +97,13 @@
         <a href="<%=ctxPath %>/mypage">마이페이지</a>
     </div>
   </div>
+  <form>
+  <table>
+  <tr> <!-- 21.10.23 추가 SH -->
+		<td><input type="text" name="keyword" class="keyword_input" id="keyword_input_var" placeholder="상품명 입력"></td>
+		<td><a href="<%=ctxPath %>/searchpage" class="button" id="searchBtn_var"><img src='./images/검색_돋보기.png' alt="검색" width="20px"/></a></td>
+</tr>
+</table>
+</form>
 </div>
     </header>

@@ -19,9 +19,14 @@
     <title>우리짐 메인페이지</title>
        <!-- /* content */-->
         <style>
-        body{
-        font-family: 'Noto Sans KR', sans-serif;
-        }
+/* reset */
+ * {
+            margin: 0;
+            padding: 0;
+}
+ body{
+    font-family: 'Noto Sans KR', sans-serif;
+}
             section {
                 width: 1200px;
                 padding: 30px 0 30px 0;

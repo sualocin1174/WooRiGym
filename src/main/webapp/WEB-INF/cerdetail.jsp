@@ -1,3 +1,7 @@
+<!-- 웹폰트: Noto Sans Korean -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
  <!-- 헤더 CSS -->
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_header.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -31,6 +35,9 @@
     </script>
  <!-- /* content */ -->
  <style>
+  body{
+        font-family: 'Noto Sans KR', sans-serif;
+        }
      section {
          width: 900px;
          padding: 0 0 30px 0;
@@ -90,10 +97,13 @@
       	padding: 10px;
       	}
       	#olist, .cer {
-      	padding-bottom: 8px;
+      	padding-bottom: 12px;
       	}
-      	#cer_detail td {
+      	#cer_detail td{
         padding: 16px;
+      	}
+      	.cer td {
+        padding: 12px;
       	}
 	   	 #cer_detail img{
           width: 80px;
@@ -132,22 +142,28 @@
    <h3>${cerdetail.claim_kind} 정보</h3>
 <table class="cer">
         <tr>
-            <th>주문 상세 번호</th>
-            <td>${cerdetail.order_detail_no}</td>
+            <th>주문 번호</th>
+            <td>${order_no}</td>
             <th>주문 일자</th>
             <td>${cerdetail.order_date}</td>
         </tr>
         <tr>
+            <th>주문 상세 번호</th>
+            <td>${cerdetail.order_detail_no}</td>
             <th>신청 일자</th>
             <td>${cerdetail.claim_date}</td>
-            <th>처리 일자</th>
-            <td>${cerdetail.done_date}</td>
         </tr>
         <tr>
-            <th>결제 정보</th>
-            <td></td>
             <th>결제 방식</th>
-            <td></td>
+            <!-- 0 : 카드결제, 1 : 무통장결제 -->
+            <c:if test="${cerdetail.order_method == '0'}">
+            <td>카드결제</td>
+            </c:if>
+            <c:if test="${cerdetail.order_method == 1}">
+            <td>무통장결제</td>
+            </c:if>
+            <th>${cerdetail.claim_kind} 처리 일자</th>
+            <td>${cerdetail.done_date}</td>
         </tr>
     </table>
    <div class="btn">

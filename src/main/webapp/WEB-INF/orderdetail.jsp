@@ -1,3 +1,7 @@
+ <!-- 웹폰트: Noto Sans Korean -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
    <!-- 헤더 CSS -->
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_header.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -38,6 +42,14 @@
     </script>
  <!-- /* content */ -->
  <style>
+ /* reset */
+        * {
+            margin:0; 
+            padding:0;
+        }
+ body{
+        font-family: 'Noto Sans KR', sans-serif;
+        }
      section {
          width: 900px;
          padding: 0 0 30px 0;
@@ -98,14 +110,14 @@
       	border-top: none;
       	margin: 0 0 15px 0;
       	}
-      	#order_detail th{
+      	#order_detail th {
       	padding: 10px;
       	}
       	#olist, .order {
-      	padding-bottom: 8px;
+      	padding-bottom: 12px;
       	}
       	#olist td, .order td {
-      	padding: 5px;
+      	padding: 8px;
       	}
         #order_detail td {
         padding: 16px;
@@ -147,22 +159,22 @@
             </table>
             <table id="olist">
                 <tr>
-                    <th>쿠폰 할인</th>
+                    <th>쿠폰 사용</th>
                     <td>${detail.coupon_discount}원</td>
                     <th>상품 금액</th>
                     <td>${detail.order_total}원</td>
-                </tr>
-                <tr>
-                    <th>결제 후 적립</th>
-                    <td>${detail.add_mileage}P</td>
-                    <th>할인 금액</th>
-                    <td>${detail.discount_all}원</td>
                 </tr>
                 <tr>
                     <th>포인트 사용</th>
                     <td>${detail.point_discount}P</td>
                     <th>배송비</th>
                     <td>${detail.order_cost}원</td>
+                </tr>
+                <tr>
+                    <th>결제 후 적립</th>
+                    <td>${detail.add_mileage}P</td>
+                    <th>할인 금액</th>
+                    <td>${detail.discount_all}원</td>
                 </tr>
                 <tr>
                     <td></td>
@@ -186,10 +198,16 @@
             <td>${detail.coupon_discount}원</td>
         </tr>
         <tr>
-            <th>결제 정보</th>
+            <th></th>
             <td></td>
             <th>결제 방식</th>
-            <td></td>
+            <!-- 0 : 카드결제, 1 : 무통장결제 -->
+            <c:if test="${detail.order_method == '0'}">
+            <td>카드결제</td>
+            </c:if>
+            <c:if test="${detail.order_method == 1}">
+            <td>무통장결제</td>
+            </c:if>
         </tr>
     </table>
     <br>
@@ -206,7 +224,7 @@
         <tr>
             <th>배송지 주소</th>
             <td>[${detail.postcode}] ${detail.basic_address} ${detail.detail_address}</td>
-    <c:if test="${detail.pay_state= '주문완료'}">
+    <c:if test="${detail.order_state == '주문완료'}">
     <td>
     <input type="button" class="button" value="수정" id="insert_place">
     </td></c:if>

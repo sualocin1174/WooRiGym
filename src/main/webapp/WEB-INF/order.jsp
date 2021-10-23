@@ -1,108 +1,42 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!-- 웹폰트: Noto Sans Korean -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
+     <!-- 헤더 CSS -->
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_header.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/orderpage.css"/>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import = "woorigym.user.model.vo.UserTable" %>
     <%
     UserTable user = (UserTable)session.getAttribute("loginSS");
-    
   %>
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>우리짐 결제페이지</title>
-    <!-- 부트스트랩 CDN -->
-     <!-- 헤더 CSS -->
-     
-    <style>
+<style>
         /* reset */
         * {
             margin:0; 
             padding:0;
         }
-         /* 공통헤더에 있던 부분인데 css로 따로 빼면 적용이 안되서 reset에 포함 */
-        #main_tnb2 {
-            position: absolute;
-            top: 10px;
-            bottom: 10px;
-            right: 30px;
-            margin: 10px;
-            overflow: hidden;
-            width: 500px;
-            height: 100px;
+        body {
+        font-family: 'Noto Sans KR', sans-serif;
+		}
+        /* content */
+        section {
+            width: 1200px;
+            padding: 30px 0 30px 0;
         }
-		
-        #main_tnb2>ul>li {
-            display: inline-block;
-            padding: 5px;
-        }
-        /* 로그인 전: 로그인 | 최근본상품 */
-        /* 로그인 후: OOO님 | 로그아웃 | 마이페이지 | 장바구니 | 최근본상품 */
-        #main_tnb2 li::after {
-            padding-left: 10px;
-            content: "|";
-        }
-        #main_tnb2 li:last-child::after {
-            padding-left: 10px;
-            content: "";
-        }
-         /* 공통헤더~reset에 포함  끝*/
-        </style>
-        <style>
-            /* content */
-            section {
-                width: 1200px;
-                padding: 30px 0 30px 0;
-            }
-        
-            #main_bnb {
-                text-align: center;
-            }
-        
-            #main_bnb li {
-                display: inline-block;
-            }
-
-        /* 신상품 | 인기상품 | 타임세일 */
-            #main_bnb li::after{
-                padding: 10px;
-                content: "|";
-            }
-            #main_bnb li:last-child::after{
-                padding: 15px;
-                content: "";
-            }
-
-          #main_img {
-              position: relative;
-              left: 20px;
-              box-sizing: content-box;
-            }
-            #main_img a{
-                display: inline-block;
-                padding: 15px;
-                /* position: relative; */
-                
-            }
-            #main_img img{
-            /* vertical-align: middle; */
-              /* display: inline-block; */
-              width: 250px;
-          }
-            </style>
-            
-<style>
 #ordersection{
 	margin : auto;
 	width : 1000px;
-	
 }
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -111,7 +45,6 @@
     // cart 와 product 불러와서 상품 정보 불러오는 js
     var totalpro = "";
     $(document).ready(function () {
-    	
     	
         //해당하는 상품정보 불러오기
         $.ajax({ // JQuery 를 통한 ajax 호출 방식 사용
@@ -1129,10 +1062,7 @@ var fixaddrno = "";
                 }
             });
            	*/
-    
     });
     </script>
 </body>
-
-
 </html>

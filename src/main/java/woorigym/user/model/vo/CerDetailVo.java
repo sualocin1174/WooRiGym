@@ -1,7 +1,7 @@
 package woorigym.user.model.vo;
 
 public class CerDetailVo {
-//	select claim.*, product_no, buy_quantity, order_total, order_cost, order_date, arrive_date from claim
+//	select claim.*, product_no, buy_quantity, order_total, order_cost, order_method, order_date, arrive_date from claim
 //	join order_detail odetail on odetail.order_detail_no = claim.order_detail_no
 //	join orderinfo on orderinfo.order_no = odetail.order_no
 //	where user_id='gym11';
@@ -16,22 +16,31 @@ public class CerDetailVo {
 		private int buy_quantity;
 		private int order_total;
 		private int order_cost;
+		private int order_method;
 		private String order_date;
 		private String arrive_date;
+		
 		
 		@Override
 		public String toString() {
 			return "CerDetailVo [order_detail_no=" + order_detail_no + ", claim_date=" + claim_date + ", claim_kind="
 					+ claim_kind + ", claim_process=" + claim_process + ", done_date=" + done_date + ", product_no="
 					+ product_no + ", buy_quantity=" + buy_quantity + ", order_total=" + order_total + ", order_cost="
-					+ order_cost + ", order_date=" + order_date + ", arrive_date=" + arrive_date
-					+ ", getOrder_detail_no()=" + getOrder_detail_no() + ", getClaim_date()=" + getClaim_date()
-					+ ", getClaim_kind()=" + getClaim_kind() + ", getClaim_process()=" + getClaim_process()
-					+ ", getDone_date()=" + getDone_date() + ", getProduct_no()=" + getProduct_no()
-					+ ", getBuy_quantity()=" + getBuy_quantity() + ", getOrder_total()=" + getOrder_total()
-					+ ", getOrder_cost()=" + getOrder_cost() + ", getOrder_date()=" + getOrder_date()
-					+ ", getArrive_date()=" + getArrive_date() + ", getClass()=" + getClass() + ", hashCode()="
-					+ hashCode() + ", toString()=" + super.toString() + "]";
+					+ order_cost + ", order_method=" + order_method + ", order_date=" + order_date + ", arrive_date="
+					+ arrive_date + ", getOrder_method()=" + getOrder_method() + ", getOrder_detail_no()="
+					+ getOrder_detail_no() + ", getClaim_date()=" + getClaim_date() + ", getClaim_kind()="
+					+ getClaim_kind() + ", getClaim_process()=" + getClaim_process() + ", getDone_date()="
+					+ getDone_date() + ", getProduct_no()=" + getProduct_no() + ", getBuy_quantity()="
+					+ getBuy_quantity() + ", getOrder_total()=" + getOrder_total() + ", getOrder_cost()="
+					+ getOrder_cost() + ", getOrder_date()=" + getOrder_date() + ", getArrive_date()="
+					+ getArrive_date() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+					+ super.toString() + "]";
+		}
+		public int getOrder_method() {
+			return order_method;
+		}
+		public void setOrder_method(int order_method) {
+			this.order_method = order_method;
 		}
 		public String getOrder_detail_no() {
 			return order_detail_no;

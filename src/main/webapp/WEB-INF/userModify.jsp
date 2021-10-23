@@ -14,6 +14,11 @@
 <meta charset="UTF-8">
 <title>회원정보 수정</title>
 <style>
+ /* reset */
+ * {
+            margin: 0;
+            padding: 0;
+}
 body{
         font-family: 'Noto Sans KR', sans-serif;
     }
