@@ -1,4 +1,4 @@
-package woorigym.search.controller;
+package woorigym.product.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,33 +15,27 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import woorigym.common.Command;
 import woorigym.product.model.vo.ProductTable;
 import woorigym.search.model.service.SearchListService;
 
 /**
- * Servlet implementation class SearchListServlet
+ * Servlet implementation class ProductPageServlet
  */
-@WebServlet("/slist.ajax")
-public class SearchListServletAjax extends HttpServlet {
+@WebServlet("/ppage")
+public class ProductPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public SearchListServletAjax() {
+    public ProductPageServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String viewPage = "/WEB-INF/productpage.jsp";
+		//확인하고 싶은 jsp 경로만 수정하고 새로고침하면 됩니다.
+		request.getRequestDispatcher(viewPage).forward(request, response);
+	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		request.setCharacterEncoding("UTF-8");
-//		response.setCharacterEncoding("UTF-8");
-//		response.setContentType("text/html; charset=UTF-8");
 		response.setContentType("application/json; charset=utf-8"); 
 		// 2021-10-07 수정
 		PrintWriter out = response.getWriter();
@@ -49,38 +43,18 @@ public class SearchListServletAjax extends HttpServlet {
 		String jsonResultMap = "";
 		
 		// 검색 조건들 읽어오기
-		String productName = request.getParameter("productName");
 		String parentCategory = request.getParameter("parentCategory");
 		String childCategory = request.getParameter("childCategory");
-		String minPriceStr = request.getParameter("minPrice");
-		String maxPriceStr = request.getParameter("maxPrice");
-		String selectRank = request.getParameter("selectRank"); // 2021.10.11 1차 내용추가
-		int minPrice = -1;
-		int maxPrice = -1;
-		System.out.println(minPrice);
-		System.out.println(maxPrice);
-		try {
-			minPrice = Integer.parseInt(minPriceStr);
-			maxPrice = Integer.parseInt(maxPriceStr);
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
 		ProductTable searchKeyVo = new ProductTable();
-		if(productName != null && !productName.equals(""))	searchKeyVo.setProductName(productName);
 		if(parentCategory != null && !parentCategory.equals(""))   searchKeyVo.setParentCategory(parentCategory);
-		if(selectRank != null && !selectRank.equals(""))   searchKeyVo.setSelectRank(selectRank); // 2021.10.11 1차 내용추가
 		if(childCategory != null && !childCategory.equals(""))   searchKeyVo.setChildCategory(childCategory);
-		searchKeyVo.setMinPrice(minPrice);
-		searchKeyVo.setMaxPrice(maxPrice);
 		
 		System.out.println("searchKeyVo 전달받은:"+ searchKeyVo);
 		
 
-		// 2021.10.13 1차 수정시작
 		final int PAGE_SIZE = 20; // 한 페이지 당 글수
 		final int PAGE_BLOCK = 5; // 한 화면에 나타날 페이지 링크 수
 		// 페이지당 글 수랑 화면에 나타낼 페이지 수 변경
-		// 2021.10.13 1차 수정완료
 		int bCount = 0; // 총 글수
 		int pageCount = 0; // 총 페이지수
 		int startPage = 1; // 화면에 나타날 시작페이지
@@ -94,7 +68,7 @@ public class SearchListServletAjax extends HttpServlet {
 			currentPage = Integer.parseInt(pageNum); // 눌려진 페이지
 		}
 		// 총 글수
-		bCount = new SearchListService().getProductListCount(searchKeyVo);
+		bCount = new SearchListService().getProductPageListCount(searchKeyVo);
 		// 총 페이지수 = (총글개수 / 페이지당글수) + (총글개수에서 페이지당글수로 나눈 나머지가 0이 아니라면 페이지개수를 1 증가)
 		pageCount = (bCount / PAGE_SIZE) + (bCount % PAGE_SIZE == 0 ? 0 : 1);
 		// rownum 조건 계산
@@ -120,13 +94,8 @@ public class SearchListServletAjax extends HttpServlet {
 		System.out.println("endPage:"+endPage);
 		System.out.println("pageCount:"+pageCount);
 		System.out.println("currentPage:"+currentPage);
-			
-		
-		
-		
-		
-//		ArrayList<ProductTable> productlist = new SearchListService().productSearch(searchKeyVo);
-		ArrayList<ProductTable> productlist = new SearchListService().searchProductList(searchKeyVo, startRnum, endRnum);
+
+		ArrayList<ProductTable> productlist = new SearchListService().productPageList(searchKeyVo, startRnum, endRnum);
 		System.out.println("productlist :"+productlist);
 
 		// vo 관련 데이터 채우기
@@ -140,7 +109,6 @@ public class SearchListServletAjax extends HttpServlet {
 		map1.put("currentPage", currentPage);
 		
 		
-//		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		Gson gson = new GsonBuilder().create();
 		jsonResultMap = gson.toJson(map1);
 		System.out.println("jsonListVo"+jsonResultMap);
@@ -148,6 +116,4 @@ public class SearchListServletAjax extends HttpServlet {
 		out.flush();
 		out.close();
 	}
-	// 2021-10-07 수정완료
-
 }

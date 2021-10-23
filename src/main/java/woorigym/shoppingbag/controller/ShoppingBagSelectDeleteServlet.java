@@ -53,6 +53,7 @@ public class ShoppingBagSelectDeleteServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		int cartNo = 0;
 		String sbsdelete = request.getParameter("cartNo");
+		System.out.println("장바구니 번호1"+sbsdelete);
 		cartNo = Integer.parseInt(sbsdelete);
 		System.out.println("장바구니 번호2"+cartNo);
 		

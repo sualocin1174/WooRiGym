@@ -100,12 +100,13 @@ public class SearchListPagingServlet extends HttpServlet {
 		if (endPage > pageCount)
 			endPage = pageCount;
 
-		System.out.println(bCount);
-		System.out.println(startRnum);
-		System.out.println(endRnum);
-		System.out.println(endPage);
-		System.out.println(startPage);
-		System.out.println(pageCount);
+		System.out.println("bCount:"+bCount);
+		System.out.println("startRnum:"+startRnum);
+		System.out.println("endRnum:"+endRnum);
+		System.out.println("startPage:"+startPage);
+		System.out.println("endPage:"+endPage);
+		System.out.println("pageCount:"+pageCount);
+		System.out.println("currentPage:"+currentPage);
 		
 		ProductTable searchKeyVo = new ProductTable();
 		if(productName != null && !productName.equals(""))	searchKeyVo.setProductName(productName);
@@ -117,11 +118,13 @@ public class SearchListPagingServlet extends HttpServlet {
 		// DB에서 값 읽어오기
 		ArrayList<ProductTable> productlist1 = new SearchListService().searchProductList(searchKeyVo, startRnum, endRnum);
 
+
 		// Data 전달을 위해서 request에 셋
 		request.setAttribute("productlist1", productlist1);
 		request.setAttribute("startPage", startPage);
 		request.setAttribute("endPage", endPage);
 		request.setAttribute("pageCount", pageCount);
+		request.setAttribute("currentPage", currentPage);
 		request.getRequestDispatcher("/WEB-INF/searchpage.jsp").forward(request, response);
 	}
 }

@@ -9,6 +9,119 @@ import woorigym.common.jdbcTemplate;
 import woorigym.product.model.vo.ProductTable;
 
 public class SearchListDao {
+	// 2021.10.23 추가시작
+	public int getProductPageListCount(Connection conn, ProductTable searchKeyVo) {
+		int result = 0;
+		String sql = "select count(*) from product p "; // 
+
+		String parentCategory = searchKeyVo.getParentCategory();
+		String childCategory = searchKeyVo.getChildCategory();	
+		boolean flag = false;
+		
+		if (parentCategory != null && !parentCategory.equals("")) {
+			if (!flag) {
+				sql += " where ";
+				flag = true;
+			} else {
+				sql += " and ";
+			}
+			sql += " p.parent_category like '%" + parentCategory + "%'";
+		}
+		if (childCategory != null && !childCategory.equals("")) {
+			if (!flag) {
+				sql += " where ";
+				flag = true;
+			} else {
+				sql += " and ";
+			}
+			sql += " p.child_category like '%" + childCategory + "%'";
+		}
+		
+		System.out.println("getProductPageListCount sql:"+sql);
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			if (rset.next()) {
+				result = rset.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			jdbcTemplate.close(rset);
+			jdbcTemplate.close(pstmt);
+		}
+		return result;
+	}
+	
+	public ArrayList<ProductTable> productPageList(Connection conn, ProductTable searchKeyVo, int start, int end) {
+		System.out.println("ProductpageList 1");
+		ArrayList<ProductTable> productlist = null;
+		String sql = "select *"
+				+ " from (select rownum r, t1.*"
+				+ "      from(select p.product_info_url, p.product_name, p.product_option, p.price, p.product_no"
+				+ "           from product p";
+
+		String parentCategory = searchKeyVo.getParentCategory();
+		String childCategory = searchKeyVo.getChildCategory();	
+		boolean flag = false;
+		
+		if (parentCategory != null && !parentCategory.equals("")) {
+			if (!flag) {
+				sql += " where ";
+				flag = true;
+			} else {
+				sql += " and ";
+			}
+			sql += " p.parent_category like '%" + parentCategory + "%'";
+		}
+		if (childCategory != null && !childCategory.equals("")) {
+			if (!flag) {
+				sql += " where ";
+				flag = true;
+			} else {
+				sql += " and ";
+			}
+			sql += " p.child_category like '%" + childCategory + "%'";
+		}
+		sql += " )t1) t2 where r between ? and ?";
+		
+		System.out.println("sql:"+sql);
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			System.out.println("ProductpageList executeQuery 1");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			rset = pstmt.executeQuery();
+			System.out.println("ProductpageList executeQuery 2");
+			if (rset.next()) {
+				System.out.println("ProductpageList executeQuery over 1");
+				productlist = new ArrayList<ProductTable>();
+				do {
+					ProductTable vo = new ProductTable();
+					vo.setProductInfoUrl(rset.getString("product_info_url"));
+					vo.setProductName(rset.getString("product_name"));
+					vo.setProductOption(rset.getString("product_option"));
+					vo.setPrice(rset.getInt("price"));
+					productlist.add(vo);			
+					System.out.println("ProductpageList executeQuery over 2");
+				} while (rset.next());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			jdbcTemplate.close(rset);
+			jdbcTemplate.close(pstmt);
+		}
+		System.out.println("ProductpageList 2" + productlist);
+		return productlist;
+	}
+	// 2021.10.23 추가완료
+	
 	// 2021.10.12 1차 추가시작
 	public ProductTable getProductNo(Connection conn, String productNo) {
 		System.out.println("getProductNo 1");
@@ -117,7 +230,7 @@ public class SearchListDao {
 		}
 		sql += " )t1) t2 where r between ? and ?";
 		
-		System.out.println(sql);
+		System.out.println("sql:"+sql);
 		
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -178,7 +291,96 @@ public class SearchListDao {
 		return result;
 	}
 	// 2021.10.11 추가완료	
+	// 2021.10.22 추가시작
+	public int getProductListCount(Connection conn, ProductTable searchKeyVo) {
+		int result = 0;
+		//String sql = "select count(product_no) from product";
+		//String sql = "select * from (select rownum r, t1.*      from(select p.product_info_url, p.product_name, p.product_option, p.price, p.product_no           from product p where  p.parent_category like '%근력기구%' )t1) t2 where r between ? and ?"
+		String sql = "select count(*) from product p "; // 
 
+		String productName = searchKeyVo.getProductName();
+		String parentCategory = searchKeyVo.getParentCategory();
+		String selectRank = searchKeyVo.getSelectRank();
+		String childCategory = searchKeyVo.getChildCategory();	
+		int minPrice = searchKeyVo.getMinPrice();
+		int maxPrice = searchKeyVo.getMaxPrice();
+		boolean flag = false;
+		boolean flag1 = false;
+		
+		if (selectRank != null && !selectRank.equals("")) {
+			if (!flag1) {
+				sql += " inner join order_detail o on p.product_no = o.product_no ";
+				sql += " inner join review r on o.order_detail_no = r.order_detail_no ";
+				flag1 = true;
+			}
+		}
+		if (productName != null && !productName.equals("")) {
+			if (!flag) {
+				sql += " where ";
+				flag = true;
+			} else {
+				sql += " and ";
+			}
+			sql += " p.product_name like '%" + productName + "%'";
+		}
+		if (parentCategory != null && !parentCategory.equals("")) {
+			if (!flag) {
+				sql += " where ";
+				flag = true;
+			} else {
+				sql += " and ";
+			}
+			sql += " p.parent_category like '%" + parentCategory + "%'";
+		}
+		if (childCategory != null && !childCategory.equals("")) {
+			if (!flag) {
+				sql += " where ";
+				flag = true;
+			} else {
+				sql += " and ";
+			}
+			sql += " p.child_category like '%" + childCategory + "%'";
+		}
+		if (minPrice >= 0 || maxPrice >= 0) {
+			if (!flag) {
+				sql += " where ";
+				flag = true;
+			} else {
+				sql += " and ";
+			}
+			sql += " p.price between " + minPrice + " and " + maxPrice;
+		}
+		if (selectRank != null && selectRank.equals("인기순")) {
+				sql += " group by p.product_info_url, p.product_name, p.product_option, p.price, p.product_no"
+						+ " order by count(o.buy_quantity) desc";
+		}
+		else if (selectRank != null && selectRank.equals("평점순")) {
+				sql += " group by p.product_info_url, p.product_name, p.product_option, p.price, p.product_no"
+						+ " order by sum(r.score) desc";
+		}
+		
+		System.out.println("getProductListCount sql:"+sql);
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			if (rset.next()) {
+				result = rset.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			jdbcTemplate.close(rset);
+			jdbcTemplate.close(pstmt);
+		}
+		return result;
+	}
+	// 2021.10.22 추가완료	
+	
+	
+	
+	
 	// 2021.10.07 추가
 	public ArrayList<ProductTable> productSearch(Connection conn, ProductTable searchKeyVo) {
 		System.out.println("productSearch 1");

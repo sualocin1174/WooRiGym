@@ -144,6 +144,16 @@
 	<h2>장바구니</h2>
 	    <!-- 2021.10.19 1차 내용삭제 시작 -->
 	    <div id="sblist"></div>
+	    <div class="modal">
+              <div class="modal-content">
+                    <span class="close">&times;</span> <!-- 닫기 -->
+                     <h3>옵션변경 리스트</h3>
+                     <br>
+                     <table class="modal-list">
+                        <!-- 쿠폰리스트 -->
+                     </table>
+              </div>
+          </div>
 	    <!-- <table border="1" width="100%" id="test"> -->
 	    	<%-- <c:forEach var="cartlist" items="${cartTableVolist}"> --%> <!-- 2021.10.15 1차 내용삭제 -->
 	    	<!-- 2021.10.15 2차 내용추가 시작 -->
@@ -299,14 +309,16 @@
 	    	$("#sblist").empty(); 
 			$("#sblist").append(html);
 			$("#sblist").append(costhtml);
+			
+			$("[class=subCB]").click(test);
 	
 			$("[class=subCB]").click(oneCheckFunc);
 			
 			$("[name=mainCB]").click(allCheckFunc);
 			
-			function allCheckFunc() {
 			var bprice = 0;
 			var dprice = 0;
+			function allCheckFunc() {
 				$("[name=subCB]").prop("checked", $(this).prop("checked") );
 			    $("[name=subCB]:checked").each(function(){
 					// console.log(this);
@@ -325,8 +337,8 @@
 	
 			/* 체크박스 체크시 전체선택 체크 여부 */
 			function oneCheckFunc( obj ) {
-				console.log("oneCheckFunc");
-				console.log(obj);
+				// console.log("oneCheckFunc");
+				// console.log(obj);
 				
 				//console.log($(this).parents().children().eq(5).html().replace("원",""));
 				var allObj = $("[name=mainCB]");
@@ -408,23 +420,24 @@
 		}
 		ajaxsdelete();
 	}
-	
-	$("[class=subCB]").click(test);
 	function test() {
-		$("[name=subCB]:checked").each(function(){
-			consle.log("장바구니번호 : "+$("[name=subCB]:checked"));
+		console.log("장바구니 번호 : "+$("[class=subCB]:checked").val());
+		$("[name=subCB]:checked").each(function(i){
+			// console.log("장바구니번호 : "+$("[name=subCB]:checked"));
 			sDeleteList.push($(this).val());
-			consle.log(sDeleteList.push($(this).val()));
+			// console.log(sDeleteList.push($(this).val()));
 		});
 	}
-	console.log("배열에 담겨진 값 : "+sDeleteList);
+	// console.log("배열에 담겨진 값 : "+sDeleteList);
 	
   	function ajaxsdelete(){
+  		console.log("배열에 담겨진 값 : "+sDeleteList);
    		$.ajax({
 			type:"post",
 			url:"<%=request.getContextPath()%>/sbsdelete.ajax",
 			data : {
-				cartNo : sDeleteList
+				// cartNo : $("[name=subCB]:checked").val()
+				"cartNo" : sDeleteList
 			},
 			dataType : "json", // 전달받을 객체는 JSON 이다.
 			success: function(data){

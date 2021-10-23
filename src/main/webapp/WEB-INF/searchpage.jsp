@@ -8,15 +8,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="woorigym.product.model.vo.ProductTable"%>
-<%@page import="java.util.ArrayList"%>
-  <%
-  String user_name = (String)request.getAttribute("user_name");
-	ArrayList<ProductTable> productlist1 = (ArrayList<ProductTable>) request.getAttribute("productlist1");
-	int startPage = (int)request.getAttribute("startPage");
-	int endPage = (int)request.getAttribute("endPage");
-	int pageCount = (int)request.getAttribute("pageCount");
-  %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -237,7 +228,7 @@
 					</select>
 					</div></td>
 					<td id=""><input type="text" name = "minprice" class="price_input" id="minprice_input" placeholder="최소금액"> ~ 
-					<input type="textprice" name = "maxprice" class="price_input" id="maxprice_input" placeholder="최대금액"> 원</td>
+					<input type="text" name = "maxprice" class="price_input" id="maxprice_input" placeholder="최대금액"> 원</td>
 					<!-- 2021.10.11 1차 내용수정 -->
 					<td><input type = "text" name = "keyword" class = "keyword_input" id = "keyword_input" placeholder="상품명 입력">
 					<input type = "button" class = "button" id = "searchBtn" value = "검색"> <!-- 2021.10.07 추가 --></td>
@@ -248,77 +239,19 @@
 		<!-- <button type="submit" class="btn_search">검색</button>  2021.10.07 삭제-->
     </aside>
     <section>
-	   <%--  <p>
-			${productlist}
-			<br>
-			${startPage}
-			<br>
-			${endPage}
-			<br>
-			${pageCount}
-		</p> --%>
     	<h2 id="productlist">상품목록</h2> <!-- 2021.10.08 1차 내용추가 및 추가완료 -->
-    	<!-- 2021.10.11 1차 추가시작 -->
-    	<div id="test"></div>
-    	<table border='1' id="prolist">
-    	<!-- 2021.10.13 1차 추가시작 -->
-    		<c:forEach var="plist" items="${productlist1}">
-	    		<!-- 2021.10.13 2차 추가시작 -->
-		    	<%-- <tr><td>이미지 : ${plist.productInfoUrl}</td></tr>
-		    	<tr><td>상품명 : ${plist.productName}</td></tr>
-		    	<tr><td>옵션 : ${plist.productOption}</td></tr>
-		    	<tr><td>가격 : ${plist.price}</td></tr>
-		    	<td height="20px"></td> --%>
-		    	
-		    	<tr>
-		    		<td>이미지 : ${plist.productInfoUrl}<br>
-		    			상품명 : ${plist.productName}<br>
-		    			옵션 : ${plist.productOption}<br>
-		    			가격 : ${plist.price}<br>
-		    			적립금 : ${plist.price*0.05}<br><br>
-		    		</td>
-		    	</tr>
-		    	
-		    	<%-- <li>
-		    		<div>${plist.productInfoUrl}</div>
-		    		<div>${plist.productName}</div>
-		    		<div>${plist.productOption}</div>
-		    		<div>${plist.price}</div>
-		    		<div> </div>
-		    	</li> --%>
-	    		<!-- 2021.10.13 2차 추가완 -->
-		    	
-    	<!-- 2021.10.13 1차 추가완료 -->
-	    	</c:forEach>
-	   		<%-- <%
-		    	if(productlist != null){
-		    		for(ProductTable vo : productlist){
-	    	%> --%>
-	    	
-    	</table>
-    	<div id="pageview"> <!-- 2021.10.22 추가 SH -->
-    	<c:if test=" ${startPage} > 1 " >
-			<p>이전</p>
-		</c:if>
-		<c:forEach begin="${startPage}"  end="${endPage}" step="1" var="i">
-			<a href="./searchpage?pagenum=${i}"> ${i} </a>
-			<c:if test="${i } != ${endPage}">
-				,
-			</c:if>
-		</c:forEach>
-		<c:if test=" ${endPage} < ${pageCount}" >
-			다음
-		</c:if>
-		</div>
     	<!-- 2021.10.11 1차 추가완료 -->
-    	<script>
-    	console.log("${startPage}");
-    	console.log("${endPage}");
-    	console.log("${pageCount}");
-    	</script>
+    	<div id="productItems"></div>  <!-- 2021.10.22 추가 SH -->
+		<div id="paging"></div> <!-- 2021.10.22 추가 SH -->
     </section>
     <footer>
     </footer>
+<script>
+// 디버깅용
+console.log("${startPage}");
+console.log("${endPage}");
+console.log("${pageCount}");
+</script>
     <script>
     /* 2021-10-07 수정 */
     	$("#searchBtn").click( function () {
@@ -345,7 +278,7 @@
 				},
 				datatype:"json",
 				success: function(data){
-					console.log(data.productlist);
+					console.log(data);
 					for(var i = 0 ; i < data.productlist.lehgth; i++) {
 						console.log(data.productlist[i].productName);
 					}
@@ -360,7 +293,7 @@
 		});
     
     	function resultHtml(data){
-			var html="<table border='1' id='test'>";
+			var html="<table border='1' id='pageview'>";
 			
 			$.each(data.productlist, function(i, value){
 				console.log(i);
@@ -373,12 +306,67 @@
 				html += "적립금 : " + value.price*0.05 + "<br><br>";
 				html += "</td></tr>";
 			});
+			html += "</table>";
+			$("#productItems").empty(); 
+			$("#productItems").append(html);
 			
-		html += "</table>";
-		$("#test").empty(); 
-		$("#test").append(html);
-	}
+			/* 2021-10-22 추가 paging */
+			$("#paging").empty();
+			var pageHtml = "";
+			if(data.startPage>1){
+				pageHtml+='<a href="javascript:clickBtnPage('+data.startPage+');"> 이전 </a>';
+			}
+			for(var i=data.startPage; i<=data.endPage; i++){
+				pageHtml+='<a href="javascript:clickBtnPage('+i+');"> '+i+'</a>';
+			}
+			if(data.endPage < data.pageCount){
+				pageHtml+='<a href="javascript:clickBtnPage('+data.endPage+');"> 다음 </a>';
+			}
+			$("#paging").append(pageHtml);
+		}
+    	
+    	
+    	function clickBtnPage(selectedPageNum) {
+			console.log($("#minprice_input").val());
+			console.log($("#maxprice_input").val());
+			$.ajax({
+				type:"post",
+				url:"<%=request.getContextPath()%>/slist.ajax",
+				data: {
+					/* 2021.10.11 1차 수정시작 */
+					productName : $("#keyword_input").val(),
+					parentCategory: $("#category option:selected").val(),
+					selectRank: $("#rank option:selected").val(), 
+					/* childCategory: "", */
+					minPrice: $("#minprice_input").val(),
+					maxPrice: $("#maxprice_input").val()
+					/* 2021.10.11 1차 수정완료 */
+					, pagenum: selectedPageNum					
+				},
+				datatype:"json",
+				success: function(data){
+					console.log(data);
+					for(var i = 0 ; i < data.productlist.lehgth; i++) {
+						console.log(data.productlist[i].productName);
+					}
+					resultHtml(data);
+				},
+				error : function(request,status,error) {
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+
+					"\n"+"error:"+error);
+					}
+			});
+		}
+    	
     	/* 2021-10-07 수정완료 */
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
     	/*2021-10-22 추가 SH*/
     	var x, i, j, l, ll, selElmnt, a, b, c;
 /*look for any elements with the class "custom-select":*/

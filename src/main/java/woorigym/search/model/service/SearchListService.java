@@ -10,6 +10,23 @@ import woorigym.product.model.vo.ProductTable;
 import woorigym.search.model.dao.SearchListDao;
 
 public class SearchListService {
+	// 2021.10.23 추가시작
+	public int getProductPageListCount(ProductTable searchKeyVo) {
+		int result = 0;
+		Connection conn = jdbcTemplate.getConnection();
+		result = new SearchListDao().getProductPageListCount(conn, searchKeyVo);		
+		jdbcTemplate.close(conn);
+		return result;
+	}
+	
+	public ArrayList<ProductTable> productPageList(ProductTable searchKeyVo, int start, int end) {
+		ArrayList<ProductTable> produList = null;
+		Connection conn = jdbcTemplate.getConnection();
+		produList = new SearchListDao().productPageList(conn, searchKeyVo, start, end);
+		jdbcTemplate.close(conn);
+		return produList;
+	}
+	// 2021.10.23 추가완료
 	
 	// 2021.10.12 1차 추가시작
 	public ProductTable getProductNo(String productNo) {
@@ -38,6 +55,16 @@ public class SearchListService {
 		return result;
 	}
 	// 2021.10.11 추가완료
+	
+	// 2021.10.22 추가시작
+	public int getProductListCount(ProductTable searchKeyVo) {
+		int result = 0;
+		Connection conn = jdbcTemplate.getConnection();
+		result = new SearchListDao().getProductListCount(conn, searchKeyVo);		
+		jdbcTemplate.close(conn);
+		return result;
+	}
+	// 2021.10.22추가완료
 	
 	// 2021.10.07 추가시작
 	public ArrayList<ProductTable> productSearch(ProductTable searchKeyVo) {

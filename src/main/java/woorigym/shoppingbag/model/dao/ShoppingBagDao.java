@@ -6,15 +6,64 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import woorigym.common.jdbcTemplate;
+import woorigym.product.model.vo.ProductTable;
 import woorigym.shoppingbag.model.vo.CartTable;
 
 public class ShoppingBagDao {
+	// 2021.10.22 1차 내용추가 시작
+	// 장바구니 옵션변경 모달창 수량변경부분 쿼리문
+//	public int ShoppingBagQuantityUpdate(Connection conn, int cartNo) {
+//		
+//	}
+	
+	// 장바구니 옵션변경 모달창 옵션변경부분 쿼리문
+	public ArrayList<ProductTable> ShoppingBagOptionUpdate(Connection conn, String productName){
+		System.out.println(productName);
+		System.out.println("ShoppingBagOptionUpdate 1");
+		ArrayList<ProductTable> volist = null;
+		String sql = "select product_info_url, product_name, product_option"
+				+ " from product"
+				+ " where product_name = ?";
+		
+		System.out.println(sql);
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			System.out.println("ShoppingBagOptionUpdate executeQuery 1");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, productName);
+			rset = pstmt.executeQuery();
+			System.out.println("ShoppingBagOptionUpdate executeQuery 2");
+			if (rset.next()) {
+				System.out.println("ShoppingBagOptionUpdate executeQuery over 1");
+				volist = new ArrayList<ProductTable>();
+				do {
+					ProductTable vo = new ProductTable();
+					vo.setProductName(rset.getString("product_name"));
+					vo.setProductOption(rset.getString("product_option"));
+					vo.setProductInfoUrl(rset.getNString("product_info_url"));
+					volist.add(vo);			
+					System.out.println("ShoppingBagOptionUpdate executeQuery over 2");
+				} while (rset.next());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			jdbcTemplate.close(rset);
+			jdbcTemplate.close(pstmt);
+		}
+		System.out.println("ShoppingBagOptionUpdate 2" + volist);
+		return volist;
+	}
+	// 2021.10.22 1차 내용추가 완료
+	
 	// 2021.10.14 1차 내용추가 시작
 	public ArrayList<CartTable> ShoppingBagList(Connection conn, String userId, int start, int end) {
 		System.out.println(userId);
 		System.out.println(start);
 		System.out.println(end);
 		System.out.println("ShoppingBagList 1");
+		
 		ArrayList<CartTable> volist = null;
 		String sql = "select *"
 				+ " from (select rownum r, t1.*"
