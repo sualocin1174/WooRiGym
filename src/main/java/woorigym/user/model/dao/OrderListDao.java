@@ -22,7 +22,7 @@ public class OrderListDao {
 		System.out.println("uid : "+uid);
 		System.out.println("startDate: "+startDate);
 		System.out.println("endDate: "+endDate);
-		ArrayList<OrderList> volist = null;
+		ArrayList<OrderList> volist = null; //null로 초기화하면 에러나기 쉬움.
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String query = "SELECT oinfo.order_no,order_total,order_cost, to_char(order_date, 'yyyy-mm-dd hh:mm') order_date,pay_state,order_state, ";
@@ -111,17 +111,17 @@ public class OrderListDao {
 	}
 	public ArrayList<OrderList> selectOrderList(Connection conn, String uid, int start, int end) {
 		String sql = "select *	from(select ROWNUM r, t1.*" + 
-				"FROM (select * from (" + 
-				"SELECT oinfo.order_no,order_total,order_cost,to_char(order_date, 'yyyy-mm-dd hh:mm') order_date,order_state," + 
+				" FROM (select * from (" + 
+				" SELECT oinfo.order_no,order_total,order_cost,to_char(order_date, 'yyyy-mm-dd hh:mm') order_date,order_state," + 
 				"    odetail.product_no, buy_quantity, " + 
 				"    product.product_name, product.PRODUCT_INFO_URL" + 
 				" FROM ORDERINFO oinfo " + 
 				"    join order_detail odetail on oinfo.order_no = odetail.order_no" + 
 				"    join product product on odetail.PRODUCT_NO = product.PRODUCT_NO" + 
-				"WHERE " + 
+				" WHERE " + 
 				"    USER_ID = ? )" + 
-				"order by order_date desc) t1) t2 " + 
-				"where r between ? and ?";
+				" order by order_date desc) t1) t2 " + 
+				" where r between ? and ?";
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		

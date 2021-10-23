@@ -41,7 +41,7 @@
     	$("#1month").on("click", lastMonth); //1개월 버튼
     	$("#3month").on("click", last3M); //3개월 버튼
     	$("#6month").on("click", last6M); //6개월 버튼
-    	$("#cancel").onclick(cancel);//주문취소
+    	$("#cancel").on("click", cancel);//주문취소
     	
     });
     };
@@ -170,9 +170,9 @@
 		    	       		 +"<td>"+data[i].order_state+"</td>"
 		    	        	 +"</tr>";
     				if(data[i].order_state =='주문완료'){
-    					html += "<tr><td colspan='7'><button class='sub-button' id='cancel'>주문취소</button></td></tr></table>";
+    					html += "<tr><td colspan='7'><button class='sub-button' id='cancel' onclick='cancel()'>주문취소</button></td></tr></table>";
     				}else if(data[i].order_state =='배송완료'){
-    					html += "<tr><td colspan='7'><button class='sub-button'>교환/환불</button></td></tr></table>";
+    					html += "<tr><td colspan='7'><button class='sub-button' onclick='cinsert(\""+data[i].order_no+"\",\""+data[i].product_name+"\",\""+data[i].order_total+"\",\""+data[i].order_cost+"\")'>교환/환불</button></td></tr></table>";
     				}else {
     					html += "</table>";
     				}
@@ -197,6 +197,11 @@
 		alert("주문을 취소하시겠습니까?");
 		//TODO: 확인 클릭 -> alert("주문이 취소되었습니다."); & 진행상태->'주문취소'로 변경
 	};
+	
+	
+	function cinsert(order_no,product_name,order_total,order_cost){
+		 location.href="<%=request.getContextPath()%>/cinsert?order_no="+order_no+"&product_name="+product_name+"&order_total="+order_total+"&order_cost="+order_cost;
+	}
     </script>
  <!-- /* content */ -->
  <style>

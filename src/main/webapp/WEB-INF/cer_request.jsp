@@ -22,30 +22,50 @@
      }
        /* 교환/반품 신청 */
       section > h2 {
-          margin: 20px;
+          margin-bottom: 50px;
           text-align: center;
-      }
-      .form_header {
-          text-align: center;
-          margin-bottom: 30px;
-      }
-      .form_header h3 {
-      display: inline-block;
-      margin: 10px 50px 0 0;
       }
       /* 신청서 작성 테이블 */
       	.step1 {
 		  width: 850px;
           margin-bottom: 30px;
-          border-top: 1.5px solid black;
-          border-bottom: 1px solid #BDBDBD;
+          border-top: 1px solid black;
+          border-bottom: 1px solid black;
         }
       	.step1 th{
       	padding: 10px;
+      	border-right: 1px solid black;
+      	}
+      	.step1 tr:first-child>td, .step1 tr:first-child>th {
+      	padding: 22px 10px 22px 10px;
+      	border-bottom: 1px solid #BDBDBD;
       	}
         .step1 td {
-        padding: 16px;
+        padding: 22px;
       	}
+      	.step1 tr:nth-of-type(9)>td, .step1 tr:nth-of-type(2)>th {
+      	padding: 22px;
+      	border-bottom: 1px solid #BDBDBD;
+      	}
+      	/* 배송지목록 버튼 */
+      	.button{
+        padding: 3px 8px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 1rem;
+        margin: 25px 10px;
+        transition-duration: 0.2s;
+        cursor: pointer;
+        background-color: white;
+        color: dodgerblue;
+        border: 2px solid dodgerblue;
+        border-radius: 5px;
+        }
+        .button:hover {
+        background-color: dodgerblue;
+        color: white;
+        }
+      	
       	/* 다음 단계 버튼 */
       	#btngroup{
           text-align: center;
@@ -68,68 +88,7 @@
             background: #FEA500;
             color: white;
         }
-   /* 상품 선택 */
-        /*the container must be positioned relative:*/
-.custom-select {
-  position: relative;
-  font-family: Arial;
-}
-
-.custom-select select {
-  display: none; /*hide original SELECT element:*/
-}
-
-.select-selected {
- background: dodgerblue;
-}
-
-/*style the arrow inside the select element:*/
-.select-selected:after {
-  position: absolute;
-  content: "";
-  top: 14px;
-  right: 10px;
-  width: 0;
-  height: 0;
-  border: 6px solid transparent;
-  border-color: #fff transparent transparent transparent;
-}
-
-/*선택 상자가 열려 있을 때 화살표를 위쪽으로*/
-.select-selected.select-arrow-active:after {
-  border-color: transparent transparent #fff transparent;
-  top: 7px;
-}
-
-/*style the items (options), including the selected item:*/
-.select-items div,.select-selected {
-  color: #ffffff;
-  padding: 8px 16px;
-  border: 1px solid transparent;
-  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
-  cursor: pointer;
-  user-select: none;
-}
-
-/*style items (options):*/
-.select-items {
-  position: absolute;
-  background-color: dodgerblue;
-  top: 100%;
-  left: 0;
-  right: 0;
-  z-index: 99;
-}
-
-/*선택 상자를 닫을 때 항목 숨기기*/
-.select-hide {
-  display: none;
-}
-
-.select-items div:hover, .same-as-selected {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-        /* 체크박스 */
+         /* 체크박스 */
         .container {
 	  display: block;
 	  position: relative;
@@ -148,7 +107,7 @@
 	  opacity: 0;
 	  cursor: pointer;
 	}
-	/* Create a custom radio button */
+	/* 새로 만든 라디오 버튼 */
 	.checkmark {
 	  position: absolute;
 	  top: 0;
@@ -194,40 +153,17 @@
  	<%@ include file="template_mypage_aside.jsp"%>
 <section>
 	<h2>교환/반품 신청</h2>
-	<div class="form_header">
-	<h3>1) 신청서 작성</h3>
-	<h3>2) 환불 정보 확인</h3>
-	<h3>3) 신청 완료</h3>
-	</div>
 	
 	<table class="step1">
 		<tr>
-			<th>상품 선택</th>
-			<!--<td><select><option>X5 런닝머신</option></select></td>-->
-			<td><div class="custom-select" style="width:200px;">
-	<select>
-    <option value="0">상품 선택</option>
-    <!-- TODO: 구매한 상품에서 불러오기 -->
-    <option value="1">웨이크보드</option>
-    <option value="2">스피닝 사이클</option>
-    <!-- <option value="3">Citroen</option>
-    <option value="4">Ford</option>
-    <option value="5">Honda</option>
-    <option value="6">Jaguar</option>
-    <option value="7">Land Rover</option>
-    <option value="8">Mercedes</option>
-    <option value="9">Mini</option>
-    <option value="10">Nissan</option>
-    <option value="11">Toyota</option>
-    <option value="12">Volvo</option>  -->
-  </select>
-	</div></td>
+	    <th>상품명</th>
+	    <td>${product_name}</td>
 		</tr>
 		<tr>
-			<th rowspan='8'>교환/반품 사유</th>
+			<th rowspan='8'>교환/반품 사유<br>(택1)</th>
 			<td><label class="container" for="reason1"><input type='radio' checked="checked" name="why" id="reason1">품질 불만<span class="checkmark"></span></label></td></tr>
-		<tr><td><label class="container" for="reason2"><input type='radio' name="why" id="reason2">구성품이 누락됨<span class="checkmark"></span></label></td></tr>
 		<tr><td><label class="container" for="reason3"><input type='radio' name="why" id="reason3">필요 없어짐<span class="checkmark"></span></label></td></tr>
+		<tr><td><label class="container" for="reason2"><input type='radio' name="why" id="reason2">구성품이 누락됨<span class="checkmark"></span></label></td></tr>
 		<tr><td><label class="container" for="reason4"><input type='radio' name="why" id="reason4">상품이 설명과 다름<span class="checkmark"></span></label></td></tr>
 		<tr><td><label class="container" for="reason5"><input type='radio' name="why" id="reason5">상품이 파손됨<span class="checkmark"></span></label></td></tr>
 		<tr><td><label class="container" for="reason6"><input type='radio' name="why" id="reason6">오배송<span class="checkmark"></span></label></td></tr>
@@ -236,33 +172,111 @@
 		
 		<tr>
 			<th rowspan='2'>교환/반품 선택</th>
-			<td><label class="container" for="exchange"><input type='radio' checked="checked" name='choice' id="exchange">교환<span class="checkmark"></span></label></td></tr>
-			<tr><td><label class="container" for="refund"><input type='radio' name='choice' id="refund">반품<span class="checkmark"></span></label></td>
+			<td><label class="container" for="exchange"><input type='radio' name='choice' value="exchange" id="exchange">교환<span class="checkmark"></span></label></td></tr>
+			<tr><td><label class="container" for="refund"><input type='radio' name='choice' value="refund" id="refund">반품<span class="checkmark"></span></label></td>
 		</tr>
 </table>
-<!-- 2단계: 교환 -->
-<table>
-<tr>
-<th>상품 회수 주소</th>
-<td><a>배송지 목록</a></td>
-</tr>
-<tr>
-<th>회수 시 요청사항</th>
-<td><textarea></textarea></td>
-</tr>
-<tr>
-<th>회수 예정일</th>
-<td></td>
-</tr>
-</table>
-<!-- 2단계: 반품 -->
-<h3>환불 정보</h3>
-<table>
-<tr><th>상품 금액</th><td></td></tr>
-<tr><th>배송비</th><td></td></tr>
-<tr><th>반품비</th><td></td></tr>
-<tr><th>환불 예상 금액</th><td></td></tr>
-</table>
+<div id="second_depth">
+</div>
+<p id="a1" style="display:none">${order_total}</p>
+<p id="a2" style="display:none">${order_cost}</p>
+
+<!-- 배송지 Modal Box -->
+            <div class="modal">
+              <div class="modal-content">
+                    <span class="close">&times;</span> <!-- 닫기 -->
+                     <h3>배송지 목록</h3>
+                     <br>
+                     <table class="modal-address">
+                        <!-- 배송지 목록 -->
+                     </table>
+              </div>
+          </div>
+<script>
+	$("input[name='choice']").change(function(){
+	var exchange ='';
+	var refund ='';
+		//console.log($("input[name='choice']:checked").val());
+		console.log($(this).val());
+		console.log("choice 이벤트 잘 들어갔니~")
+		
+		var choice = $(this).val();
+		if(choice=="exchange"){ 
+		exchange+= "<table><tr><th>상품 회수 주소</th><td><button onclick='showlist()' id='address_list' class='button'><p>배송지 목록</p></button></td>";
+		exchange+="</tr><tr><th>회수 시 요청사항</th><td><textarea></textarea></td></tr>";
+		exchange+="<tr><th>회수 예정일</th><td></td></tr></table>";
+		
+			$("#second_depth").html(exchange);
+		} else if(choice=="refund") {
+			var a1_val = $("#a1").html();
+			var a2_val = $("#a2").html();
+		console.log(a1_val);
+		console.log(a2_val);
+			
+			refund+= "<table><tr><th>상품 회수 주소</th><td><button onclick='showlist()' id='address_list' class='button'><p>배송지 목록</p></button></td>";
+			refund+="</tr><tr><th>회수 시 요청사항</th><td><textarea></textarea></td></tr>";
+			refund+="<tr><th>회수 예정일</th><td></td></tr></table>";
+			refund+="<h3>환불 정보</h3><table><tr><th>상품 금액</th><td>"+a1_val+"원</td></tr>";
+			refund+="<tr><th>배송비</th><td>"+a2_val+"원</td></tr><tr><th>반품비</th><td>원</td></tr>";
+			refund+="<tr><th>환불 예상 금액</th><td>원</td></tr></table>";
+			$("#second_depth").html(refund);
+			
+		}
+		
+	});
+	
+	function ajaxA1(){
+		$.ajax({
+    		type: "post",
+    		url: "<%=request.getContextPath()%>/cinsert",
+    		data: { //화면에서 쓰일 데이터 = where절에 쓰임. user_id도 서블릿에서 알고 있으니 data 보낼게 없다.
+    		},
+    		dataType: "json", //전달받을 객체는 json이다.
+    		success: function(data){
+		var html ="";
+    			console.log(data);
+    			console.log(data.length);
+    			html+= "<button id='submit_address' onclick='submitA1()'>제출</button>";
+    		for(var i=0;i<data.length;i++){
+    			//TODO 우편번호: 기본주소: 상세주소:
+    			html+= "<tr><td>"+data[i].postcode+"</td><td><input type='radio' name='address_choice' value='"+data[i].postcode+"'></td></tr>"
+    			html+= "<tr><td>"+data[i].basic_address+"</td></tr>"
+    			html+= "<tr><td>"+data[i].detail_address+"</td></tr>"
+    		} //TODO: 이 주소들을 어느 테이블에 저장할지? 백건호님께 물어보기.
+    		$(".modal-address").html(html);
+    		},
+    		
+    		error:function(request,status,error){
+    			alert("code:"+request.status+"\n"+"message:"+request.responseText+
+    					"\n"+"error:"+error);
+    		}
+    	});
+	};
+	function showlist(){
+		  $(".modal").show(); 
+			console.log("ajax 시작show");
+			ajaxA1(); //이벤트함수 호출
+	}
+   
+     $(".close").click(function(){
+        $(".modal").hide(); 
+     });
+     $(window).on("click",function(e){
+         console.log(e.target); 
+         //방법 1
+         //if(e.target == document.getElementById("modal-01")){};
+         //방법 2
+         if(e.target == $(".modal").get(0)){
+             $(".modal").hide();
+         }
+     });
+    function submitA1(){
+    	//postcode
+    	var postcode = $("input[name='address_choice']:checked").val();
+    }
+	
+</script>
+
 <!-- 3단계 -->
 <h3>교환/반품 신청이 접수되었습니다.</h3>
 <p>상품 회수 정보: 서울시 성동구 XX동</p>
@@ -270,94 +284,12 @@
 <h3>상품 회수일: 9월 22일(수)</h3>
 
 <div id="btngroup">
-<a href="#" class="nextbtn">다음 단계</a>
-<!-- 2단계 버튼 -->
 <a href="#" class="nextbtn">이전 단계</a>
+<!--  <a href="#" class="nextbtn">다음 단계</a> -->
 <a href="#" class="nextbtn">신청하기</a>
-<!-- 3단계 버튼 -->
-<a href="#">목록</a>
+<!-- 신청완료 페이지 버튼 -->
+<a href="#" class="nextbtn">목록</a>
 </div>
 </section>
 </body>
-<script>
-// 상품 선택
-var x, i, j, l, ll, selElmnt, a, b, c;
-/*look for any elements with the class "custom-select":*/
-x = document.getElementsByClassName("custom-select");
-l = x.length;
-for (i = 0; i < l; i++) {
-  selElmnt = x[i].getElementsByTagName("select")[0];
-  ll = selElmnt.length;
-  /*for each element, create a new DIV that will act as the selected item:*/
-  a = document.createElement("DIV");
-  a.setAttribute("class", "select-selected");
-  a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
-  x[i].appendChild(a);
-  /*for each element, create a new DIV that will contain the option list:*/
-  b = document.createElement("DIV");
-  b.setAttribute("class", "select-items select-hide");
-  for (j = 1; j < ll; j++) {
-    /*for each option in the original select element,
-    create a new DIV that will act as an option item:*/
-    c = document.createElement("DIV");
-    c.innerHTML = selElmnt.options[j].innerHTML;
-    c.addEventListener("click", function(e) {
-        /*when an item is clicked, update the original select box,
-        and the selected item:*/
-        var y, i, k, s, h, sl, yl;
-        s = this.parentNode.parentNode.getElementsByTagName("select")[0];
-        sl = s.length;
-        h = this.parentNode.previousSibling;
-        for (i = 0; i < sl; i++) {
-          if (s.options[i].innerHTML == this.innerHTML) {
-            s.selectedIndex = i;
-            h.innerHTML = this.innerHTML;
-            y = this.parentNode.getElementsByClassName("same-as-selected");
-            yl = y.length;
-            for (k = 0; k < yl; k++) {
-              y[k].removeAttribute("class");
-            }
-            this.setAttribute("class", "same-as-selected");
-            break;
-          }
-        }
-        h.click();
-    });
-    b.appendChild(c);
-  }
-  x[i].appendChild(b);
-  a.addEventListener("click", function(e) {
-      /*when the select box is clicked, close any other select boxes,
-      and open/close the current select box:*/
-      e.stopPropagation();
-      closeAllSelect(this);
-      this.nextSibling.classList.toggle("select-hide");
-      this.classList.toggle("select-arrow-active");
-    });
-}
-function closeAllSelect(elmnt) {
-  /*a function that will close all select boxes in the document,
-  except the current select box:*/
-  var x, y, i, xl, yl, arrNo = [];
-  x = document.getElementsByClassName("select-items");
-  y = document.getElementsByClassName("select-selected");
-  xl = x.length;
-  yl = y.length;
-  for (i = 0; i < yl; i++) {
-    if (elmnt == y[i]) {
-      arrNo.push(i)
-    } else {
-      y[i].classList.remove("select-arrow-active");
-    }
-  }
-  for (i = 0; i < xl; i++) {
-    if (arrNo.indexOf(i)) {
-      x[i].classList.add("select-hide");
-    }
-  }
-}
-/*if the user clicks anywhere outside the select box,
-then close all select boxes:*/
-document.addEventListener("click", closeAllSelect);
-</script>
 </html>
