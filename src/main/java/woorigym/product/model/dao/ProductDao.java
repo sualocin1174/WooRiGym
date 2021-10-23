@@ -94,8 +94,8 @@ public class ProductDao {
 		PreparedStatement pstmt = null;
 		
 		String productsql = "INSERT INTO PRODUCT VALUES(?,?,?,?,?,?,?,?)";
-		String optionsql = "INSERT INTO PRODUCT_OPTION VALUES(OPTION_NO.NEXTVAL,?,PRODUCT_NO.NEXTVAL)";
-		String imgsql = "INSERT INTO PRODUCT_IMG VALUES(IMG_NO.NEXTVAL, PRODUCT_NO.NEXTVAL, ?)";
+		String optionsql = "INSERT INTO PRODUCT_OPTION VALUES(PRODUCT_OPTION_SEQ.NEXTVAL,?,?)";
+		String imgsql = "INSERT INTO PRODUCT_IMG VALUES(PRODUCT_IMG_SEQ.NEXTVAL, ?, ?)";
 		
 		try {
 			pstmt = conn.prepareStatement(productsql);
@@ -111,16 +111,22 @@ public class ProductDao {
 			result = pstmt.executeUpdate();
 			jdbcTemplate.close(pstmt);
 			
+			System.out.println("productVo:"+ productVo);
+			System.out.println("productOption:"+ productOption);
+			System.out.println("여기 몇번? "+ productOption.get(0).getOptionContent());
+			
+			pstmt=conn.prepareStatement(optionsql);
 			for(int i=0; i<productOption.size(); i++) {
-				pstmt=conn.prepareStatement(optionsql);
-				pstmt.setString(1, productOption.get(i).getOptionContent());
+				pstmt.setString(1, productVo.getProductNo());
+				pstmt.setString(2, productOption.get(i).getOptionContent());
 				result=pstmt.executeUpdate();
 			}
 			jdbcTemplate.close(pstmt);
 			
 			for(int i=0; i<productImg.size(); i++) {
 				pstmt=conn.prepareStatement(imgsql);
-				pstmt.setString(1, productImg.get(i).getImgAddress());
+				pstmt.setString(1, productVo.getProductNo());
+				pstmt.setString(2, productImg.get(i).getImgAddress());
 				result = pstmt.executeUpdate();
 			}
 			jdbcTemplate.close(pstmt);

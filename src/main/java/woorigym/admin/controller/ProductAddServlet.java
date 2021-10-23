@@ -1,7 +1,6 @@
 package woorigym.admin.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import woorigym.admin.model.vo.ProductImgTable;
 import woorigym.admin.model.vo.ProductOptionTable;
@@ -64,11 +62,10 @@ public class ProductAddServlet extends HttpServlet {
 		
 		ServletContext context = getServletContext();
 		String uploadPath = context.getRealPath(fileSavePath);
-		MultipartRequest multi = new MultipartRequest(request, // request 객체
-				uploadPath, // 서버 상 업로드 될 디렉토리
-				uploadSizeLimit, // 업로드 파일 크기 제한
-				encType, // 인코딩 방법
-				new DefaultFileRenamePolicy() // 동일 이름 존재 시 새로운 이름 부여 방식
+		MultipartRequest multi = new MultipartRequest(request,
+				uploadPath,
+				uploadSizeLimit,
+				encType
 		);
 		
 		// 상품 정보
@@ -77,13 +74,13 @@ public class ProductAddServlet extends HttpServlet {
 		String productName = multi.getParameter("productName");
 		String price = multi.getParameter("price");
 		String quantity = multi.getParameter("quantity");
-		String productOption_1 = multi.getParameter("productOption");
+		String productOption2 = multi.getParameter("productOption2");
 		String parentCategory = multi.getParameter("parentCategory");
 		String childCategory = multi.getParameter("childCategory");
 		System.out.println("출력" + productInfoUrl);
 		System.out.println(productNo);
 		System.out.println(productName);
-		System.out.println(productOption_1);
+		System.out.println(productOption2);
 		System.out.println(parentCategory);
 		System.out.println(childCategory);
 		
@@ -103,12 +100,13 @@ public class ProductAddServlet extends HttpServlet {
 			return;
 		}
 		
-		ProductTable productVo = new ProductTable(productNo, productName, parentCategory, childCategory, quantityInt, priceInt, productInfoUrl, productOption_1);
+		ProductTable productVo = new ProductTable(productNo, productName, parentCategory, childCategory, quantityInt, priceInt, productInfoUrl, productOption2);
 		
 		ArrayList<ProductOptionTable> productOption = new ArrayList<ProductOptionTable>();
-		String optionContent = null;
-		ProductOptionTable optionVo = new ProductOptionTable(optionContent);
-		optionVo.setOptionContent(multi.getParameter("optionContent"));
+		String productOption3 = null;
+		ProductOptionTable optionVo = new ProductOptionTable(productOption3);
+		optionVo.setOptionContent(multi.getParameter("productOption3"));
+		System.out.println("이거이거"+multi.getParameter("productOption3"));
 		productOption.add(optionVo);
 		
 		for(ProductOptionTable vo : productOption) {
@@ -116,7 +114,7 @@ public class ProductAddServlet extends HttpServlet {
 		}
 		
 		ArrayList<ProductImgTable> productImg = new ArrayList<ProductImgTable>();
-		String stepImg = null;
+		String stepImg_1 = null;
 		
 		String stepCount = multi.getParameter("stepCount");
 		int stepCnt = 0;
@@ -131,7 +129,7 @@ public class ProductAddServlet extends HttpServlet {
 		}
 		
 		for(int i=0; i<stepCnt; i++) {
-			ProductImgTable imgVo = new ProductImgTable(stepImg);
+			ProductImgTable imgVo = new ProductImgTable(stepImg_1);
 			imgVo.setImgAddress("images/" + multi.getFilesystemName("uploadStepImg_" + i));
 			productImg.add(imgVo);
 		}

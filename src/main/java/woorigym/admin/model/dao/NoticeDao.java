@@ -131,7 +131,7 @@ public class NoticeDao {
 	
 	public ArrayList<NoticeTable> selectNotice(Connection conn, int notice_no){
 		ArrayList<NoticeTable> noticelist = null;
-		String sql = "SELECT N_TITLE, N_CONTENT, N_DATE FROM NOTICE WHERE NOTICE_NO = ?";
+		String sql = "SELECT * FROM NOTICE WHERE NOTICE_NO = ?";
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
@@ -146,9 +146,9 @@ public class NoticeDao {
 				System.out.println("notice-2");
 				do {
 					NoticeTable vo = new NoticeTable();
+					vo.setNotice_no(rset.getInt("notice_no"));
 					vo.setN_title(rset.getString("N_TITLE"));
 					vo.setN_content(rset.getString("N_CONTENT"));
-					vo.setN_date(rset.getNString("N_DATE"));
 					noticelist.add(vo);
 					System.out.println("notice-3");
 				} while(rset.next());
