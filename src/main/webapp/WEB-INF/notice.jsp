@@ -1,7 +1,3 @@
-<!-- 웹폰트: Noto Sans Korean -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
    <!-- 헤더 CSS -->
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_header.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -15,7 +11,7 @@
 <!--<a href = "${path}/shop/product/list.do">상품목록</a>-->
 <!--<a href = "${path}/shop/product/write.do">상품등록</a>-->
 <%
-	ArrayList<NoticeTable> volist = (ArrayList<NoticeTable>)request.getAttribute("noticelist");
+	ArrayList<NoticeTable> noticelist = (ArrayList<NoticeTable>)request.getAttribute("noticelist");
 %>
 <!DOCTYPE html>
 <html>
@@ -25,14 +21,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>공지사항 페이지</title>
 	<style>
-	/* reset */
-     * {
-            margin: 0;
-            padding: 0;
-}
-  body	{
-        font-family: 'Noto Sans KR', sans-serif;
-}
 			section {
                 width: 900px;
                 padding: 0 0 30px 0;
@@ -140,7 +128,7 @@
 <body>
 	<!-- 공통헤더 템플릿 -->
  	<%@ include file="template_header.jsp"%>
- 	<!-- 10/20 메인페이지 사이드바 추가: <aside>~</aside>
+ 	<!-- 10/10 메인페이지 사이드바 추가: <aside>~</aside>
  	추후 template_admin_aside.jsp로 따로 생성하고 include해서 쓰시는걸 추천합니다  -->
  	<aside>
  		<div id="side-menu">
@@ -190,40 +178,15 @@
 			</form>
 		</div>
 	</section>
-	
+
 	<section>
 		<div id="noticeSelect" style="display:none">
-			<form id="formSelect" name="formSelect" action="#" method="post">
-				<table id="notice_Select" class="notice_Select">
-					<tr>
-						<td>공지사항 번호</td>
-						<td><input type="text" name="notice_no1" id="notice_no1" class = "input" required="required" placeholder="번호를 입력해주세요."><br><br></td>	
-						<td><input type="button" id="checkNo" value="확인">
-						<span id="check_NN"></span>
-						</td>
-					</tr>
-				</table>
-			</form>
-		</div>
-	</section>
-	
-	<section>
-		<div id="noticeUpdate" style="display:none">
-			<form id="formUpdate" name="formUpdate" action="apuupdate" method="post">
-				<table id="notice_Update" class="notice_Update">
-					<tr>
-						<td>제목</td>
-						<td><input type="text" name="notice_no2" id="notice_no2" class="input"><br><br></td>
-					</tr>
-					<tr>
-						<td>내용</td>
-						<td><input type="text" name="notice_content" id="notice_content" class="input"><br><br></td>
-					</tr>
-				</table>
-				<div class="btn_collection"><br>
-					<input type="submit" id="save" value="등록">
-					<button type="reset" id="cancle">취소</button>
-				</div>
+			<form id="formSelect" name="formSelect" action="apuupdate" method="post">
+					<label>공지사항 번호</label>
+					<input type="text" name="notice_no1" id="notice_no1" class = "input" required="required" placeholder="번호를 입력해주세요.">
+					<input type="button" id="checkNo" value="확인">
+					<br><br>
+					<span id="check_NN"></span>
 			</form>
 		</div>
 	</section>
@@ -245,6 +208,18 @@
 		</div>
 	</section>
 	
+	<section>
+		<div id="noticeUpdate_1" style="display:none">
+			<form id="formUpdate" name="formupdate" method="post" action="apuupdate">
+				<div id="noticeUpdate">
+					<div class="btn_collection"><br>
+						<input type="submit" id="update" value="수정">
+						<button type="reset" id="cancle">취소</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</section>
 	<script>
 	$("#btn_list").click(listF1);
 	
@@ -253,7 +228,7 @@
 		$("#noticeInsert").hide();
 		$("#noticeDelete").hide();
 		$("#noticeSelect").hide();
-		$("noticeUpdate").hide();
+		$("#noticeUpdate_1").hide();
 	}
 	
 	function ajaxF1(){
@@ -268,7 +243,7 @@
 			},
 			dataType:"json",
 			success:function(data){
-				resultHtml(data);
+				resultHtml1(data);
 			},
 			error:function(request, status, error){
  				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -277,7 +252,7 @@
 		$("#noticeList").show();
 	}
 	
-	function resultHtml(data){
+	function resultHtml1(data){
 		var html="<table border='1' id='tsearch'>";
 		html += "<tr>";
 		html += "<th>공지사항번호</th>";
@@ -306,7 +281,7 @@
 		$("#noticeList").hide();
 		$("#noticeDelete").hide();
 		$("#noticeSelect").hide();
-		$("noticeUpdate").hide();
+		$("#noticeUpdate_1").hide();
 	};
 	
 	$("#btn_delete").click(DeleteShow);
@@ -315,7 +290,7 @@
 		$("#noticeInsert").hide();
 		$("#noticeList").hide();
 		$("#noticeSelect").hide();
-		$("noticeUpdate").hide();
+		$("#noticeUpdate_1").hide();
 	};
 	
 	$("#btn_update").click(UpdateShow);
@@ -324,7 +299,7 @@
 		$("#noticeDelete").hide();
 		$("#noticeInsert").hide();
 		$("#noticeList").hide();
-		$("noticeUpdate").hide();
+		$("#noticeUpdate_1").hide();
 	}
 	</script>
 	
@@ -343,28 +318,55 @@
 					notice_no1 : notice_no1
 			},
 			
+			dataType:"json",
 			success : function(NN) {
-					console.log("1 = 중복o / 0 = 중복x : "+ NN);							
-					
-					if(NN == 2){
-						$("#check_NN").html("공지사항 번호를 입력해주세요");
-						$("#check_NN").css("color","red");
-					}
-					else if (NN == 1) {
-						$("noticeUpdate").show();
-						$("noticeSelect").hide();
-					}
-					else if(idck == 0){
-						$("#check_NN").html("존재하지 않는 공지사항입니다.");
-						$("#check_NN").css("color","green");
-					}
-				}, 
+				console.log("1 = 중복o / 0 = 중복x : " + NN);							
+				
+				if(NN.result == -1){
+					$("#check_NN").html("공지사항 번호를 입력해주세요");
+					$("#check_NN").css("color","red");
+				}
+				else if (NN.result > 0) {
+					console.log(NN.noticelist);
+
+					$("#check_NN").html("공지사항을 수정할 수 있습니다.");
+					$("#check_NN").css("color","green");
+					console.log("출력 :" + NN.noticelist);
+					resultHtml2(NN);
+				}
+				else if(NN.result == 0){
+					$("#check_NN").html("존재하지 않는 공지사항입니다.");
+					$("#check_NN").css("color","red");
+				}
+			}, 
 			error:function(request,status,error){
-	    			alert("code:"+request.status+"\n"+"message:"+request.responseText+
-	    					"\n"+"error:"+error);
+	    			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
 			});
+			$("#noticeUpdate_1").show();
 		};
+		
+		function resultHtml2(NN){
+			var html = "<table border='1' id='tupdate'>";
+			html += "<tr>";
+			
+			if(NN.noticelist != null){
+				for(var i=0; i<NN.noticelist.length; i++){
+					html += "<td>제목</td>";
+					html += "<td><input type='text' name='notice_title' id='title_1' value='" + NN.noticelist[i].n_title + "'></td>";
+					html += "</tr>";
+					html += "<tr>";
+					html += "<td>내용</td>";
+					html += "<td><input type='text' name='notice_content' id='content_1' value='" + NN.noticelist[i].n_content + "'></td>";
+					html += "</tr>";
+				};
+			};
+			html += "</table>";
+			
+			$("#noticeSelect").hide();
+			//$("#noticeUpdate").empty();
+			$("#noticeUpdate").prepend(html);	
+		}
 	</script>
 </body>
 </html>

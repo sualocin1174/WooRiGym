@@ -53,7 +53,7 @@ public class PopUpListServletAjax extends HttpServlet {
 			e.printStackTrace();
 			System.out.println("숫자로 변환하지 못했음");
 			
-			out.println("오류 발생");
+			out.print("오류 발생");
 			out.flush();
 			out.close();
 			return;

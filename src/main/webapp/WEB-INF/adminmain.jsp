@@ -1,7 +1,3 @@
-<!-- 웹폰트: Noto Sans Korean -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
    <!-- 헤더 CSS -->
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_header.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -12,10 +8,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import = "java.util.ArrayList"%>
 <%@page import = "woorigym.product.model.vo.ProductTable" %>
+<%@page import = "woorigym.admin.model.vo.ProductOptionTable" %>
+<%@page import = "woorigym.admin.model.vo.ProductImgTable" %>
 <!--<a href = "${path}/shop/product/list.do">상품목록</a>-->
 <!--<a href = "${path}/shop/product/write.do">상품등록</a>-->
 <%
 	ArrayList<ProductTable> productlist = (ArrayList<ProductTable>)request.getAttribute("productlist");
+	ArrayList<ProductOptionTable> productOption = (ArrayList<ProductOptionTable>)request.getAttribute("productOption");
+	ArrayList<ProductImgTable> productImg = (ArrayList<ProductImgTable>)request.getAttribute("productImg");
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -26,14 +26,6 @@
     <title>관리자 메인페이지</title>
        <!-- /* content */-->
        <style>
-        /* reset */
-        * {
-            margin: 0;
-            padding: 0;
-        }
-        body{
-        font-family: 'Noto Sans KR', sans-serif;
-        }
             section {
                 width: 900px;
                 padding: 0 0 30px 0;
@@ -162,85 +154,79 @@
 	<form id="form1" name="form1" action="apadd" method="post" enctype="multipart/form-data">
 		<div id = "productInsert">
 			<div id = "imgCollection">
-				<div id = "imgCollection_1">
+				<div id = "stepImgContainer">
 					<label>이미지 추가</label>
-					<img name="stepImg_1" id="stepImg_1">
-					<input type="file"name="productInfoUrl" required="required">
-            		<input name="addButton" type="button" id="img_btn" value="추가">
+					<img src="./alt.JPS" name="stepImg_1" id="stepImg_1">
+					<input type="file"name="uploadStepImg_1" required="required">
+            		<input name="addButton" type="button" id="img_btn" value="추가"><br><br>
 				</div>
 			</div>
+			<input type="hidden" name="optionCount" id="optionCount" readonly value="1">
 			<input type="hidden" name="stepCount" id="stepCount" readonly value="1">
-	<div id="productOption" >
-		<table id="product_table">
-			<tr>
-			<td>상품 번호</td>
-			<td><input type="text" name="productNo" id="productNo" required="required" placeholder="상품 번호를 입력해주세요."></td>
-			</tr>
-			<tr>
-                <td>상품명</td>
-                <td><input type="text" name="productName" id="productName" required="required" placeholder="상품명을 입력해주세요."></td>
-            </tr>
-            <tr>
-                <td>상품 가격</td>
-                <td><input type="text" name="price" id="price" required="required" placeholder="상품 가격을 입력해주세요."></td>
-            </tr>
-            <tr>
-                <td>상품 옵션</td>
-                <td><input type="text" name="productOption" id="option" required="required" placeholder="상품 옵션을 입력해주세요."></td>
-            </tr>
-            <tr>
-                <td>상품 수량</td>
-                <td><input type="text" name="quantity" id="quantity" required="required" placeholder="상품 수량을 입력해주세요."></td>
-            </tr>
-            <tr>
-                <td>상위 카테고리</td>
-                <td><select id="upCategory" name="parentCategory">
-				<option value="근력기구">근력기구</option>
-				<option value="유산소기구">유산소기구</option>
-				<option value="웨이트리프팅">웨이트리프팅</option>
-				<option value="어시스트">어시스트</option>
-				<option value="전시상품">전시상품</option>
-			</select></td>
-            </tr>
-            <tr>
-                <td>하위 카테고리</td>
-                <td><select id="downCategory" name="childCategory">
-				<option value="멀티랙">멀티랙</option>
-				<option value="멀티짐">멀티짐</option>
-				<option value="벤치">벤치</option>
-				<option value="벤치프레스">벤치프레스</option>
-				<option value="스미스짐">스미스짐</option>
-				<option value="클럼용머신">클럽용머신</option>
-				<option value="마사지">마사지</option>
-				<option value="매트">매트</option>
-				<option value="스트랩과패드">스트랩과패드</option>
-				<option value="튜빙밴드">튜빙밴드</option>
-				<option value="트레이닝보조">트레이닝보조</option>
-				<option value="거꾸리">거꾸리</option>
-				<option value="케이블손잡이">케이블손잡이</option>
-				<option value="부속품">부속품</option>
-				<option value="덤벨">덤벨</option>
-				<option value="바벨">바벨</option>
-				<option value="정리대">정리대</option>
-				<option value="케틀벨">케틀벨</option>
-				<option value="플레이트">플레이트(원판)</option>
-				<option value="런닝머신">런닝머신</option>
-				<option value="사이클">사이클</option>
-				<option value="로잉머신">로잉머신</option>
-				<option value="일립티컬">일립티컬</option>
-				<option value="샌드백">샌드백</option>
-			</select></td>
-            </tr>
-		</table>
-		</div>
-		<div class="btn_collection"><br>
-			<input type="submit" id="save" value="등록">
-			<button type="reset" id="cancle">취소</button>
-		</div>
+	
+			<div id="productOption" >
+				<label>상품 번호</label>
+				<input type="text" name="productNo" id="productNo" required="required" placeholder="상품 번호를 입력해주세요."><br><br>
+		
+        		<label>상품명</label>
+        		<input type="text" name="productName" id="productName" required="required" placeholder="상품명을 입력해주세요."><br><br>
+        	    
+        		<label>상품 가격</label>
+        		<input type="text" name="price" id="price" required="required" placeholder="상품 가격을 입력해주세요."><br><br>
+	
+    	    	<label>상품 옵션</label>
+    	    	<input type="text" name="productOption2" id="option" required="required" placeholder="상품 옵션을 입력해주세요.">
+    	    	<a href='#' id='btn_txtAdd'><i class='fas fa-plus-circle'></i></a><br><br>
+
+    	    	<label>상품 수량</label>
+       			<input type="text" name="quantity" id="quantity" required="required" placeholder="상품 수량을 입력해주세요."><br><br>
+
+        		<label>상위 카테고리</label>
+        		<select id="upCategory" name="parentCategory">
+					<option value="근력기구">근력기구</option>
+					<option value="유산소기구">유산소기구</option>
+					<option value="웨이트리프팅">웨이트리프팅</option>
+					<option value="어시스트">어시스트</option>
+					<option value="전시상품">전시상품</option>
+				</select><br><br>
+
+        		<label>하위 카테고리</label>
+        		<select id="downCategory" name="childCategory">
+					<option value="멀티랙">멀티랙</option>
+					<option value="멀티짐">멀티짐</option>
+					<option value="벤치">벤치</option>
+					<option value="벤치프레스">벤치프레스</option>
+					<option value="스미스짐">스미스짐</option>
+					<option value="클럼용머신">클럽용머신</option>
+					<option value="마사지">마사지</option>
+					<option value="매트">매트</option>
+					<option value="스트랩과패드">스트랩과패드</option>
+					<option value="튜빙밴드">튜빙밴드</option>
+					<option value="트레이닝보조">트레이닝보조</option>
+					<option value="거꾸리">거꾸리</option>
+					<option value="케이블손잡이">케이블손잡이</option>
+					<option value="부속품">부속품</option>
+					<option value="덤벨">덤벨</option>
+					<option value="바벨">바벨</option>
+					<option value="정리대">정리대</option>
+					<option value="케틀벨">케틀벨</option>
+					<option value="플레이트">플레이트(원판)</option>
+					<option value="런닝머신">런닝머신</option>
+					<option value="사이클">사이클</option>
+					<option value="로잉머신">로잉머신</option>
+					<option value="일립티컬">일립티컬</option>
+					<option value="샌드백">샌드백</option>
+				</select><br><br>
+			</div>
+			<div class="btn_collection"><br>
+				<input type="submit" id="save" value="등록">
+				<button type="reset" id="cancle">취소</button>
+			</div>
 		</div>
 	</form>
 </section>
-	<script>
+
+<script>
 	$("#btn_search").click(searchF1);
 	 
 	function searchF1(){
@@ -307,13 +293,23 @@
 		$("#productList").append(html);
 	}
 	
+	var proOptNameId = 1;
+	var proOptPriceId = 1;
+	
+	$("#btn_txtAdd").on('click', function(){
+		proOptNameId++;
+		proOptPriceId++;
+		$("productContainer").append("")
+		
+	});
+	
 	var stepId= 1;
 	var stepImgId = 1;
 	
 	$("#img_btn").on('click', function(){
 		stepId++;
 		stepImgId++;
-		$('#imgCollection').append('<div id="imgCollection_1"><img name="stepImg_'+stepId+'" id="stepImg_'+stepId+'"> <input type="file" name="uploadStepImg_'+stepId+'" required="required"></div>');
+		$('#imgCollection').append('<div id="imgCollection_1"><img name="productInfoUrl_'+stepId+'" id="productInfoUrl_'+stepId+'"> <input type="file" name="uploadStepImg_'+stepId+'" required="required"></div>');
 		$("#stepCount").val(stepId);
         console.log(stepId);
 	});
@@ -325,7 +321,7 @@
 		$("#noticeDelete").hide();
 		$("#noticeUpdate").hide();
 	}
-	</script>
-    <footer></footer>
+</script>
+<footer></footer>
 </body>
 </html>
