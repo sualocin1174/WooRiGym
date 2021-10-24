@@ -92,8 +92,7 @@ public class MypageDao {
 		String sql = "select sum(order_cancel) as order_cancel, sum(order_change) as order_change, sum(order_refund) as order_refund from\r\n" + 
 				"	(select case when claim_kind ='취소' then 1 else 0 end as order_cancel, case when claim_kind='교환' then 1 else 0 end as order_change, case when claim_kind='환불' then 1 else 0 end as order_refund\r\n" + 
 				"	from claim \r\n" + 
-				"	join order_detail odetail on odetail.order_detail_no = claim.order_detail_no\r\n" + 
-				"	join orderinfo on orderinfo.order_no = odetail.order_no\r\n" + 
+				"	join orderinfo on orderinfo.order_no = claim.order_no\r\n" + 
 				"	where user_id=?)";
 		
 		PreparedStatement pstmt = null;

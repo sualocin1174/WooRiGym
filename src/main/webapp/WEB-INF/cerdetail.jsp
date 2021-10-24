@@ -148,12 +148,6 @@
             <td>${cerdetail.order_date}</td>
         </tr>
         <tr>
-            <th>주문 상세 번호</th>
-            <td>${cerdetail.order_detail_no}</td>
-            <th>신청 일자</th>
-            <td>${cerdetail.claim_date}</td>
-        </tr>
-        <tr>
             <th>결제 방식</th>
             <!-- 0 : 카드결제, 1 : 무통장결제 -->
             <c:if test="${cerdetail.order_method == '0'}">
@@ -162,6 +156,12 @@
             <c:if test="${cerdetail.order_method == 1}">
             <td>무통장결제</td>
             </c:if>
+            <th>신청 일자</th>
+            <td>${cerdetail.claim_date}</td>
+        </tr>
+        <tr>
+            <th></th>
+            <td></td>
             <th>${cerdetail.claim_kind} 처리 일자</th>
             <td>${cerdetail.done_date}</td>
         </tr>

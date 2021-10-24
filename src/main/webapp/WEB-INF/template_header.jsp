@@ -7,7 +7,7 @@
 <header>
         <div id="logo">
             <a href="<%=ctxPath %>/main"> <!-- 10/13 수정: 로고 클릭시 main으로 이동 -->
-                <img src='./images/logo_simple_w 180x98.png' alt="로고"/><br>
+                <img src='./images/logo_simple_w 200x109.png' alt="로고"/><br><!-- 10/24 로고 크기 확대 -->
             </a>
         </div>
         <c:if test="${loginSS == null}"> <!-- 10/13 수정: 로그인 여부 확인   --> 

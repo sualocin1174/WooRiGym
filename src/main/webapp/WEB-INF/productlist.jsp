@@ -16,8 +16,8 @@
 <style>
 /* reset */
  * {
-            margin: 0;
-            padding: 0;
+    margin: 0;
+    padding: 0;
 }
  body{
     font-family: 'Noto Sans KR', sans-serif;
@@ -27,14 +27,14 @@
 <body>
 <!-- 공통헤더 템플릿 -->
  	<%@ include file="template_header.jsp"%>
- 	${productvolist[0].imagesFilePath[0]}
-	<c:forEach items="${productvolist}" var="vo">
-		<p>${vo.productName }<p>
-		<c:forEach items="${vo.imagesFilePath }" var="imgfile">
-			<img src="${imgfile }" width="200" height="200">
+		<c:forEach items="${product_img}" var="imgfile">
+			<img src="${imgfile}" width="200" height="200">
 		</c:forEach>
 		<hr>
-	</c:forEach>
+		<c:forEach items="${productinfo}" var="product_info">
+			<img src="${product_info}" width="200" height="200">
+		</c:forEach>
+		
 <script>
 /*
 	var cloudinary = require('cloudinary');
