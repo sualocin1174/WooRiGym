@@ -3,6 +3,7 @@ package woorigym.shoppingbag.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -50,21 +51,33 @@ public class ShoppingBagSelectDeleteServlet extends HttpServlet {
 	}
 	
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		PrintWriter out = response.getWriter();
-		int cartNo = 0;
+		response.setContentType("application/json;charset=UTF-8");
 		String sbsdelete = request.getParameter("cartNo");
 		System.out.println("장바구니 번호1"+sbsdelete);
-		cartNo = Integer.parseInt(sbsdelete);
-		System.out.println("장바구니 번호2"+cartNo);
+		// cartNo = Integer.parseInt(sbsdelete);
+		// System.out.println("장바구니 번호2"+cartNo);
+		
+		StringTokenizer st = new StringTokenizer(sbsdelete, ",");
+		int length = st.countTokens();
+		int[] list = new int[length];
+		for(int i = 0 ; i < length ; i++) {
+			list[i] = Integer.parseInt(st.nextToken());
+			System.out.println(list[i]);
+		}
+		
+		int cartNo = 0;
 		
 		// DB에서 값 읽어오기
-		int selectDeleteCartList = new ShoppingBagService().selectDeleteCartList(cartNo);
+		cartNo = new ShoppingBagService().selectDeleteCartList(list);
 		
-		Gson gson = new GsonBuilder().create();
-		String jsonListVo = gson.toJson(selectDeleteCartList);
+		PrintWriter out = response.getWriter();
+		
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		String jsonListVo = gson.toJson(cartNo);
 		out.print(jsonListVo);
 		out.flush();
 		out.close();
+		System.out.println(list);
+		System.out.println(cartNo);
 	}
-
 }

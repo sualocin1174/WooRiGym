@@ -1,5 +1,8 @@
 package woorigym.shoppingbag.model.service;
 
+import static woorigym.common.jdbcTemplate.close;
+import static woorigym.common.jdbcTemplate.getConnection;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,9 +11,19 @@ import java.util.ArrayList;
 import woorigym.common.jdbcTemplate;
 import woorigym.shoppingbag.model.dao.ShoppingBagDao;
 import woorigym.shoppingbag.model.vo.CartTable;
+import woorigym.user.model.dao.OrderDao;
 
 public class ShoppingBagService {
 	// 2021.10.24 내용추가 시작
+	// 장바구니 선택구매
+	public int selectBuyCartList(int[] list) {
+		int result = -1;
+		Connection conn = jdbcTemplate.getConnection();
+		result = new ShoppingBagDao().selectBuyCartList(conn, list);
+		jdbcTemplate.close(conn);
+		return result;
+	}
+	
 	// 장바구니 전체구매
 		public ArrayList<CartTable> allbuyCartList(String userId) {
 			ArrayList<CartTable> volist = null;
@@ -50,10 +63,10 @@ public class ShoppingBagService {
 
 	// TODO
 	// 장바구니 선택삭제 .. 체크박스를 체크하면 cartNo를 알 수 있어야함?
-	public int selectDeleteCartList(int cartNo) {
+	public int selectDeleteCartList(int[] list) {
 		int result = -1;
 		Connection conn = jdbcTemplate.getConnection();
-		result = new ShoppingBagDao().selectDeleteCartList(conn, cartNo);
+		result = new ShoppingBagDao().selectDeleteCartList(conn, list);
 		jdbcTemplate.close(conn);
 		return result;
 	}
