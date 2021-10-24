@@ -10,6 +10,38 @@ import woorigym.product.model.vo.ProductTable;
 import woorigym.shoppingbag.model.vo.CartTable;
 
 public class ShoppingBagDao {
+	// 2021.10.24 내용추가 시작
+	// 장바구니 전체구매
+		public ArrayList<CartTable> allbuyCartList(Connection conn, String userId) {
+			System.out.println("allbuyCartList 1");
+			System.out.println(userId);
+			ArrayList<CartTable> volist = null;
+			String sql = "update cart set checked = 1 where user_id = ?";
+			System.out.println(sql);
+
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			try {
+				System.out.println("allbuyCartList executeQuery 1");
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, userId);
+				rset = pstmt.executeQuery();
+				System.out.println("allbuyCartList executeQuery 2");
+				if (rset.next()) {
+					System.out.println("allbuyCartList executeQuery over 1");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				jdbcTemplate.close(rset);
+				jdbcTemplate.close(pstmt);
+			}
+			System.out.println("allbuyCartList 2" + volist);
+			return volist;
+		}
+	// 2021.10.24 내용추가 완료
+	
+	
 	// 2021.10.22 1차 내용추가 시작
 	// 장바구니 옵션변경 모달창 수량변경부분 쿼리문
 //	public int ShoppingBagQuantityUpdate(Connection conn, int cartNo) {
@@ -200,7 +232,7 @@ public class ShoppingBagDao {
 		System.out.println("deleteCartList 1");
 		System.out.println(userId);
 		ArrayList<CartTable> volist = null;
-		String sql = "delete from cart where user_id = ? ";
+		String sql = "delete from cart where user_id = ?";
 		System.out.println(sql);
 
 		PreparedStatement pstmt = null;

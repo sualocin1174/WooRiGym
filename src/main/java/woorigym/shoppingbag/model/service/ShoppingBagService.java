@@ -10,6 +10,17 @@ import woorigym.shoppingbag.model.dao.ShoppingBagDao;
 import woorigym.shoppingbag.model.vo.CartTable;
 
 public class ShoppingBagService {
+	// 2021.10.24 내용추가 시작
+	// 장바구니 전체구매
+		public ArrayList<CartTable> allbuyCartList(String userId) {
+			ArrayList<CartTable> volist = null;
+			Connection conn = jdbcTemplate.getConnection();
+			volist = new ShoppingBagDao().allbuyCartList(conn, userId);
+			jdbcTemplate.close(conn);
+			return volist;
+		}
+	// 2021.10.24 내용추가 완료
+	
 	public ArrayList<CartTable> ShoppingBagList(String userId, int start, int end) {
 		ArrayList<CartTable> volist = null;
 		Connection conn = jdbcTemplate.getConnection();
