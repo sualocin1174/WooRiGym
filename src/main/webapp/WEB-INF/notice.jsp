@@ -181,7 +181,7 @@
 
 	<section>
 		<div id="noticeSelect" style="display:none">
-			<form id="formSelect" name="formSelect" action="apuupdate" method="post">
+			<form id="formSelect" name="formSelect" action="#" method="post">
 					<label>공지사항 번호</label>
 					<input type="text" name="notice_no1" id="notice_no1" class = "input" required="required" placeholder="번호를 입력해주세요.">
 					<input type="button" id="checkNo" value="확인">

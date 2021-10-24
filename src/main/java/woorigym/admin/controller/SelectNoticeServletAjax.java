@@ -21,7 +21,7 @@ import woorigym.admin.model.vo.NoticeTable;
 /**
  * Servlet implementation class SelectNoticeServlet
  */
-@WebServlet("/SelectNotice")
+@WebServlet("/SelectNoticeAjax")
 public class SelectNoticeServletAjax extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
