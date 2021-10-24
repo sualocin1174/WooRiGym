@@ -20,18 +20,18 @@ public class OrderDetailDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String query = "SELECT oinfo.order_no,order_total,order_cost, to_char(order_date, 'yyyy-mm-dd hh:mm')" +
-				" order_method, order_date,pay_state,order_state, \r\n" + 
-				"     odetail.product_no, buy_quantity\r\n" + 
-				"		,  product.product_name, product.PRODUCT_INFO_URL,\r\n" + 
-				"        coupon_discount, add_mileage, point_discount, (coupon_discount+point_discount) discount_all, (order_total-(coupon_discount+point_discount)+order_cost) total_pay\r\n" + 
-				"    ,postcode, basic_address, detail_address, receiver_name, phone_no " + 
-				"	 FROM ORDERINFO oinfo\r\n" + 
-				"	join order_detail odetail on oinfo.order_no = odetail.order_no\r\n" + 
-				"		join product product on odetail.PRODUCT_NO = product.PRODUCT_NO\r\n" + 
-				"        join address on oinfo.address_no = address.address_no\r\n" + 
-				"		 WHERE \r\n" + 
-				"	 oinfo.order_no = ?";
+		String query = "SELECT oinfo.order_no,order_total,order_cost, to_char(order_date, 'yyyy-mm-dd hh:mm'), \r\n" + 
+				"				 order_method, order_date,pay_state,order_state,   \r\n" + 
+				"				     odetail.product_no, buy_quantity  \r\n" + 
+				"						,  product.product_name, product.PRODUCT_INFO_URL,  \r\n" + 
+				"				        coupon_discount, add_mileage, point_discount, (coupon_discount+point_discount) discount_all, (order_total-(coupon_discount+point_discount)) total_pay  \r\n" + 
+				"				    ,postcode, basic_address, detail_address, receiver_name, phone_no   \r\n" + 
+				"					 FROM ORDERINFO oinfo  \r\n" + 
+				"					join order_detail odetail on oinfo.order_no = odetail.order_no  \r\n" + 
+				"						join product product on odetail.PRODUCT_NO = product.PRODUCT_NO  \r\n" + 
+				"				        join address on oinfo.address_no = address.address_no  \r\n" + 
+				"						 WHERE   \r\n" + 
+				"					 oinfo.order_no = ?";
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, order_no);
@@ -59,7 +59,7 @@ public class OrderDetailDao {
 					volist.setDetail_address(rset.getString("detail_address")); //상세주소
 					volist.setReceiver_name(rset.getString("receiver_name")); //수령인 이름
 					volist.setPhone_no(rset.getString("phone_no")); //폰번호
-					volist.setOrder_method(rset.getInt("order_method")); //폰번호
+					volist.setOrder_method(rset.getInt("order_method")); 
 				} while(rset.next());
 			}
 		} catch (Exception e) {

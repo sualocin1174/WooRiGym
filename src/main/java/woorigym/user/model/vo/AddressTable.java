@@ -1,5 +1,12 @@
 package woorigym.user.model.vo;
 
+//-------------- -------- ------------- 
+//ADDRESS_NO     NOT NULL NUMBER        
+//USER_ID        NOT NULL VARCHAR2(30)  
+//POSTCODE       NOT NULL VARCHAR2(20)  
+//BASIC_ADDRESS  NOT NULL VARCHAR2(100) 
+//DETAIL_ADDRESS NOT NULL VARCHAR2(100) 
+//FIXED_ADDRESS  NOT NULL NUMBER 
 public class AddressTable {
 	private String address_no;
 	private String user_id;
@@ -7,8 +14,8 @@ public class AddressTable {
 	private String basic_address;
 	private String detail_address;
 	private int fixed_address;
+	
 	public AddressTable() {
-		// TODO Auto-generated constructor stub
 	}
 	public String getAddress_no() {
 		return address_no;

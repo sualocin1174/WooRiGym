@@ -28,7 +28,7 @@ public class CerListDao {
 		//inner join: 데이터가 있을 때만 조인됨.
 		query += " join order_detail odetail on oinfo.order_no = odetail.order_no";
 		query += " join product product on odetail.PRODUCT_NO = product.PRODUCT_NO";
-		query += " join claim claim on odetail.order_detail_no = claim.order_detail_no";
+		query += " join claim claim on oinfo.order_no = claim.order_no";
 		query += " WHERE ";
 		query += " USER_ID = ?";
 		query += " and order_date between to_date(?, 'yyyy-mm-dd') and to_date(?, 'yyyy-mm-dd')";
@@ -114,7 +114,7 @@ public class CerListDao {
 				"    product.product_name, product.PRODUCT_INFO_URL " + 
 				" FROM ORDERINFO oinfo " + 
 				"    join order_detail odetail on oinfo.order_no = odetail.order_no" + 
-				"    join claim claim on odetail.order_detail_no = claim.order_detail_no" +
+				"    join claim claim on oinfo.order_no = claim.order_no" +
 				"    join product product on odetail.PRODUCT_NO = product.PRODUCT_NO" + 
 				" WHERE " + 
 				"    USER_ID = ? order by order_date desc )" + 

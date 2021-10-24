@@ -312,7 +312,7 @@
     <!-- 서블릿 -> 서비스-> Dao -> DB-> jsp 순으로 오기때문에 이미 데이터를 갖고있으니
     서블릿에서 정의한 endPage, startPage 등 용어 사용 가능 -->
     <script>
-    console.log("시작 페이지: "+<%=request.getAttribute("startPage") %>);
+    console.log(<%=request.getAttribute("startPage") %>);
     console.log("마지막 페이지"+<%=request.getAttribute("endPage") %>);
     </script>
    <c:if test=" ${startPage} > 1 " >

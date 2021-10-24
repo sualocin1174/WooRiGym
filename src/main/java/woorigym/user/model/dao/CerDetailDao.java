@@ -15,9 +15,9 @@ public class CerDetailDao {
 
 	 public CerDetailVo CerDetail(Connection conn, String uid, String ono) {
 		 String sql = "select claim.*, product_no, buy_quantity, order_total, order_cost, order_method, order_date, arrive_date from claim\r\n" + 
-		 		" join order_detail odetail on odetail.order_detail_no = claim.order_detail_no\r\n" + 
-		 		" join orderinfo on orderinfo.order_no = odetail.order_no\r\n" + 
-		 		" where user_id = ? and orderinfo.order_no=?";
+		 		" join orderinfo oinfo on oinfo.order_no = claim.order_no\r\n" + 
+		 		" join order_detail odetail on oinfo.order_no = odetail.order_no\r\n" + 
+		 		" where user_id = ? and oinfo.order_no=?";
 		 
 		 PreparedStatement pstmt = null;
 			ResultSet rset = null;
@@ -30,7 +30,7 @@ public class CerDetailDao {
 				pstmt.setString(2, ono);
 				rset = pstmt.executeQuery();
 				if(rset.next()) {
-					vo.setOrder_detail_no(rset.getString("order_detail_no"));//주문상세번호
+					vo.setOrder_no(rset.getString("order_no"));//주문상세번호
 					vo.setClaim_date(rset.getString("claim_date"));//신청일자
 					vo.setClaim_kind(rset.getString("claim_kind"));//분류
 					vo.setClaim_process(rset.getString("claim_process"));//처리상태

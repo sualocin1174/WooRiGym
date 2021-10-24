@@ -55,7 +55,7 @@ body{
       	border-bottom: 1px solid #BDBDBD;
       	}
       	/* 배송지목록 버튼 */
-      	.button{
+      	.button, #submit_address, .step3{
         padding: 3px 8px;
         text-align: center;
         text-decoration: none;
@@ -68,7 +68,7 @@ body{
         border: 2px solid dodgerblue;
         border-radius: 5px;
         }
-        .button:hover {
+        .button:hover, #submit_address:hover, .step3:hover {
         background-color: dodgerblue;
         color: white;
         }
@@ -165,7 +165,7 @@ body{
 }
 .modal-content-a {
             width: 300px;
-            height: 300px;
+            height: 400px;
             top: 50px;
             left: 450px;
             position: relative;
@@ -197,6 +197,7 @@ body{
                         <!-- 배송지 목록 -->
                      </table>
               </div>
+              <p id="delivery"></p>
           </div>
 <section>
 	<h2>교환/반품 신청</h2>
@@ -208,14 +209,14 @@ body{
 		</tr>
 		<tr>
 			<th rowspan='8'>교환/반품 사유<br>(택1)</th>
-			<td><label class="container" for="reason1"><input type='radio' checked="checked" name="why" id="reason1">품질 불만<span class="checkmark"></span></label></td></tr>
-		<tr><td><label class="container" for="reason3"><input type='radio' name="why" id="reason3">필요 없어짐<span class="checkmark"></span></label></td></tr>
-		<tr><td><label class="container" for="reason2"><input type='radio' name="why" id="reason2">구성품이 누락됨<span class="checkmark"></span></label></td></tr>
-		<tr><td><label class="container" for="reason4"><input type='radio' name="why" id="reason4">상품이 설명과 다름<span class="checkmark"></span></label></td></tr>
-		<tr><td><label class="container" for="reason5"><input type='radio' name="why" id="reason5">상품이 파손됨<span class="checkmark"></span></label></td></tr>
-		<tr><td><label class="container" for="reason6"><input type='radio' name="why" id="reason6">오배송<span class="checkmark"></span></label></td></tr>
-		<tr><td><label class="container" for="reason7"><input type='radio' name="why" id="reason7">배송 중 분실<span class="checkmark"></span></label></td></tr>
-		<tr><td><label class="container" for="reason8"><input type='radio' name="why" id="reason8">그 외 기타<span class="checkmark"></span></label></td></tr>
+			<td><label class="container" for="reason1"><input type='radio' checked="checked" name="why" id="reason1" value="0">품질 불만<span class="checkmark"></span></label></td></tr>
+		<tr><td><label class="container" for="reason3"><input type='radio' name="why" id="reason3" value="1">필요 없어짐<span class="checkmark"></span></label></td></tr>
+		<tr><td><label class="container" for="reason2"><input type='radio' name="why" id="reason2" value="2">구성품이 누락됨<span class="checkmark"></span></label></td></tr>
+		<tr><td><label class="container" for="reason4"><input type='radio' name="why" id="reason4" value="3">상품이 설명과 다름<span class="checkmark"></span></label></td></tr>
+		<tr><td><label class="container" for="reason5"><input type='radio' name="why" id="reason5" value="4">상품이 파손됨<span class="checkmark"></span></label></td></tr>
+		<tr><td><label class="container" for="reason6"><input type='radio' name="why" id="reason6" value="5">오배송<span class="checkmark"></span></label></td></tr>
+		<tr><td><label class="container" for="reason7"><input type='radio' name="why" id="reason7" value="6">배송 중 분실<span class="checkmark"></span></label></td></tr>
+		<tr><td><label class="container" for="reason8"><input type='radio' name="why" id="reason8" value="7">그 외 기타<span class="checkmark"></span></label></td></tr>
 		
 		<tr>
 			<th rowspan='2'>교환/반품 선택</th>
@@ -227,7 +228,16 @@ body{
 </div>
 <p id="a1" style="display:none">${order_total}</p>
 <p id="a2" style="display:none">${order_cost}</p>
+<p id="a3" style="display:none">${order_no}</p>
+<!-- 3단계 -->
 
+<div id="btngroup">
+<button class="nextbtn" onclick="ajaxR1()">신청하기</button>
+<a href="<%=request.getContextPath()%>/orderlist" class="nextbtn">목록</a>
+<!-- 신청완료 페이지 버튼 -->
+<a href="<%=request.getContextPath()%>/clist" class="step3" style="display:none">신청내역 조회</a>
+<a href="<%=request.getContextPath()%>/main" class="step3" style="display:none">메인으로 이동</a>
+</div>
 <script>
 	$("input[name='choice']").change(function(){
 	var exchange ='';
@@ -239,7 +249,7 @@ body{
 		var choice = $(this).val();
 		if(choice=="exchange"){ 
 		exchange+= "<table><tr><th>상품 회수 주소</th><td><button onclick='showlist()' id='address_list' class='button'><p>배송지 목록</p></button></td>";
-		exchange+="</tr><tr><th>회수 시 요청사항</th><td><textarea></textarea></td></tr>";
+		exchange+="</tr><tr><th>회수 시 요청사항</th><td><textarea id='request_memo'></textarea></td></tr>";
 		exchange+="<tr><th>회수 예정일</th><td></td></tr></table>";
 		
 			$("#second_depth").html(exchange);
@@ -260,35 +270,7 @@ body{
 		}
 		
 	});
-	
-	function ajaxA1(){
-		$.ajax({
-    		type: "post",
-    		url: "<%=request.getContextPath()%>/cinsert",
-    		data: { //화면에서 쓰일 데이터 = where절에 쓰임. user_id도 서블릿에서 알고 있으니 data 보낼게 없다.
-    		},
-    		dataType: "json", //전달받을 객체는 json이다.
-    		success: function(data){
-		var html ="";
-    			console.log(data);
-    			console.log(data.length);
-    			html+= "<button id='submit_address' onclick='submitA1()'>제출</button>";
-    		for(var i=0;i<data.length;i++){
-    			//TODO 우편번호: 기본주소: 상세주소:
-    			html+= "<tr><td>"+data[i].postcode+"</td><td><input type='radio' name='address_choice' value='"+data[i].postcode+"'></td></tr>"
-    			html+= "<tr><td>"+data[i].basic_address+"</td></tr>"
-    			html+= "<tr><td>"+data[i].detail_address+"</td></tr>"
-    		} //TODO: 이 주소들을 어느 테이블에 저장할지? 백건호님께 물어보기.
-    		$(".modal-address").html(html);
-    		},
-    		
-    		error:function(request,status,error){
-    			alert("code:"+request.status+"\n"+"message:"+request.responseText+
-    					"\n"+"error:"+error);
-    		}
-    	});
-	};
-	function showlist(){
+	function showlist(){ //배송지 목록 버튼 클릭 시
 		  $(".modal-a").show(); 
 			console.log("ajax 시작show");
 			ajaxA1(); //이벤트함수 호출
@@ -306,27 +288,83 @@ body{
              $(".modal-a").hide();
          }
      });
-    function submitA1(){
-    	//postcode
-    	var postcode = $("input[name='address_choice']:checked").val();
-    }
 	
+	function ajaxA1(){ //배송지 목록 Modal Box 화면
+		$.ajax({
+    		type: "post",
+    		url: "<%=request.getContextPath()%>/cinsert",
+    		data: { //화면에서 쓰일 데이터 = where절에 쓰임. user_id도 서블릿에서 알고 있으니 data 보낼게 없다.
+    		}, //그래서 data, dataType 지워도 되지만, 혹시 모르니 남겨두기
+    		dataType: "json",
+    		success: function(data){
+		var html ="";
+    			console.log(data);
+    			console.log(data.length);
+    			html+= "<button id='submit_address' onclick='submitA1()'>제출</button>";
+    		for(var i=0;i<data.length;i++){
+    			//TODO 우편번호: 기본주소: 상세주소:
+    			html+= "<tr><td>["+data[i].postcode+"]</td></tr>"
+    			html+= "<tr><td>"+data[i].address_no+"</td><td><label class='container' for='address_choice'>"
+    			html+= "<input type='radio' name='address_choice' id='address_choice' value='"+data[i].address_no+"'><span class='checkmark'></span></label></td></tr>"
+    			html+= "<tr><td>"+data[i].basic_address+"</td></tr>"
+    			html+= "<tr><td>"+data[i].detail_address+"</td></tr>"
+    		}
+    		$(".modal-address").html(html);
+    		//$("#address_choice").hide();
+    		},
+    		
+    		error:function(request,status,error){
+    			alert("code:"+request.status+"\n"+"message:"+request.responseText+
+    					"\n"+"error:"+error);
+    		}
+    	});
+	};
+    function submitA1(){ //제출 버튼 onclick
+    	//postcode
+    	var address_no = $("input[name='address_choice']:checked").val();
+    	$("#delivery").html(address_no);//address_no를 delivery에 박기
+    	$(".modal-a").hide();
+    }
+	function ajaxR1(){ // 신청하기 버튼 onclick 시 가져오기
+		var why = $("input[name='why']:checked").val();
+		var choice = $("input[name='choice']:checked").val();
+		var delivery = $("#delivery").html(); 
+		var request_memo = $("#request_memo").val(); //회수 시 요청사항
+		var a3_val = $("#a3").html();
+		console.log("잘나오나? "+why+choice+delivery+request_memo+a3_val);
+		
+		$.ajax({
+    		type: "post",
+    		url: "<%=request.getContextPath()%>/crequest?why="+why+"&choice="+choice+"&delivery="+delivery+"&request_memo="+request_memo+"&order_no="+a3_val,
+    		data: {
+    			why: why,
+    			choice: choice,
+    			delivery: delivery,
+    			request_memo: request_memo
+    		},
+    		dataType: "json", //전달받을 객체는 json이다.
+    		success: function(data){
+    			console.log(data);
+			var html ="";
+			html+= "<table><tr><td colspan='2'><h3>교환/반품 신청이 정상적으로 접수되었습니다.</h3></td></tr>";
+			html+="<tr><td>상품 회수 정보:</td><td>["+data.postcode+"] "+data.basic_address+" "+data.detail_address+"</td></tr>";
+			html+="<tr><td>회수 시 요청사항:</td><td>"+data.request_memo+"</td></tr>";
+			html+="<tr><td>회수 예정일:</td><td>"+data.return_date+"</td></tr></table>";
+			console.log(html);
+			$(".step1").html("");
+			$(".step1").html(html);
+			$("#second_depth").hide();
+			$(".nextbtn").hide(); //신청하기, 목록 버튼 숨기기
+			$(".step3").show(); //신청내역 조회, 메인으로 이동
+    		},
+    		
+    		error:function(request,status,error){
+    			alert("code:"+request.status+"\n"+"message:"+request.responseText+
+    					"\n"+"error:"+error);
+    		}
+    	});
+	};
 </script>
-
-<!-- 3단계 -->
-<div id='third depth'>
-<h3>교환/반품 신청이 접수되었습니다.</h3>
-<p>상품 회수 정보: 서울시 성동구 XX동</p>
-<h3>회수 요청사항: 부재시 문 앞</h3>
-<h3>상품 회수일: 9월 22일(수)</h3>
-</div>
-<div id="btngroup">
-<a href="#" class="nextbtn">이전 단계</a>
-<!--  <a href="#" class="nextbtn">다음 단계</a> -->
-<a href="#" class="nextbtn">신청하기</a>
-<!-- 신청완료 페이지 버튼 -->
-<a href="#" class="nextbtn">목록</a>
-</div>
 </section>
 </body>
 </html>

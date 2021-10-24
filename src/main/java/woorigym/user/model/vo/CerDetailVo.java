@@ -7,7 +7,7 @@ public class CerDetailVo {
 //	where user_id='gym11';
 	public CerDetailVo() {
 	}
-		private String order_detail_no;
+		private String order_no;
 		private String claim_date;
 		private String claim_kind;
 		private String claim_process;
@@ -23,12 +23,12 @@ public class CerDetailVo {
 		
 		@Override
 		public String toString() {
-			return "CerDetailVo [order_detail_no=" + order_detail_no + ", claim_date=" + claim_date + ", claim_kind="
+			return "CerDetailVo [order_no=" + order_no + ", claim_date=" + claim_date + ", claim_kind="
 					+ claim_kind + ", claim_process=" + claim_process + ", done_date=" + done_date + ", product_no="
 					+ product_no + ", buy_quantity=" + buy_quantity + ", order_total=" + order_total + ", order_cost="
 					+ order_cost + ", order_method=" + order_method + ", order_date=" + order_date + ", arrive_date="
-					+ arrive_date + ", getOrder_method()=" + getOrder_method() + ", getOrder_detail_no()="
-					+ getOrder_detail_no() + ", getClaim_date()=" + getClaim_date() + ", getClaim_kind()="
+					+ arrive_date + ", getOrder_method()=" + getOrder_method() + ", getOrder_no()="
+					+ getOrder_no() + ", getClaim_date()=" + getClaim_date() + ", getClaim_kind()="
 					+ getClaim_kind() + ", getClaim_process()=" + getClaim_process() + ", getDone_date()="
 					+ getDone_date() + ", getProduct_no()=" + getProduct_no() + ", getBuy_quantity()="
 					+ getBuy_quantity() + ", getOrder_total()=" + getOrder_total() + ", getOrder_cost()="
@@ -42,11 +42,11 @@ public class CerDetailVo {
 		public void setOrder_method(int order_method) {
 			this.order_method = order_method;
 		}
-		public String getOrder_detail_no() {
-			return order_detail_no;
+		public String getOrder_no() {
+			return order_no;
 		}
-		public void setOrder_detail_no(String order_detail_no) {
-			this.order_detail_no = order_detail_no;
+		public void setOrder_no(String order_no) {
+			this.order_no = order_no;
 		}
 		public String getClaim_date() {
 			return claim_date;
