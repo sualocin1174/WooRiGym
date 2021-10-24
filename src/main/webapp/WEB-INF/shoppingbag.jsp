@@ -310,8 +310,6 @@
 	    	$("#sblist").empty(); 
 			$("#sblist").append(html);
 			$("#sblist").append(costhtml);
-			
-			$("#btnSelectDelete").click(selectDelete);
 	
 			$("[class=subCB]").click(oneCheckFunc);
 			
@@ -384,13 +382,71 @@
 		}
     </script>
     <!-- 2021.10.24 내용추가 시작 -->
+    <!-- 장바구니 선택구매 -->
+   	<script>
+   	$("#btnSelectBuy").click(sbuy);
+	var sBuyList = [];
+	function sbuy(){
+		// alert($("[name=subCB]:checked").val());
+		if($("[name=subCB]:checked").val() == undefined) {
+			alert("구매할 품목을 체크해주세요.");
+			return;
+		}
+		selectBuy();
+		ajaxsbuy();
+	}
+	
+	function selectBuy() {
+		// console.log("장바구니 번호 : "+$("[class=subCB]:checked").val());
+		$("[name=subCB]:checked").each(function(){
+			// console.log("장바구니번호2 : "+$("[name=subCB]:checked"));
+			sBuyList.push($(this).val());
+			// console.log(sDeleteList.push($(this).val()));
+		});
+  		console.log("배열에 담겨진 값1 : "+sBuyList);
+  		var newsBuyList = [];
+  		newsBuyList = sBuyList.filter(function(item){
+       		return item !== "";
+       	});
+  		
+  		$("#cartnolist").val(newsBuyList);
+  		console.log(typeof newsBuyList);
+	}
+	
+	
+  	function ajaxsbuy(){
+ 		console.log($("#cartnolist").val());
+		console.log("테스트2 : "+$("[name=subCB]:checked").val());
+  		// console.log("배열에 담겨진 값5 : "+newsDeleteList);
+  		console.log("배열에 담겨진 값2 : "+$("#cartnolist").val());
+   		$.ajax({
+			type:"post",
+			url:"<%=request.getContextPath()%>/sbtopo.ajax",
+			data : {
+				// cartNo : $("[name=subCB]:checked").val()
+				cartNo : $("#cartnolist").val()
+			},
+			dataType : "json", // 전달받을 객체는 JSON 이다.
+			success: function(data){
+				alert("선택상품 결제페이지로 이동합니다.");
+				window.location.href = "/wooRiGym/order";
+			},
+			error : function(request,status,error) {
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+
+				"\n"+"error:"+error);
+			}
+		});
+		location.reload(); // 페이지 새로고침
+   	};
+    </script>
+    
     <!-- 장바구니 전체구매 -->
    	<script>
    	$("#btnAllBuy").click(ajaxf4);
     	function ajaxf4() {
 			$.ajax({
 				type:"post",
-				url:"<%=request.getContextPath()%>/sbtopo.ajax",
+				url:"<%=request.getContextPath()%>/abtopo.ajax",
 				data : {
 					userId : "<%=user.getUser_id()%>"
 				},
@@ -444,10 +500,11 @@
 			alert("삭제할 품목을 체크해주세요.");
 			return;
 		}
+		selectDelete();
 		ajaxsdelete();
 	}
 	
-	// function selectDelete() {
+	function selectDelete() {
 		// console.log("장바구니 번호 : "+$("[class=subCB]:checked").val());
 		$("[name=subCB]:checked").each(function(){
 			// console.log("장바구니번호2 : "+$("[name=subCB]:checked"));
@@ -455,23 +512,27 @@
 			// console.log(sDeleteList.push($(this).val()));
 		});
   		console.log("배열에 담겨진 값1 : "+sDeleteList);
-	// }
-	
   		var newsDeleteList = [];
   		newsDeleteList = sDeleteList.filter(function(item){
        		return item !== "";
        	});
+  		
+  		$("#cartnolist").val(newsDeleteList);
+  		console.log(typeof newsDeleteList);
+	}
+	
 	
   	function ajaxsdelete(){
-	console.log("테스트2 : "+$("[name=subCB]:checked").val());
-  		console.log("배열에 담겨진 값5 : "+newsDeleteList);
-  		console.log("배열에 담겨진 값2 : "+sDeleteList);
+ 		console.log($("#cartnolist").val());
+		console.log("테스트2 : "+$("[name=subCB]:checked").val());
+  		// console.log("배열에 담겨진 값5 : "+newsDeleteList);
+  		console.log("배열에 담겨진 값2 : "+$("#cartnolist").val());
    		$.ajax({
 			type:"post",
 			url:"<%=request.getContextPath()%>/sbsdelete.ajax",
 			data : {
 				// cartNo : $("[name=subCB]:checked").val()
-				"cartNo" : sDeleteList
+				cartNo : $("#cartnolist").val()
 			},
 			dataType : "json", // 전달받을 객체는 JSON 이다.
 			success: function(data){

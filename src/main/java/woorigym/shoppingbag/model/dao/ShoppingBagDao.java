@@ -1,5 +1,7 @@
 package woorigym.shoppingbag.model.dao;
 
+import static woorigym.common.jdbcTemplate.close;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +13,37 @@ import woorigym.shoppingbag.model.vo.CartTable;
 
 public class ShoppingBagDao {
 	// 2021.10.24 내용추가 시작
+	// 장바구니 선택구매
+		public int selectBuyCartList(Connection conn, int[] list) {
+			System.out.println("selectBuyCartList 1");
+			System.out.println(list);
+			int result = -1;
+			String sql = "update cart set checked = 1 where cart_no = ?";
+			System.out.println(sql);
+
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			try {
+				System.out.println("selectBuyCartList executeQuery 1");
+				for(int i = 0 ; i < list.length;i++ ) {
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setInt(1, list[i]);
+					rset = pstmt.executeQuery();
+				}
+				System.out.println("selectBuyCartList executeQuery 2");
+				if (rset.next()) {
+					System.out.println("selectBuyCartList executeQuery over 1");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				jdbcTemplate.close(rset);
+				jdbcTemplate.close(pstmt);
+			}
+			System.out.println("selectBuyCartList 2" + result);
+			return result;
+		}
+	
 	// 장바구니 전체구매
 		public ArrayList<CartTable> allbuyCartList(Connection conn, String userId) {
 			System.out.println("allbuyCartList 1");
@@ -196,12 +229,12 @@ public class ShoppingBagDao {
 		System.out.println("selectCheckBoxUpdateCartList 2" + result);
 		return result;
 	}
-
+	
 	// TODO
 	// 장바구니 선택삭제 .. 체크박스를 체크하면 cartNo를 알 수 있어야함?
-	public int selectDeleteCartList(Connection conn, int cartNo) {
+	public int selectDeleteCartList(Connection conn, int[] list) {
 		System.out.println("selectDeleteCartList 1");
-		System.out.println(cartNo);
+		System.out.println(list);
 		int result = -1;
 		String sql = "delete from cart where cart_no = ? ";
 		System.out.println(sql);
@@ -210,9 +243,11 @@ public class ShoppingBagDao {
 		ResultSet rset = null;
 		try {
 			System.out.println("selectDeleteCartList executeQuery 1");
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, cartNo);
-			rset = pstmt.executeQuery();
+			for(int i = 0 ; i < list.length;i++ ) {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, list[i]);
+				rset = pstmt.executeQuery();
+			}
 			System.out.println("selectDeleteCartList executeQuery 2");
 			if (rset.next()) {
 				System.out.println("selectDeleteCartList executeQuery over 1");
