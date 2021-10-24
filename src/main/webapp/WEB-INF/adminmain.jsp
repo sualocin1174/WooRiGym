@@ -129,30 +129,31 @@
  	<%@ include file="template_header.jsp"%>
  	<!-- 10/10 메인페이지 사이드바 추가: <aside>~</aside>
  	추후 template_admin_aside.jsp로 따로 생성하고 include해서 쓰시는걸 추천합니다  -->
- 	<aside>
- <div id="side-menu">
-     <ul>
-         <li>메인페이지</li>
-         <li><a href="amain">상품관리</a></li>
-         <li><a href="apupage">팝업공지</a></li>
-         <li><a href="#">매출관리</a></li>
-         <li><a href="#">주문내역 확인</a></li>
-         <li><a href="#">배송현황 관리</a></li>
-         <li><a href="#">교환/반품/환불 승인</a></li>
-         <li><a href="#">Q&A 문답관리</a></li>
-     </ul>
- </div>
-</aside>
+	<aside>
+		<div id="side-menu">
+     	<ul>
+        	<li>메인페이지</li>
+         	<li><a href="amain">상품관리</a></li>
+         	<li><a href="apupage">팝업공지</a></li>
+         	<li><a href="#">매출관리</a></li>
+         	<li><a href="#">주문내역 확인</a></li>
+         	<li><a href="#">배송현황 관리</a></li>
+         	<li><a href="#">교환/반품/환불 승인</a></li>
+         	<li><a href="#">Q&A 문답관리</a></li>
+     	</ul>
+ 	</div>
+	</aside>
+
  <section>
     <input type="text" id="input" name="input" placeholder="상품번호를 입력해주세요.">
     <button type="button" id="btn_search" class="button" name="btn_search">검색</button>
     <button type="button" id="btn_insert" class="button" name="btn_insert">추가</button>
     <button type="button" id="btn_update" class="button" name="btn_update">수정</button>
-    <button type="button" id="btn_delete" class="button" name="btn_delete">삭제</button>
+    <button type="button" id="btn_delete" class="button" name="btn_delete">삭제</button><br><br>
 	<div id="productList" style="display:none"></div>
 	<br><br>
-	<form id="form1" name="form1" action="apadd" method="post" enctype="multipart/form-data">
-		<div id = "productInsert">
+	<div id = "productInsert" style="display:none">
+		<form id="form1" name="form1" action="apadd" method="post" enctype="multipart/form-data">
 			<div id = "imgCollection">
 				<div id = "stepImgContainer">
 					<label>이미지 추가</label>
@@ -166,7 +167,7 @@
 	
 			<div id="productOption" >
 				<label>상품 번호</label>
-				<input type="text" name="productNo" id="productNo" required="required" placeholder="상품 번호를 입력해주세요."><br><br>
+				<input type="text" name="productNo1" id="productNo1" required="required" placeholder="상품 번호를 입력해주세요."><br><br>
 		
         		<label>상품명</label>
         		<input type="text" name="productName" id="productName" required="required" placeholder="상품명을 입력해주세요."><br><br>
@@ -222,10 +223,26 @@
 				<input type="submit" id="save" value="등록">
 				<button type="reset" id="cancle">취소</button>
 			</div>
-		</div>
-	</form>
+		</form>
+	</div>
 </section>
 
+<section>
+	<div id="productDelete" style="display:none">
+		<form id="formDelete" name="formDelete" method="post" action="apdelete">
+			<table id="pdelete" class="ptable">
+				<tr>
+					<td>상품 번호</td>
+					<td><input type="text" name="productNo1" id="productNo1" class="input" required="required" placeholder="번호를 입력해주세요."><br><br></td>
+					<td><input type="submit" id="delete" value="삭제"></td>			
+			</table>
+		</form>
+	</div>
+</section>
+
+<section>
+	
+</section>
 <script>
 	$("#btn_search").click(searchF1);
 	 
@@ -235,59 +252,70 @@
 		$("#productDelete").hide();
 		$("#productUpdate").hide();
 	}
+	
+	function ajaxF1(){
+			$.ajax({
+				type:"post",
+				url:"<%=request.getContextPath()%>/plist.ajax",
+				data: {
+					productNo:$("#input").val(),
+					productName:"",
+					parentCategory:"",
+					childCategory:"",
+					quantity:0,
+					price:0,
+					productInfoUrl:"",
+					productOption:""
+				},
+				dataType:"json",
+				success: function(data){
+					resultHtml(data);
+				},
+				error: function(request, status, error){
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			});
+			$("#productList").show();
+	}
 		
-		function ajaxF1(){
-				$.ajax({
-					type:"post",
-					url:"<%=request.getContextPath()%>/plist.ajax",
-					data: {
-						productNo:$("#input").val(),
-						productName:"",
-						parentCategory:"",
-						childCategory:"",
-						quantity:0,
-						price:0,
-						productInfoUrl:"",
-						productOption:""
-					},
-					dataType:"json",
-					success: function(data){
-						//[{"productNo":"a","productName":"b","parentCategory":"c","childCategory":"d","quantity":1,"price":2,"productInfoUrl":"e","productOption":"f","minPrice":0,"maxPrice":0}]
-						resultHtml(data);
-					},
-					error: function(request, status, error){
-						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-					}
-				});
-				$("#productList").show();
-		}
+	function resultHtml(data){
+		var html="<table border='1' id='productList'>";
 		
-		function resultHtml(data){
-			var html="<table border='1' id='productList'>";
+		$.each(data, function(key, value){
 			html += "<tr>";
 			html += "<th>상품번호</th>";
-			html += "<th>상품이름</th>";
-			html += "<th>부모카테고리</th>";
-			html += "<th>자식카테고리</th>";
-			html += "<th>수량</th>";
-			html += "<th>가격</th>";
-			html += "<th>상품이미지URL</th>";
-			html += "<th>상품 옵션</th>";
+			html += "<td>" + value.productNo + "</td>";
 			html += "</tr>";
-			
-			$.each(data, function(key, value){
-				html += "<tr>";
-				html += "<td>" + value.productNo + "</td>";
-				html += "<td>" + value.productName + "</td>";
-				html += "<td>" + value.parentCategory + "</td>";
-				html += "<td>" + value.childCategory + "</td>";
-				html += "<td>" + value.quantity + "</td>";
-				html += "<td>" + value.price + "</td>";
-				html += "<td>" + value.productInfoUrl + "</td>";
-				html += "<td>" + value.productOption + "</td>";
-				html += "</tr>";
-			});
-			
+			html += "<tr>";
+			html += "<th>상품이름</th>";
+			html += "<td>" + value.productName + "</td>";
+			html += "</tr>";
+			html += "<tr>";
+			html += "<th>상위카테고리</th>";
+			html += "<td>" + value.parentCategory + "</td>";
+			html += "</tr>";
+			html += "<tr>";
+			html += "<th>하위카테고리</th>";
+			html += "<td>" + value.childCategory + "</td>";
+			html += "</tr>";
+			html += "<tr>";
+			html += "<th>수량</th>";
+			html += "<td>" + value.quantity + "</td>";
+			html += "</tr>";
+			html += "<tr>";
+			html += "<th>가격</th>";
+			html += "<td>" + value.price + "</td>";
+			html += "</tr>";
+			html += "<tr>";
+			html += "<th>상품이미지URL</th>";
+			html += "<td>" + value.productInfoUrl + "</td>";
+			html += "</tr>";
+			html += "<tr>";
+			html += "<th>상품 옵션</th>";
+			html += "<td>" + value.productOption + "</td>";
+			html += "</tr>";
+		});
+		
 		html += "</table>";
 		$("#productList").empty(); 
 		$("#productList").append(html);
@@ -319,6 +347,14 @@
 		$("#productInsert").show();
 		$("#productList").hide();
 		$("#noticeDelete").hide();
+		$("#noticeUpdate").hide();
+	}
+	
+	$("#btn_delete").click(DeleteShow);
+	function DeleteShow(){
+		$("#productDelete").show();
+		$("#productList").hide();
+		$("#productInsert").hide();
 		$("#noticeUpdate").hide();
 	}
 </script>

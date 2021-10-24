@@ -160,7 +160,7 @@
 	<section>
 		<div id="noticeInsert" style="display:none">
 			<form id="formInsert" name="formInsert" action="apuadd" method="post">
-				<table id="notice_insert" class="notice_table">
+				<table id="ninsert" class="ntable">
 					<tr>
 						<td>제목</td>
 						<td><input type="text" name="n_title" id="n_title" class = "input" required="required" placeholder="제목을 입력해주세요."><br><br></td>
@@ -182,29 +182,29 @@
 	<section>
 		<div id="noticeSelect" style="display:none">
 			<form id="formSelect" name="formSelect" action="#" method="post">
-					<label>공지사항 번호</label>
-					<input type="text" name="notice_no1" id="notice_no1" class = "input" required="required" placeholder="번호를 입력해주세요.">
-					<input type="button" id="checkNo" value="확인">
-					<br><br>
-					<span id="check_NN"></span>
+				<table id="nselect" class="ntable">
+					<tr>
+						<td>공지사항 번호</td>
+						<td><input type="text" name="notice_no1" id="notice_no1" class = "input" required="required" placeholder="번호를 입력해주세요."><td>
+						<td><input type="button" id="checkNo" value="확인"><br></td>
+						<td><span id="check_NN"></span></td>
+					</tr>
+				</table>
 			</form>
 		</div>
 	</section>
 	
 	<section>
 		<div id="noticeDelete" style="display:none">
-		<form id="formDelete" name="formDelete" method="post" action="apudelete">
-				<table id="notice_delete" class="notice_table">
+			<form id="formDelete" name="formDelete" method="post" action="apudelete">
+				<table id="ndelete" class="ntable">
 					<tr>
 						<td>공지사항 번호</td>
 						<td><input type="text" name="notice_no2" id="notice_no2" class = "input" required="required" placeholder="번호를 입력해주세요."><br><br></td>
+						<td><input type="submit" id="delete" value="삭제"></td>
 					</tr>
 				</table>
-			<div class="btn_collection"><br>
-				<input type="submit" id="delete" value="삭제">
-				<button type="reset" id="cancle">취소</button>
-			</div>
-		</form>
+			</form>
 		</div>
 	</section>
 	
@@ -220,6 +220,7 @@
 			</form>
 		</div>
 	</section>
+	
 	<script>
 	$("#btn_list").click(listF1);
 	
@@ -353,7 +354,7 @@
 			if(NN.noticelist != null){
 				for(var i=0; i<NN.noticelist.length; i++){
 					html += "<td>번호</td>";
-					html += "<td><input type='hidden' name='notice_no111' id='notice_no111' value='" + NN.noticelist[i].notice_no + "'></td>";
+					html += "<td><input type='text' name='notice_no111' id='notice_no111' value='" + NN.noticelist[i].notice_no + "' readonly></td>";
 					html += "</tr>"
 					html += "<tr>"
 					html += "<td>제목</td>";
