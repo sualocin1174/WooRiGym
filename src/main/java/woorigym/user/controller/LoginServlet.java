@@ -38,9 +38,24 @@ public class LoginServlet extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		String user_id = request.getParameter("user_id");
 		String user_pwd = request.getParameter("user_pwd");
+		String admin_id = user_id;
+		String admin_pwd = user_pwd;
 		UserService userSvc = new UserService();
 		UserTable vo = userSvc.Login(user_id, user_pwd);
-
+		int result = userSvc.adminLogin(admin_id, admin_pwd);
+		System.out.println("관리자 로그인 성공하면 뜨는 result값 -->" + result);
+		if(result == 1) {
+			System.out.println("관리자 로그인 성공");
+			request.setAttribute("result", "관리자 로그인 성공");
+			HttpSession session = request.getSession();
+			session.setAttribute("admin_id", admin_id);
+			request.getRequestDispatcher("/WEB-INF/loginAction.jsp").forward(request, response);
+			
+		} else if(result == 0) {
+			System.out.println("관리자 로그인 실패");
+			request.setAttribute("result", "관리자 로그인 실패");
+			request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+		}
 		if(vo != null) {		
 			System.out.println("로그인 성공");
 			request.setAttribute("result", "로그인성공");
@@ -48,8 +63,8 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("loginSS", vo);
 			request.getRequestDispatcher("/WEB-INF/loginAction.jsp").forward(request, response);
 		}
-		else {
-			System.out.println("로그인 실패");
+		else if(vo == null && result != 1){
+			System.out.println("-->"+"로그인 실패");
 			request.setAttribute("result", "로그인실패");
 			request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
 		}		

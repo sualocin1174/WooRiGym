@@ -43,54 +43,33 @@ public class UserDao {
 		}
 		return vo; 
 	}
-//	public int userInfo(Connection conn, String user_id) {
-//		String sql ="select user_name email from member where user_id = ?";
-//		PreparedStatement pstmt = null;
-//		ResultSet rset = null;
-//		try {
-//			pstmt = conn.prepareStatement(sql);
-//			pstmt.setString(1, user_id);
-//			rset = pstmt.executeQuery();
-//			if(rset.next()){
-//				return 1; // 아이디 일치
-//			}
-//			return 0; //불일치
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			jdbcTemplate.close(rset);
-//			jdbcTemplate.close(pstmt);
-//		}
-//		return -2; //데이터 베이스 에러
-//	}
-//	public ArrayList<UserTable> userInfo(Connection conn, String user_id) {
-//		ArrayList<UserTable> volist = null; 
-//		String sql ="select (user_name, email) from member where user_id = ?";
-//		PreparedStatement pstmt = null;
-//		ResultSet rset = null;
-//		
-//		try {
-//			pstmt = conn.prepareStatement(sql);
-//			pstmt.setString(1, user_id);
-//			rset = pstmt.executeQuery();
-//			volist = new ArrayList<UserTable>();
-//			if(rset.next()) {
-//				do {
-//					UserTable vo = new UserTable();
-//					vo.setUser_id(rset.getString("user_id"));
-//					vo.setUser_name(rset.getString("user_name"));
-//					vo.setEmail(rset.getString("email"));
-//					volist.add(vo);
-//					}while(rset.next());
-//			}		
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			jdbcTemplate.close(rset);
-//			jdbcTemplate.close(pstmt);
-//		}
-//		 return volist;
-//	}
+	public int adminLogin(Connection conn, String admin_id, String admin_pwd) {
+		String sql ="select admin_pwd from admin where admin_id = ?";
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		System.out.println("관리자 로그인 dao 진입");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, admin_id);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				if(rset.getString("admin_pwd").equals(admin_pwd)) {
+					System.out.println("관리자 로그인 성공");
+					result = 1;
+				} else {
+					System.out.println("관리자 로그인 실패");
+					result = 0;
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			jdbcTemplate.close(rset);
+			jdbcTemplate.close(pstmt);
+		}
+		return result; 
+	}
 	
 	public int dupidChk(Connection conn, String user_id) {
 		int result = 0;
@@ -190,21 +169,31 @@ public class UserDao {
 	}
 	// 회원정보 수정
 	public int updateUser(Connection conn, UserTable user) {
-		String sql ="update member set user_pwd=? user_name=? ";
+		String sql ="update member set phone=?, email=?, email_yn=?, user_pwd=? where user_id =?";
 		PreparedStatement pstmt = null;
-		ResultSet rset = null;
+		int result = 0;
 		System.out.println("회원정보수정 dao 진입");
 		try {
-			
-			return -1; //아이디 없음
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, user.getPhone());
+			pstmt.setString(2, user.getEmail());
+			pstmt.setInt(3, user.getEmail_yn());
+			pstmt.setString(4, user.getUser_pwd());
+			pstmt.setString(5, user.getUser_id());
+			result = pstmt.executeUpdate();
+			if(result > 0) {
+				System.out.println("회원 정보 수정완료");
+			} else {
+				System.out.println("회원 정보 수정실패");
+			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		} finally {
-			jdbcTemplate.close(rset);
 			jdbcTemplate.close(pstmt);
 		}
-		return -2; //데이터 베이스 에러
+		return result; 
 	}
+	// 아이디 찾기
 	public String findId(Connection conn, String user_name, String phone) {
 		String sql = "select user_id from member where user_name = ? and phone = ?";
 		PreparedStatement pstmt = null;
@@ -228,7 +217,7 @@ public class UserDao {
 		}
 		return user_id;
 	}
-	
+	// 비밀번호 찾기
 	public String findPwd(Connection conn, String user_id, String email) {
 		String sql = "select user_pwd from member where user_id = ? and email = ?";
 		PreparedStatement pstmt = null;

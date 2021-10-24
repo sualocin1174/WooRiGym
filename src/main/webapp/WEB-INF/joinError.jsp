@@ -118,7 +118,19 @@
 					$(".identity_number.regex").html("");	
 				}
 			});
-			
+			//휴대폰 번호 확인
+			$("#phone01").on("input", function (){
+			var regex = /^01[016789]$/;
+			result = regex.test($("#phone01").val());
+			console.log(result);
+			if(result == false){
+				$(".phone01.regex").html("010, 011, 016, 017, 018, 019 유효 조건에 맞게 입력해주세요");
+				$(".phone01.regex").css("color", "red");
+			} else{
+				$(".phone01.regex").html("");
+			}
+				
+			});
 			//모두 입력 되어있으면 회원가입
 			
 			$("#joinbtn").on("click", function(){

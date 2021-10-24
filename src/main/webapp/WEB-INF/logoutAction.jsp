@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<%session.removeAttribute("admin_id"); %>
 	<%
 	session.removeAttribute("loginSS");
 	%>

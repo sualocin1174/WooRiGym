@@ -8,6 +8,12 @@
    <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+<% UserTable loginSS = (UserTable)request.getSession().getAttribute("loginSS"); %>
+<%String pf = loginSS.getPhone().substring(0, 3); %>
+<%String ps = loginSS.getPhone().substring(4, 8); %>
+<%String pt = loginSS.getPhone().substring(9, 13); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -170,7 +176,7 @@ td{
                    <table border="1">
                        <tr>
                            <td>아이디</td>
-                           <td>${loginSS.user_id}</td>
+                           <td>${loginSS.user_id}<input type="hidden" id = "user_id" name = "user_id" value ="${loginSS.user_id}"></td>
                        </tr>
                        <tr>
                            <td>이름</td>
@@ -182,9 +188,11 @@ td{
                            		${loginSS.phone}
                            		<button type="button" class="button btn phone">휴대폰 번호 변경</button>
                            		<div id = "phone-text">
-	                               <input type="text" id = "phone01" name="phone01" placeholder="010" maxlength="3" size = "3"> -
-	                               <input type="text" id = "phone02" name="phone02" placeholder="0000" maxlength="4" size = "4"> -
-	                               <input type="text" id = "phone03" name="phone03" placeholder="0000" maxlength="4" size = "4">
+	                               <input class = "text" type="text" id = "phone01" name="phone01" placeholder="010" maxlength="3" size = "3" value= "<%= pf %>">-
+	                               <input class = "text" type="text" id = "phone02" name="phone02" placeholder="0000" maxlength="4" size = "4" value="<%= ps %>">-
+	                               <input class = "text" type="text" id = "phone03" name="phone03" placeholder="0000" maxlength="4" size = "4" value="<%= pt %>">
+	                               <input class = "text" id = "phone" type="hidden" value="${loginSS.phone}">
+	                               <div class = "phone01 regex"></div> 
                                </div>
                                
                            </td>
@@ -192,33 +200,94 @@ td{
                        <tr>
                            <td rowspan='2'>이메일</td>
                            <td>
-                               <input type="text" id = "email" name="email" placeholder ="${loginSS.email}" maxlength="30"></td>      
+                               <input type="text" class = "text" id = "email" name="email" maxlength="30" value = "${loginSS.email}"></td>      
                                    
                        </tr>
                        <tr>
                        		<td>이메일 수신동의      
-                           <label class="container" for="email_yes"><input type="radio" class = "email_yn" id='email_yes' name="email_ynStr" value= "1" >동의<span class="checkmark"></span></label>       
-                           <label class="container" for="email_no"><input type="radio" class = "email_yn" id='email_no' name="email_ynStr" value= "0" >거부<span class="checkmark"></span></label>                                
+                           <label class="container" for="email_yes"><input type="radio" class = "email_yn" id="email_yes" name="email_ynStr" value= "1" >동의<span class="checkmark"></span></label>       
+                           <label class="container" for="email_no"><input type="radio" class = "email_yn" id="email_no" name="email_ynStr" value= "0" >거부<span class="checkmark"></span></label>                                
                            </td>
                        </tr>
                        <tr>
 						<td>비밀번호 변경</td>
 						<td>
-                            <input type="password" id = "user_pwd" name= user_pwd placeholder="현재 비밀번호" maxlength="15"><br>
-                            <input type="password" id = "new_user_pwd" name= new_user_pwd placeholder="새로운 비밀번호 입력" maxlength="15"><br>
-                            <input type="password" id = "new_user_pwd" name= new_user_pwd placeholder="새로운 비밀번호 확인" maxlength="15">
+                            <input type="password" class = "user_pwd" name="user_pwd" id="user_pwd" placeholder="현재 비밀번호" maxlength="20"><br>
+                            <input type="hidden" class = "pwd" name="pwd" id="pwd" value="${loginSS.user_pwd}">
+                            <input type="password" class = "new_user_pwd01" name= "new_user_pwd01" id= "new_user_pwd01" placeholder="새로운 비밀번호 입력" maxlength="20"><br>
+                            <input type="password" class = "new_user_pwd02" name= "new_user_pwd02" id= "new_user_pwd02" placeholder="새로운 비밀번호 확인" maxlength="20">
+                            <div class = "pwd regex"></div>
+                            <div class = "new_user_pwd01 regex"></div>
+                            <div class = "new_user_pwd02 regex"></div>
                         </td>
                         </tr>
                    </table>
                     <div id="modybtn">
-                       <input class="modybtn" id = "modybtn" type="submit" value="수정">  
-                       <input class="btn gohome" type="button" onclick="location.href= 'main'" value="취소">
+                       <input class="modybtn" id = "modybtn" type="button" value="수정">  
+                       <input class="btn gohome" type="button" onclick="location.href= 'mypage'" value="취소">
                		</div>
                </form>
 	</div>
 <script>
-	$(".btn.phone").click(function (){
-		$("#phone-text").css("display", "block");
+	$(function (){
+		var result = false;
+		$(".btn.phone").click(function (){
+			$("#phone-text").css("display", "block");
+		});
+		
+		$("#new_user_pwd01").on("input", pwdTest);
+		 function pwdTest(){
+				var regex  = /^[A-Za-z0-9]{7,17}$/;
+				result = regex.test($("#new_user_pwd01").val());
+				console.log("유효검사-> " + result);
+				
+				if(result == false){
+					$(".new_user_pwd01.regex").html("영대소문자나 숫자를 이용하여 최소 8~16자 까지 입력하세요.");
+					$(".new_user_pwd01.regex").css("color", "red");
+				} else {
+					$(".new_user_pwd01.regex").html("");
+					result = true;
+					return result;
+				}
+				console.log("비밀번호 유효검사 이후->"+result);
+			};
+			$("#new_user_pwd02").on("input", pwdAgreement);
+			function pwdAgreement(){
+				var user_pwd = $("#new_user_pwd01").val();
+				var user_pwdTest = $("#new_user_pwd02").val();
+				console.log("비밀번호->" + user_pwd);
+				console.log("비밀번호확인->" + user_pwdTest);
+				if($("#new_user_pwd01").val() == $("#new_user_pwd02").val()){
+					$(".new_user_pwd02.regex").html("비밀번호가 일치합니다.");
+					$(".new_user_pwd02.regex").css("color", "green");
+					result = true;
+				} else{
+					$(".new_user_pwd02.regex").html("비밀번호가 일치하지 않습니다.");
+					$(".new_user_pwd02.regex").css("color", "red");
+					result = false;
+					return result;
+				}
+				console.log("비밀번호 일치확인 ->"+result);
+			};
+			$("#modybtn").on("click", function(){
+				console.log("버튼을 눌렀을 때->"+result);
+				var pp = $("#pwd").val();
+				var ppp = $("#user_pwd").val();
+				console.log(pp);
+				console.log(ppp);
+				
+				if(pp == ppp){
+					if(result == true && $(".email_yn") != null){
+						alert("수정이 완료되었습니다.");
+						$("#userModify").submit();
+					} else {
+						alert("정보를 다시한번 확인해주세요.");
+						return;
+					}
+				} else{
+					alert("현재 비밀번호가 올바르지 않습니다.");
+				}
+		});
 	});
 </script>
 </section>

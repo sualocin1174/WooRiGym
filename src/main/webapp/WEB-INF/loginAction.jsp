@@ -13,12 +13,18 @@
 		var result = "${result}";
 		console.log(result);
 		var msg = "";
-		if("${loginSS}" != "") {
-			msg += "${loginSS.user_id}님, ";
+		if(result == "관리자 로그인 성공"){
+			alert("관리자 로그인화면입니다.");
+			location.href = "amain";
+		} else{
+			if("${loginSS}" != "") {
+				msg += "${loginSS.user_id}님, ";
+			}
+			msg +="로그인 하셨습니다.";
+			alert(msg);
+			location.href = "main";
 		}
-		msg +="로그인 하셨습니다.";
-		alert(msg);
-		location.href = "main";
+		
 	</script>
 </body>
 </html>

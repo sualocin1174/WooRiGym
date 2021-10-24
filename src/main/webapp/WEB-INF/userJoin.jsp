@@ -200,7 +200,8 @@ text-align: center;
                             <td>        
                                 <input type="text" id = "phone01" name="phone01" placeholder="010" maxlength="3" size = "3"> -
                                 <input type="text" id = "phone02" name="phone02" placeholder="0000" maxlength="4" size = "4"> -
-                                <input type="text" id = "phone03" name="phone03" placeholder="0000" maxlength="4" size = "4">       
+                                <input type="text" id = "phone03" name="phone03" placeholder="0000" maxlength="4" size = "4">
+                                <div class = "phone01 regex"></div>        
                             </td>        
                         </tr>
                          
