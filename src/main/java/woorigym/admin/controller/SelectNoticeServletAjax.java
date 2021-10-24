@@ -53,6 +53,7 @@ public class SelectNoticeServletAjax extends HttpServlet {
 		String notice_no = request.getParameter("notice_no1");
 		String n_title = request.getParameter("n_title");
 		String n_content = request.getParameter("n_content");
+		String n_date = request.getParameter("n_date");
 		
 		int notice_noInt = 0;
 		notice_noInt = Integer.parseInt(notice_no);
@@ -65,6 +66,8 @@ public class SelectNoticeServletAjax extends HttpServlet {
 			NoticeTable noticeVo = new NoticeTable();
 			noticeVo.setN_title(n_title);
 			noticeVo.setN_content(n_content);
+			noticeVo.setN_date(n_date);
+			
 			ArrayList<NoticeTable> noticelist = new NoticeService().selectNotice(notice_noInt);
 			System.out.println("noticelist 값: " + noticelist);
 			

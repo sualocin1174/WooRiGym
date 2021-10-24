@@ -73,13 +73,14 @@ public class NoticeDao {
 	
 	public int updateNotice(Connection conn, NoticeTable noticeVo) {
 		int result = -1;
-		String sqlUpdate = "UPDATE NOTICE SET (N_TITLE=?, N_CONTENT=?) WHERE NOTICE_NO=?"; 
+		String sqlUpdate = "UPDATE NOTICE SET N_TITLE=?, N_CONTENT=?, N_DATE=? WHERE NOTICE_NO=?"; 
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = conn.prepareStatement(sqlUpdate);
 			pstmt.setString(1, noticeVo.getN_title());
 			pstmt.setString(2, noticeVo.getN_content());
-			pstmt.setInt(3, noticeVo.getNotice_no());
+			pstmt.setString(3, noticeVo.getN_date());
+			pstmt.setInt(4, noticeVo.getNotice_no());
 
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -149,6 +150,8 @@ public class NoticeDao {
 					vo.setNotice_no(rset.getInt("notice_no"));
 					vo.setN_title(rset.getString("N_TITLE"));
 					vo.setN_content(rset.getString("N_CONTENT"));
+					vo.setN_date(rset.getString("N_DATE"));
+					
 					noticelist.add(vo);
 					System.out.println("notice-3");
 				} while(rset.next());

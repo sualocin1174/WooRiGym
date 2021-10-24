@@ -47,16 +47,13 @@ public class PopUpUpdateServlet extends HttpServlet {
 
 		String n_title = request.getParameter("notice_title");
 		String n_content = request.getParameter("notice_content");
-		String notice_no = request.getParameter("notice_no2");
+		String notice_no = request.getParameter("notice_no111");
+		String n_date = request.getParameter("notice_date");
 		
 		int notice_noInt = 0;
 		notice_noInt = Integer.parseInt(notice_no);
 		
-		out.print(n_title);
-		out.print(n_content);
-		out.print(notice_noInt);
-		
-		NoticeTable noticeVo = new NoticeTable(notice_noInt, n_title, n_content);
+		NoticeTable noticeVo = new NoticeTable(n_title, n_content, n_date, notice_noInt);
 		noticeVo.setN_title(n_title);
 		noticeVo.setN_content(n_content);
 		noticeVo.setNotice_no(notice_noInt);
@@ -68,5 +65,9 @@ public class PopUpUpdateServlet extends HttpServlet {
 		out.print(jsonListVo);
 		out.flush();
 		out.close();
+		
+//		if(result == 1) {
+//			
+//		}
 	}
 }

@@ -15,11 +15,12 @@ public class NoticeTable {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public NoticeTable(int notice_no, String n_title, String n_content) {
+	public NoticeTable(String n_title, String n_content, String n_date, int notice_no) {
 		super();
 		this.notice_no = notice_no;
 		this.n_title = n_title;
 		this.n_content = n_content;
+		this.n_date = n_date;
 	}
 
 	public NoticeTable(String n_title, String n_content, String n_date) {

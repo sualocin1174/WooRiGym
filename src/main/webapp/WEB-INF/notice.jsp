@@ -313,7 +313,7 @@
 		console.log(notice_no1);
 		$.ajax({
 			type: "post",
-			url : "<%=request.getContextPath()%>/SelectNotice",
+			url : "<%=request.getContextPath()%>/SelectNoticeAjax",
 			data : {
 					notice_no1 : notice_no1
 			},
@@ -352,12 +352,20 @@
 			
 			if(NN.noticelist != null){
 				for(var i=0; i<NN.noticelist.length; i++){
+					html += "<td>번호</td>";
+					html += "<td><input type='hidden' name='notice_no111' id='notice_no111' value='" + NN.noticelist[i].notice_no + "'></td>";
+					html += "</tr>"
+					html += "<tr>"
 					html += "<td>제목</td>";
 					html += "<td><input type='text' name='notice_title' id='title_1' value='" + NN.noticelist[i].n_title + "'></td>";
 					html += "</tr>";
 					html += "<tr>";
 					html += "<td>내용</td>";
 					html += "<td><input type='text' name='notice_content' id='content_1' value='" + NN.noticelist[i].n_content + "'></td>";
+					html += "</tr>";
+					html += "<tr>";
+					html += "<td>작성일</td>";
+					html += "<td><input type='text' name='notice_date' id='content_date' value='" + NN.noticelist[i].n_date + "' readonly></td>";
 					html += "</tr>";
 				};
 			};
