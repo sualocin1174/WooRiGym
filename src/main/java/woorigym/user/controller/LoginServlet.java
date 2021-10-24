@@ -49,9 +49,9 @@ public class LoginServlet extends HttpServlet {
 			request.setAttribute("result", "관리자 로그인 성공");
 			HttpSession session = request.getSession();
 			session.setAttribute("admin_id", admin_id);
-			request.getRequestDispatcher("/WEB-INF/loginAction.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/adminAction.jsp").forward(request, response);
 			
-		} else if(result == 0) {
+		} else if(result == 0 && vo == null) {
 			System.out.println("관리자 로그인 실패");
 			request.setAttribute("result", "관리자 로그인 실패");
 			request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
