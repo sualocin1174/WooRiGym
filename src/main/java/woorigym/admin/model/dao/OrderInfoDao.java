@@ -16,14 +16,14 @@ public class OrderInfoDao {
 	
 	public ArrayList<OrderInfoTable> salesList(Connection conn, String start_date, String end_date){
 		ArrayList<OrderInfoTable> saleslist = null;
-		String sql = "SELECT ORDER_PAYMENT FROM ORDERIFNO WHERE ORDER_DATE BETWEEN to_date(?, 'yyyy-mm-dd') AND to_date(?, 'yyyy-mm-dd')";
+		String sql = "SELECT ORDER_PAYMENT FROM ORDERINFO WHERE to_char(ORDER_DATE, 'yyyy-mm-dd') BETWEEN ? AND ?";
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, start_date);
-			pstmt.setNString(2, end_date);
+			pstmt.setString(2, end_date);
 			rset = pstmt.executeQuery();
 			System.out.println("orderinfo-1");
 			

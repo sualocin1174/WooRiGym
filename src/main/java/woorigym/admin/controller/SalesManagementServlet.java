@@ -1,6 +1,7 @@
 package woorigym.admin.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -8,6 +9,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import woorigym.admin.model.service.OrderInfoService;
 import woorigym.admin.model.vo.OrderInfoTable;
@@ -31,24 +35,27 @@ public class SalesManagementServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/adminSales.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/asalesmanagement.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html; charset=UTF-8");
-		response.setCharacterEncoding("UTF-8");
+		PrintWriter out = response.getWriter();
+		Gson gson = new GsonBuilder().create();
+		String jsonListVo ="";
 		
 		String start_date = request.getParameter("start_date");
 		String end_date = request.getParameter("end_date");
 		
 		OrderInfoTable orderinfoVo = new OrderInfoTable();
-		//orderinfoVo.setOrder_payment(order_payment);
-		
+
 		ArrayList<OrderInfoTable> saleslist = new OrderInfoService().salesList(start_date, end_date);
-		
-		
+		request.setAttribute("saleslist", orderinfoVo);
+		jsonListVo = gson.toJson(saleslist);
+		out.print(jsonListVo);
+		out.flush();
+		out.close();
 	}
 }
