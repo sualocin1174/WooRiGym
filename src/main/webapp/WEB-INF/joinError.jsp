@@ -149,21 +149,14 @@
 			$("#joinbtn").on("click", function(){
 				var genderck = $(".gender").val();
 				var emailyn= $(".emailyn").val();
-				console.log(genderck);
-				console.log(emailyn);
-				if(genderck == null){
-					$(".genderT.regex").html("체크해주세요.");
-					$(".genderT.regex").css("color","red");
-					return;
-				} else if(emailyn == null){
-					$(".emailynT.regex").html("체크해주세요.");
-					$(".emailynT.regex").css("color","red");
+				
 				  if(result == true && idck == 0 && genderck != null && emailyn != null){
 					alert("회원가입이 완료되었습니다.");
 					$("#joinform").submit();
 				} else{
 					alert("정보를 다시한번 확인해주세요.");
 					return;
+				
 				}
 				
 			});
