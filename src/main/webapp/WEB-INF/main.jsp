@@ -28,9 +28,16 @@
  body{
     font-family: 'Noto Sans KR', sans-serif;
 }
+			.box{
+					flex-wrap: nowrap;
+					justify-content: center;
+					
+			}
             section {
                 width: 1200px;
                 padding: 30px 0 30px 0;
+                margin: 0 auto;
+                
             }
         
         /* 신상품 | 인기상품 | 타임세일 */
@@ -128,6 +135,7 @@
     </head>
 
 <body>
+	<div class="box">
 		<!-- 공통헤더 템플릿 -->
  	<%@ include file="template_header.jsp"%>
     
@@ -191,6 +199,7 @@
             <a href="#"><img src='./images/01번 메인_2.jpg' /><br></a>
         </div>
   </section>
+  </div>
 </body>
 <footer>
 <%@ include file="template_footer.jsp"%>

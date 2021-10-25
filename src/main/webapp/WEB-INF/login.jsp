@@ -24,6 +24,10 @@
  body{
     font-family: 'Noto Sans KR', sans-serif;
 }
+.box{
+	flex-wrap: nowrap;
+	justify-content: center;
+}
 #head {
 	text-align: center;
 	margin-bottom: 15px;
@@ -122,6 +126,7 @@ input:hover,
 		alert("아이디와 패스워드가 일치하지 않습니다. 다시 확인하고 로그인해주세요");
 	}
 </script>
+	<div class="box">
             <!-- 공통헤더 템플릿 -->
             <%@ include file="template_header.jsp" %>
 
@@ -158,6 +163,7 @@ input:hover,
                                         <li><a href="join">회원가입</a></li>
                                     </ul>
                                 </div>
+                           </div>
                 </div>
         </body>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_footer.css"/>
