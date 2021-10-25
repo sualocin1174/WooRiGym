@@ -224,7 +224,7 @@ td{
                    </table>
                     <div id="modybtn">
                        <input class="modybtn" id = "modybtn" type="button" value="수정">  
-                       <input class="btn gohome" type="button" onclick="location.href= 'mypage'" value="취소">
+                       <input class="gohome" type="button" onclick="history.back();" value="취소">
                		</div>
                </form>
 	</div>
@@ -276,6 +276,7 @@ td{
 				console.log(pp);
 				console.log(ppp);
 				
+				
 				if(pp == ppp){
 					if(result == true && $(".email_yn") != null){
 						alert("수정이 완료되었습니다.");
@@ -284,10 +285,11 @@ td{
 						alert("정보를 다시한번 확인해주세요.");
 						return;
 					}
-				} else{
+				} else if(pp != ppp){
 					alert("현재 비밀번호가 올바르지 않습니다.");
 				}
 		});
+			
 	});
 </script>
 </section>

@@ -158,7 +158,7 @@
 				} else if(emailyn == null){
 					$(".emailynT.regex").html("체크해주세요.");
 					$(".emailynT.regex").css("color","red");
-				} else if(result == true && idck == 0){
+				  if(result == true && idck == 0 && genderck != null && emailyn != null){
 					alert("회원가입이 완료되었습니다.");
 					$("#joinform").submit();
 				} else{

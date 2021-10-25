@@ -216,8 +216,8 @@ text-align: center;
                         <tr>        
                             <th id="title">성별</th>       
                             <td>       
-                                <label class="gender" for="male"><input type="radio" id = "male" name="genderStr" value= 1 >남<span class="checkmark"></span></label>
-                                <label class="gender" for="female"><input type="radio" id = "female" name="genderStr" value= 0 >여<span class="checkmark"></span></label>
+                                <label for="male"><input type="radio" id = "male" class="gender" name="genderStr" value= 1 >남<span class="checkmark"></span></label>
+                                <label for="female"><input type="radio" id = "female" class="gender" name="genderStr" value= 0 >여<span class="checkmark"></span></label>
                                 <div class="genderT regex"></div>       
                             </td>       
                         </tr>
@@ -261,8 +261,8 @@ text-align: center;
                         <tr>        
                             <th id="title">이메일 수신동의</th>        
                             <td>       
-                                <label class="emailyn" for="email_yes"><input type="radio" id = "email_yes" name="email_ynStr" value= "1" >동의<span class="checkmark"></span></label>        
-                                <label class="emailyn" for="email_no"><input type="radio" id = "email_no" name="email_ynStr" value= "0" >거부<span class="checkmark"></span></label>
+                                <label for="email_yes"><input type="radio" class="emailyn" id = "email_yes" name="email_ynStr" value= "1" >동의<span class="checkmark"></span></label>        
+                                <label for="email_no"><input type="radio" class="emailyn" id = "email_no" name="email_ynStr" value= "0" >거부<span class="checkmark"></span></label>
                                 <div class="emailynT regex"></div>         
                             </td>        
                         </tr>
@@ -272,7 +272,7 @@ text-align: center;
                         <input type="text" id="sample6_postcode" name = "postcode" placeholder="우편번호">
 						<input type="button" onclick="sample6_execDaumPostcode()" class="button" value="우편번호 찾기"><br>
 						<input type="text" name = "basic_address" id="sample6_address" placeholder="주소"><br>
-						<input type="text" name = "detail_address" id="sample6_detailAddress" placeholder="상세주소">
+						<input type="text" name = "detail_address" id="sample6_detailAddress" placeholder="상세주소" value=" ">
 						<input type="text" id="sample6_extraAddress" placeholder="참고항목">
                         </td>
                         </tr>                                          
@@ -280,7 +280,7 @@ text-align: center;
                     <br> 
             <div id="btnJoin">
                     <input class="joinbtn" id = "joinbtn" type="button" value="회원가입">  
-                    <input class="btn" type="button" onclick="history.back()" value="취소">
+                    <input class="btn" type="button" onclick="history.back();" value="취소">
 			</div>
 </form>
 </div>
