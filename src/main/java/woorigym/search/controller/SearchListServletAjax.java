@@ -1,10 +1,15 @@
 package woorigym.search.controller;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,10 +17,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
+import org.apache.commons.net.ftp.FTPReply;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import woorigym.common.Command;
+import woorigym.product.controller.ProductListServlet;
+import woorigym.product.model.service.ProductService;
 import woorigym.product.model.vo.ProductTable;
 import woorigym.search.model.service.SearchListService;
 
@@ -26,18 +37,11 @@ import woorigym.search.model.service.SearchListService;
 public class SearchListServletAjax extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public SearchListServletAjax() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //		request.setCharacterEncoding("UTF-8");
 //		response.setCharacterEncoding("UTF-8");
@@ -147,7 +151,91 @@ public class SearchListServletAjax extends HttpServlet {
 		out.print(jsonResultMap);
 		out.flush();
 		out.close();
-	}
 	// 2021-10-07 수정완료
-
+	
+		if (productlist != null) {
+			List<String> imagesFilePath = new ArrayList<String>();
+			Map<String,List<String>> temp2 = new HashMap();
+			
+			Properties prop = new Properties();
+			List<String> imagePathList = new ArrayList();
+			/* 방법 1 dothome은 용량이 작음. 속도 느림 */
+			if(true) {
+				try {
+					String currentPath = ProductListServlet.class.getResource("./").getPath();
+					//String currentPath = SearchListServletAjax.class.getResource("./").getPath();
+					prop.load(new BufferedReader(new FileReader(currentPath + "cloudServer.properties")));
+					String server = prop.getProperty("server");
+					int port = Integer.parseInt(prop.getProperty("port"));
+					String user = prop.getProperty("user");
+					String pass = prop.getProperty("pass");
+	
+					// FTP연결
+					FTPClient ftpClient = new FTPClient();
+					// connection 환경에서 UTF-8의 인코딩 타입을 사용한다.
+					ftpClient.setControlEncoding("UTF-8");
+					// ftp://localhost에 접속한다.
+					ftpClient.connect(server, 21);
+					// 접속을 확인한다.
+					int resultCode = ftpClient.getReplyCode();
+					// 접속시 에러가 나오면 콘솔에 에러 메시지를 표시하고 프로그램을 종료한다.
+					if (!FTPReply.isPositiveCompletion(resultCode)) {
+						System.out.println("FTP server refused connection.!");
+						return;
+					} else {
+						// 파일 전송간 접속 딜레이 설정 (1ms 단위기 때문에 1000이면 1초)
+						ftpClient.setSoTimeout(1000);
+						// 로그인을 한다.
+						if (!ftpClient.login(user, pass)) {
+							// 로그인을 실패하면 프로그램을 종료한다.
+							System.out.println("Login Error!");
+							return;
+						}
+	
+						Map<String,List<String>> temp1 = new HashMap();
+						for(ProductTable vo: productlist) {
+							String key=vo.getProductInfoUrl().substring(0,vo.getProductInfoUrl().length() - 4);//상품이미지 가져오기
+							List<String> productName_productCost = new ArrayList(); //상품명, 가격 가져오기
+							productName_productCost.add(vo.getProductName());
+							productName_productCost.add(String.valueOf(vo.getPrice()));
+							temp1.put(key,productName_productCost);
+						}
+						Iterator<String> temp1_keys = temp1.keySet().iterator();
+						
+						
+						while(temp1_keys.hasNext()) {
+							String infoUrl = temp1_keys.next();
+							FTPFile[] files = ftpClient.listFiles("/html/product" + "/" + infoUrl);//닷홈의 폴더경로: html/product
+							
+							if(files!=null && files.length>0){ //상품별 대표이미지만 출력
+							String details = files[0].getName();
+							System.out.println("details:" + details);
+							imagePathList.add(prop.getProperty("url") + "/product" + "/" + infoUrl + "/" + details);
+							
+							temp2.put(prop.getProperty("url") + "/product" + "/" + infoUrl + "/" + details,temp1.get(infoUrl));
+							}/*for (FTPFile file : files) { //이건 전체 이미지 모두 출력
+								String details = file.getName();
+								System.out.println("details:" + details);
+								imagePathList.add(prop.getProperty("url") + "/product" + "/" + infoUrl + "/" + details);
+							}*/
+							
+							System.out.println("imagesFilePath:" + imagesFilePath + ": "+ infoUrl);
+							
+						}
+						
+						// FTP 끊기
+						ftpClient.logout();
+						ftpClient.disconnect();
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			System.out.println("imagePathList: "+imagePathList);
+			System.out.println("temp2: "+temp2);
+			//request.setAttribute("productvolist", volist);
+			request.setAttribute("product_img", imagePathList);
+			request.setAttribute("productinfo", temp2 );
+		}
+	}
 }
