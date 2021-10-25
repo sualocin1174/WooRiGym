@@ -16,7 +16,7 @@ public class OrderListDao {
 	}
 //	  <!-- 주문번호 -->
 //  <!-- 날짜 시간 yyyy.mm-dd hh:mm-->
-//  상품이미지, 상품명, 수량, 가격, 배송비(기본 2,500원, 5만원 이상 무배)
+//  상품이미지, 상품명, 수량, 가격, 배송비
 	
 	public ArrayList<OrderList> readOrderListPeriod(Connection conn, String uid, String startDate ,String endDate){
 		System.out.println("uid : "+uid);
@@ -164,5 +164,34 @@ ArrayList<OrderList> volist = new ArrayList<OrderList>();
 		System.out.println("페이징 volist 리턴: "+ volist);
 		return volist;
 	}
+	
+//	public ArrayList<OrderList> updateOrderCancel(Connection conn, String uid, String order_no){
+	public int updateOrderCancel(Connection conn, String uid, String order_no){
+//		ArrayList<OrderList> volist = new ArrayList<OrderList>();
+		int result = -1;
+		PreparedStatement pstmt = null;
+//		ResultSet rset = null;
+		 String sql = "update orderinfo set order_state='주문취소', pay_state='주문취소'"+ 
+				 " where user_id=? and order_no=?";
+		 try {
+			 pstmt = conn.prepareStatement(sql);
+			 pstmt.setString(1, uid);
+			 pstmt.setString(2, order_no);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("연결 실패");
+			e.printStackTrace();
+		} finally {
+//			try {
+//				close(rset);
+				close(pstmt);
+//			}catch(Exception e){
+//				e.printStackTrace();
+//			}
+	}	//return volist;
+		 return result;
+	}
+	
 }
+
 		

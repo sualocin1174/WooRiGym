@@ -28,11 +28,21 @@ public class OrderListService {
 	}
 	
 	public ArrayList<OrderList> selectOrderList(String uid, int start, int end){
-		ArrayList<OrderList> result = new ArrayList() ; //0이든 -1이든 어차피 못 읽어오는거 똑같다. 0,1 둘 다 사용가능!!
+		ArrayList<OrderList> result = new ArrayList() ;
 		Connection conn = getConnection();
 		result = new OrderListDao().selectOrderList(conn,uid, start, end);
 		close(conn);
 		return result;
 		
+	}
+	
+//	public ArrayList<OrderList> updateOrderCancel(String uid,String order_no){
+	public int updateOrderCancel(String uid,String order_no){
+//		ArrayList<OrderList> result = new ArrayList() ;
+		int result = -1; //0이든 -1이든 어차피 못 읽어오는거 똑같다. 0,1 둘 다 사용가능!!
+		Connection conn = getConnection();
+		result = new OrderListDao().updateOrderCancel(conn,uid,order_no);
+		close(conn);
+		return result;
 	}
 }

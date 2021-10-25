@@ -25,15 +25,13 @@ public class CerListServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
-		UserTable userTableSessionAttr = (UserTable)request.getSession().getAttribute("loginSS");
+		UserTable loginSS = (UserTable)request.getSession().getAttribute("loginSS");
 		//로그인 안하면 진입 불가
-				if(userTableSessionAttr == null) {
-					out.append("로그인 상태가 아닙니다!\n로그인 해주세요!");
-					String viewPage = "/WEB-INF/loginAlert.jsp";
-					out.flush();
-					out.close();
+				if(loginSS == null) {
+					System.out.println("loginSS~~~~~~~~~");//확인
+					request.getRequestDispatcher("/WEB-INF/loginAlert.jsp").forward(request, response);
 					return;
-				}
+			}	String uid = loginSS.getUser_id();
 		// 페이징
 				final int PAGE_SIZE = 5;   // 한 페이지 당 글수
 				final int PAGE_BLOCK = 5;   // 한 화면에 나타날 페이지 링크 수
@@ -54,7 +52,7 @@ public class CerListServlet extends HttpServlet {
 				}
 				
 				// 총 글수
-				bCount = new CerListService().getCerCount(userTableSessionAttr.getUser_id());
+				bCount = new CerListService().getCerCount(loginSS.getUser_id());
 				System.out.println("bCount"+bCount);
 				// 총 페이지수 = (총글개수 / 페이지당글수) + (총글개수에서 페이지당글수로 나눈 나머지가 0이 아니라면 페이지개수를 1 증가)
 				pageCount = (bCount / PAGE_SIZE) + (bCount % PAGE_SIZE == 0 ? 0 : 1); // 몫 + 나머지
@@ -75,7 +73,7 @@ public class CerListServlet extends HttpServlet {
 				
 				System.out.println(startRnum);
 					System.out.println(endRnum);
-				ArrayList<CerList> volist = new CerListService().selectCerList(userTableSessionAttr.getUser_id(),startRnum,endRnum);
+				ArrayList<CerList> volist = new CerListService().selectCerList(loginSS.getUser_id(),startRnum,endRnum);
 				System.out.println("volist.size() 1: "+volist.size());
 //				if(volist.size() > 0 ) 
 //				{

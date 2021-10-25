@@ -13,7 +13,7 @@
          <li><a href="<%=request.getContextPath()%>/clist">취소/교환/반품</a></li>
          <li><a href="#">상품 후기</a></li>
          <li><a href="#" id="btncoupon" class="btnC">쿠폰 관리</a></li>
-         <li><a href="#">상품 문의(Q&A)</a></li>
+         <li><a href="<%=request.getContextPath()%>/qnalist">상품 문의(Q&A)</a></li>
      </ul>
      <!-- 쿠폰 Modal Box -->
             <div class="modal">

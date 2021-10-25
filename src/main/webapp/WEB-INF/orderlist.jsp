@@ -7,6 +7,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- 마이페이지 사이드 CSS -->
  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_mypage_aside.css" />
+<!-- 푸터 CSS -->
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_footer.css"/>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -193,9 +195,10 @@
     	});
 	};
 	//주문 취소 버튼 클릭 시
-	function cancel(){
+	function cancel(order_no){
 		prompt("주문을 취소하시겠습니까?");
 		//TODO: 확인 클릭 -> alert("주문이 취소되었습니다."); & 진행상태->'주문취소'로 변경
+		location.href="<%=request.getContextPath()%>/ocancel?order_no="+order_no;
 	};
 	
 	
@@ -361,5 +364,7 @@
 	</c:if>
     </div>
 </section>
+<!-- 공통푸터 템플릿 -->
+<%@ include file="template_footer.jsp"%>
 </body>
 </html>

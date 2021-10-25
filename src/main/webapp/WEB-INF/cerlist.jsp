@@ -9,6 +9,8 @@
  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_mypage_aside.css" />
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<!-- 푸터 CSS -->
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_footer.css"/>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
 <%@ page import = "woorigym.user.model.vo.CerList" %>
@@ -329,5 +331,7 @@
 	</c:if>
     </div>
 </section>
+<!-- 공통푸터 템플릿 -->
+<%@ include file="template_footer.jsp"%>
 </body>
 </html>

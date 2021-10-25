@@ -8,6 +8,8 @@
   <!-- 마이페이지 사이드 CSS -->
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_mypage_aside.css" />
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+<!-- 푸터 CSS -->
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_footer.css"/>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -166,10 +168,8 @@
     <img src="./images/01번 메인_2.jpg">
 </div>
 </section>
-
-<footer>
-
-</footer>
+<!-- 공통푸터 템플릿 -->
+<%@ include file="template_footer.jsp"%>
 </body>
 
 </html>
