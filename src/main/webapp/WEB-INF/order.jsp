@@ -88,7 +88,7 @@
                 var producttotal = 0;
                 for (var i in cart) { // 상품번호도 상세주문내역 생성 메소드 호출 시 넘길 수 있도록 td 태그 추가 --10.14
                     let priceXquant = ((1 * cart[i].cartQuantity) * (1 * minusComma($('#product' + p).text())));
-                    ctext += "<tr id='cartinfos"+p+"'><td style='display:none' id='cartprono"+p+"'>" + cart[i].productNo + "</td><td id='cartquan"+p+"'>" + cart[i].cartQuantity + "</td><td id='pXq"+p+"'>" + comma(priceXquant) + "원" + "</td><td>" + comma(priceXquant * 0.05) + "원</td><td><button onclick='delProduct("+p+")' class='delproduct'>삭제</button></td><td style='display:none' id='cartno"+p+"'>" + cart[i].cartNo + "</td></tr>";
+                    ctext += "<tr id='cartinfos"+p+"'><td style='display:none' id='cartprono"+p+"'>" + cart[i].productNo + "</td><td id='cartquan"+p+"'>" + cart[i].cartQuantity + "</td><td id='pXq"+p+"'>" + comma(priceXquant) + "원" + "</td><td>" + comma(parseInt(priceXquant * 0.05)) + "원</td><td><button onclick='delProduct("+p+")' class='delproduct'>삭제</button></td><td style='display:none' id='cartno"+p+"'>" + cart[i].cartNo + "</td></tr>";
                     producttotal += priceXquant;//cart[i].cartNo; <td style='display:none' id='cartno"+p+"'>" + cart[i].cartNo + "</td>
                     p++;
                 }
@@ -678,7 +678,7 @@ var fixaddrno = "";
                 <table id="whichbank">
         <tr>
             <th>입금자명</th>
-            <td><input size="5"></td>
+            <td><input size="5" id="deponame"></td>
         </tr>
         <tr>
             <th>입금은행</th>
@@ -691,10 +691,14 @@ var fixaddrno = "";
         </tr>
         <tr>
             <th>계좌번호</th>
-            <td><input placeholder="-없이 입력해주세요."></td>
+            <td><input placeholder="-없이 입력해주세요." id="deponumber"></td>
         </tr>
     </table>
 				<br>총 결제 금액 : <input type="text" id="finalpay3" readonly><br><br>
+				<p>아래 계좌로 결제 금액 만큼 입금해주세요.</p>
+				<p>입금은행 : 신한은행 <br>
+				예금주 : 우리짐<br>
+				계좌번호 : 123-123-123456 </p><br>
                 <span><button class="close" name="ordersubmit">완료</button></span>
 
         </div>
@@ -723,9 +727,6 @@ var fixaddrno = "";
 
         </div>
     </div>
-    
-
-
 
    <%@ include file="template_footer.jsp"%>
     <script>
@@ -836,6 +837,45 @@ var fixaddrno = "";
     <script>
     
     $("button[name=ordersubmit]").click(function(){
+    	if($("input[id=cardmodalbtn]:radio").is(":checked")){
+    		if($("#card1 option:selected").val()=="none"){
+    			alert("카드사를 선택해 주세요");
+    			$("#modal_01").show();   
+    			return;
+    		} else if($("#card2-1").val()==""){
+    			alert("카드번호를 입력해 주세요");
+    			$("#modal_01").show();
+    			return;
+    		} else if($("#card2-2").val()==""){
+    			alert("카드번호를 입력해 주세요");    
+    			$("#modal_01").show();
+    			return;
+    		} else if($("#card2-3").val()==""){
+    			alert("카드번호를 입력해 주세요"); 
+    			$("#modal_01").show();
+    			return;
+    		} else if($("#card3").val()==""){
+    			alert("cvc번호를 입력해 주세요");   
+    			$("#modal_01").show();
+    			return;
+    		} 
+    		
+    		 } else if($("input[id=depomodalbtn]:radio").is(":checked")){
+    		if($("#bank option:selected").val()=="bank"){
+    			alert("은행을 선택해 주세요");
+    			$("#modal_02").show();
+    			return;
+    		} else if($("#deponame").val()==""){
+    			alert("입금자명을 입력해 주세요");
+    			$("#modal_02").show();
+    			return;
+    		} else if($("#deponumber").val()==""){
+    			alert("계좌번호를 입력해 주세요");
+    			$("#modal_02").show();
+    			return;
+    		}
+    		
+    		 } // if deposit 
 
            	 console.log("정보넘기기");  
            	 console.log($(".existaddr").is(":checked"));  
@@ -858,15 +898,15 @@ var fixaddrno = "";
                 	 	coupon_discount : minusComma($("#coudiscount").val())+"",
                 	 	order_payment : minusComma($("#finalpay").val()),
                 	 	order_method : $("#paymethodno").val(),
-                	 	add_mileage : 0.05 * minusComma($("#totalprice").val()),
+                	 	add_mileage : parseInt(0.05 * minusComma($("#totalprice").val())),
                 		receiver_name : $("#receiver_name").val(),
                  	 	phone_no : $("#phone_no1").val() + $("#phone_no2").val() + $("#phone_no3").val()
                 	 	
                  },
                  dataType: "json", // 전달받을 객체는 JSON 이다.
                  success: function (data) {
-                	 alert($("#phone_no1").val() + $("#phone_no2").val() + $("#phone_no3").val());
-                	 alert("주문내역 기록 성공\n" + data);
+                	 //alert($("#phone_no1").val() + $("#phone_no2").val() + $("#phone_no3").val());
+                	 //alert("주문내역 기록 성공\n" + data);
                 	 //TODO 마이페이지로 넘어가기
                  },
                  error : function(request,status,error) {
@@ -920,8 +960,8 @@ var fixaddrno = "";
                       },
                       dataType: "json", // 전달받을 객체는 JSON 이다.
                       success: function (data) {
-                    	  alert($("#phone_no1").val() + $("#phone_no2").val() + $("#phone_no3").val());
-                    	  alert("주문내역 기록 성공\n" + data);
+                    	  //alert($("#phone_no1").val() + $("#phone_no2").val() + $("#phone_no3").val());
+                    	  //alert("주문내역 기록 성공\n" + data);
                      	 //TODO 마이페이지로 넘어가기
                       },
                       error : function(request,status,error) {
@@ -943,7 +983,7 @@ var fixaddrno = "";
                     },
                     dataType: "json", // 전달받을 객체는 JSON 이다.
                     success: function (data) {
-                   	 alert("사용된 쿠폰 기록 성공\n" + data);
+                   	 //alert("사용된 쿠폰 기록 성공\n" + data);
                     },
                     error : function(request,status,error) {
                         alert("code:"+request.status+"\n"+"message:"+request.responseText+
@@ -966,7 +1006,7 @@ var fixaddrno = "";
                     },
                     dataType: "json", // 전달받을 객체는 JSON 이다.
                     success: function (data) {
-                   	 alert("사용된 적립금 기록 성공\n" + data);
+                   	 //alert("사용된 적립금 기록 성공\n" + data);
                     },
                     error : function(request,status,error) {
                         alert("code:"+request.status+"\n"+"message:"+request.responseText+
@@ -1022,7 +1062,7 @@ var fixaddrno = "";
                 },
                 dataType: "json", // 전달받을 객체는 JSON 이다.
                 success: function (data) {
-               	 alert("주문상세내역 기록 성공" + data);
+               	// alert("주문상세내역 기록 성공" + data);
                	//window.location.href = "/wooRiGym/mypage";
                 },
                 error : function(request,status,error) {
@@ -1047,7 +1087,8 @@ var fixaddrno = "";
                 },
                 dataType: "json", // 전달받을 객체는 JSON 이다.
                 success: function (data) {
-               	 alert("구매한 상품 장바구에서 삭제 성공" + data);
+               	 //alert("구매한 상품 장바구에서 삭제 성공" + data);
+               	 alert("결제되었습니다.");
                	window.location.href = "/wooRiGym/mypage";
                 },
                 error : function(request,status,error) {

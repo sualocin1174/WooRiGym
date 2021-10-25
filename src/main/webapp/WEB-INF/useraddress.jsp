@@ -190,6 +190,7 @@
 </head>
 <body>
 <section>
+<br>
 &nbsp&nbsp&nbsp<button onclick="insertAddr()" id="newaddr">새 주소지 추가</button>
 <table id="addrtable">
 	<tr>
