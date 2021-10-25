@@ -106,14 +106,14 @@ public class OrderProductImgServlet extends HttpServlet {
 							infoUrl = infoUrl.substring(0, infoUrl.length() - 4);
 							System.out.println("infoUrl :"+infoUrl);
 							// lists files and directories in the current working directory
-							FTPFile[] files = ftpClient.listFiles("/html/images" + "/" + infoUrl+"/1.jpg");
-							/*for (FTPFile file : files) {
+							FTPFile[] files = ftpClient.listFiles("/html/product" + "/" + infoUrl);
+							for (FTPFile file : files) {
 								String details = file.getName();
-								imagesFilePath.add(prop.getProperty("url") + "/images" + "/" + infoUrl + "/" + details);
+								imagesFilePath.add(prop.getProperty("url") + "/product" + "/" + infoUrl + "/" + details);
 								System.out.println("details:" + details);
+								break;
 							}
-							*/
-							imagesFilePath.add(prop.getProperty("url") + "/images" + "/" + infoUrl +"/1.jpg");
+							
 							
 							
 

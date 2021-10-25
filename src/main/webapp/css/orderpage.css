@@ -34,6 +34,10 @@
 	display: block;
 	
 }
+#productinfo  tr  td:nth-of-type(2){
+	display : none;
+	
+}
 #productinfo  tr  td:nth-of-type(3){
 	width : 160px;
 	vertical-align : top;
@@ -80,7 +84,7 @@
     
 }
 #cartinfo td {
-	height :65px;
+	height :60px;
 	padding:5px;
     
 }
@@ -502,4 +506,11 @@
 label:hover {
 	cursor: pointer;
 	
+}
+
+#cartnolist{
+	display : none;
+}
+#pnolist{
+	display : none;
 }

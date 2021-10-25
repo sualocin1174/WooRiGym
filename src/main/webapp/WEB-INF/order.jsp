@@ -6,6 +6,7 @@
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_header.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/orderpage.css"/>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_footer.css"/>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -61,8 +62,8 @@
                 for (var i in product) {
                     let pricecomma = comma(product[i].price);
                     console.log(pricecomma);
-                    ptext += "<tr id='productinfos"+p+"'><td><img src='http://via.placeholder.com/50'></td> <td id=productno" + p + ">" + product[i].productNo + "</td><td>" + product[i].productName + "</td><td id=product" + p + ">" + pricecomma + "원<td></tr>";
-                    p++;
+                    ptext += "<tr id='productinfos"+p+"'><td><img  id='productimg"+p+"' src='http://via.placeholder.com/50'></td> <td id=productno" + p + ">" + product[i].productNo + "</td><td>" + product[i].productName + "</td><td id=product" + p + ">" + pricecomma + "원<td></tr>";
+                    p++; 
                 }
                 $("#productinfo").append(ptext);
             },
@@ -116,8 +117,9 @@
         */
         
         //setinterval 을 활용하지 않는 상품 금액 계산으로 수정
+        
         var sumPxQ_1 = 0;
-    	for(var i = 0 ; i < $("#productinfo > tbody > tr").length ; i++) {
+    	for(var i = 0 ; i < 100 ; i++) {
     		sumPxQ_1 += 1 * minusComma($("#pXq"+i+"").text());
     	};
         $("#totalprice").val(comma(sumPxQ_1) + "원");
@@ -129,7 +131,9 @@
     	for(var i = 0 ; i < $("#productinfo > tbody > tr").length-1  ; i++) {
     		pnolist += $("#productno"+i+"").text()+",";
     	};
+    	
     	$("#pnolist").val(pnolist);
+    	
     	// 상품 썸네일 불러오기
     	$.ajax({ // JQuery 를 통한 ajax 호출 방식 사용
             type: "post",
@@ -138,8 +142,17 @@
             data: { pnoList : pnolist },
             dataType: "json", // 전달받을 객체는 JSON 이다.
             success: function (data) {
-                alert("성공 : "+data);
-                $("#imgtest").html("<img src="+data[0]+">");
+               //alert("구매상품 이미지 불러오기 성공 : "+data);
+              //  alert(data[0]);
+              //  alert(data[1]);
+              //  alert(data.length);
+              //  $("#imgtest").html("<img src='http://woorigym.dothome.co.kr/product/CARDIO-RN-0004/01번 메인 1,990,000.jpg'>");
+               //id='productinfos"+p+"'
+               for(var i=0 ; i < data.length ; i++){
+            	   $("#productimg"+i+"").attr("src",data[i]);
+            	   $("#productimg"+i+"").attr("width","50");
+            	   $("#productimg"+i+"").attr("height","50");
+               }
                
             },
             error : function(request,status,error) {
@@ -158,7 +171,7 @@
      do{
   	   sumPxQ += 1 * minusComma($("#pXq"+loop+"").text());
   	   loop++;
-     }while(loop< $("#productinfo > tbody > tr").length +3);
+     }while(loop< $("#productinfo > tbody > tr").length +10);
      $("#totalprice").val(comma(sumPxQ) + "원");
      $("#producttotal").val(comma(sumPxQ));
      
@@ -631,7 +644,6 @@ var fixaddrno = "";
 <input type="text" id="proquan" style='display:none'>
 <input type="text" id="cartnolist">
 <input type="text" id="pnolist">
-<div id="imgtest">ㅋㅋㅋ</div>
 
 <!--  modal box-->
     <div id="modal_01" class="modal">
@@ -715,7 +727,7 @@ var fixaddrno = "";
 
 
 
-    <footer></footer>
+   <%@ include file="template_footer.jsp"%>
     <script>
         $("#submitinfo").click(function(){
         	 if($("#postcode").val()==""){
@@ -1043,25 +1055,9 @@ var fixaddrno = "";
                 "\n"+"error:"+error+"구매한 상품 장바구에서 삭제 실패");
                 }
             });      
-           	/*
-           	// 썸네일 이미지 불러오기
-           	$.ajax({ // JQuery 를 통한 ajax 호출 방식 사용
-                type: "post",
-                url: "orderproductimg",
-                async: false,
-                data: { cart_nolist: $("#cartnolist").val()
-                },
-                dataType: "json", // 전달받을 객체는 JSON 이다.
-                success: function (data) {
-               	 alert("구매한 상품 장바구에서 삭제 성공" + data);
-               	window.location.href = "/wooRiGym/mypage";
-                },
-                error : function(request,status,error) {
-                alert("code:"+request.status+"\n"+"message:"+request.responseText+
-                "\n"+"error:"+error+"구매한 상품 장바구에서 삭제 실패");
-                }
-            });
-           	*/
+           	
+         
+           	
     });
     </script>
 </body>
