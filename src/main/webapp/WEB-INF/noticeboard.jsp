@@ -8,6 +8,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import = "java.util.ArrayList"%>
+<%@page import = "woorigym.admin.model.vo.NoticeTable" %>
+<%
+	ArrayList<NoticeTable> noticelist = (ArrayList<NoticeTable>)request.getAttribute("noticelist");
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,64 +37,85 @@
         td{
         	text-align:center;
         }
-#ordersection{
-	margin : auto;
-	width : 1000px;
-}
+		
+		.paging {
+			padding: 50px, 20px;
+			text-align:center;	
+		}
+		
+		#noticeBoard{
+			padding: 50px, 20px;
+			text-align:center;
+		}
 </style>
 </head>
 <body>
 	<%@ include file="template_header.jsp"%>
-	<%-- <%@ include file="template_footer.jsp"%> --%>
-	<section>
-		<div id="noticeList"></div>
-	</section>
+	<% 
+   		int startPage = (int)request.getAttribute("startPage");
+   		int endPage = (int)request.getAttribute("endPage");
+   		int pageCount = (int)request.getAttribute("pageCount");
+	%>
+	
+	<div id="noticeBoard" class="noticeBaord">
+         <table border='1' class="board_list">
+            	<thead>
+            		<tr>
+            			<th>공지사항 번호</th>
+                 	 	<th>제목</th>
+                 	 	<th>내용</th>
+                 	 	<th>작성일</th>
+               		</tr>
+            	</thead>
+            	
+            	<tbody>
+            		<tr>
+            			<%
+                			if (noticelist != null) {
+                			for(NoticeTable vo : noticelist) {
+               			 %>
+                		<td><%=vo.getNotice_no()%></td>
+                		<td><%=vo.getN_title() %></td>
+                		<td><%=vo.getN_content() %></td>
+                		<td><%=vo.getN_date() %></td>
+               		</tr>
+               			<%
+                  				}
+               				}
+               			%>
+            	</tbody>
+        </table>
+        </div>
+		<div class="paging">
+        	<!-- <a href="#" class="bt">첫 페이지</a> --> 
+            <!-- <a href="#" class="bt">이전 페이지</a>  -->
+            <%
+               if (startPage > 1) {
+            %>
+            <a href="NoticeBoarderServlet?pagenum=<%=startPage - 1%>" class="num">이전</a>
+            <%
+               }
+            %>
+            <%
+               for (int i = startPage; i <= endPage; i++) {
+            %>
+            <a href="NoticeBoarderServlet?pagenum=<%=i%>" class="num"><%=i%></a>
+            <%
+               }
+            %>
+            <%
+               if (endPage < pageCount) {
+            %>
+            <a href="NoticeBoarderServlet?pagenum=<%=endPage + 1%>" class="num">다음</a>
+            <%
+               }
+            %>
+            <!-- <a href="#" class="bt">다음 페이지</a> <a href="#" class="bt">마지막 페이지</a> -->
+         </div>
+	
+	<%@ include file="template_footer.jsp"%>
 </body>
 <script>
-	ajaxF1();
-
-	function ajaxF1(){
-		$.ajax({
-			type:"post",
-			url:"<%=request.getContextPath()%>/apulist.ajax",
-			data:{
-				notice_no:0,
-				n_title:"",
-				n_content:"",
-				n_date:""
-			},
-			dataType:"json",
-			success:function(data){
-				resultHtml1(data);
-			},
-			error:function(request, status, error){
-					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-			}
-		});
-		$("#noticeList").show();
-	}
-
-	function resultHtml1(data){
-		var html="<table border='1' id='tsearch'>";
-		html += "<tr>";
-		html += "<th>공지사항번호</th>";
-		html += "<th>제목</th>";
-		html += "<th>내용</th>";
-		html += "<th>작성일</th>";
-		html += "</tr>";
 	
-		$.each(data, function(key, value){
-			html += "<tr>";
-			html += "<td>" + value.notice_no + "</td>";
-			html += "<td>" + value.n_title + "</td>";
-			html += "<td>" + value.n_content + "</td>";
-			html += "<td>" + value.n_date + "</td>";
-			html += "</tr>";
-		});
-	
-		html += "</table>";
-		$("#noticeList").empty(); 
-		$("#noticeList").append(html);
-	}
 </script>
 </html>

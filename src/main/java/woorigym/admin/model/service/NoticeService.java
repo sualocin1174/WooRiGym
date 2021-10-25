@@ -82,4 +82,12 @@ public class NoticeService {
 		jdbcTemplate.close(conn);
 		return volist;
 	}
+	
+	public int getNoticeCount() {
+		int result = 0;
+		Connection conn = jdbcTemplate.getConnection();
+		result = new NoticeDao().getNoticeCount(conn);
+		jdbcTemplate.close(conn);
+		return result;
+	}
 }

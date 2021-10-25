@@ -170,7 +170,7 @@ public class NoticeDao {
 	public ArrayList<NoticeTable> selectNoticeBoard(Connection conn, int start, int end){
 		ArrayList<NoticeTable> volist = null;
 		
-		String sql ="select * from (select rownum r, t1.* from (select b.* from notice n order by notice_no desc) t1) t2 where r between ? and ?";
+		String sql ="select * from (select rownum r, t1.* from (select n.* from notice n order by notice_no desc) t1) t2 where r between ? and ?";
 		
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -181,27 +181,50 @@ public class NoticeDao {
 			pstmt.setInt(2, end);
 			rset = pstmt.executeQuery();
 			volist = new ArrayList<NoticeTable>();
-			if(rset.next()) {
-				do {
-					NoticeTable vo = new NoticeTable();
-					vo.setNotice_no(rset.getInt("notice_no"));
-					vo.setN_title(rset.getString("n_title"));
-					vo.setN_content(rset.getString("n_content"));
-					vo.setN_date(rset.getString("n_date"));
-					volist.add(vo);
-				}while(rset.next());
-			}
+			
+			while(rset.next()) {
+				NoticeTable vo = new NoticeTable();
+				vo.setNotice_no(rset.getInt("notice_no"));
+				vo.setN_title(rset.getString("n_title"));
+				vo.setN_content(rset.getString("n_content"));
+				vo.setN_date(rset.getString("n_date"));
+				volist.add(vo);
+			};
 		}catch(Exception e) {
 			e.printStackTrace();
 		} finally {
+			jdbcTemplate.close(conn);
+			jdbcTemplate.close(rset);
+		}
+		
+		System.out.println("리턴은"+ volist);
+		return volist;
+	}
+	
+	public int getNoticeCount(Connection conn) {
+		int result = 0;
+		String sql = "select count(notice_no) from notice";
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				result = rset.getInt(1);
+				System.out.println("2:" + result);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
 			try {
-				rset.close();
-				pstmt.close();
+				jdbcTemplate.close(rset);
+				jdbcTemplate.close(pstmt);
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("리턴은"+ volist);
-		return volist;
+		System.out.println("1: " + result);
+		return result;
 	}
 }
