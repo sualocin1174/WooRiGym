@@ -4,6 +4,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
    <!-- 헤더 CSS -->
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_header.css" />
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_footer.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -144,16 +145,6 @@
 	<h2>장바구니</h2>
 	    <!-- 2021.10.19 1차 내용삭제 시작 -->
 	    <div id="sblist"></div>
-	    <div class="modal">
-              <div class="modal-content">
-                    <span class="close">&times;</span> <!-- 닫기 -->
-                     <h3>옵션변경 리스트</h3>
-                     <br>
-                     <table class="modal-list">
-                        <!-- 쿠폰리스트 -->
-                     </table>
-              </div>
-          </div>
 	    <!-- <table border="1" width="100%" id="test"> -->
 	    	<%-- <c:forEach var="cartlist" items="${cartTableVolist}"> --%> <!-- 2021.10.15 1차 내용삭제 -->
 	    	<!-- 2021.10.15 2차 내용추가 시작 -->
@@ -223,7 +214,7 @@
 	</form>
 </section>
 <footer>
-	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_footer.css"/>
+	<%@ include file="template_footer.jsp"%>
 </footer>
 	<input type="text" id="cartnolist" style="display: none;">
 	<script type="text/javascript">
@@ -233,6 +224,7 @@
 			$.ajax({
 				type:"post",
 				url:"<%=request.getContextPath()%>/sblist.ajax",
+				async: false,
 				data : {
 					//'page' : pagenum
 				},
@@ -291,10 +283,10 @@
 			$.each(data.cartTableVolist, function(i, cartlist){
 				html += "<tr>";
 				html += "<td style='display: none'>" + cartlist.cartNo + "</td>";
-				html += "<td><input type ='checkbox' name='subCB' value="+cartlist.cartNo+" class='subCB'>"+cartlist.cartNo+"</td>";
+				html += "<td><input type ='checkbox' name='subCB' value="+cartlist.cartNo+" class='subCB'></td>";
 				// html += "<td style='display: none'><input type ='hidden' name='subCB' value='0' id='subCB_hidden'></td>";
 				html += "<td><img src='./images/1번 메인.jpg'></td>"; 
-				html += "<td>" + cartlist.productName+"<br>"+cartlist.productOption + "<br><button type='button' id='btnoption'>옵션변경</button></td>";
+				html += "<td>" + cartlist.productName+"<br>"+cartlist.productOption + "<br></td>";
 				html += "<td>" + cartlist.cartQuantity + "개</td>";
 				html += "<td>" + cartlist.price*cartlist.cartQuantity + "원</td>";
 				html += "<td>" + (cartlist.price*cartlist.cartQuantity)*0.05 + "원</td>";
@@ -450,6 +442,7 @@
 			$.ajax({
 				type:"post",
 				url:"<%=request.getContextPath()%>/abtopo.ajax",
+				async: false,
 				data : {
 					userId : "<%=user.getUser_id()%>"
 				},
@@ -475,6 +468,7 @@
 			$.ajax({
 				type:"post",
 				url:"<%=request.getContextPath()%>/sbdelete.ajax",
+				async: false,
 				data : {
 					userId : "<%=user.getUser_id()%>"
 				},
@@ -533,6 +527,7 @@
    		$.ajax({
 			type:"post",
 			url:"<%=request.getContextPath()%>/sbsdelete.ajax",
+			async: false,
 			data : {
 				// cartNo : $("[name=subCB]:checked").val()
 				cartNo : $("#cartnolist").val()

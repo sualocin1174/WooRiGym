@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>우리짐 근력기구페이지</title>
+    <title>우리짐 마사지페이지</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
         /* reset */
@@ -198,7 +198,7 @@
     <aside>
     </aside>
     <section>
-    	<h2 id="productlist">근력기구 전체 상품목록</h2>
+    	<h2 id="productlist">마사지 상품목록</h2>
     	<div id="productItems"></div>
 		<div id="paging"></div>
     </section>
@@ -243,8 +243,7 @@ console.log($("#producttest").val());
 				type:"post",
 				url:"<%=request.getContextPath()%>/ppage",
 				data: {
-					parentCategory: "근력기구"
-					/* childCategory: "" */
+					childCategory: "MG"
 				},
 				datatype:"json",
 				success: function(data){
@@ -300,8 +299,7 @@ console.log($("#producttest").val());
 				type:"post",
 				url:"<%=request.getContextPath()%>/ppage",
 				data: {
-					parentCategory: "근력기구"
-					/* childCategory: "", */
+					childCategory: "MG"
 					, pagenum: selectedPageNum					
 				},
 				datatype:"json",

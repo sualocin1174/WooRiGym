@@ -4,6 +4,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
    <!-- 헤더 CSS -->
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_header.css" />
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_footer.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -245,7 +246,7 @@
 		<div id="paging"></div> <!-- 2021.10.22 추가 SH -->
     </section>
     <footer>
-    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_footer.css"/>
+    <%@ include file="template_footer.jsp"%>
     </footer>
 <script>
 // 디버깅용
@@ -311,7 +312,7 @@ console.log("${pageCount}");
 				console.log(value);
 				// console.log(data.product_img);
 					html += "<tr>";
-					html += "<td>이미지 : <img src="+value.imagesFilePath[0]+" width='200' height='200'><br>";
+					html += "<td>이미지 : <img src="+value.imagesFilePath+" width='200' height='200'><br>";
 					html += "상품명 : " + value.productName + "<br>";
 					html += "옵션 : " + value.productOption + "<br>";
 					html += "가격 : " + value.price + "<br>";

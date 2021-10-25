@@ -34,44 +34,44 @@
     <button class="subnavbtn">근력기구 <i class="fa fa-caret-down"></i></button>
     <div class="subnav-content">
         <a href="<%=ctxPath %>/ppage" class="parent_category" id="근력기구">전체</a>
-        <a href="<%=ctxPath %>/ppage" class="child_category" id="SJ">스미스짐</a>
-        <a href="#" class="child_category" id="MJ">멀티짐</a>
-        <a href="#" class="child_category" id="ML">멀티랙</a>
-        <a href="#" class="child_category" id="BC">벤치</a>
-        <a href="#" class="child_category" id="BP">벤치프레스</a>
-        <a href="#" class="child_category" id="CM">클럽용머신</a>
+        <a href="<%=ctxPath %>/productsjpage" class="child_category" id="SJ">스미스짐</a>
+        <a href="<%=ctxPath %>/productmjpage" class="child_category" id="MJ">멀티짐</a>
+        <a href="<%=ctxPath %>/productmlpage" class="child_category" id="ML">멀티랙</a>
+        <a href="<%=ctxPath %>/productbcpage" class="child_category" id="BC">벤치</a>
+        <a href="<%=ctxPath %>/productbppage" class="child_category" id="BP">벤치프레스</a>
+        <a href="<%=ctxPath %>/productcmpage" class="child_category" id="CM">클럽용머신</a>
     </div>
   </div> 
   <div class="subnav">
     <button class="subnavbtn">유산소기구 <i class="fa fa-caret-down"></i></button>
     <div class="subnav-content">
-        <a href="#" class="parent_category" id="유산소기구">전체</a>
-        <a href="#" class="child_category" id="RN">런닝머신</a>
-        <a href="#" class="child_category" id="CC">사이클</a>
-        <a href="#" class="child_category" id="RW">로잉머신</a>
-        <a href="#" class="child_category" id="ET">일립티컬</a><!-- 10/21 샌드백 삭제 SH -->
+        <a href="<%=ctxPath %>/productotpage" class="parent_category" id="유산소기구">전체</a>
+        <a href="<%=ctxPath %>/productrnpage" class="child_category" id="RN">런닝머신</a>
+        <a href="<%=ctxPath %>/productccpage" class="child_category" id="CC">사이클</a>
+        <a href="<%=ctxPath %>/productrwpage" class="child_category" id="RW">로잉머신</a>
+        <a href="<%=ctxPath %>/productetpage" class="child_category" id="ET">일립티컬</a><!-- 10/21 샌드백 삭제 SH -->
     </div>
   </div> 
   <div class="subnav">
     <button class="subnavbtn">웨이브리프팅 <i class="fa fa-caret-down"></i></button>
     <div class="subnav-content">
-        <a href="#" class="parent_category" id="웨이브리프팅">전체</a>
-        <a href="#" class="child_category" id="DB">덤벨</a>
-        <a href="#" class="child_category" id="CB">케틀벨</a>
-        <a href="#" class="child_category" id="BB">바벨</a>
-        <a href="#" class="child_category" id="PL">플레이트(원판)</a>
-        <a href="#" class="child_category" id="OR">정리대</a>
+        <a href="<%=ctxPath %>/productwlpage" class="parent_category" id="웨이브리프팅">전체</a>
+        <a href="<%=ctxPath %>/productdbpage" class="child_category" id="DB">덤벨</a>
+        <a href="<%=ctxPath %>/productcbpage" class="child_category" id="CB">케틀벨</a>
+        <a href="<%=ctxPath %>/productbbpage" class="child_category" id="BB">바벨</a>
+        <a href="<%=ctxPath %>/productplpage" class="child_category" id="PL">플레이트(원판)</a>
+        <a href="<%=ctxPath %>/productorpage" class="child_category" id="OR">정리대</a>
     </div>
   </div>
   <div class="subnav">
     <button class="subnavbtn">어시스트 <i class="fa fa-caret-down"></i></button>
     <div class="subnav-content">
-        <a href="#" class="parent_category" id="어시스트">전체</a>
-        <a href="#" class="child_category" id="AS">트레이닝보조</a>
-        <a href="#" class="child_category" id="SP">스트랩&패드</a>
-        <a href="#" class="child_category" id="MT">매트</a>
-        <a href="#" class="child_category" id="TB">튜빙밴드</a>
-        <a href="#" class="child_category" id="MG">마사지</a> <!-- 10/21 삭제: 거꾸리, 케이블손잡이, 부속품 SH-->
+        <a href="<%=ctxPath %>/productasstpage" class="parent_category" id="어시스트">전체</a>
+        <a href="<%=ctxPath %>/productaspage" class="child_category" id="AS">트레이닝보조</a>
+        <a href="<%=ctxPath %>/productsppage" class="child_category" id="SP">스트랩&패드</a>
+        <a href="<%=ctxPath %>/productmtpage" class="child_category" id="MT">매트</a>
+        <a href="<%=ctxPath %>/producttbpage" class="child_category" id="TB">튜빙밴드</a>
+        <a href="<%=ctxPath %>/productmgpage" class="child_category" id="MG">마사지</a> <!-- 10/21 삭제: 거꾸리, 케이블손잡이, 부속품 SH-->
     </div>
   </div>
   <div class="subnav">
