@@ -261,7 +261,7 @@ public class OrderDao {
 			int add_mileage, String receiver_name, String phone_no, Connection conn) {
 		int result = -1;
 
-		String sql = "insert into ORDERINFO values ('GYM'||to_char(sysdate, 'yyyymmdd')||'-'||ORDER_SEQ.nextval, ? , ? , ? , ? , ? ,? ,? ,? ,? ,sysdate , ?,'주문완료',null, ? ,?,?)";
+		String sql = "insert into ORDERINFO values ('GYM'||to_char(sysdate, 'yyyymmdd')||'-'||ORDERINFO_SEQ.nextval, ? , ? , ? , ? , ? ,? ,? ,? ,? ,sysdate , ?,'주문완료',null, ? ,?,?)";
 
 		PreparedStatement pstmt = null;
 
