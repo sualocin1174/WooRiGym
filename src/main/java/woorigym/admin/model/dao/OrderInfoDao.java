@@ -14,7 +14,7 @@ public class OrderInfoDao {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public ArrayList<OrderInfoTable> salesList(Connection conn, String start_date, String end_date){
+	public ArrayList<OrderInfoTable> salesList(Connection conn, String startDate, String endDate){
 		ArrayList<OrderInfoTable> saleslist = null;
 		String sql = "SELECT ORDER_PAYMENT FROM ORDERINFO WHERE to_char(ORDER_DATE, 'yyyy-mm-dd') BETWEEN ? AND ?";
 		PreparedStatement pstmt = null;
@@ -22,8 +22,8 @@ public class OrderInfoDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, start_date);
-			pstmt.setString(2, end_date);
+			pstmt.setString(1, startDate);
+			pstmt.setString(2, endDate);
 			rset = pstmt.executeQuery();
 			System.out.println("orderinfo-1");
 			

@@ -5,6 +5,8 @@
    <!-- 헤더 CSS -->
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_header.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <!-- 푸터 CSS -->
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_footer.css"/>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
@@ -26,6 +28,8 @@ $(function(){
 	$("#end_date").val(sysdate());
 	console.log("1달전 : ", default_date()); 
 	console.log("오늘 날짜 : ", sysdate()); 
+	
+	$("#search").on("click",searchF1());
 	$("#1week").on("click", lastWeek); //1주일 버튼
 	$("#1month").on("click", lastMonth); //1개월 버튼
 	$("#3month").on("click", last3M); //3개월 버튼
@@ -112,9 +116,65 @@ function last6M(){
 //원하는 날짜형식: yyyy/mm/dd
 	$("#start_date").val(year+"-"+month+"-"+day);
 }
+	
+	function searchF1(){
 
+	console.log("#start_date: "+$("#start_date"));
+	var startDate = $("#start_date").val();
+	var endDate =  $("#end_date").val();
+	console.log(startDate);
+	console.log(endDate);
+	
+		$.ajax({
+			type:"post",
+			url:"<%=request.getContextPath()%>/asales",
+			data:{
+				startDate: startDate,
+    			endDate: endDate
+			},
+			dataType:"json",
+			success : function(data){
+				console.log(data);
+				console.log(data.length);
+				var empty ="";
+				if(data!=""){
+					var html = "";
+					for(var i=0; i<data.length;i++){
+						console.log(data[i]);
+						 html+= "<table><tr><th>매출 내역</th></tr>"
+							 + "<tr><td>"+data[i].order_payment+"<td></tr></table>";
+						
+					}$("#salesManagement").html(html);
+				//resultHtml(data);
+				} 
+			},
+			error:function(request, status, error){
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			}
+		});
+	}
+	
+	function resultHtml(data){
+		var html = "<table border='1' id='tsearch'>";
+		html += "<tr>";
+		html += "<th>해당 기간 동안의 매출</th>";
+		html += "</tr>";
+		$.each(data, function(key, value){
+			html += "<tr>";
+			html += "<td>" + value.order_info + "</td>";
+			html += "</tr>";
+		});
+		
+		html += "</table>";
+		$("#salesManagement").empty();
+		$("#salesManagement").append(html);
+	}
+	
 </script>
 <style>
+  body{
+        font-family: 'Noto Sans KR', sans-serif;
+        }
 section {
                 width: 900px;
                 padding: 0 0 30px 0;
@@ -123,12 +183,22 @@ section {
 		        left: 260px;
             }
 aside{
-	        display: inline-block;
-			 padding: 30px 0 0 30px;
-			 }
-		 	#side-menu>ul>li{
-		        padding: 5px;
-		        list-style-type: none;
+	  display: inline-block;
+		padding: 30px 0 0 30px;
+}
+/* 매출관리 */
+    section > h2 {
+          margin: 20px;
+          text-align: center;
+   }
+ /* 기간별 매출관리 검색 */
+      .date{
+      margin: 15px 10px;
+      padding: 4px;
+      }
+		#side-menu>ul>li{
+		    padding: 5px;
+		    list-style-type: none;
 		     }
 		     /* 메인페이지 폰트 크게 */
 		    #side-menu>ul>li:first-child{
@@ -173,6 +243,18 @@ aside{
       	 	 text-align: center;
          	 margin-bottom: 20px;
       }
+      /* 조회 버튼 */
+        #search {
+        padding: 6px 32px;
+        margin: 4px 2px;
+        background-color: white;
+        color: black;
+        border: 2px solid #555555;
+        }
+        #search:hover {
+        background-color: #555555;
+        color: white;
+        }
 </style>
 </head>
 <body>
@@ -182,9 +264,9 @@ aside{
 		<div id="side-menu">
      	<ul>
         	<li>메인페이지</li>
-         	<li><a href="amain">상품관리</a></li>
-         	<li><a href="apupage">팝업공지</a></li>
-         	<li><a href="asales">매출관리</a></li>
+         	<li><a href="<%=request.getContextPath()%>/amain">상품관리</a></li>
+         	<li><a href="<%=request.getContextPath()%>/apupage">팝업공지</a></li>
+         	<li><a href="<%=request.getContextPath()%>/asales">매출관리</a></li>
          	<li><a href="#">주문내역 확인</a></li>
          	<li><a href="#">배송현황 관리</a></li>
          	<li><a href="#">교환/반품/환불 승인</a></li>
@@ -204,53 +286,16 @@ aside{
     <input type="button" class="button" value="1개월" id="1month">
     <input type="button" class="button" value="3개월" id="3month">
     <input type="button" class="button" value="6개월" id="6month"><br><br>
-    <input type="button" class="button" value="조회" id="search">
+    <input type="button" class="button" value="조회" id="search" onclick="searchF1()">
     <br>
     </div>
- 	</section>
- 	<section>
- 		<div id="salesManagement" style="display:none">
+ 	
+ 		<div id="salesManagement">
  		
  		</div>
- 	</section>
- 	<script>
- 		$("#search").click(searchF1);
-	
- 		function searchF1(){
- 			$.ajax({
- 				type:"post",
- 				url:"<%=request.getContextPath()%>/asales",
- 				data:{
- 					start_date : $("#start_date").val(),
- 					end_date : $("end_date").val()
- 				},
- 				dataType:"json",
- 				success : function(data){
- 					resultHtml(data);
- 				},
- 				error:function(request, status, error){
- 	 				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
- 	 			}
- 			});
- 			$("#salesManagement").show();
- 		}
- 		
- 		function resultHtml(data){
- 			var html = "<table border='1' id='tsearch'>";
- 			html += "<tr>";
- 			html += "<th>해당 기간 동안의 매출</th>";
- 			html += "</tr>";
- 			$.each(data, function(key, value){
- 				html += "<tr>";
- 				html += "<td>" + value.order_info + "</td>";
- 				html += "</tr>";
- 			});
- 			
- 			html += "</table>";
- 			$("#salesManagement").empty();
- 			$("#salesManagement").append(html);
- 		}
- 		
- 	</script>
+ 	
+ </section>
+ 	<!-- 공통푸터 템플릿 -->
+<%@ include file="template_footer.jsp"%>
 </body>
 </html>

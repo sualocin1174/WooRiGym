@@ -16,44 +16,33 @@ import com.google.gson.GsonBuilder;
 import woorigym.admin.model.service.OrderInfoService;
 import woorigym.admin.model.vo.OrderInfoTable;
 
-/**
- * Servlet implementation class SalesManagementServlet
- */
 @WebServlet("/asales")
 public class SalesManagementServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public SalesManagementServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+    public SalesManagementServlet() { super(); }
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("/WEB-INF/asalesmanagement.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 		Gson gson = new GsonBuilder().create();
 		String jsonListVo ="";
 		
-		String start_date = request.getParameter("start_date");
-		String end_date = request.getParameter("end_date");
+		String startDate = request.getParameter("startDate");
+		String endDate = request.getParameter("endDate");
+		System.out.println("startDate: "+startDate);
+		System.out.println("endDate: "+endDate);
 		
 		OrderInfoTable orderinfoVo = new OrderInfoTable();
-
-		ArrayList<OrderInfoTable> saleslist = new OrderInfoService().salesList(start_date, end_date);
+		ArrayList<OrderInfoTable> saleslist = new OrderInfoService().salesList(startDate, endDate);
+		response.setContentType("application/json;charset=UTF-8");
 		request.setAttribute("saleslist", orderinfoVo);
 		jsonListVo = gson.toJson(saleslist);
+		System.out.println("jsonListVo: "+jsonListVo);
 		out.print(jsonListVo);
 		out.flush();
 		out.close();

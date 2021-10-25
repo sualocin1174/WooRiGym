@@ -10,15 +10,12 @@ import woorigym.common.jdbcTemplate;
 public class OrderInfoService {
 
 	public OrderInfoService() {
-		// TODO Auto-generated constructor stub
 	}
 
 	
-	public ArrayList<OrderInfoTable> salesList(String start_date, String end_date){
-		ArrayList<OrderInfoTable> saleslist = null;
+	public ArrayList<OrderInfoTable> salesList(String startDate, String endDate){
 		Connection conn = jdbcTemplate.getConnection();
-		
-		saleslist = new OrderInfoDao().salesList(conn, start_date, end_date);
+		ArrayList<OrderInfoTable> saleslist = new OrderInfoDao().salesList(conn, startDate, endDate);
 		
 		jdbcTemplate.close(conn);;
 		return saleslist;
