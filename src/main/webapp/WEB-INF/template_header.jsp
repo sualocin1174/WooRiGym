@@ -25,7 +25,7 @@
             <li><a href="<%=ctxPath %>/logout">로그아웃</a></li>
             <li><a href="<%=ctxPath %>/mypage" id="btnmy">마이페이지</a></li> 
             <li><a href="<%=ctxPath %>/sblist">장바구니</a></li>
-            <li><a href="#">최근본상품</a></li>
+           <!--  <li><a href="#">최근본상품</a></li> -->
         </ul>
     </div> 
     </c:if> <!-- 21.10.23 검색버튼 네비게이션바로 이동 SH -->
@@ -82,9 +82,9 @@
     <div class="subnav-content">
         <a href="#">회사소개</a>
         <a href="#">설치사례</a>
-        <a href="#">이벤트</a>
+       <!--   <a href="#">이벤트</a> -->
         <a href="NoticeBoarderServlet">공지사항</a>
-        <a href="#">사용후기</a>
+       <!--  <a href="#">사용후기</a> --> 
         <a href="#">Q & A</a> <!--  10/21 삭제: 1:1 문의, 개인결제창 SH -->
     </div>
   </div>
@@ -100,7 +100,7 @@
   <form>
   <table>
   <tr> <!-- 21.10.23 추가 SH -->
-		<td><input type="text" name="keyword" class="keyword_input" id="keyword_input_var" placeholder="상품명 입력"></td>
+		<!--  <td><input type="text" name="keyword" class="keyword_input" id="keyword_input_var" placeholder="상품명 입력"></td> -->
 		<td><a href="<%=ctxPath %>/searchpage" class="button" id="searchBtn_var"><img src='./images/검색_돋보기.png' alt="검색" width="20px"/></a></td>
 </tr>
 </table>
