@@ -166,4 +166,42 @@ public class NoticeDao {
 		System.out.println("notice 리턴은 " + noticelist);
 		return noticelist;
 	}
+	
+	public ArrayList<NoticeTable> selectNoticeBoard(Connection conn, int start, int end){
+		ArrayList<NoticeTable> volist = null;
+		
+		String sql ="select * from (select rownum r, t1.* from (select b.* from notice n order by notice_no desc) t1) t2 where r between ? and ?";
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
+			rset = pstmt.executeQuery();
+			volist = new ArrayList<NoticeTable>();
+			if(rset.next()) {
+				do {
+					NoticeTable vo = new NoticeTable();
+					vo.setNotice_no(rset.getInt("notice_no"));
+					vo.setN_title(rset.getString("n_title"));
+					vo.setN_content(rset.getString("n_content"));
+					vo.setN_date(rset.getString("n_date"));
+					volist.add(vo);
+				}while(rset.next());
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rset.close();
+				pstmt.close();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println("리턴은"+ volist);
+		return volist;
+	}
 }

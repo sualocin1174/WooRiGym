@@ -83,7 +83,7 @@
         <a href="#">회사소개</a>
         <a href="#">설치사례</a>
         <a href="#">이벤트</a>
-        <a href="#">공지사항</a>
+        <a href="NoticeBoarderServlet">공지사항</a>
         <a href="#">사용후기</a>
         <a href="#">Q & A</a> <!--  10/21 삭제: 1:1 문의, 개인결제창 SH -->
     </div>

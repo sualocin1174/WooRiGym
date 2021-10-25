@@ -72,4 +72,14 @@ public class NoticeService {
 		jdbcTemplate.close(conn);
 		return noticelist;
 	}
+	
+	public ArrayList<NoticeTable> selectNoticeBoard(int start, int end){
+		ArrayList<NoticeTable> volist = null;
+		Connection conn = jdbcTemplate.getConnection();
+
+		volist = new NoticeDao().selectNoticeBoard(conn, start, end);
+		
+		jdbcTemplate.close(conn);
+		return volist;
+	}
 }

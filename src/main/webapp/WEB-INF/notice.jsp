@@ -167,8 +167,8 @@
 					</tr>
 					<tr>
 						<td>내용</td>
-						<td><input type="text" name="n_content" id="n_content" class = "input" required="required" placeholder="내용을 입력해주세요."><br><br></td>
-					</tr>
+ 						<td><input type="text" name="n_content" id="n_content" class = "input" required="required" placeholder="내용을 입력해주세요."><br><br></td>					
+ 					</tr>
 				</table>
 		
 				<div class="btn_collection"><br>
