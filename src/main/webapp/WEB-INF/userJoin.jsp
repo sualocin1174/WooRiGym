@@ -216,8 +216,9 @@ text-align: center;
                         <tr>        
                             <th id="title">성별</th>       
                             <td>       
-                                <label class="container" for="male"><input type="radio" id = "male" name="genderStr" value= 1 >남<span class="checkmark"></span></label>
-                                <label class="container" for="female"><input type="radio" id = "female" name="genderStr" value= 0 >여<span class="checkmark"></span></label>       
+                                <label class="gender" for="male"><input type="radio" id = "male" name="genderStr" value= 1 >남<span class="checkmark"></span></label>
+                                <label class="gender" for="female"><input type="radio" id = "female" name="genderStr" value= 0 >여<span class="checkmark"></span></label>
+                                <div class="genderT regex"></div>       
                             </td>       
                         </tr>
                                            
@@ -260,8 +261,9 @@ text-align: center;
                         <tr>        
                             <th id="title">이메일 수신동의</th>        
                             <td>       
-                                <label class="container" for="email_yes"><input type="radio" id = "email_yes" name="email_ynStr" value= "1" >동의<span class="checkmark"></span></label>        
-                                <label class="container" for="email_no"><input type="radio" id = "email_no" name="email_ynStr" value= "0" >거부<span class="checkmark"></span></label>         
+                                <label class="emailyn" for="email_yes"><input type="radio" id = "email_yes" name="email_ynStr" value= "1" >동의<span class="checkmark"></span></label>        
+                                <label class="emailyn" for="email_no"><input type="radio" id = "email_no" name="email_ynStr" value= "0" >거부<span class="checkmark"></span></label>
+                                <div class="emailynT regex"></div>         
                             </td>        
                         </tr>
                         <tr>
