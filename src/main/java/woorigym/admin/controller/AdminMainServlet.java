@@ -27,7 +27,13 @@ public class AdminMainServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/adminmain.jsp").forward(request,response);
+		String admin_id = (String)request.getSession().getAttribute("admin_id");
+		if(admin_id == null) {
+			System.out.println("관리자 로그인 정보 확인 바람");
+			request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request,response);
+		} else {
+			request.getRequestDispatcher("/WEB-INF/adminmain.jsp").forward(request,response);
+		}
 	}
 
 	/**

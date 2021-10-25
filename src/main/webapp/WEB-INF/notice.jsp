@@ -127,7 +127,7 @@
 </head>
 <body>
 	<!-- 공통헤더 템플릿 -->
- 	<%@ include file="template_header.jsp"%>
+ 	<%@ include file="admin_header.jsp"%>
  	<!-- 10/10 메인페이지 사이드바 추가: <aside>~</aside>
  	추후 template_admin_aside.jsp로 따로 생성하고 include해서 쓰시는걸 추천합니다  -->
  	<aside>
@@ -136,7 +136,7 @@
          		<li>메인페이지</li>
          		<li><a href="amain">상품관리</a></li>
          		<li><a href="apupage">팝업공지</a></li>
-         		<li><a href="#">매출관리</a></li>
+         		<li><a href="asales">매출관리</a></li>
          		<li><a href="#">주문내역 확인</a></li>
          		<li><a href="#">배송현황 관리</a></li>
          		<li><a href="#">교환/반품/환불 승인</a></li>
