@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import woorigym.admin.model.vo.QnaTable;
 import woorigym.user.model.service.QnaListService;
@@ -37,6 +38,7 @@ public class QnaListServlet extends HttpServlet {
 		System.out.println("myQnaList volist.size(): "+volist.size());
 		System.out.println("myQnaList volist: "+volist);
 		request.setAttribute("myQnA", volist);
+		
 		String ViewPage = "/WEB-INF/qnalist.jsp";
 		request.getRequestDispatcher(ViewPage).forward(request, response);
 	}

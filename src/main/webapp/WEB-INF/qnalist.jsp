@@ -14,6 +14,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
 <%@ page import = "woorigym.admin.model.vo.QnaTable" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -69,6 +70,9 @@
         color: white;
         }
 </style>
+<script>
+console.log("<%=session.getAttribute("myQnA")%>");
+</script>
 </head>
 <body>
 <!-- 공통헤더 템플릿 -->
@@ -80,8 +84,7 @@
 <c:if test="${myQnA != null || ''}">
 <table>
 <tr>
-<th>번호<th>
-<td>${myQnA} <td>
+<th>번호 ${myQnA[0].q_no}<th> <!-- for문 돌리기!! -->
 </tr>
 <tr>
 <th>카테고리<th>

@@ -33,11 +33,17 @@
        	// TODO
     	//$("#start_date").val(1달전날짜);
     	//$("#end_date").val(오늘날짜);
+    	
     	console.log($("#start_date"));
+    	console.log($("#start_date").val(default_date()));
+    	
     	$("#start_date").val(default_date());
     	$("#end_date").val(sysdate());
+    	
+    	
     	console.log("1달전 : ", default_date()); 
     	console.log("오늘 날짜 : ", sysdate()); 
+    	
     	$("#order_search").on("click", ajaxF1());//검색 버튼
     	$("#1week").on("click", lastWeek); //1주일 버튼
     	$("#1month").on("click", lastMonth); //1개월 버튼

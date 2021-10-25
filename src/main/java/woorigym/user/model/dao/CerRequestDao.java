@@ -53,7 +53,7 @@ public class CerRequestDao {
 	public void insertClaimDao(Connection conn, ClaimTable input, String user_id) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String sql = "insert into claim(order_no, claim_date, claim_kind, address_no, request_memo, return_date, return_cost, claim_process, done_date, why ) "
+		String sql = "insert into claim(order_no, claim_date, claim_kind, address_no, request_memo, return_date, claim_process, done_date, why ) "
 				+ "values (?, sysdate, ?, ?, ?, sysdate+3, ?, '접수완료', ?, ? )";
 //		String sql_address = "insert into address(address_no, user_id, postcode, basic_address, detail_address,fixed_address )"
 //				+ "values (address_seq.nextval, ?, ?,' ', ' ', 0)";
@@ -96,10 +96,9 @@ public class CerRequestDao {
 			pstmt.setInt(3, input.getAddress_no());
 			pstmt.setString(4, input.getRequest_memo());
 //			pstmt.setString(5, input.getReturn_date()); claim_date(sysdate) + 3일
-			pstmt.setInt(5, input.getReturn_cost());
 //			pstmt.setString(7, input.getClaim_process());
-			pstmt.setString(6, input.getDone_date());
-			pstmt.setInt(7, input.getWhy());
+			pstmt.setString(5, input.getDone_date());
+			pstmt.setInt(6, input.getWhy());
 			boolean result = pstmt.execute();//�� �ƴ��� �ȵƴ��� boolean���� ����ޱ�
 			System.out.println("result: "+ result);
 		}catch(Exception e){

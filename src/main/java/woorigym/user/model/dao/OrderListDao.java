@@ -33,7 +33,7 @@ public class OrderListDao {
 		query += " join product product on odetail.PRODUCT_NO = product.PRODUCT_NO";
 		query += " WHERE ";
 		query += " USER_ID = ?";
-		query += " and order_date between to_date(?, 'yyyy-mm-dd') and to_date(?, 'yyyy-mm-dd')";
+		query += " and to_char(order_date,'yyyy-mm-dd')  between ? and ? ";
 //		private String order_no;
 //		private int order_total;
 //		private int order_cost;
