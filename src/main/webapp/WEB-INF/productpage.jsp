@@ -202,7 +202,10 @@
 		<div id="paging"></div>
     </section>
     <footer>
+    	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_footer.css"/>
     </footer>
+    <input type="text" id="parentlist" style="display: none;">
+	<input type="text" id="childList" style="display: none;">
 <script>
 // 디버깅용
 console.log("${startPage}");
@@ -212,40 +215,34 @@ console.log($("#producttest").val());
 </script>
     <script>
     var trashParam;
-    var testvalue;
-    /* $(function() {
-	    $('.productpage').on('click', function() {
-	    	testvalue = $(this).attr('id');
-    		console.log(testvalue);
-	    });
-	});
-    		console.log($(this).attr('id')); */
+    var parentValue;
+    var childValue;
     		
-    <%-- <div class="subnav-content">
-        <a href="<%=ctxPath %>/ppage" class="productpage" id="근력기구">전체</a>
-        <a href="#" class="productpage" id="SJ">스미스짐</a>
-        <a href="#" class="productpage" id="MJ">멀티짐</a>
-        <a href="#">멀티랙</a>
-        <a href="#">벤치</a>
-        <a href="#">벤치프레스</a>
-        <a href="#">클럽용머신</a>
-    </div> --%>
-	
-    
-    $(".productpage").click(function(){
+    $(".parent_category").click(function(){
     	trashParam = $(this).attr('id');
     	console.log(trashParam);
     });
-    	console.log($(this).attr('id'));
-
-
+    
+    $(".child_category").click(function(){
+    	trashParam = $(this).attr('id');
+    	console.log(trashParam);
+  		var newsDeleteList = [];
+  		childValue = trashParam.filter(function(item){
+       		return item !== "";
+       	});
+  		
+  		$("#childList").val(childValue);
+  		console.log(typeof childValue);
+    });
+    
     	$(document).ready(ajaxf1);
+    	console.log($("#childList").val());
     	function ajaxf1() {
 			$.ajax({
 				type:"post",
 				url:"<%=request.getContextPath()%>/ppage",
 				data: {
-					parentCategory: testvalue
+					parentCategory: parentValue
 					/* childCategory: "" */
 				},
 				datatype:"json",
@@ -270,7 +267,7 @@ console.log($("#producttest").val());
 				console.log(i);
 				console.log(value);
 				html += "<tr>";
-				html += "<td>이미지 : " + value.productInfoUrl + "<br>";
+				html += "<td>이미지 : <img src="+value.imagesFilePath[0]+" width='200' height='200'><br>";
 				html += "상품명 : " + value.productName + "<br>";
 				html += "옵션 : " + value.productOption + "<br>";
 				html += "가격 : " + value.price + "<br>";
@@ -302,7 +299,7 @@ console.log($("#producttest").val());
 				type:"post",
 				url:"<%=request.getContextPath()%>/ppage",
 				data: {
-					parentCategory: testvalue
+					parentCategory: parentValue
 					/* childCategory: "", */
 					, pagenum: selectedPageNum					
 				},

@@ -221,7 +221,10 @@
 	    <button type="button" class="button" id="btnAllBuy">전체구매</button>
 	    <button type="button" class="button" id="btnAllDelete">전체삭제</button>
 	</form>
-	</section>
+</section>
+<footer>
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_footer.css"/>
+</footer>
 	<input type="text" id="cartnolist" style="display: none;">
 	<script type="text/javascript">
     	$(document).ready(ajaxf1);

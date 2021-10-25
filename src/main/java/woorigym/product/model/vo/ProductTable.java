@@ -61,14 +61,16 @@ public class ProductTable {
 		return "ProductTable [productNo=" + productNo + ", productName=" + productName + ", parentCategory="
 				+ parentCategory + ", childCategory=" + childCategory + ", quantity=" + quantity + ", price=" + price
 				+ ", productInfoUrl=" + productInfoUrl + ", productOption=" + productOption + ", minPrice=" + minPrice
-				+ ", maxPrice=" + maxPrice + ", selectRank=" + selectRank + "]";
+				+ ", maxPrice=" + maxPrice + ", selectRank=" + selectRank + ", imagesFilePath=" + imagesFilePath + "]";
 	}
+	
 	// 2021.10.11 1차 수정완료
 	// 2021.10.07 수정완료
 	
 	public String getProductNo() {
 		return productNo;
 	}
+
 
 
 

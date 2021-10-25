@@ -33,49 +33,49 @@
   <div class="subnav">
     <button class="subnavbtn">근력기구 <i class="fa fa-caret-down"></i></button>
     <div class="subnav-content">
-        <a href="#">전체</a>
-        <a href="#">스미스짐</a>
-        <a href="#">멀티짐</a>
-        <a href="#">멀티랙</a>
-        <a href="#">벤치</a>
-        <a href="#">벤치프레스</a>
-        <a href="#">클럽용머신</a>
+        <a href="<%=ctxPath %>/ppage" class="parent_category" id="근력기구">전체</a>
+        <a href="<%=ctxPath %>/ppage" class="child_category" id="SJ">스미스짐</a>
+        <a href="#" class="child_category" id="MJ">멀티짐</a>
+        <a href="#" class="child_category" id="ML">멀티랙</a>
+        <a href="#" class="child_category" id="BC">벤치</a>
+        <a href="#" class="child_category" id="BP">벤치프레스</a>
+        <a href="#" class="child_category" id="CM">클럽용머신</a>
     </div>
   </div> 
   <div class="subnav">
     <button class="subnavbtn">유산소기구 <i class="fa fa-caret-down"></i></button>
     <div class="subnav-content">
-        <a href="#">전체</a>
-        <a href="#">런닝머신</a>
-        <a href="#">사이클</a>
-        <a href="#">로잉머신</a>
-        <a href="#">일립티컬</a><!-- 10/21 샌드백 삭제 SH -->
+        <a href="#" class="parent_category" id="유산소기구">전체</a>
+        <a href="#" class="child_category" id="RN">런닝머신</a>
+        <a href="#" class="child_category" id="CC">사이클</a>
+        <a href="#" class="child_category" id="RW">로잉머신</a>
+        <a href="#" class="child_category" id="ET">일립티컬</a><!-- 10/21 샌드백 삭제 SH -->
     </div>
   </div> 
   <div class="subnav">
     <button class="subnavbtn">웨이브리프팅 <i class="fa fa-caret-down"></i></button>
     <div class="subnav-content">
-        <a href="#">전체</a>
-        <a href="#">덤벨</a>
-        <a href="#">케틀벨</a>
-        <a href="#">바벨</a>
-        <a href="#">플레이트(원판)</a>
-        <a href="#">정리대</a>
+        <a href="#" class="parent_category" id="웨이브리프팅">전체</a>
+        <a href="#" class="child_category" id="DB">덤벨</a>
+        <a href="#" class="child_category" id="CB">케틀벨</a>
+        <a href="#" class="child_category" id="BB">바벨</a>
+        <a href="#" class="child_category" id="PL">플레이트(원판)</a>
+        <a href="#" class="child_category" id="OR">정리대</a>
     </div>
   </div>
   <div class="subnav">
     <button class="subnavbtn">어시스트 <i class="fa fa-caret-down"></i></button>
     <div class="subnav-content">
-        <a href="#">전체</a>
-        <a href="#">트레이닝보조</a>
-        <a href="#">스트랩&패드</a>
-        <a href="#">매트</a>
-        <a href="#">튜빙밴드</a>
-        <a href="#">마사지</a> <!-- 10/21 삭제: 거꾸리, 케이블손잡이, 부속품 SH-->
+        <a href="#" class="parent_category" id="어시스트">전체</a>
+        <a href="#" class="child_category" id="AS">트레이닝보조</a>
+        <a href="#" class="child_category" id="SP">스트랩&패드</a>
+        <a href="#" class="child_category" id="MT">매트</a>
+        <a href="#" class="child_category" id="TB">튜빙밴드</a>
+        <a href="#" class="child_category" id="MG">마사지</a> <!-- 10/21 삭제: 거꾸리, 케이블손잡이, 부속품 SH-->
     </div>
   </div>
   <div class="subnav">
-    <button class="subnavbtn">전시상품 </i></button>
+    <button class="subnavbtn" class="parent_category" id="전시상품">전시상품 </i></button>
     </div>
   <div class="subnav">
     <button class="subnavbtn">게시판 <i class="fa fa-caret-down"></i></button>

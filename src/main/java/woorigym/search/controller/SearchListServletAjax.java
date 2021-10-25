@@ -36,11 +36,10 @@ import woorigym.search.model.service.SearchListService;
 @WebServlet("/slist.ajax")
 public class SearchListServletAjax extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    public SearchListServletAjax() {
-        super();
-    }
 
+	public SearchListServletAjax() {
+		super();
+	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //		request.setCharacterEncoding("UTF-8");
@@ -132,38 +131,25 @@ public class SearchListServletAjax extends HttpServlet {
 //		ArrayList<ProductTable> productlist = new SearchListService().productSearch(searchKeyVo);
 		ArrayList<ProductTable> productlist = new SearchListService().searchProductList(searchKeyVo, startRnum, endRnum);
 		System.out.println("productlist :"+productlist);
-
-		// vo 관련 데이터 채우기
-		map1.put("productlist", productlist);
-		// search 관련 데이터 채우기
-		map1.put("searchKeyVo", searchKeyVo);
-		// page 관련 데이터 채우기
-		map1.put("startPage", startPage);
-		map1.put("endPage", endPage);
-		map1.put("pageCount", pageCount);
-		map1.put("currentPage", currentPage);
+		List<String> imagePathList = null;
+		//List<String> imagesFilePath = new ArrayList<String>();
+		//Map<String,List<String>> temp1 = new HashMap();
+		//Map<String,List<String>> temp2 = new HashMap();
+		List<String> productName_productCost = new ArrayList(); //상품명, 가격 가져오기
+		String infoUrl = null;
 		
-		
-//		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		Gson gson = new GsonBuilder().create();
-		jsonResultMap = gson.toJson(map1);
-		System.out.println("jsonListVo"+jsonResultMap);
-		out.print(jsonResultMap);
-		out.flush();
-		out.close();
-	// 2021-10-07 수정완료
-	
+		// 이미지관련 추가 시작
 		if (productlist != null) {
-			List<String> imagesFilePath = new ArrayList<String>();
-			Map<String,List<String>> temp2 = new HashMap();
+			//imagesFilePath = new ArrayList<String>();
+			//temp2 = new HashMap();
 			
 			Properties prop = new Properties();
-			List<String> imagePathList = new ArrayList();
+			
 			/* 방법 1 dothome은 용량이 작음. 속도 느림 */
 			if(true) {
 				try {
-					String currentPath = ProductListServlet.class.getResource("./").getPath();
-					//String currentPath = SearchListServletAjax.class.getResource("./").getPath();
+					//String currentPath = ProductListServlet.class.getResource("./").getPath();
+					String currentPath = SearchListServletAjax.class.getResource("./").getPath();
 					prop.load(new BufferedReader(new FileReader(currentPath + "cloudServer.properties")));
 					String server = prop.getProperty("server");
 					int port = Integer.parseInt(prop.getProperty("port"));
@@ -191,20 +177,22 @@ public class SearchListServletAjax extends HttpServlet {
 							System.out.println("Login Error!");
 							return;
 						}
-	
-						Map<String,List<String>> temp1 = new HashMap();
+						//temp1 = new HashMap();
 						for(ProductTable vo: productlist) {
-							String key=vo.getProductInfoUrl().substring(0,vo.getProductInfoUrl().length() - 4);//상품이미지 가져오기
-							List<String> productName_productCost = new ArrayList(); //상품명, 가격 가져오기
-							productName_productCost.add(vo.getProductName());
-							productName_productCost.add(String.valueOf(vo.getPrice()));
-							temp1.put(key,productName_productCost);
-						}
-						Iterator<String> temp1_keys = temp1.keySet().iterator();
+							imagePathList = new ArrayList<String>();
+							infoUrl=vo.getProductInfoUrl().substring(0,vo.getProductInfoUrl().length() - 4);//상품이미지 가져오기
+							System.out.println("이미지 : "+infoUrl);
+							//productName_productCost = new ArrayList(); //상품명, 가격 가져오기
+							//productName_productCost.add(vo.getProductName());
+							//productName_productCost.add(String.valueOf(vo.getPrice()));
+							//productName_productCost.add(vo.getProductNo());
+							//temp1.put(key,productName_productCost);
 						
+						//}
+						//Iterator<String> temp1_keys = temp1.keySet().iterator();
 						
-						while(temp1_keys.hasNext()) {
-							String infoUrl = temp1_keys.next();
+						//while(temp1_keys.hasNext()) {
+							//String infoUrl = temp1_keys.next();
 							FTPFile[] files = ftpClient.listFiles("/html/product" + "/" + infoUrl);//닷홈의 폴더경로: html/product
 							
 							if(files!=null && files.length>0){ //상품별 대표이미지만 출력
@@ -212,17 +200,21 @@ public class SearchListServletAjax extends HttpServlet {
 							System.out.println("details:" + details);
 							imagePathList.add(prop.getProperty("url") + "/product" + "/" + infoUrl + "/" + details);
 							
-							temp2.put(prop.getProperty("url") + "/product" + "/" + infoUrl + "/" + details,temp1.get(infoUrl));
-							}/*for (FTPFile file : files) { //이건 전체 이미지 모두 출력
-								String details = file.getName();
-								System.out.println("details:" + details);
-								imagePathList.add(prop.getProperty("url") + "/product" + "/" + infoUrl + "/" + details);
-							}*/
+							//temp2.put(prop.getProperty("url") + "/product" + "/" + infoUrl + "/" + details,temp1.get(infoUrl));
+							//}
+//							for (FTPFile file : files) { //이건 전체 이미지 모두 출력
+//								String details = file.getName();
+//								System.out.println("details:" + details);
+//								imagePathList.add(prop.getProperty("url") + "/product" + "/" + infoUrl + "/" + details);
+//							}
 							
-							System.out.println("imagesFilePath:" + imagesFilePath + ": "+ infoUrl);
+							System.out.println("imagePathList: "+ imagePathList);
+							System.out.println("infoUrl: "+ infoUrl);
 							
+						//}
+							vo.setImagesFilePath(imagePathList); // vo(productlist)에 imagePathList을 채움
+							}
 						}
-						
 						// FTP 끊기
 						ftpClient.logout();
 						ftpClient.disconnect();
@@ -232,10 +224,34 @@ public class SearchListServletAjax extends HttpServlet {
 				}
 			}
 			System.out.println("imagePathList: "+imagePathList);
-			System.out.println("temp2: "+temp2);
+			//System.out.println("temp2: "+temp2);
+			System.out.println("상품리스트: "+productlist);
+			
+			
 			//request.setAttribute("productvolist", volist);
-			request.setAttribute("product_img", imagePathList);
-			request.setAttribute("productinfo", temp2 );
-		}
+			//request.setAttribute("product_img", imagePathList);
+			//request.setAttribute("productinfo", temp2 );
+			// 이미지관련 추가 완료
+			}
+
+			// vo 관련 데이터 채우기
+			map1.put("productlist", productlist);
+			// search 관련 데이터 채우기
+			map1.put("searchKeyVo", searchKeyVo);
+			// page 관련 데이터 채우기
+			map1.put("startPage", startPage);
+			map1.put("endPage", endPage);
+			map1.put("pageCount", pageCount);
+			map1.put("currentPage", currentPage);
+			
+	//		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+			Gson gson = new GsonBuilder().create();
+			jsonResultMap = gson.toJson(map1);
+			System.out.println("jsonListVo"+jsonResultMap);
+			out.print(jsonResultMap);
+			out.flush();
+			out.close();
+		// 2021-10-07 수정완료
+
 	}
 }

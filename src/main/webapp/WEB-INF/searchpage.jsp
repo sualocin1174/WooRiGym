@@ -245,6 +245,7 @@
 		<div id="paging"></div> <!-- 2021.10.22 추가 SH -->
     </section>
     <footer>
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_footer.css"/>
     </footer>
 <script>
 // 디버깅용
@@ -263,6 +264,7 @@ console.log("${pageCount}");
 			2021.10.11 1차 내용삭제완료*/
 			console.log($("#minprice_input").val());
 			console.log($("#maxprice_input").val());
+			//console.log(${product_img});
 			$.ajax({
 				type:"post",
 				url:"<%=request.getContextPath()%>/slist.ajax",
@@ -278,10 +280,13 @@ console.log("${pageCount}");
 				},
 				datatype:"json",
 				success: function(data){
+					console.log(data.product_img);
+					console.log(data.product_test);
+					//console.log(data.product_test.index());
 					console.log(data);
-					for(var i = 0 ; i < data.productlist.lehgth; i++) {
+					/* for(var i = 0 ; i < data.productlist.lehgth; i++) {
 						console.log(data.productlist[i].productName);
-					}
+					} */
 					alert("상품이 검색되었습니다."); /* 2021.10.11 1차 내용수정 */
 					resultHtml(data);
 				},
@@ -294,21 +299,29 @@ console.log("${pageCount}");
     
     	function resultHtml(data){
 			var html="<table border='1' id='pageview'>";
-			
+				
+			/* var test_img;
+			$.each(data.product_img, function(a, img){
+				console.log(a);
+				console.log(img);
+					test_img = img;			
+				}); */
 			$.each(data.productlist, function(i, value){
 				console.log(i);
 				console.log(value);
-				html += "<tr>";
-				html += "<td>이미지 : " + value.productInfoUrl + "<br>";
-				html += "상품명 : " + value.productName + "<br>";
-				html += "옵션 : " + value.productOption + "<br>";
-				html += "가격 : " + value.price + "<br>";
-				html += "적립금 : " + value.price*0.05 + "<br><br>";
-				html += "</td></tr>";
+				// console.log(data.product_img);
+					html += "<tr>";
+					html += "<td>이미지 : <img src="+value.imagesFilePath[0]+" width='200' height='200'><br>";
+					html += "상품명 : " + value.productName + "<br>";
+					html += "옵션 : " + value.productOption + "<br>";
+					html += "가격 : " + value.price + "<br>";
+					html += "적립금 : " + value.price*0.05 + "<br><br>";
+					html += "</td></tr>";
 			});
 			html += "</table>";
 			$("#productItems").empty(); 
 			$("#productItems").append(html);
+			
 			
 			/* 2021-10-22 추가 paging */
 			$("#paging").empty();
