@@ -35,7 +35,7 @@ public class NoticeBoarderServlet extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		
 		final int PAGE_SIZE = 5; // 한 페이지 당 글 수
-		final int PAGE_BLOCK = 1; // 한 화면에 나타날 페이지 링크 수
+		final int PAGE_BLOCK = 3; // 한 화면에 나타날 페이지 링크 수
 		int nCount = 0;
 		int pageCount = 0; // 총 페이지 수
 		int startPage = 1; //화면에 나타날 시작 페이지

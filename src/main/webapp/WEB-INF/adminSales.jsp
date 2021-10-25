@@ -197,15 +197,35 @@ aside{
  	<h2>매출관리</h2>
  	<!-- 달력 -->
  	 <div id="btngroup">
-    <input type="date" id="start_date" class="date">
-    <input type="date" id="end_date" class="date">
+    <input type="date" name="start_date" id="start_date" class="date">
+    <input type="date" name="end_date" id="end_date" class="date">
    <!-- 기간 선택 버튼 -->
     <input type="button" class="button" value="1주일" id="1week">
     <input type="button" class="button" value="1개월" id="1month">
     <input type="button" class="button" value="3개월" id="3month">
-    <input type="button" class="button" value="6개월" id="6month">
+    <input type="button" class="button" value="6개월" id="6month"><br><br>
+    <input type="button" class="button" value="조회" id="search">
     <br>
     </div>
  	</section>
+ 	<script>
+ 		$("#search").click(searchF1);
+	
+ 		function searchF1(){
+ 			$.ajax({
+ 				type:"post",
+ 				url:"<%=request.getContextPath()%>/asales",
+ 				data:{
+ 					start_date : $("#start_date").val(),
+ 					end_date : $("end_date").val()
+ 				},
+ 				dataType:"json",
+ 				success : function(data){
+ 					
+ 				}
+ 			});
+ 		}
+ 		
+ 	</script>
 </body>
 </html>
