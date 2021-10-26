@@ -16,7 +16,7 @@ public class jdbcTemplate {
 		try {
 			Context initContext = new InitialContext();
 			Context envContext = (Context)initContext.lookup("java:/comp/env");  //Tomcat resource 설정을 찾기. server.xm;, context.xml
-			DataSource ds = (DataSource)envContext.lookup("jdbc/gymLocal"); //jdbc/gymLocal   //jdbc/gymDclass
+			DataSource ds = (DataSource)envContext.lookup("jdbc/gymDclass"); //jdbc/gymLocal   //jdbc/gymDclass
 			conn = ds.getConnection();
 			
 			if(conn!=null) System.out.println("DBCP JNDI 연결성공");

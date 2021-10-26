@@ -135,7 +135,7 @@
      		<ul>
          		<li>메인페이지</li>
          		<li><a href="amain">상품관리</a></li>
-         		<li><a href="apupage">팝업공지</a></li>
+         		<li><a href="apupage">공지사항 관리</a></li>
          		<li><a href="asales">매출관리</a></li>
          		<li><a href="#">주문내역 확인</a></li>
          		<li><a href="#">배송현황 관리</a></li>

@@ -122,6 +122,7 @@ function last6M(){
 	console.log("#start_date: "+$("#start_date"));
 	var startDate = $("#start_date").val();
 	var endDate =  $("#end_date").val();
+	var sum = 0;
 	console.log(startDate);
 	console.log(endDate);
 	
@@ -140,11 +141,12 @@ function last6M(){
 				if(data!=""){
 					var html = "";
 					for(var i=0; i<data.length;i++){
-						console.log(data[i]);
-						 html+= "<table><tr><th>매출 내역</th></tr>"
-							 + "<tr><td>"+data[i].order_payment+"<td></tr></table>";
-						
-					}$("#salesManagement").html(html);
+						sum += data[i].order_payment;
+						console.log(data[i]);		
+					}
+					html+= "<table><tr><th>해당 기간 동안의 총 매출</th></tr>"
+						 + "<tr><td>"+sum+"<td></tr></table>";
+					$("#salesManagement").html(html);
 				//resultHtml(data);
 				} 
 			},
@@ -265,7 +267,7 @@ aside{
      	<ul>
         	<li>메인페이지</li>
          	<li><a href="<%=request.getContextPath()%>/amain">상품관리</a></li>
-         	<li><a href="<%=request.getContextPath()%>/apupage">팝업공지</a></li>
+         	<li><a href="<%=request.getContextPath()%>/apupage">공지사항 관리</a></li>
          	<li><a href="<%=request.getContextPath()%>/asales">매출관리</a></li>
          	<li><a href="#">주문내역 확인</a></li>
          	<li><a href="#">배송현황 관리</a></li>
