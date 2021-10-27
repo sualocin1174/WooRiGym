@@ -58,7 +58,7 @@
         }
          #order_info tr:first-child>td {
             font-size: 50px;
-            padding: 45px;
+            padding: 30px;
         }
         #order_info tr:nth-child(2)>td{
             text-align: center;
@@ -145,17 +145,17 @@
 	<!-- 취소/교환/반품 -->
 <!-- 아래 0은 시범용(삭제예정) -->
 <li onclick="">
-    <span>취소:</span>
+    <span>취소 </span>
     <span>${MyCerlistVo.order_cancel}</span>
     건
 </li>
 <li onclick="">
-    <span>교환:</span>
+    <span>교환 </span>
     <span>${MyCerlistVo.order_change}</span>
     건
 </li>
 <li onclick="">
-    <span>반품:</span>
+    <span>반품 </span>
     <span>${MyCerlistVo.order_refund}</span>
     건
 </li>

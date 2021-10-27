@@ -36,6 +36,26 @@
          bottom: 170px;
          left: 260px;
      }
+       /* 나의 상품문의(Q&A) */
+      section > h2 {
+          margin: 20px;
+          text-align: center;
+      }
+       /* 상품문의(Q&A)내역 테이블 */
+      	#qnalist {
+		  width: 850px;
+          text-align: center;
+          margin: 25px 0 25px 0;
+          border-top: 1.5px solid black;
+          border-bottom: 1px solid #BDBDBD;
+          padding-bottom: 12px;
+        }
+        #qnalist th {
+      	padding: 10px;
+      	}
+        #qnalist td {
+      	padding: 8px;
+      	}
      #btngroup{
           text-align: center;
           margin-bottom: 20px;
@@ -82,17 +102,21 @@ console.log("<%=session.getAttribute("myQnA")%>");
 <section>
 <h2>나의 상품문의(Q&A)</h2>
 <c:if test="${myQnA != null || ''}">
-<table>
+<table id="qnalist">
 <tr>
-<th>번호 ${myQnA[0].q_no}<th> <!-- for문 돌리기!! -->
-</tr>
-<tr>
+<th>번호<th> 
 <th>카테고리<th>
-</tr>
-<tr>
 <th>제목<th>
 <th>문의 내용<th>
 </tr>
+<!--ArrayList니까 for문 돌리기!! -->
+<c:forEach items="${myQnA}" var = "qna">
+<tr>
+<td>${qna.q_no}<td>
+<td>${qna.q_category}<td>
+<td>${qna.q_title}<td>
+<td>${qna.q_content}<td>
+</c:forEach>
 </table>
 </c:if>
 <div id="btngroup">
