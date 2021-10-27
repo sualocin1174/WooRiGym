@@ -144,8 +144,8 @@ function last6M(){
 						sum += data[i].order_payment;
 						console.log(data[i]);		
 					}
-					html+= "<table><tr><th>해당 기간 동안의 총 매출</th></tr>"
-						 + "<tr><td>"+sum+"<td></tr></table>";
+					html += "<table id='selectsales'><tr><th>해당 기간 동안의 총 매출</th></tr>";
+					html +=	"<tr><td>"+sum+"원"+"<td></tr></table>";
 					$("#salesManagement").html(html);
 				//resultHtml(data);
 				} 
@@ -174,41 +174,50 @@ function last6M(){
 	
 </script>
 <style>
-  body{
-        font-family: 'Noto Sans KR', sans-serif;
-        }
-section {
+	body{
+	     font-family: 'Noto Sans KR', sans-serif;
+    }
+  	
+	#selectsales{
+		text-align:center;
+	}
+	section {
                 width: 900px;
                 padding: 0 0 30px 0;
                 position: relative;
 		        bottom: 250px;
 		        left: 260px;
-            }
-aside{
-	  display: inline-block;
+    }
+
+	aside{
+		display: inline-block;
 		padding: 30px 0 0 30px;
-}
-/* 매출관리 */
+	}
+
+	/* 매출관리 */
     section > h2 {
           margin: 20px;
           text-align: center;
    }
- /* 기간별 매출관리 검색 */
-      .date{
-      margin: 15px 10px;
-      padding: 4px;
-      }
-		#side-menu>ul>li{
-		    padding: 5px;
-		    list-style-type: none;
-		     }
+ 	/* 기간별 매출관리 검색 */
+   	.date{
+    	margin: 15px 10px;
+    	padding: 4px;
+    }
+	
+	#side-menu>ul>li{
+		padding: 5px;
+		list-style-type: none;
+	 }
 		     /* 메인페이지 폰트 크게 */
 		    #side-menu>ul>li:first-child{
 		         font-size: 25px;
 		    }
+		    
 		    input{
 			border: 2px solid #e7e7e7;
 			}
+			
 			input,
 			.btn {
 			  padding: 8px;
@@ -220,6 +229,7 @@ aside{
 			  line-height: 20px;
 			  text-decoration: none;
 			}
+			
 			input:hover,
 			.btn:hover {
 			  opacity: 1;
@@ -237,26 +247,32 @@ aside{
 	        color: black;
 	        border: 2px solid #e7e7e7;
 	        }
-
+			
+			#salesManagement{
+				margin-left:370px
+			}
+			
 	        .button:hover {
 	            background-color: #e7e7e7;
 	        }
 	        #btngroup{
       	 	 text-align: center;
          	 margin-bottom: 20px;
-      }
-      /* 조회 버튼 */
-        #search {
-        padding: 6px 32px;
-        margin: 4px 2px;
-        background-color: white;
-        color: black;
-        border: 2px solid #555555;
-        }
-        #search:hover {
-        background-color: #555555;
-        color: white;
-        }
+      		}
+      
+      		/* 조회 버튼 */
+       		 #search {
+        	padding: 6px 32px;
+        	margin: 4px 2px;
+        	background-color: white;
+        	color: black;
+        	border: 2px solid #555555;
+        	}
+        	
+        	#search:hover {
+        	background-color: #555555;
+        	color: white;
+        	}
 </style>
 </head>
 <body>
@@ -292,12 +308,9 @@ aside{
     <br>
     </div>
  	
- 		<div id="salesManagement">
- 		
- 		</div>
+ 	<br><br><br>
+ 	<div id="salesManagement" class="btngroup"></div>
  	
  </section>
- 	<!-- 공통푸터 템플릿 -->
-<%@ include file="template_footer.jsp"%>
 </body>
 </html>

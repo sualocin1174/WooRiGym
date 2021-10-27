@@ -46,7 +46,9 @@
 		#noticeBoard{
 			padding: 50px, 20px;
 			text-align:center;
+			margin-left:610px;
 		}
+
 </style>
 </head>
 <body>
@@ -86,6 +88,7 @@
             	</tbody>
         </table>
         </div>
+        <br>
 		<div class="paging">
         	<!-- <a href="#" class="bt">첫 페이지</a> --> 
             <!-- <a href="#" class="bt">이전 페이지</a>  -->

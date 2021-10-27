@@ -52,6 +52,7 @@
 			.btn:hover {
 			  opacity: 1;
 			}
+    		
 			/*검색, 추가, 수정, 삭제 버튼*/
 			.button{
 	        padding: 5px;
@@ -150,9 +151,9 @@
     <button type="button" id="btn_insert" class="button" name="btn_insert">추가</button>
     <button type="button" id="btn_update" class="button" name="btn_update">수정</button>
     <button type="button" id="btn_delete" class="button" name="btn_delete">삭제</button><br><br>
-	<div id="productList" style="display:none"></div>
+	<div id="productList" style="display:none" class="content"></div>
 	<br><br>
-	<div id = "productInsert" style="display:none">
+	<div id = "productInsert" style="display:none" class="content">
 		<form id="form1" name="form1" action="apadd" method="post" enctype="multipart/form-data">
 			<div id = "imgCollection">
 				<div id = "stepImgContainer">
@@ -228,7 +229,7 @@
 </section>
 
 <section>
-	<div id="productDelete" style="display:none">
+	<div id="productDelete" style="display:none" class="content">
 		<form id="formDelete" name="formDelete" method="post" action="apdelete">
 			<table id="pdelete" class="ptable">
 				<tr>
