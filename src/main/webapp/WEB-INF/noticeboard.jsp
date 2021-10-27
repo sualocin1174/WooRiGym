@@ -61,6 +61,7 @@
 	
 	<div id="noticeBoard" class="noticeBaord">
          <table border='1' class="board_list">
+         <br><br><br>
             	<thead>
             		<tr>
             			<th>공지사항 번호</th>
@@ -115,10 +116,5 @@
             %>
             <!-- <a href="#" class="bt">다음 페이지</a> <a href="#" class="bt">마지막 페이지</a> -->
          </div>
-	
-	<%@ include file="template_footer.jsp"%>
 </body>
-<script>
-	
-</script>
 </html>
