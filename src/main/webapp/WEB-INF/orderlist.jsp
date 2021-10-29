@@ -178,7 +178,7 @@
 		    	       		 +"<td>"+data[i].order_state+"</td>"
 		    	        	 +"</tr>";
     				if(data[i].order_state =='주문완료'){
-    					html += "<tr><td colspan='7'><button class='sub-button' id='cancel' onclick='cancel()'>주문취소</button></td></tr></table>";
+    					html += "<tr><td colspan='7'><button class='sub-button' id='cancel' onclick='cancel(\""+data[i].order_no+"\")'>주문취소</button></td></tr></table>";
     				}else if(data[i].order_state =='배송완료'){
     					html += "<tr><td colspan='7'><button class='sub-button' onclick='cinsert(\""+data[i].order_no+"\",\""+data[i].product_name+"\",\""+data[i].order_total+"\",\""+data[i].order_cost+"\")'>교환/환불</button></td></tr></table>";
     				}else {
@@ -202,9 +202,33 @@
 	};
 	//주문 취소 버튼 클릭 시
 	function cancel(order_no){
-		prompt("주문을 취소하시겠습니까?");
+		console.log(order_no);
+		if(confirm("주문을 취소하시겠습니까?")){
+			console.log("1");
+			$.ajax({
+	    		type: "post",
+	    		url: "<%=request.getContextPath()%>/ocancel",
+	    		data: {
+	    			order_no: order_no
+	    		},
+	    		dataType: "json", //전달받을 객체는 json이다.
+	    		success: function(data){
+	    			console.log(data);
+	    			console.log(data.length);
+	    			alert("주문이 취소되었습니다.");
+	    			location.href="<%=request.getContextPath()%>/orderlist";
+	    		},
+	    		error:function(request,status,error){
+	    			alert("code:"+request.status+"\n"+"message:"+request.responseText+
+	    					"\n"+"error:"+error);
+	    		}
+	    	});	
+		}else{
+			console.log("0");
+			
+		};
 		//TODO: 확인 클릭 -> alert("주문이 취소되었습니다."); & 진행상태->'주문취소'로 변경
-		location.href="<%=request.getContextPath()%>/ocancel?order_no="+order_no;
+		//location.href="<%=request.getContextPath()%>/ocancel?order_no="+order_no;
 	};
 	
 	

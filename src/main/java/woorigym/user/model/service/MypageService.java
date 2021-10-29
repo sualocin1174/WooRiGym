@@ -4,7 +4,7 @@ import java.sql.Connection;
 
 import static woorigym.common.jdbcTemplate.*;
 
-import woorigym.user.model.dao.MyCerlistVo;
+import woorigym.user.model.vo.MyCerlistVo;
 import woorigym.user.model.dao.MypageDao;
 import woorigym.user.model.vo.MyCoupon;
 import woorigym.user.model.vo.MyDeliveryVo;

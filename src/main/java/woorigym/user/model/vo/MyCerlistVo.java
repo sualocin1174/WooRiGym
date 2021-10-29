@@ -1,4 +1,4 @@
-package woorigym.user.model.dao;
+package woorigym.user.model.vo;
 
 public class MyCerlistVo {
 //	select sum(order_cancel) as order_cancel, sum(order_change) as order_change, sum(order_refund) as order_refund from

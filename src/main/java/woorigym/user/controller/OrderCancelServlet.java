@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import woorigym.user.model.service.OrderCancelService;
 import woorigym.user.model.service.OrderListService;
 import woorigym.user.model.vo.UserTable;
 
@@ -39,7 +43,24 @@ public class OrderCancelServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		UserTable userTableSessionAttr = (UserTable)request.getSession().getAttribute("loginSS"); // 10/13 수정
+		PrintWriter out = response.getWriter();
+		String uid = userTableSessionAttr.getUser_id();
+		System.out.println("user_id: "+uid);
+		String order_no = (String)request.getParameter("order_no");
+		
+		
+		
+		new OrderCancelService().cancelOrder(uid, order_no);
+		// 사용자의 정보를 JSON 형식으로 전달하기 위해 ContentType 변경
+				response.setContentType("application/json;charset=UTF-8");
+				Gson order_gob = new GsonBuilder().setPrettyPrinting().create();
+				String gobStr ="";
+				gobStr = order_gob.toJson("");
+				System.out.println(gobStr);
+				out.print(gobStr);
+				out.flush(); //현재 버퍼에 출력된 내용들을 클라이언트로 전송
+				out.close();
 	}
 
 }

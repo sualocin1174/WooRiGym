@@ -49,7 +49,7 @@
     text-align: center;
     margin-bottom: 15px;
     border-top: 1.5px solid black;
-    border-bottom: 1px solid #BDBDBD;
+    border-bottom: 1px solid black;
     }
     #qna_table th{
    	padding: 10px;
@@ -57,9 +57,18 @@
     #qna_table td {
     padding: 16px;
     }
-    input{
+    select#category{
+    padding: 5px;
+    }
+    input#title {
+    width: 400px;
     padding: 12px;
-	border: 2px solid #e7e7e7;
+	border-radius: 4px;
+	}
+	input#content {
+	padding: 12px;
+	width: 600px;
+	height: 400px;
 	border-radius: 4px;
 	}
 	#btngroup{
@@ -96,6 +105,36 @@
         color: white;
         }
 </style>
+<script>
+function write1(){
+	var category = $("#category").val();
+	var title = $("#title").val();
+	var content = $("#content").val();
+	console.log(category+title+content);
+	
+	$.ajax({
+		type: "post",
+		url: "<%=request.getContextPath()%>/qna_write",
+		data: {
+			category : category,
+			title	: title,
+			content : content
+		},
+		dataType: "json", //전달받을 객체는 json이다.
+		success: function(data){
+			console.log(data);
+			console.log(data.length);
+			alert("상품문의글이 등록되었습니다.")
+			location.href ="<%=request.getContextPath()%>/qnalist"
+		},
+		error:function(request,status,error){
+			alert("code:"+request.status+"\n"+"message:"+request.responseText+
+					"\n"+"error:"+error);
+		}
+	});
+};
+
+</script>
 </head>
 <body>
 <!-- 공통헤더 템플릿 -->
@@ -106,20 +145,26 @@
 <h2>상품문의(Q&A)</h2>
 <table id="qna_table">
 <tr>
+<th>카테고리</th>
+<td><select id="category">
+<option value="교환">교환</option>
+<option value="환불">환불</option>
+<option value="기타">기타</option>
+</select></td>
 <th>문의 제목</th>
-<td><input type='text'></td>
+<td colspan="2"><input type='text' id="title"></td>
 </tr>
+<!--  <tr>
+<th colspan="4">문의 내용</th>
+</tr>-->
 <tr>
-<th>문의 내용</th>
-<td><input type='text'></td>
-</tr>
-<tr>
-<th></th>
-<td><div id="btngroup">
-<a><input type="submit" class="button" value="등록하기" id="qna_btn"></a>
-</div></td>
+<th>문의<br>내용</th>
+<td colspan="3"><input type='text' id="content"></td>
 </tr>
 </table>
+<div id="btngroup">
+<input type="submit" class="button" value="등록하기" id="qna_btn" onclick="write1()" placeholder="제목을 입력하세요">
+</div>
 </section>
 <!-- 공통푸터 템플릿 -->
 <%@ include file="template_footer.jsp"%>

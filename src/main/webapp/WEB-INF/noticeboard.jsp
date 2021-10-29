@@ -46,9 +46,7 @@
 		#noticeBoard{
 			padding: 50px, 20px;
 			text-align:center;
-			margin-left:610px;
 		}
-
 </style>
 </head>
 <body>
@@ -61,7 +59,6 @@
 	
 	<div id="noticeBoard" class="noticeBaord">
          <table border='1' class="board_list">
-         <br><br><br>
             	<thead>
             		<tr>
             			<th>공지사항 번호</th>
@@ -89,7 +86,6 @@
             	</tbody>
         </table>
         </div>
-        <br>
 		<div class="paging">
         	<!-- <a href="#" class="bt">첫 페이지</a> --> 
             <!-- <a href="#" class="bt">이전 페이지</a>  -->
@@ -116,5 +112,10 @@
             %>
             <!-- <a href="#" class="bt">다음 페이지</a> <a href="#" class="bt">마지막 페이지</a> -->
          </div>
+	
+	<%@ include file="template_footer.jsp"%>
 </body>
+<script>
+	
+</script>
 </html>

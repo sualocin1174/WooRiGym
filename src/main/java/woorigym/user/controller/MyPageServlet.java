@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import woorigym.user.model.dao.MyCerlistVo;
+import woorigym.user.model.vo.MyCerlistVo;
 import woorigym.user.model.service.MypageService;
 import woorigym.user.model.service.OrderListService;
 import woorigym.user.model.vo.MyCoupon;

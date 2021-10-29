@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import static woorigym.common.jdbcTemplate.*;
 
+import woorigym.user.model.vo.MyCerlistVo;
 import woorigym.user.model.vo.MyCoupon;
 import woorigym.user.model.vo.MyDeliveryVo;
 import woorigym.user.model.vo.UserTable;
