@@ -180,7 +180,8 @@
     				if(data[i].order_state =='주문완료'){
     					html += "<tr><td colspan='7'><button class='sub-button' id='cancel' onclick='cancel(\""+data[i].order_no+"\")'>주문취소</button></td></tr></table>";
     				}else if(data[i].order_state =='배송완료'){
-    					html += "<tr><td colspan='7'><button class='sub-button' onclick='cinsert(\""+data[i].order_no+"\",\""+data[i].product_name+"\",\""+data[i].order_total+"\",\""+data[i].order_cost+"\")'>교환/환불</button></td></tr></table>";
+    					html += "<tr><td colspan='7'><button class='sub-button' onclick='cinsert(\""+data[i].order_no+"\",\""+data[i].product_name+"\",\""+data[i].order_total+"\",\""+data[i].order_cost+"\")'>교환/환불</button></td>";
+    					html += "<td colspan='7'><button class='sub-button' onclick='rwrite(\""+data[i].order_no+"\",\""+data[i].product_name+"\")'>상품후기</button></td></tr></table>";
     				}else {
     					html += "</table>";
     				}
@@ -234,6 +235,10 @@
 	
 	function cinsert(order_no,product_name,order_total,order_cost){
 		 location.href="<%=request.getContextPath()%>/cinsert?order_no="+order_no+"&product_name="+product_name+"&order_total="+order_total+"&order_cost="+order_cost;
+	}
+	
+	function rwrite(order_no,product_name){
+		location.href="<%=request.getContextPath()%>/rwrite?order_no="+order_no+"&product_name="+product_name;
 	}
     </script>
  <!-- /* content */ -->

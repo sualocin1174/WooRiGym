@@ -25,7 +25,7 @@
             <li><a href="<%=ctxPath %>/logout">로그아웃</a></li>
             <li><a href="<%=ctxPath %>/mypage" id="btnmy">마이페이지</a></li> 
             <li><a href="<%=ctxPath %>/sblist">장바구니</a></li>
-           <!--  <li><a href="#">최근본상품</a></li> -->
+           <li><a href="#">최근본상품</a></li> 
         </ul>
     </div> 
     </c:if> <!-- 21.10.23 검색버튼 네비게이션바로 이동 SH -->

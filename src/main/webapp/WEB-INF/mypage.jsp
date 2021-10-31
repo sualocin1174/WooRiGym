@@ -14,6 +14,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="java.util.ArrayList"%>
+<%@page import="woorigym.product.model.vo.ProductTable"%>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -163,9 +165,22 @@
 <h3 class="recent_product">최근 본 상품</h3>
 <div class="recent_product">
 	<!-- TODO: 이미지 경로 수정 -->
-    <img src="./images/01번 메인 841,500.jpg">
-    <img src="./images/1번 메인.jpg">
-    <img src="./images/01번 메인_2.jpg">
+	<%
+	ArrayList<ProductTable> products = new ArrayList();
+	request.setAttribute("recentImages",products);
+	ProductTable vo = new ProductTable();
+	vo.setProductInfoUrl("./images/01번 메인_2.jpg");
+	
+	ArrayList<ProductTable> images = (ArrayList)request.getAttribute("recentImages");
+	images.add(vo);
+	if(images == null){
+		out.println("최근 본 상품이 없습니다.");
+	} else{
+		for(ProductTable product : images)
+		out.println("<img src='"+product.getProductInfoUrl()+"'>");
+	}
+	%>
+   
 </div>
 </section>
 <!-- 공통푸터 템플릿 -->
