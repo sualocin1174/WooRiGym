@@ -42,7 +42,7 @@
 	<!--마이페이지 공통사이드 템플릿 -->
  	<%@ include file="template_mypage_aside.jsp"%>
 <section>
-<form action="<%=request.getContextPath()%>/rwrite" method="post" enctype=" multipart/form-data">
+<form action="<%=request.getContextPath()%>/rwrite" method="post" enctype="multipart/form-data">
 <table>
 <tr>
 <th>후기 내용</th>
@@ -55,8 +55,8 @@
 <option value="5" selected>★★★★★</option>
 </select></td>
 <td><input type="file" name="review_img"></td>
-<td><input type="button" value="파일첨부"></td>
 <td><input type="submit" value="등록"></td>
+<input type="text" name= "order_no" value="${order_no}">
 <th></th>
 </tr>
 

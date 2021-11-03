@@ -2,6 +2,7 @@ package woorigym.review.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -15,6 +16,8 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
+import woorigym.review.model.service.ReviewWriteService;
+import woorigym.review.model.vo.ReviewListVo;
 import woorigym.user.model.vo.UserTable;
 
 
@@ -38,6 +41,7 @@ public class ReviewWriteServlet extends HttpServlet {
 					return;
 			}	String uid = loginSS.getUser_id();
 			System.out.println("uid: "+uid);
+			request.setAttribute("order_no", request.getParameter("order_no"));
 			String viewPage = "/WEB-INF/review_write.jsp";
 		request.getRequestDispatcher(viewPage).forward(request, response);
 	}
@@ -54,10 +58,7 @@ public class ReviewWriteServlet extends HttpServlet {
 			}	String uid = loginSS.getUser_id();
 			System.out.println("uid: "+uid);
 			
-			String r_content = request.getParameter("r_content");
-			String score = request.getParameter("score");
-			System.out.println(r_content);
-			System.out.println(score);
+		
 			 String fileSavePath = "images"; 
 			 int uploadSizeLimit = 10 * 1024 * 1024;
 			 String encType = "UTF-8"; 
@@ -67,6 +68,8 @@ public class ReviewWriteServlet extends HttpServlet {
 			String uploadPath = context.getRealPath(fileSavePath);
 			
 			System.out.println(uploadPath); 
+			
+			//MultipartRequest file = 단순 파일업로드 뿐 아니라 값을 request에서 쪼개주는 역할
 			MultipartRequest file = new MultipartRequest(request,
 					uploadPath, // 서버 상 업로드 될 디렉토리 
 			        uploadSizeLimit, // 업로드 파일 크기 제한
@@ -74,16 +77,31 @@ public class ReviewWriteServlet extends HttpServlet {
 			        new DefaultFileRenamePolicy() // 동일 이름 존재 시 새로운 이름 부여 방식
 			        );
 			// 업로드 된 파일 이름 얻어오기 
-		    String img = file.getFilesystemName("uploadFile");
+			Enumeration enumerations = file.getFileNames();
+			String fileName = (String)enumerations.nextElement();
+			String img = file.getFilesystemName(fileName);
+		    System.out.println(img);
 		    if (img == null) { 
 		      // 업로드 실패 시 
 		      System.out.println("업로드 실패");
 		      } else { 
-		      // 업로드 성공 시 
-		      out.println("<br> 글쓴이 : " + file.getParameter("name")); 
-		      out.println("<br> 제목 : " + file.getParameter("title")); 
-		      out.println("<br> 첨부파일명 : " + img); 
-		      out.println("<br> 업로드 성공!!!");     } 
+		    		String r_content = file.getParameter("r_content"); //평소엔 request객체에서 꺼내 썼지만 이번엔 multipart/form-data 때문에!! 
+					String score = file.getParameter("score");
+					String order_no = file.getParameter("order_no");
+					System.out.println(r_content);
+					System.out.println(score);
+					System.out.println(order_no);
+					
+					ReviewListVo vo = new ReviewListVo();
+					vo.setrContent(r_content);
+					vo.setScore((Integer.parseInt(score)));
+					vo.setrImg(img);
+					//vo.setOrderDetailNo(order_no);
+					
+					new ReviewWriteService().reviewWrite(vo);
+		      } 
+		    
+		   
 	}
 
 }
