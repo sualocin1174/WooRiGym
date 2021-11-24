@@ -16,7 +16,7 @@ public class OpenView extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String viewPage = "/WEB-INF/qna_write.jsp";
+		String viewPage = "/WEB-INF/product_detail.jsp";
 		//확인하고 싶은 jsp 경로만 수정하고 Ctrl+F11(실행)
 		request.getRequestDispatcher(viewPage).forward(request, response);
 	}

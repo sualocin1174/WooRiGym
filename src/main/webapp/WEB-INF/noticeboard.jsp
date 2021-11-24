@@ -37,16 +37,32 @@
         td{
         	text-align:center;
         }
-		
+		#title{
+			background: #FFE4B5;
+		}
 		.paging {
 			padding: 50px, 20px;
 			text-align:center;	
 		}
 		
 		#noticeBoard{
-			padding: 50px, 20px;
-			text-align:center;
+			position: absolute;
+			left: 30%;
 		}
+		table{
+			border-left: none;
+			border: 3;
+		}
+		
+		#tid{
+			
+			border: 1 solid black;
+			border-left: none;
+		}
+		td{
+			width: 25%
+		}
+		
 </style>
 </head>
 <body>
@@ -58,9 +74,9 @@
 	%>
 	
 	<div id="noticeBoard" class="noticeBaord">
-         <table border='1' class="board_list">
+         <table class="board_list">
             	<thead>
-            		<tr>
+            		<tr id="title">
             			<th>공지사항 번호</th>
                  	 	<th>제목</th>
                  	 	<th>내용</th>
@@ -68,7 +84,7 @@
                		</tr>
             	</thead>
             	
-            	<tbody>
+            	<tbody id="tid">
             		<tr>
             			<%
                 			if (noticelist != null) {
@@ -86,6 +102,7 @@
             	</tbody>
         </table>
         </div>
+        <p><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></p>
 		<div class="paging">
         	<!-- <a href="#" class="bt">첫 페이지</a> --> 
             <!-- <a href="#" class="bt">이전 페이지</a>  -->
@@ -111,8 +128,8 @@
                }
             %>
             <!-- <a href="#" class="bt">다음 페이지</a> <a href="#" class="bt">마지막 페이지</a> -->
+            
          </div>
-	
 	<%@ include file="template_footer.jsp"%>
 </body>
 <script>

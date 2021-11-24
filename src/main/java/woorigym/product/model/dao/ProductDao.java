@@ -89,13 +89,13 @@ public class ProductDao {
 		System.out.println("product 리턴은" + productlist);
 		return productlist;
 	}
-	public int addProduct(Connection conn, ProductTable productVo, ArrayList<ProductOptionTable> productOption, ArrayList<ProductImgTable> productImg) {
+	public int addProduct(Connection conn, ProductTable productVo) {
 		int result = -1;
 		PreparedStatement pstmt = null;
 		
 		String productsql = "INSERT INTO PRODUCT VALUES(?,?,?,?,?,?,?,?)";
-		String optionsql = "INSERT INTO PRODUCT_OPTION VALUES(PRODUCT_OPTION_SEQ.NEXTVAL,?,?)";
-		String imgsql = "INSERT INTO PRODUCT_IMG VALUES(PRODUCT_IMG_SEQ.NEXTVAL, ?, ?)";
+//		String optionsql = "INSERT INTO PRODUCT_OPTION VALUES(PRODUCT_OPTION_SEQ.NEXTVAL,?,?)";
+//		String imgsql = "INSERT INTO PRODUCT_IMG VALUES(PRODUCT_IMG_SEQ.NEXTVAL, ?, ?)";
 		
 		try {
 			pstmt = conn.prepareStatement(productsql);
@@ -112,24 +112,24 @@ public class ProductDao {
 			jdbcTemplate.close(pstmt);
 			
 			System.out.println("productVo:"+ productVo);
-			System.out.println("productOption:"+ productOption);
-			System.out.println("여기 몇번? "+ productOption.get(0).getOptionContent());
+//			System.out.println("productOption:"+ productOption);
+//			System.out.println("여기 몇번? "+ productOption.get(0).getOptionContent());
 			
-			pstmt=conn.prepareStatement(optionsql);
-			for(int i=0; i<productOption.size(); i++) {
-				pstmt.setString(1, productVo.getProductNo());
-				pstmt.setString(2, productOption.get(i).getOptionContent());
-				result=pstmt.executeUpdate();
-			}
-			jdbcTemplate.close(pstmt);
+//			pstmt=conn.prepareStatement(optionsql);
+//			for(int i=0; i<productOption.size(); i++) {
+//				pstmt.setString(1, productVo.getProductNo());
+//				pstmt.setString(2, productOption.get(i).getOptionContent());
+//				result=pstmt.executeUpdate();
+//			}
+//			jdbcTemplate.close(pstmt);
 			
-			for(int i=0; i<productImg.size(); i++) {
-				pstmt=conn.prepareStatement(imgsql);
-				pstmt.setString(1, productVo.getProductNo());
-				pstmt.setString(2, productImg.get(i).getImgAddress());
-				result = pstmt.executeUpdate();
-			}
-			jdbcTemplate.close(pstmt);
+//			for(int i=0; i<productImg.size(); i++) {
+//				pstmt=conn.prepareStatement(imgsql);
+//				pstmt.setString(1, productVo.getProductNo());
+//				pstmt.setString(2, productImg.get(i).getImgAddress());
+//				result = pstmt.executeUpdate();
+//			}
+//			jdbcTemplate.close(pstmt);
 			
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -200,5 +200,40 @@ public class ProductDao {
 			jdbcTemplate.close(pstmt);
 		}
 		return result;
+	}
+	
+	public ProductTable ProdectDetailList(Connection conn, String productName){
+		ProductTable vo = new ProductTable();
+		String sql = "select * from product where product_name=?";
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, productName);
+			rset = pstmt.executeQuery();
+			System.out.println("product-1");
+			if(rset.next()) {
+				System.out.println("product-2");
+				do {
+					vo.setProductNo(rset.getString("PRODUCT_NO"));
+					vo.setProductName(rset.getString("PRODUCT_NAME"));
+					vo.setParentCategory(rset.getString("PARENT_CATEGORY"));
+					vo.setChildCategory(rset.getString("CHILD_CATEGORY"));
+					vo.setQuantity(rset.getInt("QUANTITY"));
+					vo.setPrice(rset.getInt("PRICE"));
+					vo.setProductInfoUrl(rset.getString("PRODUCT_INFO_URL"));
+					vo.setProductOption(rset.getString("PRODUCT_OPTION"));
+					System.out.println("product-3");
+				} while(rset.next());
+			}
+		} catch(Exception e) {
+			System.out.println("product-4");
+			e.printStackTrace();
+		} finally {
+				jdbcTemplate.close(rset);
+				jdbcTemplate.close(pstmt);
+			}
+		System.out.println("product 리턴은" + vo);
+		return vo;
 	}
 }

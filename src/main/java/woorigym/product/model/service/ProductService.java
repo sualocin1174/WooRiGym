@@ -3,6 +3,8 @@ package woorigym.product.model.service;
 import static woorigym.common.jdbcTemplate.getConnection;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import woorigym.admin.model.vo.ProductImgTable;
@@ -37,11 +39,11 @@ public class ProductService {
 		return productlist;
 	}
 	
-	public int addProduct(ProductTable productVo, ArrayList<ProductOptionTable> productOption, ArrayList<ProductImgTable> productImg){
+	public int addProduct(ProductTable productVo){
 		int result = -1;
 		Connection conn = getConnection();
 
-		result = new ProductDao().addProduct(conn, productVo, productOption, productImg);
+		result = new ProductDao().addProduct(conn, productVo);
 			
 		jdbcTemplate.close(conn);
 		return result; //오류발생:-1 상품등록성공:1, 상품등록실패:0. 기존에 등록되어 있던 상품:2 
@@ -70,6 +72,13 @@ public class ProductService {
 		
 		jdbcTemplate.close(conn);
 		return result;
+	}
+	
+	public ProductTable select(String productName) {
+		Connection conn = getConnection();
+		ProductTable vo = new ProductDao().ProdectDetailList(conn, productName);
+		jdbcTemplate.close(conn);
+		return vo;
 	}
 	
 }

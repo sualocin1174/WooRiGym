@@ -27,17 +27,20 @@
 }
  body{
     font-family: 'Noto Sans KR', sans-serif;
+    text-align: center;
+}
+footer{
+	margin: 0 auto;
+	text-align: center;
 }
 			.box{
 					flex-wrap: nowrap;
 					justify-content: center;
-					
 			}
             section {
                 width: 1200px;
                 padding: 30px 0 30px 0;
                 margin: 0 auto;
-                
             }
         
         /* 신상품 | 인기상품 | 타임세일 */

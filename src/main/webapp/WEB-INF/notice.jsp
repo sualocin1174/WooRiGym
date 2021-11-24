@@ -123,6 +123,24 @@
 		    #side-menu>ul>li:first-child{
 		         font-size: 25px;
 		    }
+		    
+		    #title{
+		    	background: #FFE4B5;
+		    }
+		    #noticeList{
+		    
+		    }
+		    #tsearch{
+		    	border-left: none;
+				border: 3;
+		    }
+		    #tid{
+		    	border: 1 solid black;
+				border-left: none;
+		    }
+		    .tdclass{
+		    	width: 25%;
+		    }
 	</style>
 </head>
 <body>
@@ -154,7 +172,7 @@
 	</section>
 	
 	<section>
-		<div id="noticeList" style="display:none"></div>
+		<div id="noticeList"></div>
 	</section>
 	
 	<section>
@@ -255,20 +273,24 @@
 	
 	function resultHtml1(data){
 		var html="<table border='1' id='tsearch'>";
-		html += "<tr>";
+		html += "<thead>";
+		html += "<tr id ='title'>";
 		html += "<th>공지사항번호</th>";
 		html += "<th>제목</th>";
 		html += "<th>내용</th>";
 		html += "<th>작성일</th>";
 		html += "</tr>";
+		html += "</thead>";
 		
 		$.each(data, function(key, value){
+			html += "<tboby id='tid'>";
 			html += "<tr>";
-			html += "<td>" + value.notice_no + "</td>";
-			html += "<td>" + value.n_title + "</td>";
-			html += "<td>" + value.n_content + "</td>";
-			html += "<td>" + value.n_date + "</td>";
+			html += "<td class='tdclass'>" + value.notice_no + "</td>";
+			html += "<td class='tdclass'>" + value.n_title + "</td>";
+			html += "<td class='tdclass'>" + value.n_content + "</td>";
+			html += "<td class='tdclass'>" + value.n_date + "</td>";
 			html += "</tr>";
+			html += "</tboby>";
 		});
 		
 		html += "</table>";

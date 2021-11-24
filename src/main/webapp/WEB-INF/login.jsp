@@ -167,5 +167,4 @@ input:hover,
                 </div>
         </body>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/template_footer.css"/>
-<%@ include file="template_footer.jsp"%>
         </html>

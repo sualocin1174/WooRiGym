@@ -35,11 +35,8 @@
     <style> /* 2021.10.08 1차 추가시작 */
         /* content */
         section {
-            width: 900px;
             padding: 30px 0 30px 0;
-            position: relative;
-            bottom: 170px;
-            left: 300px;
+            text-align: center;
         }
         aside {
             padding: 30px 0 0 30px;
@@ -198,6 +195,14 @@
       	#pageview a:hover{
       	background: #FEA500;
       	}
+      	.test{
+      	width: 340px;
+      	height: 285px;
+      	width: 25%;
+      	float: left!important;
+      	margin: 10px 0 20px 0;
+      	text-align: center;
+      	}
 	/* 2021.10.22 추가완료 SH */
     </style> <!-- 2021.10.08 1차 추가완료 -->
     </head>
@@ -243,7 +248,11 @@
     	<h2 id="productlist">상품목록</h2> <!-- 2021.10.08 1차 내용추가 및 추가완료 -->
     	<!-- 2021.10.11 1차 추가완료 -->
     	<div id="productItems"></div>  <!-- 2021.10.22 추가 SH -->
+    	<p><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    	<br><br><br><br><br><br><br><br><br><br><br><br><br><br></p>
 		<div id="paging"></div> <!-- 2021.10.22 추가 SH -->
+		<p><br><br><br><br></p>
     </section>
     <footer>
     <%@ include file="template_footer.jsp"%>
@@ -299,7 +308,7 @@ console.log("${pageCount}");
 		});
     
     	function resultHtml(data){
-			var html="<table border='1' id='pageview'>";
+			var html="";
 				
 			/* var test_img;
 			$.each(data.product_img, function(a, img){
@@ -311,15 +320,14 @@ console.log("${pageCount}");
 				console.log(i);
 				console.log(value);
 				// console.log(data.product_img);
-					html += "<tr>";
-					html += "<td>이미지 : <img src="+value.imagesFilePath+" width='200' height='200'><br>";
+					html += "<div class = 'test'>";
+					html += "<img src="+value.imagesFilePath+" width='200' height='200'><br>";
 					html += "상품명 : " + value.productName + "<br>";
 					html += "옵션 : " + value.productOption + "<br>";
 					html += "가격 : " + value.price + "<br>";
 					html += "적립금 : " + value.price*0.05 + "<br><br>";
-					html += "</td></tr>";
+					html += "</div>";
 			});
-			html += "</table>";
 			$("#productItems").empty(); 
 			$("#productItems").append(html);
 			

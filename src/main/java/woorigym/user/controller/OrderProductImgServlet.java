@@ -113,9 +113,6 @@ public class OrderProductImgServlet extends HttpServlet {
 								System.out.println("details:" + details);
 								break;
 							}
-							
-							
-							
 
 						}
 					} // 반복 끝

@@ -1,7 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <style>
+    	footer{
+    		text-align: center;
+    		margin: 0 auto;
+    	}
+    	div  {
+    		text-align: center;
+    	}
+    </style>
     <footer>
-        <div>
+       <div>
             <span>
                 <h4>고객센터 C/S center</h4><br>
                 전화 : 02-123-1234 <br>
@@ -30,11 +39,5 @@
                 <br><br>
                 
             </span>
-            
-
-            
-    
-          
         </div>
-      
     </footer>

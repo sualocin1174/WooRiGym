@@ -14,25 +14,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>우리짐 케틀벨페이지</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <style>
-        /* reset */
-        * {
-            margin: 0;
-            padding: 0;
-        }
-      	/* On smaller screens, decrease text size */
-			@media only screen and (min-width: 960px) and (max-width: 1200px){
-			  .text {font-size: 11px}
-			}
-    </style>
     <style> /* 2021.10.08 1차 추가시작 */
         /* content */
         section {
-            width: 900px;
             padding: 30px 0 30px 0;
-            position: relative;
-            bottom: 170px;
-            left: 300px;
+            text-align: center;
         }
         aside {
             padding: 30px 0 0 30px;
@@ -40,7 +26,11 @@
 		
 		div#searchmenubar > div {
 			padding: 30px 0 0 30px;
-			float: left;
+			
+		}
+		
+		footer {
+			text-align: center;
 		}
 
 		h2#productlist {
@@ -50,7 +40,6 @@
 		
 		/* 2021.10.11 1차 추가시작 */
 		section {
-			position: relative; 
 			top: 0;
 			text-align: center;
 		}
@@ -176,18 +165,33 @@
 		/* 페이징 버튼 */
       	#paging{
       	text-align: center;
+      	width: 100%;
+      	position: relative;
       	}
       	#paging a{
       	padding: 4px 4px 4px 8px;
       	margin: 5px;
       	background: #2F4858;
       	color: white;
+      	position: relative;
       	}
       	#paging a:last-child {
       	padding: 4px 8px;
       	}
       	#paging a:hover{
       	background: #FEA500;
+      	}
+      	#row{
+      	}
+      	#productItems{
+      	}
+      	.test{
+      	width: 340px;
+      	height: 285px;
+      	width: 25%;
+      	float: left!important;
+      	margin: 10px 0 10px 0;
+      	text-align: center;
       	}
 	/* 2021.10.22 추가완료 SH */
     </style> <!-- 2021.10.08 1차 추가완료 -->
@@ -200,7 +204,9 @@
     <section>
     	<h2 id="productlist">케틀벨 상품목록</h2>
     	<div id="productItems"></div>
+		<p><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></p>
 		<div id="paging"></div>
+		<p><br><br><br><br></p>
     </section>
     <footer>
     	<%@ include file="template_footer.jsp"%>
@@ -260,21 +266,24 @@ console.log($("#producttest").val());
 			});
 		};
     
-    	function resultHtml(data){
-			var html="<table border='1' id='pageview'>";
-			
+		function resultHtml(data){
+			var html="";
 			$.each(data.productlist, function(i, value){
+				var str = "\""+value.productName+"\"";
 				console.log(i);
-				console.log(value);
-				html += "<tr>";
-				html += "<td>이미지 : <img src="+value.imagesFilePath+" width='200' height='200'><br>";
+				console.log("상품 값 --> "+str);
+				html += "<form name='fom' method='post' action='pdetailview'>" ;
+				html += "<div id =img"+i+" name = img"+i+" class = 'test'>";
+				html += "<input type ='hidden' value = "+str+" name='productName'>";
+				html += "<input type ='hidden' value = "+value.imagesFilePath+" name='productImg'>";
+				html += "<button type='submit'><img src="+value.imagesFilePath+" width='200' height='200'></button><br>";
 				html += "상품명 : " + value.productName + "<br>";
 				html += "옵션 : " + value.productOption + "<br>";
 				html += "가격 : " + value.price + "<br>";
 				html += "적립금 : " + value.price*0.05 + "<br><br>";
-				html += "</td></tr>";
+				html += "</div>";
+				html += "</form>";
 			});
-			html += "</table>";
 			$("#productItems").empty(); 
 			$("#productItems").append(html);
 			

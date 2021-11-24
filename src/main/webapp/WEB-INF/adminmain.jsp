@@ -160,7 +160,7 @@
 					<label>이미지 추가</label>
 					<img src="./alt.JPS" name="stepImg_1" id="stepImg_1">
 					<input type="file"name="uploadStepImg_1" required="required">
-            		<input name="addButton" type="button" id="img_btn" value="추가"><br><br>
+            		<!-- <input name="addButton" type="button" id="img_btn" value="추가"><br><br> -->
 				</div>
 			</div>
 			<input type="hidden" name="optionCount" id="optionCount" readonly value="1">
@@ -168,7 +168,7 @@
 	
 			<div id="productOption" >
 				<label>상품 번호</label>
-				<input type="text" name="productNo1" id="productNo1" required="required" placeholder="상품 번호를 입력해주세요."><br><br>
+				<input type="text" name="productNo" id="productNo1" required="required" placeholder="상품 번호를 입력해주세요."><br><br>
 		
         		<label>상품명</label>
         		<input type="text" name="productName" id="productName" required="required" placeholder="상품명을 입력해주세요."><br><br>

@@ -144,11 +144,71 @@
 			}
 				
 			});
-			//모두 입력 되어있으면 회원가입
+			//빈칸이 있을 때 다시 유효성 검사진행
 			
 			$("#joinbtn").on("click", function(){
-				var genderck = $(".gender").val();
-				var emailyn= $(".emailyn").val();
+				
+			 /* 	var name = $("#name").val();
+				var phone1 = $("#phone01").val();
+				var phone2 = $("#phone02").val();
+				var phone3 = $("#phone03").val();
+				var identity_number = $("identity_number").val();
+				
+				var male = $("male").val();
+				var female = $("female").val();
+				var birthday_yy = $("birthday_yy").val();
+				var birthday_mm = $("birthday_mm").val();
+				var birthday_dd = $("birthday_dd").val();
+				var email_1 = $("email_1").val();
+				var email_2 = $("email_2").val();
+				var email_yes = $("email_yes").val();
+				var email_no = $("email_no").val();
+				var sample6_postcode $("sample6_postcode").val();
+				
+				
+				var nameregex = /[가-힣]{2,}/;
+				var phone1regex = /^01[016789]$/;
+				var phone2regex = /[0-9]{3}$/;
+				var phone3regex = /[0-9]{3}$/;
+				var identity_numberregex = /^[1-4][0-9]{6}$/;
+				  */
+				/* nameregex = nameregex.test(name);
+				if(nameregex == false){
+					alert("이름을 다시 확인해주세요");
+					return;
+				}
+				phone1regex = phone1regex.test(phone1);
+				if(phone1regex == false){
+					alert("휴대폰 번호 앞 3자리를 확인해주세요");
+					return;
+				}
+				phone2regex == phone2regex.test(phone2);
+				if(phone2regex == false){
+					alert("휴대폰  번호를 확인해주세요");
+					return;
+				}
+				phone3regex == phone2regex.test(phone3);
+				if(phone3regex == false){
+					alert("휴대폰  번호를 확인해주세요");
+					return;
+				}
+				identity_numberregex == identity_numberregex.test(identity_numberregex);
+				if(identity_numberregex == false){
+					alert("주민등록번호를 확인해주세요");
+					return;
+				} */
+				
+				/* console.log(male);
+				console.log(female);
+				console.log(birthday_yy);
+				console.log(birthday_mm);
+				console.log(birthday_dd);
+				console.log(email_1);
+				console.log(email_2);
+				console.log(email_yes);
+				console.log(email_no);
+				console.log(sample6_postcode);
+ */
 				
 				  if(result == true && idck == 0 && genderck != null && emailyn != null){
 					alert("회원가입이 완료되었습니다.");

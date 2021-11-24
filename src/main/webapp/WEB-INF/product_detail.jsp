@@ -1,4 +1,8 @@
 <!-- 웹폰트: Noto Sans Korean -->
+<%@page import="java.text.NumberFormat"%>
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="woorigym.product.model.vo.ProductTable"%>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
@@ -9,6 +13,14 @@
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+<%@page import = "woorigym.user.model.vo.UserTable" %>
+    <%
+    UserTable user = (UserTable)session.getAttribute("loginSS");
+  %>
+  <%String img = (String) request.getAttribute("img"); %>
+  <%ProductTable productVo = (ProductTable) request.getAttribute("prodectInfo");
+ 
+  %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,9 +60,9 @@
         div.product_info{
             width: 400px;
             display: inline-block;
-            position: absolute;
-            top: 250px;
-            left: 800px;
+            position: relative;
+            top: -100px;
+            
         }
         div.product_info li{
            padding: 5px;
@@ -132,22 +144,30 @@
  	<%@ include file="template_header.jsp"%>
 <div id="content">
 	<section>
-        <img class="thumbnail_img" src="./images/1번 메인.jpg">
+    <img class="thumbnail_img" src="<%=img %>">
     <div class="product_info">
     <ul><!-- TODO -->
-    <li><h1>랫 풀 다운</h1></li>
-    <li><h3>CARDIO-SB-001</h3></li>
-    <li><h2>가격: 1,686,000원</h2></li>
-    <li><h4>16,860원 적립</h4></li>
+    <li><h1><%=productVo.getProductName()%></h1></li>
+    <li><h3><%=productVo.getProductNo()%></h3></li>
+    <%DecimalFormat formatter = new DecimalFormat("###,###,###");
+    	String price= formatter.format(productVo.getPrice());
+    	String point = formatter.format(productVo.getPrice() * 0.05);
+    %>
+    <li><h2><%=price%>원</h2></li>
+    <li><h4>적립금: <%=point %></h4></li>
     <li><h4>배송비: 2,500원</h4></li>
     <li><select>
             <option>옵션 선택</option>
         </select><li>
+        <form name="for" method="post" action="">
+        <input type="hidden" value="<%=productVo.getProductNo()%>" name="ProductNo">
     <li><a href="<%=ctxPath %>/sblist" class="button">장바구니</a>
-    <a href="#" class="button">바로구매</a><li>
+    <a href="<%=ctxPath %>/order" class="button">바로구매</a></li>
+    </form>
     </ul>
     </div>
 	</section>
+	
     <aside>
         <!-- tab 부분 안보이게 하는게 포인트! -->
         <!-- checked : 기본적으로 눌려진 상태 -->

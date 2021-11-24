@@ -234,32 +234,6 @@
 				success: function(data){
 					// console.log(data);
 					resultHtml(data);
-					// let str = JSON.stringify(data.cartTableVolist); // <> parse()
-					// alert(str);
-					// var key = Object.keys(data["cartTableVolist"][0]);
-					// alert(key);
-					/* $.each(data.cartTableVolist, function(i, cartlist) { // 데이터 = cartlist에 담음
-						$("#test1").append(cartlist.cartNo+" ");
-						$("#test2").append("<input type ='checkbox' name='subCB' id='subCB'>");
-						$("#test3").append(cartlist.productName+"<br>"+cartlist.productOption + " ");
-						$("#test4").append(cartlist.cartQuantity+"개");
-						$("#test5").append(cartlist.price+"원");
-						$("#test6").append(cartlist.price*0.05+"원"); */
-						/* $("#test").append("<td style='display: none'>"+cartlist.cartNo+"</td>");
-						$("#test").append("<input type ='checkbox' name='subCB' id='subCB'>");
-						$("#test").append("<td>"+cartlist.productName+"<br>"+cartlist.productOption+"</td>");
-						$("#test").append("<td>"+cartlist.cartQuantity+"개</td>");
-						$("#test").append("<td>"+cartlist.price+"원/<td>");
-						$("#test").append("<td>"+cartlist.price*0.05+"원</td>"); */
-						// console.log(cartlist);
-					// });
-					// var key = Object.keys(data["orderCost"][0]);
-					// alert(key);
-					// $.each(data.orderCost, function(i, ordercost) {
-						// $("#test7").append(ordercost.ordercost);
-						// $("#test").append("<td>"+ordercost.ordercost+"</td>");
-						// 2021.10.15 2차 내용추가 완료
-					// });
 				},
 				error : function(request,status,error) {
 					alert("code:"+request.status+"\n"+"message:"+request.responseText+
